@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="game_server.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="game_session\game_session.cpp">
+      <Filter>game_session</Filter>
+    </ClCompile>
+    <ClCompile Include="game_session\game_session_manager.cpp">
+      <Filter>game_session</Filter>
+    </ClCompile>
+    <ClCompile Include="game_session\client_packet_handler.cpp">
+      <Filter>game_session</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\enum.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\protocol.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\struct.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="player\player.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="game_session\packet_creator.cpp">
+      <Filter>game_session</Filter>
+    </ClCompile>
+    <ClCompile Include="game_contents\game_room\game_room.cpp">
+      <Filter>game_contents\game_room</Filter>
+    </ClCompile>
+    <ClCompile Include="game_contents\game_room\game_room_manager.cpp">
+      <Filter>game_contents\game_room</Filter>
+    </ClCompile>
+    <ClCompile Include="game_contents\game_objects\game_object.cpp">
+      <Filter>game_contents\game_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="game_contents\game_objects\monster\monster.cpp">
+      <Filter>game_contents\game_objects\monster</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="game_session">
+      <UniqueIdentifier>{e73081cf-bd1e-4b8c-bee8-5cae46f5bd00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="protocol">
+      <UniqueIdentifier>{a848330f-0f22-4d0b-b098-a196851131a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="player">
+      <UniqueIdentifier>{8c632bdb-80e5-4f42-ad6c-a43c56da0e04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{713985d8-a984-4024-bb64-ae04de0f5fd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_contents">
+      <UniqueIdentifier>{fc03240f-92a4-47f4-b69b-c30548f5d569}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_contents\game_room">
+      <UniqueIdentifier>{6d572985-69a0-41e2-a00a-91661b2f93c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_contents\game_objects">
+      <UniqueIdentifier>{c8637f75-22bd-47cf-8c93-73e15046a528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_contents\game_objects\monster">
+      <UniqueIdentifier>{28725f08-6f77-4ae7-bb96-f70f050dc3e6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="game_session\client_packet_handler.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="game_session\game_session.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="game_session\game_session_manaeger.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\enum.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\protocol.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\struct.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="player\player.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="game_session\packet_creator.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="game_contents\game_room\game_room.h">
+      <Filter>game_contents\game_room</Filter>
+    </ClInclude>
+    <ClInclude Include="game_contents\game_room\game_room_manager.h">
+      <Filter>game_contents\game_room</Filter>
+    </ClInclude>
+    <ClInclude Include="game_contents\game_objects\game_object.h">
+      <Filter>game_contents\game_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="game_contents\game_objects\monster\monster.h">
+      <Filter>game_contents\game_objects\monster</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Common\Protobuf\bin\enum.proto">
+      <Filter>protocol</Filter>
+    </None>
+    <None Include="..\..\Common\Protobuf\bin\gen_packet.bat">
+      <Filter>protocol</Filter>
+    </None>
+    <None Include="..\..\Common\Protobuf\bin\protocol.proto">
+      <Filter>protocol</Filter>
+    </None>
+    <None Include="..\..\Common\Protobuf\bin\struct.proto">
+      <Filter>protocol</Filter>
+    </None>
+  </ItemGroup>
+</Project>

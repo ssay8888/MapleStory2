@@ -31,6 +31,7 @@
 *.out
 *.app
 
-.\.vc\
+.vs\
 *.tlog
 *.log
+/.vs/MapleStory2Project/v16
