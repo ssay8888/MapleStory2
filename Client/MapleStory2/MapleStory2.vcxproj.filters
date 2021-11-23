@@ -1,41 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="targetver.h">
-      <Filter>main</Filter>
-    </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>main</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
-      <Filter>main</Filter>
+      <Filter>default</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>main</Filter>
+      <Filter>default</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>main</Filter>
+      <Filter>default</Filter>
+    </ClInclude>
+    <ClInclude Include="client_pch.h">
+      <Filter>default</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>main</Filter>
+      <Filter>default</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>main</Filter>
+      <Filter>default</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
-      <Filter>main</Filter>
+      <Filter>default</Filter>
     </Image>
     <Image Include="small.ico">
-      <Filter>main</Filter>
+      <Filter>default</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="main">
-      <UniqueIdentifier>{7ef0b80f-fe97-492d-a6c6-b54ef0f5d334}</UniqueIdentifier>
+    <Filter Include="default">
+      <UniqueIdentifier>{72b588c0-a747-4d7e-ba5e-a86566f3c049}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="maplestory2.rc">
+      <Filter>default</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

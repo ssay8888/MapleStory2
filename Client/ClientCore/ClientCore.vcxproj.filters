@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\graphic\graphic_device.h">
+      <Filter>system\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="engine_pch.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\defines\engine_macro.h">
+      <Filter>defines</Filter>
+    </ClInclude>
+    <ClInclude Include="src\defines\engine_typedef.h">
+      <Filter>defines</Filter>
+    </ClInclude>
+    <ClInclude Include="src\defines\engine_functor.h">
+      <Filter>defines</Filter>
+    </ClInclude>
+    <ClInclude Include="src\defines\engine_struct.h">
+      <Filter>defines</Filter>
+    </ClInclude>
+    <ClInclude Include="src\timers\timer_manager.h">
+      <Filter>timers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\timers\timer.h">
+      <Filter>timers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\system\graphic\graphic_device.cpp">
+      <Filter>system\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timers\timer_manager.cpp">
+      <Filter>timers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timers\timer.cpp">
+      <Filter>timers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{4e7538a3-2591-45b2-a435-e52d5dde86e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system">
+      <UniqueIdentifier>{a81ff169-38eb-4d6d-b622-0a029abfb9e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\graphic">
+      <UniqueIdentifier>{782617cc-9208-46eb-99fc-28dde4d53596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="defines">
+      <UniqueIdentifier>{333fbcb3-2752-490a-ba19-9db0765544e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="timers">
+      <UniqueIdentifier>{b8338a46-a5e7-4f04-989e-d8bb0e3f7196}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
