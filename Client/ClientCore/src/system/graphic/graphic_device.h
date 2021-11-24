@@ -1,21 +1,23 @@
 #pragma once
-#include <wrl.h>
 #include <d3d9.h>
 #include <d3dx9.h>
 
-using namespace Microsoft::WRL;
 
 class GraphicDevice
 {
 private:
-	GraphicDevice();
-	~GraphicDevice();
+	GraphicDevice() = default;
+	~GraphicDevice() = default;
 
 public:
-	enum class WINMODE { MODE_FULL, MODE_WIN };
+	enum class kWindowMode
+	{
+		kModeFull,
+		kModeWin
+	};
 
 public:
-	static auto& GetInstance()
+	static auto GetInstance() -> GraphicDevice&
 	{
 		static GraphicDevice instance;
 		return instance;
@@ -27,9 +29,9 @@ public:
 	auto GetLine() const->ComPtr<ID3DXLine>;
 
 public:
-	auto ReadyGraphicDevice(HWND hWnd, GraphicDevice::WINMODE mode, uint32_t winCx, uint32_t winCy, ComPtr<IDirect3DDevice9>* ppGraphicDevice = nullptr)->HRESULT;
+	auto ReadyGraphicDevice(HWND hWnd, kWindowMode mode, uint32_t winCx, uint32_t winCy, ComPtr<IDirect3DDevice9>* ppGraphicDevice = nullptr)->HRESULT;
 	auto RenderBegin()->void;
-	auto RenderEnd(HWND hWND = nullptr)->void;
+	auto RenderEnd(HWND hWnd = nullptr)->void;
 
 private:
 	ComPtr<IDirect3D9>				_sdk;

@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\MapleStory2Project\Server\bin\GameServer.exe</FullPath>
+      <FullPath>C:\MapleStory2Project\Binary\GameServer.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

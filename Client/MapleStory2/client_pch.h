@@ -1,7 +1,6 @@
 #pragma once
 #include <cstdint>
 
-
 #ifdef _DEBUG
 #pragma comment(lib, "ClientCore\\Debug\\ClientCore.lib")
 #pragma comment(lib, "ServerCore\\Debug\\ServerCore.lib")
@@ -13,3 +12,6 @@
 
 const int16_t		g_WinCX = 1280;
 const int16_t		g_WinCY = 720;
+
+
+#include "engine_pch.h"

@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)Server\ServerCore;$(SolutionDir)Client\ClientCore;%(AdditionalIncludeDirectories);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Client\ClientCore;%(AdditionalIncludeDirectories);$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Libraries\Libs\$(ProjectName)\$(Configuration)\</OutDir>
     <ExternalIncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(ExternalIncludePath)</ExternalIncludePath>
@@ -163,13 +163,31 @@
   <ItemGroup>
     <ClInclude Include="engine_pch.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="shader.h" />
     <ClInclude Include="src\defines\engine_functor.h" />
     <ClInclude Include="src\defines\engine_macro.h" />
     <ClInclude Include="src\defines\engine_struct.h" />
     <ClInclude Include="src\defines\engine_typedef.h" />
     <ClInclude Include="src\system\graphic\graphic_device.h" />
-    <ClInclude Include="src\timers\timer.h" />
-    <ClInclude Include="src\timers\timer_manager.h" />
+    <ClInclude Include="src\system\input\input_device.h" />
+    <ClInclude Include="src\utility\components\component.h" />
+    <ClInclude Include="src\utility\components\manager\component_manager.h" />
+    <ClInclude Include="src\utility\components\picking\picking.h" />
+    <ClInclude Include="src\utility\components\renderer\renderer.h" />
+    <ClInclude Include="src\utility\components\transform\transform.h" />
+    <ClInclude Include="src\utility\game_objects\game_object.h" />
+    <ClInclude Include="src\utility\game_objects\manager\layer\layer.h" />
+    <ClInclude Include="src\utility\game_objects\manager\object_manager.h" />
+    <ClInclude Include="src\utility\pipe_line\pipe_line.h" />
+    <ClInclude Include="src\utility\scene_utility\scene.h" />
+    <ClInclude Include="src\utility\scene_utility\scene_manager.h" />
+    <ClInclude Include="src\utility\timers\timer.h" />
+    <ClInclude Include="src\utility\timers\timer_manager.h" />
+    <ClInclude Include="src\utility\vi_buffer\vi_buffer.h" />
+    <ClInclude Include="src\utility\vi_buffer\vi_buffer_cube\texture.h" />
+    <ClInclude Include="src\utility\vi_buffer\vi_buffer_cube\vi_buffer_cube.h" />
+    <ClInclude Include="src\utility\vi_buffer\vi_buffer_rect\vi_buffer_rect.h" />
+    <ClInclude Include="src\utility\vi_buffer\vi_buffer_terrain\vi_buffer_terrain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -179,8 +197,26 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\system\graphic\graphic_device.cpp" />
-    <ClCompile Include="src\timers\timer.cpp" />
-    <ClCompile Include="src\timers\timer_manager.cpp" />
+    <ClCompile Include="src\system\input\input_device.cpp" />
+    <ClCompile Include="src\utility\components\component.cpp" />
+    <ClCompile Include="src\utility\components\manager\component_manager.cpp" />
+    <ClCompile Include="src\utility\components\picking\picking.cpp" />
+    <ClCompile Include="src\utility\components\renderer\renderer.cpp" />
+    <ClCompile Include="src\utility\components\shader\shader.cpp" />
+    <ClCompile Include="src\utility\components\transform\transform.cpp" />
+    <ClCompile Include="src\utility\game_objects\game_object.cpp" />
+    <ClCompile Include="src\utility\game_objects\manager\layer\layer.cpp" />
+    <ClCompile Include="src\utility\game_objects\manager\object_manager.cpp" />
+    <ClCompile Include="src\utility\pipe_line\pipe_line.cpp" />
+    <ClCompile Include="src\utility\scene_utility\scene.cpp" />
+    <ClCompile Include="src\utility\scene_utility\scene_manager.cpp" />
+    <ClCompile Include="src\utility\timers\timer.cpp" />
+    <ClCompile Include="src\utility\timers\timer_manager.cpp" />
+    <ClCompile Include="src\utility\vi_buffer\vi_buffer.cpp" />
+    <ClCompile Include="src\utility\vi_buffer\vi_buffer_cube\texture.cpp" />
+    <ClCompile Include="src\utility\vi_buffer\vi_buffer_cube\vi_buffer_cube.cpp" />
+    <ClCompile Include="src\utility\vi_buffer\vi_buffer_rect\vi_buffer_rect.cpp" />
+    <ClCompile Include="src\utility\vi_buffer\vi_buffer_terrain\vi_buffer_terrain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

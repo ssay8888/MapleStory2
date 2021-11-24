@@ -22,12 +22,64 @@
     <ClInclude Include="src\defines\engine_struct.h">
       <Filter>defines</Filter>
     </ClInclude>
-    <ClInclude Include="src\timers\timer_manager.h">
-      <Filter>timers</Filter>
+    <ClInclude Include="src\utility\scene_utility\scene_manager.h">
+      <Filter>utility\scene_utiliy</Filter>
     </ClInclude>
-    <ClInclude Include="src\timers\timer.h">
-      <Filter>timers</Filter>
+    <ClInclude Include="src\utility\scene_utility\scene.h">
+      <Filter>utility\scene_utiliy</Filter>
     </ClInclude>
+    <ClInclude Include="src\utility\game_objects\game_object.h">
+      <Filter>utility\game_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\manager\component_manager.h">
+      <Filter>utility\components\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\component.h">
+      <Filter>utility\components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\game_objects\manager\object_manager.h">
+      <Filter>utility\game_objects\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\game_objects\manager\layer\layer.h">
+      <Filter>utility\game_objects\manager\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\input\input_device.h">
+      <Filter>system\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\renderer\renderer.h">
+      <Filter>utility\components\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\transform\transform.h">
+      <Filter>utility\components\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\vi_buffer\vi_buffer.h">
+      <Filter>utility\components\vi_buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\vi_buffer\vi_buffer_rect\vi_buffer_rect.h">
+      <Filter>utility\components\vi_buffer\vi_buffer_rect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\vi_buffer\vi_buffer_terrain\vi_buffer_terrain.h">
+      <Filter>utility\components\vi_buffer\vi_buffer_terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\vi_buffer\vi_buffer_cube\vi_buffer_cube.h">
+      <Filter>utility\components\vi_buffer\vi_buffer_cube</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\vi_buffer\vi_buffer_cube\texture.h">
+      <Filter>utility\components\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\picking\picking.h">
+      <Filter>utility\components\picking</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\pipe_line\pipe_line.h">
+      <Filter>utility\pipe_line</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\timers\timer.h">
+      <Filter>utility\timers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\timers\timer_manager.h">
+      <Filter>utility\timers</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -36,12 +88,64 @@
     <ClCompile Include="src\system\graphic\graphic_device.cpp">
       <Filter>system\graphic</Filter>
     </ClCompile>
-    <ClCompile Include="src\timers\timer_manager.cpp">
-      <Filter>timers</Filter>
+    <ClCompile Include="src\utility\scene_utility\scene_manager.cpp">
+      <Filter>utility\scene_utiliy</Filter>
     </ClCompile>
-    <ClCompile Include="src\timers\timer.cpp">
-      <Filter>timers</Filter>
+    <ClCompile Include="src\utility\scene_utility\scene.cpp">
+      <Filter>utility\scene_utiliy</Filter>
     </ClCompile>
+    <ClCompile Include="src\utility\game_objects\game_object.cpp">
+      <Filter>utility\game_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\manager\component_manager.cpp">
+      <Filter>utility\components\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\component.cpp">
+      <Filter>utility\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\game_objects\manager\object_manager.cpp">
+      <Filter>utility\game_objects\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\game_objects\manager\layer\layer.cpp">
+      <Filter>utility\game_objects\manager\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\system\input\input_device.cpp">
+      <Filter>system\input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\renderer\renderer.cpp">
+      <Filter>utility\components\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\transform\transform.cpp">
+      <Filter>utility\components\transform</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\vi_buffer\vi_buffer.cpp">
+      <Filter>utility\components\vi_buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\vi_buffer\vi_buffer_rect\vi_buffer_rect.cpp">
+      <Filter>utility\components\vi_buffer\vi_buffer_rect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\vi_buffer\vi_buffer_terrain\vi_buffer_terrain.cpp">
+      <Filter>utility\components\vi_buffer\vi_buffer_terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\vi_buffer\vi_buffer_cube\vi_buffer_cube.cpp">
+      <Filter>utility\components\vi_buffer\vi_buffer_cube</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\vi_buffer\vi_buffer_cube\texture.cpp">
+      <Filter>utility\components\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\picking\picking.cpp">
+      <Filter>utility\components\picking</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\pipe_line\pipe_line.cpp">
+      <Filter>utility\pipe_line</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\timers\timer.cpp">
+      <Filter>utility\timers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\timers\timer_manager.cpp">
+      <Filter>utility\timers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\shader\shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -56,8 +160,62 @@
     <Filter Include="defines">
       <UniqueIdentifier>{333fbcb3-2752-490a-ba19-9db0765544e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="timers">
-      <UniqueIdentifier>{b8338a46-a5e7-4f04-989e-d8bb0e3f7196}</UniqueIdentifier>
+    <Filter Include="utility">
+      <UniqueIdentifier>{fc2c8738-2808-45ec-aac7-7417b21241eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\scene_utiliy">
+      <UniqueIdentifier>{2c7ac76a-d3af-47c2-9c58-87379b2fb964}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\game_objects">
+      <UniqueIdentifier>{4ce0ddf4-2fbc-46ad-9ca5-573c5ade6178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components">
+      <UniqueIdentifier>{d5a20f57-b10a-4fe8-9adb-6cc6720508f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\manager">
+      <UniqueIdentifier>{fdde0d8c-e4f3-4b6c-a41c-677813842040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\game_objects\manager">
+      <UniqueIdentifier>{6dab4d25-cb9d-40d8-9bd0-2e497e3c931b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\game_objects\manager\layer">
+      <UniqueIdentifier>{c56864d2-53e0-49de-a3d9-2fed9a8e326a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\input">
+      <UniqueIdentifier>{64b3b286-8c36-4c8f-9f19-459457602963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\renderer">
+      <UniqueIdentifier>{66e63011-4fff-47aa-98c6-150427d53b06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\transform">
+      <UniqueIdentifier>{007be160-94ed-47a4-ab61-822a844e8da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\vi_buffer">
+      <UniqueIdentifier>{8230851e-b83b-40ba-89dd-cc842f4ea967}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\vi_buffer\vi_buffer_rect">
+      <UniqueIdentifier>{b2ab22bc-7b9d-4416-a76a-a21c1d3fd001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\vi_buffer\vi_buffer_terrain">
+      <UniqueIdentifier>{a4a74166-57a5-410a-9495-eab482d0a994}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\vi_buffer\vi_buffer_cube">
+      <UniqueIdentifier>{cb31d474-30dd-4b1b-885e-1ef6bfda23ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\textures">
+      <UniqueIdentifier>{30885141-d23d-40ba-b4d0-fcdbb3108d38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\picking">
+      <UniqueIdentifier>{82ecdf29-5376-4cee-95d8-76731115e09b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\pipe_line">
+      <UniqueIdentifier>{8ffc55c7-bb9b-419b-acc5-135829a4f771}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\timers">
+      <UniqueIdentifier>{7985cbb4-ad56-43db-9529-8f6aa9d6ce29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\shader">
+      <UniqueIdentifier>{adbac046-a90c-4078-9a84-7d6d0b4d9356}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

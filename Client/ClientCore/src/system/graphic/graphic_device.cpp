@@ -1,14 +1,6 @@
 #include "pch.h"
 #include "graphic_device.h"
 
-GraphicDevice::GraphicDevice()
-{
-}
-
-GraphicDevice::~GraphicDevice()
-{
-}
-
 auto GraphicDevice::GetDevice() const ->ComPtr<IDirect3DDevice9>
 {
 	return _device;
@@ -24,7 +16,7 @@ auto GraphicDevice::GetLine() const -> ComPtr<ID3DXLine>
 	return _line;
 }
 
-auto GraphicDevice::ReadyGraphicDevice(HWND hWnd, GraphicDevice::WINMODE mode, uint32_t winCx, uint32_t winCy,
+auto GraphicDevice::ReadyGraphicDevice(HWND hWnd, GraphicDevice::kWindowMode mode, uint32_t winCx, uint32_t winCy,
 	ComPtr<IDirect3DDevice9>* ppGraphicDevice) -> HRESULT
 {
 	D3DCAPS9 d3dcaps;
@@ -71,7 +63,6 @@ auto GraphicDevice::ReadyGraphicDevice(HWND hWnd, GraphicDevice::WINMODE mode, u
 	tFontDesc.Weight = FW_HEAVY;
 	tFontDesc.CharSet = HANGUL_CHARSET;
 	lstrcpy(tFontDesc.FaceName, L"@³Ø½¼Lv1°íµñ Bold");
-	//std::vector<ComPtr<ID3DXFont>> a;
 
 	if (FAILED(D3DXCreateFontIndirectW(_device.Get(), &tFontDesc, &_font)))
 	{
@@ -98,8 +89,8 @@ auto GraphicDevice::RenderBegin() -> void
 	_device->BeginScene();
 }
 
-auto GraphicDevice::RenderEnd(HWND hWND) -> void
+auto GraphicDevice::RenderEnd(HWND hWnd) -> void
 {
 	_device->EndScene();
-	_device->Present(nullptr, nullptr, hWND, nullptr);
+	_device->Present(nullptr, nullptr, hWnd, nullptr);
 }

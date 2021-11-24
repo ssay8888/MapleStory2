@@ -1,0 +1,23 @@
+#pragma once
+#include "src/utility/components/component.h"
+
+class Transform : public Component
+{
+public:
+	enum class kState
+	{
+		kStateRight,
+		kStateUp,
+		kStateLook,
+		kStatePosition,
+		kStateEnd
+	};
+
+public:
+	typedef struct TransformDesc
+	{
+		float speed_per_sec;
+		float rotation_per_sec;
+	} Transformdesc;
+};
+

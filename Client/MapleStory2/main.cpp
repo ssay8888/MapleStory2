@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "main.h"
 #include "src/system/graphic/graphic_device.h"
+#include "src/timers/timer_manager.h"
 
 #define MAX_LOADSTRING 100
 
@@ -27,8 +28,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // TODO: 여기에 코드를 입력합니다.
-
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_MAPLESTORY2, szWindowClass, MAX_LOADSTRING);
@@ -40,15 +39,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MAPLESTORY2));
+    const HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MAPLESTORY2));
 
     MSG msg;
     auto& graphic_device = GraphicDevice::GetInstance();
+    auto& timer_manager = TimerManager::GetInstance();
     
-    if (FAILED(graphic_device.ReadyGraphicDevice(g_Wnd, GraphicDevice::WINMODE::MODE_WIN, g_WinCX, g_WinCY, nullptr)))
+    if (FAILED(graphic_device.ReadyGraphicDevice(g_Wnd, GraphicDevice::kWindowMode::kModeWin, g_WinCX, g_WinCY, nullptr)))
         return E_FAIL;
 
     // 기본 메시지 루프입니다:
+    float		fTimeAcc = 0.f;
     while(true)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -62,9 +63,25 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 DispatchMessage(&msg);
             }
         }
-        graphic_device.RenderBegin();
+        const float	timeDelta = timer_manager.ComputeTimeDelta(TEXT("Timer_Default"));
 
-        graphic_device.RenderEnd();
+        fTimeAcc += timeDelta;
+
+        if (fTimeAcc > 1.0f / 60.0f)
+        {
+            float		timeDelta60 = timer_manager.ComputeTimeDelta(TEXT("Timer_60"));
+
+            //if (0x80000000 & pMainApp->Tick(fTimeDelta_60))
+            //    break;
+
+            //if (FAILED(pMainApp->Render_MainApp()))
+            //    break;
+            graphic_device.RenderBegin();
+
+            graphic_device.RenderEnd();
+
+            fTimeAcc = 0.f;
+        }
 
     }
     return (int) msg.wParam;
@@ -150,7 +167,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
             EndPaint(hWnd, &ps);
         }
         break;
@@ -180,5 +196,5 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     }
-    return (INT_PTR)FALSE;
+    return static_cast<INT_PTR>(FALSE);
 }

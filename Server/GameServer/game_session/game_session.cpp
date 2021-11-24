@@ -57,7 +57,6 @@ auto GameSession::OnRecvPacket(BYTE* buffer, const int32 len) -> void
 {
 	PacketSessionRef session = GetPacketSessionRef();
 	PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
-	// TODO : packetId �뿪 üũ
 	//LRecvBuffers.push(std::make_pair(session, buffer));
 	ClientPacketHandler::HandlePacket(session, buffer, len);
 }

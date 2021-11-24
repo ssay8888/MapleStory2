@@ -1,0 +1,34 @@
+#pragma once
+#include "src/utility/components/component.h"
+
+class Transform : public Component
+{
+public:
+	enum class kState
+	{
+		kStateRight,
+		kStateUp,
+		kStateLook,
+		kStatePosition,
+		kStateEnd
+	};
+
+	typedef struct TransformDesc
+	{
+		float speed_per_sec;
+		float rotation_per_sec;
+	} TransformDesc;
+
+private:
+	Transform(const ComPtr<IDirect3DDevice9>& graphicDevice);
+	Transform(const Transform& rhs);
+	virtual ~Transform() = default;
+
+public:
+	const _matrix& GetWorldMatrix() const;
+	_matrix GetWorldMatrixInverse() const;
+	_float3 Get_State(kState state);
+	_float3 GetScale() const;
+
+};
+

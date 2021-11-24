@@ -24,7 +24,6 @@ auto Service::CanStart() const -> bool
 
 auto Service::CloseService() -> void
 {
-	// TODO
 }
 
 auto Service::SetSessionFactory(const SessionFactory func) -> void
@@ -139,7 +138,5 @@ auto ServerService::Start() -> bool
 
 auto ServerService::CloseService() -> void
 {
-	// TODO
-
 	Service::CloseService();
 }
