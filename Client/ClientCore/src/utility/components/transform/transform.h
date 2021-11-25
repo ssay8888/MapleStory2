@@ -17,8 +17,8 @@ public:
 
 	typedef struct TransformDesc
 	{
-		float speed_per_sec;
-		float rotation_per_sec;
+		double speed_per_sec;
+		double rotation_per_sec;
 	} TransformDesc;
 
 public:
@@ -38,10 +38,10 @@ public:
 	auto SetMovingState(bool isMoving)->void;
 
 public:
-	auto GoStraight(const float timeDelta)->void;
-	auto BackStraight(const float timeDelta)->void;
-	auto WalkLeft(const float timeDelta)->void;
-	auto WalkRight(const float timeDelta)->void;
+	auto GoStraight(const double timeDelta)->void;
+	auto BackStraight(const double timeDelta)->void;
+	auto WalkLeft(const double timeDelta)->void;
+	auto WalkRight(const double timeDelta)->void;
 	auto RotationAxis(_float3 axis, float timeDelta)->void;
 	auto SetUpRotation(_float3 axis, float radian)->void;
 	auto ChaseTarget(const std::shared_ptr<Transform>& targetTransform, float timeDelta)->void;

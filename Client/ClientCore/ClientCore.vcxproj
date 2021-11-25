@@ -175,6 +175,8 @@
     <ClInclude Include="src\utility\components\picking\picking.h" />
     <ClInclude Include="src\utility\components\renderer\renderer.h" />
     <ClInclude Include="src\utility\components\transform\transform.h" />
+    <ClInclude Include="src\utility\game_logic_manager\game_logic_manager.h" />
+    <ClInclude Include="src\utility\game_objects\camera\camera.h" />
     <ClInclude Include="src\utility\game_objects\game_object.h" />
     <ClInclude Include="src\utility\game_objects\manager\layer\layer.h" />
     <ClInclude Include="src\utility\game_objects\manager\object_manager.h" />
@@ -204,6 +206,8 @@
     <ClCompile Include="src\utility\components\renderer\renderer.cpp" />
     <ClCompile Include="src\utility\components\shader\shader.cpp" />
     <ClCompile Include="src\utility\components\transform\transform.cpp" />
+    <ClCompile Include="src\utility\game_logic_manager\game_logic_manager.cpp" />
+    <ClCompile Include="src\utility\game_objects\camera\camera.cpp" />
     <ClCompile Include="src\utility\game_objects\game_object.cpp" />
     <ClCompile Include="src\utility\game_objects\manager\layer\layer.cpp" />
     <ClCompile Include="src\utility\game_objects\manager\object_manager.cpp" />

@@ -3,13 +3,15 @@
 
 #include "pch.h"
 #include "main.h"
+
+#include "src/main/main_app.h"
 #include "src/system/graphic/graphic_device.h"
-#include "src/timers/timer_manager.h"
+#include "src/utility/timers/timer_manager.h"
 
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
-HINSTANCE hInst;                                // 현재 인스턴스입니다.
+HINSTANCE g_hInst;                                // 현재 인스턴스입니다.
 HWND	g_Wnd;
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
@@ -42,11 +44,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     const HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MAPLESTORY2));
 
     MSG msg;
-    auto& graphic_device = GraphicDevice::GetInstance();
-    auto& timer_manager = TimerManager::GetInstance();
-    
-    if (FAILED(graphic_device.ReadyGraphicDevice(g_Wnd, GraphicDevice::kWindowMode::kModeWin, g_WinCX, g_WinCY, nullptr)))
-        return E_FAIL;
+
+    MainApp mainApp;
+    auto& graphicDevice = GraphicDevice::GetInstance();
+    auto& timerManager = TimerManager::GetInstance();
+
+    if (FAILED(timerManager.AddTimers(TEXT("Timer_Default"))))
+        return FALSE;
+
+    if (FAILED(timerManager.AddTimers(TEXT("Timer_60"))))
+        return FALSE;
 
     // 기본 메시지 루프입니다:
     float		fTimeAcc = 0.f;
@@ -63,22 +70,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 DispatchMessage(&msg);
             }
         }
-        const float	timeDelta = timer_manager.ComputeTimeDelta(TEXT("Timer_Default"));
+        const float	timeDelta = timerManager.ComputeTimeDelta(TEXT("Timer_Default"));
 
         fTimeAcc += timeDelta;
 
         if (fTimeAcc > 1.0f / 60.0f)
         {
-            float		timeDelta60 = timer_manager.ComputeTimeDelta(TEXT("Timer_60"));
+	        const double timeDelta60 = timerManager.ComputeTimeDelta(TEXT("Timer_60"));
 
-            //if (0x80000000 & pMainApp->Tick(fTimeDelta_60))
-            //    break;
+            if (0x80000000 & mainApp.Tick(timeDelta60))
+                break;
 
-            //if (FAILED(pMainApp->Render_MainApp()))
-            //    break;
-            graphic_device.RenderBegin();
+            if (FAILED(mainApp.RenderMainApp()))
+                break;
 
-            graphic_device.RenderEnd();
+            graphicDevice.RenderBegin();
+
+            graphicDevice.RenderEnd();
 
             fTimeAcc = 0.f;
         }
@@ -127,7 +135,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+   g_hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
    RECT		rcWindow = { 0, 0, g_WinCX, g_WinCY };
 

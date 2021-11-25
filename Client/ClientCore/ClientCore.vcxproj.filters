@@ -79,7 +79,15 @@
     <ClInclude Include="src\utility\timers\timer_manager.h">
       <Filter>utility\timers</Filter>
     </ClInclude>
-    <ClInclude Include="shader.h" />
+    <ClInclude Include="shader.h">
+      <Filter>utility\components\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\game_logic_manager\game_logic_manager.h">
+      <Filter>utility\game_logic_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\game_objects\camera\camera.h">
+      <Filter>utility\game_objects\camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -145,7 +153,15 @@
     <ClCompile Include="src\utility\timers\timer_manager.cpp">
       <Filter>utility\timers</Filter>
     </ClCompile>
-    <ClCompile Include="src\utility\components\shader\shader.cpp" />
+    <ClCompile Include="src\utility\components\shader\shader.cpp">
+      <Filter>utility\components\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\game_logic_manager\game_logic_manager.cpp">
+      <Filter>utility\game_logic_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\game_objects\camera\camera.cpp">
+      <Filter>utility\game_objects\camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -216,6 +232,12 @@
     </Filter>
     <Filter Include="utility\components\shader">
       <UniqueIdentifier>{adbac046-a90c-4078-9a84-7d6d0b4d9356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\game_logic_manager">
+      <UniqueIdentifier>{6efdee18-51e0-4b00-b921-084c7c544976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\game_objects\camera">
+      <UniqueIdentifier>{e49e6909-c8a0-46ef-8bba-5e984000b988}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

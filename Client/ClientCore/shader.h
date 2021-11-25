@@ -8,13 +8,13 @@ public:
 	virtual ~Shader() = default;
 
 public:
-	virtual auto NativeConstruct_Prototype(const std::wstring& shaderFilePath)->HRESULT;
+	virtual auto NativeConstructPrototype(const std::wstring& shaderFilePath)->HRESULT;
 	virtual auto NativeConstruct(void* arg)->HRESULT;
 		
 public:
-	auto SetUp_ConstantTable(D3DXHANDLE hHandle, const void* data, int32_t lengthByte)->HRESULT;
-	auto Begin_Shader(int32_t passIndex)->HRESULT;
-	auto End_Shader()->HRESULT;
+	auto SetUpConstantTable(D3DXHANDLE hHandle, const void* data, int32_t lengthByte) const ->HRESULT;
+	auto BeginShader(int32_t passIndex) const ->HRESULT;
+	auto EndShader() const ->HRESULT;
 
 public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& graphicDevice, const std::wstring& shaderFilePath)->std::shared_ptr<Shader>;

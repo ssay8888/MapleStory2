@@ -66,46 +66,46 @@ auto Transform::SetMovingState(const bool isMoving) -> void
 	_is_moving = isMoving;
 }
 
-auto Transform::GoStraight(const float timeDelta) -> void
+auto Transform::GoStraight(const double timeDelta) -> void
 {
 	_float3 look = GetState(kState::kStateLook);
 	D3DXVec3Normalize(&look, &look);
 
 	_float3 pos = GetState(kState::kStatePosition);
-	pos += look * _transform_state.speed_per_sec * timeDelta;
+	pos += look * static_cast<float>(_transform_state.speed_per_sec * timeDelta);
 
 	SetState(kState::kStatePosition, pos);
 }
 
-auto Transform::BackStraight(const float timeDelta) -> void
+auto Transform::BackStraight(const double timeDelta) -> void
 {
 	_float3 look = GetState(kState::kStateLook);
 	D3DXVec3Normalize(&look, &look);
 
 	_float3 pos = GetState(kState::kStatePosition);
-	pos -= look * _transform_state.speed_per_sec * timeDelta;
+	pos -= look * static_cast<float>(_transform_state.speed_per_sec * timeDelta);
 
 	SetState(kState::kStatePosition, pos);
 }
 
-auto Transform::WalkLeft(const float timeDelta) -> void
+auto Transform::WalkLeft(const double timeDelta) -> void
 {
 	_float3	right = GetState(kState::kStateRight);
 	D3DXVec3Normalize(&right, &right);
 
 	_float3	position = GetState(kState::kStatePosition);
-	position -= right * _transform_state.speed_per_sec * timeDelta;
+	position -= right * static_cast<float>(_transform_state.speed_per_sec * timeDelta);
 
 	SetState(kState::kStatePosition, position);
 }
 
-auto Transform::WalkRight(const float timeDelta) -> void
+auto Transform::WalkRight(const double timeDelta) -> void
 {
 	_float3	right = GetState(kState::kStateRight);
 	D3DXVec3Normalize(&right, &right);
 
 	_float3	position = GetState(kState::kStatePosition);
-	position += right * _transform_state.speed_per_sec * timeDelta;
+	position += right * static_cast<float>(_transform_state.speed_per_sec * timeDelta);
 
 	SetState(kState::kStatePosition, position);
 }
@@ -120,7 +120,7 @@ auto Transform::RotationAxis(const _float3 axis, const float timeDelta) -> void
 
 	_matrix	rotationMatrix;
 
-	D3DXMatrixRotationAxis(&rotationMatrix, &axis, _transform_state.speed_per_sec * timeDelta);
+	D3DXMatrixRotationAxis(&rotationMatrix, &axis, static_cast<float>(_transform_state.speed_per_sec * timeDelta));
 
 	SetState(kState::kStateRight, *D3DXVec3TransformNormal(&right, &right, &rotationMatrix));
 	SetState(kState::kStateUp, *D3DXVec3TransformNormal(&up, &up, &rotationMatrix));
@@ -155,7 +155,7 @@ auto Transform::ChaseTarget(const std::shared_ptr<Transform>& targetTransform, c
 
 	if (distance >= 0.5f)
 	{
-		position += dir * _transform_state.speed_per_sec * timeDelta;
+		position += dir * static_cast<float>(_transform_state.speed_per_sec * timeDelta);
 	}
 
 	SetState(kState::kStatePosition, position);
@@ -177,7 +177,7 @@ auto Transform::ChaseTarget(_float3 vTargetPos, float timeDelta) -> void
 
 	if (distance >= 0.5f)
 	{
-		position += dir * _transform_state.speed_per_sec * timeDelta;
+		position += dir * static_cast<float>(_transform_state.speed_per_sec * timeDelta);
 	}
 	else
 	{

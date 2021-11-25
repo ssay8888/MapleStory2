@@ -7,18 +7,15 @@ GameObject::GameObject(const ComPtr<IDirect3DDevice9>& device)
 {
 }
 
-GameObject::GameObject(const GameObject& rhs)
-{
-}
-
-auto GameObject::AddComponent(int32_t levelIndex, const std::wstring prototypeTag, const std::wstring componentTag,
-	std::shared_ptr<Component>* ppOut, void* arg) -> HRESULT
+auto GameObject::AddComponent(const int32_t levelIndex, const std::wstring& prototypeTag, const std::wstring& componentTag,
+                              std::shared_ptr<Component>* ppOut, void* arg) -> HRESULT
 {
 	if (nullptr != FindComponent(componentTag))
 		return E_FAIL;
 
 	auto component = ComponentManager::GetInstance().CloneComponent(levelIndex, prototypeTag, arg);
-
+	if (component == nullptr)
+		return E_FAIL;
 	_components.emplace(componentTag, component);
 
 	*ppOut = component;

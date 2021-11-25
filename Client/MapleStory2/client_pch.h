@@ -10,8 +10,20 @@
 #pragma comment(lib, "Protobuf\\Release\\libprotobuf.lib")
 #endif
 
-const int16_t		g_WinCX = 1280;
-const int16_t		g_WinCY = 720;
+enum class kScene
+{
+	kSceneStatic,
+	kSceneLogo,
+	kSceneLoading,
+	kSceneGamePlay0,
+	kSceneGamePlay1,
+	kSceneEnd
+};
+
+constexpr int16_t		g_WinCX = 1280;
+constexpr int16_t		g_WinCY = 720;
+extern HWND				g_Wnd;
+extern HINSTANCE		g_hInst;
 
 
 #include "engine_pch.h"

@@ -5,11 +5,10 @@ class GameObject : public std::enable_shared_from_this<GameObject>
 {
 protected:
 	explicit GameObject(const ComPtr<IDirect3DDevice9>& device);
-	explicit GameObject(const GameObject& rhs);
 	virtual ~GameObject() = default;
 
 public:
-	auto AddComponent(int32_t levelIndex, const std::wstring prototypeTag, const std::wstring componentTag, std::shared_ptr<Component>* ppOut, void* arg = nullptr)->HRESULT;
+	auto AddComponent(int32_t levelIndex, const std::wstring& prototypeTag, const std::wstring& componentTag, std::shared_ptr<Component>* ppOut, void* arg = nullptr)->HRESULT;
 	auto GetComponentPtr(const std::wstring& componentTag)->std::shared_ptr<Component>;
  
 public:

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "timer.h"
 
-inline auto Timer::GetDeltaTime() const -> float
+auto Timer::GetDeltaTime() const -> float
 {
 	return _delta_time;
 }

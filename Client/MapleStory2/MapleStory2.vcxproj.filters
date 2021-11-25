@@ -13,6 +13,21 @@
     <ClInclude Include="client_pch.h">
       <Filter>default</Filter>
     </ClInclude>
+    <ClInclude Include="src\main\main_app.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\logo\scene_logo.h">
+      <Filter>scene\logo</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\back_ground\back_ground.h">
+      <Filter>game_object\back_ground</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\camera\camera_free.h">
+      <Filter>game_object\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\player\player.h">
+      <Filter>game_object\player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -20,6 +35,21 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>default</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main\main_app.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\logo\scene_logo.cpp">
+      <Filter>scene\logo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\back_ground\back_ground.cpp">
+      <Filter>game_object\back_ground</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\camera\camera_free.cpp">
+      <Filter>game_object\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\player\player.cpp">
+      <Filter>game_object\player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -33,6 +63,27 @@
   <ItemGroup>
     <Filter Include="default">
       <UniqueIdentifier>{72b588c0-a747-4d7e-ba5e-a86566f3c049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{393f02dd-9429-41e5-8139-1580d55a905c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{3f55790a-dca8-44e3-9ffd-17ffa8b11c4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\logo">
+      <UniqueIdentifier>{a2a8ed55-74ae-4236-ba43-3642985aa1df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object">
+      <UniqueIdentifier>{eacb8eca-3aeb-4208-b1c5-e59b37b6b137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\back_ground">
+      <UniqueIdentifier>{ea1aa0ff-290c-4daa-8893-d8e9581081d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\camera">
+      <UniqueIdentifier>{64134b76-fb4b-4e7b-8779-0b9c00c2edae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\player">
+      <UniqueIdentifier>{86ca4e56-8e2d-40c6-9ff9-27442e9e30fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
