@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "picking.h"
 
-#include "src/utility/vi_buffer/vi_buffer.h"
+#include "src/utility/components/vi_buffer/vi_buffer.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/pipe_line/pipe_line.h"
 

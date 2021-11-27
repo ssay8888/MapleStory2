@@ -17,7 +17,7 @@ auto Renderer::RenderGameObject() -> HRESULT
 	RenderNonAlpha();
 	RenderAlpha();
 	RenderUi();
-	return S_OK;;
+	return S_OK;
 }
 
 auto Renderer::RenderPriority() -> HRESULT

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "camera_free.h"
 
+#include "client_defines.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/transform/transform.h"
 
@@ -64,7 +65,7 @@ HRESULT CameraFree::AddComponents()
 {
 	Transform::TransformDesc			transformDesc;
 	transformDesc.speed_per_sec = 10.0f;
-	transformDesc.rotation_per_sec = D3DXToRadian(90.0f);
+	transformDesc.rotation_per_sec = D3DXToRadian(90.0);
 
 	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic), 
 		TEXT("Prototype_Transform"), 

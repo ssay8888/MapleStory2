@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "shader.h"
 
+#include "src/utility/components/textures/texture.h"
+
 Shader::Shader(const ComPtr<IDirect3DDevice9>& graphicDevice):
 	Component(graphicDevice)
 {
@@ -33,6 +35,23 @@ auto Shader::SetUpConstantTable(const D3DXHANDLE hHandle, const void* data, cons
 		return E_FAIL;
 
 	return S_OK;
+}
+
+auto Shader::SetUpTextureConstantTable(D3DXHANDLE hHandle, const std::shared_ptr<Texture> textureCom, const int32_t textureIndex) -> HRESULT
+{
+	if (nullptr == _effect)
+		return E_FAIL;
+
+	const auto pTexture = textureCom->GetTexture(textureIndex);
+	if (nullptr == pTexture)
+		return E_FAIL;
+
+	return _effect->SetTexture(hHandle, pTexture.Get());
+}
+
+auto Shader::SetUpTextureConstantTable(D3DXHANDLE hHandle, const ComPtr<IDirect3DBaseTexture9> texture) const -> HRESULT
+{
+	return _effect->SetTexture(hHandle, texture.Get());
 }
 
 auto Shader::BeginShader(const int32_t passIndex) const -> HRESULT

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "transform.h"
 
+#include "src/utility/components/vi_buffer/vi_buffer_terrain/vi_buffer_terrain.h"
+
 Transform::Transform(const ComPtr<IDirect3DDevice9>& graphicDevice):
 	Component(graphicDevice),
 	_transform_state()
@@ -110,7 +112,7 @@ auto Transform::WalkRight(const double timeDelta) -> void
 	SetState(kState::kStatePosition, position);
 }
 
-auto Transform::RotationAxis(const _float3 axis, const float timeDelta) -> void
+auto Transform::RotationAxis(const _float3 axis, const double timeDelta) -> void
 {
 	_float3	right, up, look;
 
@@ -145,7 +147,7 @@ auto Transform::SetUpRotation(_float3 axis, float radian) -> void
 	SetState(kState::kStateLook, *D3DXVec3TransformNormal(&look, &look, &rotationMatrix));
 }
 
-auto Transform::ChaseTarget(const std::shared_ptr<Transform>& targetTransform, const float timeDelta) -> void
+auto Transform::ChaseTarget(const std::shared_ptr<Transform>& targetTransform, const double timeDelta) -> void
 {
 	_float3 position = GetState(kState::kStatePosition);
 		    
@@ -163,7 +165,7 @@ auto Transform::ChaseTarget(const std::shared_ptr<Transform>& targetTransform, c
 	LookAtTarget(targetTransform);
 }
 
-auto Transform::ChaseTarget(_float3 vTargetPos, float timeDelta) -> void
+auto Transform::ChaseTarget(_float3 vTargetPos, double timeDelta) -> void
 {
 	if (false == _is_moving)
 	{
@@ -227,7 +229,7 @@ auto Transform::LookAtTarget(_float3 targetPos) -> void
 	SetState(kState::kStateRight, right);
 }
 
-auto Transform::StandOnTerrain(std::shared_ptr<VIBufferTerrain>& viBuffer, const _matrix* pTerrainWorldMatrix) -> void
+auto Transform::StandOnTerrain(std::shared_ptr<ViBufferTerrain> viBuffer, const _matrix* pTerrainWorldMatrix) -> void
 {
 	//TODO : 지형위에올라가는것 구현해야함
 }
@@ -246,13 +248,25 @@ auto Transform::NativeConstruct(void* arg)->HRESULT
 	return S_OK;
 }
 
+auto Transform::Create(const ComPtr<IDirect3DDevice9>& graphicDevice) -> std::shared_ptr<Transform>
+{
+	auto instance = std::make_shared<Transform>(graphicDevice);
+
+	if (FAILED(instance->NativeConstructPrototype()))
+	{
+		MSGBOX("Failed to Creating Transform");
+		return nullptr;
+	}
+	return instance;
+}
+
 auto Transform::Clone(void* arg) -> std::shared_ptr<Component>
 {
 	auto instance = std::make_shared<Transform>(*this);
 
 	if (FAILED(instance->NativeConstruct(arg)))
 	{
-		MSGBOX("Failed to Creating Transform");
+		MSGBOX("Failed to Clone Transform");
 		return nullptr;
 	}
 	return instance;

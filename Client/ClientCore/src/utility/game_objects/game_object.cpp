@@ -3,7 +3,8 @@
 
 #include "src/utility/components/manager/component_manager.h"
 
-GameObject::GameObject(const ComPtr<IDirect3DDevice9>& device)
+GameObject::GameObject(const ComPtr<IDirect3DDevice9>& device):
+	_graphic_device(device)
 {
 }
 

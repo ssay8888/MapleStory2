@@ -78,19 +78,24 @@ auto GraphicDevice::ReadyGraphicDevice(HWND hWnd, GraphicDevice::kWindowMode mod
 		*ppGraphicDevice = _device;
 	}
 
-	_device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
-	_device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	return S_OK;
 }
 
 auto GraphicDevice::RenderBegin() -> void
 {
 	_device->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DXCOLOR(0, 0, 255, 255), 1.f, 0);
-	_device->BeginScene();
+	if (FAILED(_device->BeginScene()))
+	{
+		return;
+	}
 }
 
 auto GraphicDevice::RenderEnd(HWND hWnd) -> void
 {
-	_device->EndScene();
+	if (FAILED(_device->EndScene()))
+	{
+		return;
+	}
+	
 	_device->Present(nullptr, nullptr, hWnd, nullptr);
 }

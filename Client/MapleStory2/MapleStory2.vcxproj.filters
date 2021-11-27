@@ -28,6 +28,12 @@
     <ClInclude Include="src\game_object\player\player.h">
       <Filter>game_object\player</Filter>
     </ClInclude>
+    <ClInclude Include="client_defines.h">
+      <Filter>default</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\sky\sky.h">
+      <Filter>game_object\sky</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="src\game_object\player\player.cpp">
       <Filter>game_object\player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\sky\sky.cpp">
+      <Filter>game_object\sky</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -85,10 +94,24 @@
     <Filter Include="game_object\player">
       <UniqueIdentifier>{86ca4e56-8e2d-40c6-9ff9-27442e9e30fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game_object\sky">
+      <UniqueIdentifier>{3a33c32e-2620-408b-be5a-10a99ad98e12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\monster">
+      <UniqueIdentifier>{50f2c009-c433-41d2-8282-235b9885b6e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shader_files">
+      <UniqueIdentifier>{582c4967-c54f-4a5f-842c-fbce5d31e264}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="maplestory2.rc">
       <Filter>default</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\Binary\ShaderFiles\shader_rect.hlsl">
+      <Filter>shader_files</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -17,12 +17,12 @@ public:
 	}
 
 public:
-	auto GetComponentPtr(uint32_t levelIndex, const std::wstring& layerTag, const std::wstring& componentTag, uint32_t index) const ->std::shared_ptr<Component>;
+	auto GetComponentPtr(uint32_t levelIndex, const std::wstring& layerTag, const std::wstring& componentTag, uint32_t index = 0) const ->std::shared_ptr<Component>;
 
 public:
 	auto ReserveContainer(uint32_t numLevel)->HRESULT;
 	auto AddPrototype(const std::wstring& prototypeTag, const std::shared_ptr<GameObject>& prototype)->HRESULT;
-	auto AddGameObject(uint32_t levelIndex, const std::wstring& prototypeTag, const std::wstring& layerTag, void* arg)->HRESULT;
+	auto AddGameObject(uint32_t levelIndex, const std::wstring& prototypeTag, const std::wstring& layerTag, void* arg = nullptr)->HRESULT;
 
 	auto Tick(double timeDelta) const ->int32_t;
 	auto LateTick(double timeDelta) const ->int32_t;

@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "main.h"
 
+#include "client_defines.h"
 #include "src/main/main_app.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/timers/timer_manager.h"
@@ -79,15 +80,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	        const double timeDelta60 = timerManager.ComputeTimeDelta(TEXT("Timer_60"));
 
             if (0x80000000 & mainApp.Tick(timeDelta60))
-                break;
+            {
+	            break;
+            }
 
             if (FAILED(mainApp.RenderMainApp()))
-                break;
-
-            graphicDevice.RenderBegin();
-
-            graphicDevice.RenderEnd();
-
+            {
+	            break;
+            }
+            
             fTimeAcc = 0.f;
         }
 

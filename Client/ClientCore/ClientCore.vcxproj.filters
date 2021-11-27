@@ -52,21 +52,6 @@
     <ClInclude Include="src\utility\components\transform\transform.h">
       <Filter>utility\components\transform</Filter>
     </ClInclude>
-    <ClInclude Include="src\utility\vi_buffer\vi_buffer.h">
-      <Filter>utility\components\vi_buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utility\vi_buffer\vi_buffer_rect\vi_buffer_rect.h">
-      <Filter>utility\components\vi_buffer\vi_buffer_rect</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utility\vi_buffer\vi_buffer_terrain\vi_buffer_terrain.h">
-      <Filter>utility\components\vi_buffer\vi_buffer_terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utility\vi_buffer\vi_buffer_cube\vi_buffer_cube.h">
-      <Filter>utility\components\vi_buffer\vi_buffer_cube</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utility\vi_buffer\vi_buffer_cube\texture.h">
-      <Filter>utility\components\textures</Filter>
-    </ClInclude>
     <ClInclude Include="src\utility\components\picking\picking.h">
       <Filter>utility\components\picking</Filter>
     </ClInclude>
@@ -79,14 +64,29 @@
     <ClInclude Include="src\utility\timers\timer_manager.h">
       <Filter>utility\timers</Filter>
     </ClInclude>
-    <ClInclude Include="shader.h">
-      <Filter>utility\components\shader</Filter>
-    </ClInclude>
     <ClInclude Include="src\utility\game_logic_manager\game_logic_manager.h">
       <Filter>utility\game_logic_manager</Filter>
     </ClInclude>
     <ClInclude Include="src\utility\game_objects\camera\camera.h">
       <Filter>utility\game_objects\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\vi_buffer\vi_buffer.h">
+      <Filter>utility\components\vi_buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\vi_buffer\vi_buffer_terrain\vi_buffer_terrain.h">
+      <Filter>utility\components\vi_buffer\vi_buffer_terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\vi_buffer\vi_buffer_rect\vi_buffer_rect.h">
+      <Filter>utility\components\vi_buffer\vi_buffer_rect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\vi_buffer\vi_buffer_cube\vi_buffer_cube.h">
+      <Filter>utility\components\vi_buffer\vi_buffer_cube</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\textures\texture.h">
+      <Filter>utility\components\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\shader\shader.h">
+      <Filter>utility\components\shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -126,21 +126,6 @@
     <ClCompile Include="src\utility\components\transform\transform.cpp">
       <Filter>utility\components\transform</Filter>
     </ClCompile>
-    <ClCompile Include="src\utility\vi_buffer\vi_buffer.cpp">
-      <Filter>utility\components\vi_buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utility\vi_buffer\vi_buffer_rect\vi_buffer_rect.cpp">
-      <Filter>utility\components\vi_buffer\vi_buffer_rect</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utility\vi_buffer\vi_buffer_terrain\vi_buffer_terrain.cpp">
-      <Filter>utility\components\vi_buffer\vi_buffer_terrain</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utility\vi_buffer\vi_buffer_cube\vi_buffer_cube.cpp">
-      <Filter>utility\components\vi_buffer\vi_buffer_cube</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utility\vi_buffer\vi_buffer_cube\texture.cpp">
-      <Filter>utility\components\textures</Filter>
-    </ClCompile>
     <ClCompile Include="src\utility\components\picking\picking.cpp">
       <Filter>utility\components\picking</Filter>
     </ClCompile>
@@ -161,6 +146,21 @@
     </ClCompile>
     <ClCompile Include="src\utility\game_objects\camera\camera.cpp">
       <Filter>utility\game_objects\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\vi_buffer\vi_buffer.cpp">
+      <Filter>utility\components\vi_buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\vi_buffer\vi_buffer_terrain\vi_buffer_terrain.cpp">
+      <Filter>utility\components\vi_buffer\vi_buffer_terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\vi_buffer\vi_buffer_rect\vi_buffer_rect.cpp">
+      <Filter>utility\components\vi_buffer\vi_buffer_rect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\vi_buffer\vi_buffer_cube\vi_buffer_cube.cpp">
+      <Filter>utility\components\vi_buffer\vi_buffer_cube</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\textures\texture.cpp">
+      <Filter>utility\components\textures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

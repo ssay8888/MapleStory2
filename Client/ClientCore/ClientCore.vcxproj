@@ -163,7 +163,6 @@
   <ItemGroup>
     <ClInclude Include="engine_pch.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="shader.h" />
     <ClInclude Include="src\defines\engine_functor.h" />
     <ClInclude Include="src\defines\engine_macro.h" />
     <ClInclude Include="src\defines\engine_struct.h" />
@@ -174,7 +173,13 @@
     <ClInclude Include="src\utility\components\manager\component_manager.h" />
     <ClInclude Include="src\utility\components\picking\picking.h" />
     <ClInclude Include="src\utility\components\renderer\renderer.h" />
+    <ClInclude Include="src\utility\components\shader\shader.h" />
+    <ClInclude Include="src\utility\components\textures\texture.h" />
     <ClInclude Include="src\utility\components\transform\transform.h" />
+    <ClInclude Include="src\utility\components\vi_buffer\vi_buffer.h" />
+    <ClInclude Include="src\utility\components\vi_buffer\vi_buffer_cube\vi_buffer_cube.h" />
+    <ClInclude Include="src\utility\components\vi_buffer\vi_buffer_rect\vi_buffer_rect.h" />
+    <ClInclude Include="src\utility\components\vi_buffer\vi_buffer_terrain\vi_buffer_terrain.h" />
     <ClInclude Include="src\utility\game_logic_manager\game_logic_manager.h" />
     <ClInclude Include="src\utility\game_objects\camera\camera.h" />
     <ClInclude Include="src\utility\game_objects\game_object.h" />
@@ -185,11 +190,6 @@
     <ClInclude Include="src\utility\scene_utility\scene_manager.h" />
     <ClInclude Include="src\utility\timers\timer.h" />
     <ClInclude Include="src\utility\timers\timer_manager.h" />
-    <ClInclude Include="src\utility\vi_buffer\vi_buffer.h" />
-    <ClInclude Include="src\utility\vi_buffer\vi_buffer_cube\texture.h" />
-    <ClInclude Include="src\utility\vi_buffer\vi_buffer_cube\vi_buffer_cube.h" />
-    <ClInclude Include="src\utility\vi_buffer\vi_buffer_rect\vi_buffer_rect.h" />
-    <ClInclude Include="src\utility\vi_buffer\vi_buffer_terrain\vi_buffer_terrain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -205,7 +205,12 @@
     <ClCompile Include="src\utility\components\picking\picking.cpp" />
     <ClCompile Include="src\utility\components\renderer\renderer.cpp" />
     <ClCompile Include="src\utility\components\shader\shader.cpp" />
+    <ClCompile Include="src\utility\components\textures\texture.cpp" />
     <ClCompile Include="src\utility\components\transform\transform.cpp" />
+    <ClCompile Include="src\utility\components\vi_buffer\vi_buffer.cpp" />
+    <ClCompile Include="src\utility\components\vi_buffer\vi_buffer_cube\vi_buffer_cube.cpp" />
+    <ClCompile Include="src\utility\components\vi_buffer\vi_buffer_rect\vi_buffer_rect.cpp" />
+    <ClCompile Include="src\utility\components\vi_buffer\vi_buffer_terrain\vi_buffer_terrain.cpp" />
     <ClCompile Include="src\utility\game_logic_manager\game_logic_manager.cpp" />
     <ClCompile Include="src\utility\game_objects\camera\camera.cpp" />
     <ClCompile Include="src\utility\game_objects\game_object.cpp" />
@@ -216,11 +221,6 @@
     <ClCompile Include="src\utility\scene_utility\scene_manager.cpp" />
     <ClCompile Include="src\utility\timers\timer.cpp" />
     <ClCompile Include="src\utility\timers\timer_manager.cpp" />
-    <ClCompile Include="src\utility\vi_buffer\vi_buffer.cpp" />
-    <ClCompile Include="src\utility\vi_buffer\vi_buffer_cube\texture.cpp" />
-    <ClCompile Include="src\utility\vi_buffer\vi_buffer_cube\vi_buffer_cube.cpp" />
-    <ClCompile Include="src\utility\vi_buffer\vi_buffer_rect\vi_buffer_rect.cpp" />
-    <ClCompile Include="src\utility\vi_buffer\vi_buffer_terrain\vi_buffer_terrain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

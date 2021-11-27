@@ -1,7 +1,7 @@
 #pragma once
 #include "src/utility/components/component.h"
 
-class VIBufferTerrain;
+class ViBufferTerrain;
 
 class Transform final : public Component
 {
@@ -42,17 +42,18 @@ public:
 	auto BackStraight(const double timeDelta)->void;
 	auto WalkLeft(const double timeDelta)->void;
 	auto WalkRight(const double timeDelta)->void;
-	auto RotationAxis(_float3 axis, float timeDelta)->void;
+	auto RotationAxis(_float3 axis, double timeDelta)->void;
 	auto SetUpRotation(_float3 axis, float radian)->void;
-	auto ChaseTarget(const std::shared_ptr<Transform>& targetTransform, float timeDelta)->void;
-	auto ChaseTarget(_float3 vTargetPos, float timeDelta)->void;
+	auto ChaseTarget(const std::shared_ptr<Transform>& targetTransform, double timeDelta)->void;
+	auto ChaseTarget(_float3 vTargetPos, double timeDelta)->void;
 	auto LookAtTarget(const std::shared_ptr<Transform>& targetTransform)->void;
 	auto LookAtTarget(_float3 targetPos)->void;
-	auto StandOnTerrain(class std::shared_ptr<VIBufferTerrain>& viBuffer, const _matrix* pTerrainWorldMatrix)->void;
+	auto StandOnTerrain(class std::shared_ptr<ViBufferTerrain> viBuffer, const _matrix* pTerrainWorldMatrix)->void;
 
 public:
 	auto NativeConstructPrototype()->HRESULT override;
 	auto NativeConstruct(void* arg)->HRESULT override;
+	static auto Create(const ComPtr<IDirect3DDevice9>& graphicDevice)->std::shared_ptr<Transform>;
 	auto Clone(void* arg)->std::shared_ptr<Component> override;
 
 private:

@@ -5,7 +5,11 @@
       <FullPath>C:\MapleStory2Project\Binary\MapleStory2.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
-  <ContentFiles />
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\MapleStory2Project\Binary\shader_rect.cso</FullPath>
+    </ContentFile>
+  </ContentFiles>
   <SatelliteDlls />
   <NonRecipeFileRefs />
 </Project>
