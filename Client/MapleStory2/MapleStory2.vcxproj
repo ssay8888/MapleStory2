@@ -79,7 +79,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Binary\</OutDir>
-    <IncludePath>$(SolutionDir)Libraries\include;$(SolutionDir)Client\ClientCore;$(SolutionDir)Client\MapleStory2;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Libraries\include;$(SolutionDir)Client\ClientCore;$(SolutionDir)Client\MapleStory2;$(SolutionDir)Server\ServerCore;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libraries\Libs\;$(LibraryPath)</LibraryPath>
     <ExternalIncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
@@ -173,22 +173,45 @@
     <ClInclude Include="src\game_object\camera\camera_free.h" />
     <ClInclude Include="src\game_object\player\player.h" />
     <ClInclude Include="src\game_object\sky\sky.h" />
+    <ClInclude Include="src\game_object\terrain\terrain.h" />
     <ClInclude Include="src\main\main_app.h" />
+    <ClInclude Include="src\scene\game_play\game_play.h" />
+    <ClInclude Include="src\scene\loading\loader\loading.h" />
+    <ClInclude Include="src\scene\loading\scene_loading.h" />
     <ClInclude Include="src\scene\logo\scene_logo.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="client_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\game_object\back_ground\back_ground.cpp" />
-    <ClCompile Include="src\game_object\camera\camera_free.cpp" />
-    <ClCompile Include="src\game_object\player\player.cpp" />
-    <ClCompile Include="src\game_object\sky\sky.cpp" />
-    <ClCompile Include="src\main\main_app.cpp" />
+    <ClCompile Include="src\game_object\back_ground\back_ground.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\game_object\camera\camera_free.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\game_object\player\player.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\game_object\sky\sky.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\game_object\terrain\terrain.cpp" />
+    <ClCompile Include="src\main\main_app.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\scene\game_play\game_play.cpp" />
+    <ClCompile Include="src\scene\loading\loader\loading.cpp" />
+    <ClCompile Include="src\scene\loading\scene_loading.cpp" />
     <ClCompile Include="src\scene\logo\scene_logo.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_rect.hlsl" />
+    <FxCompile Include="..\..\Binary\ShaderFiles\shader_terrain.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

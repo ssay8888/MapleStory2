@@ -11,4 +11,6 @@
 #endif
 
 
+#include "client_defines.h"
 #include "engine_pch.h"
+#include "core_macro.h"

@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "sky.h"
 
-#include "client_defines.h"
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/textures/texture.h"
 #include "src/utility/components/vi_buffer/vi_buffer_cube/vi_buffer_cube.h"
@@ -80,16 +79,13 @@ auto Sky::AddComponents() -> HRESULT
 	transformDesc.speed_per_sec = 2.f;
 	transformDesc.rotation_per_sec = D3DXToRadian(90.0);
 
-	auto transform = std::static_pointer_cast<Component>(_transform_com);
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Transform"), TEXT("Com_Transform"), &transform, &transformDesc)))
+	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
 		return E_FAIL;
 
-	auto viBuffer = std::static_pointer_cast<Component>(_vi_buffer_com);
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_VIBuffer_Cube"), TEXT("Com_VIBuffer"), &viBuffer)))
+	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_VIBuffer_Cube"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
-	auto texture = std::static_pointer_cast<Component>(_texture_com);
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Sky"), TEXT("Com_Texture"), &texture)))
+	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Sky"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
 		return E_FAIL;
 
 	return S_OK;

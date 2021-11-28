@@ -33,7 +33,7 @@ auto ViBuffer::GetPolygonVertexPositions(const uint32_t polygonIndex, _float3* p
 	}
 	else
 	{
-		points[0] = _vertices_pos[static_cast<uint64_t*>(_indices)[index]];
+		points[0] = _vertices_pos[((uint32_t*)_indices)[index]];
 		points[1] = _vertices_pos[static_cast<uint64_t*>(_indices)[index + 1]];
 		points[2] = _vertices_pos[static_cast<uint64_t*>(_indices)[index + 2]];
 	}

@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "back_ground.h"
 
-#include "client_defines.h"
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/textures/texture.h"
@@ -44,55 +43,25 @@ int32_t BackGround::LateTick(const double timeDelta)
 
 HRESULT BackGround::Render()
 {
-	//GameObject::Render();
-	//_matrix		identityMatrix, scaleMatrix;
-
-	//D3DXMatrixScaling(&scaleMatrix, 2.f, 2.f, 1.f);
-	//D3DXMatrixIdentity(&identityMatrix);
-
-	///* 쉐이더 전역변수로 값을 전달한다. */
-
-	//auto result = _shader_com->SetUpConstantTable("g_WorldMatrix", &scaleMatrix, sizeof(_matrix));
-	//result = _shader_com->SetUpConstantTable("g_ViewMatrix", &identityMatrix, sizeof(_matrix));
-	//result = _shader_com->SetUpConstantTable("g_ProjMatrix", &identityMatrix, sizeof(_matrix));
-	//result = _shader_com->SetUpTextureConstantTable("g_DiffuseTexture", _texture_com, 0);
-
-
-	///*LPD3DXEFFECT pEffect = m_pShaderCom->GetEffect();
-	//LPDIRECT3DBASETEXTURE9 pTexture = m_pTextureCom->GetTexture();
-
-	//pEffect->SetTexture()*/
-
-	///* Shader_Rect 쉐이더로 그린다. */
-
-	//result = _shader_com->BeginShader(0);
-
-	//_vi_buffer_com->RenderViBuffer();
-
-	//result = _shader_com->EndShader();
 	GameObject::Render();
+	_matrix		identityMatrix, scaleMatrix;
 
-	if (FAILED(_texture_com->SetUpOnGraphicDevice(0)))
-		return E_FAIL;
+	D3DXMatrixScaling(&scaleMatrix, 2.f, 2.f, 1.f);
+	D3DXMatrixIdentity(&identityMatrix);
 
-	_matrix		IdentityMatrix, ScaleMatrix;
+	/* 쉐이더 전역변수로 값을 전달한다. */
 
-	D3DXMatrixScaling(&ScaleMatrix, 2.f, 2.f, 1.f);
-	D3DXMatrixIdentity(&IdentityMatrix);
-	if (FAILED(_graphic_device->SetTransform(D3DTS_WORLD, &ScaleMatrix)))
-	{
-		return int32_t();
-	}
-	if (FAILED(_graphic_device->SetTransform(D3DTS_VIEW, &IdentityMatrix)))
-	{
-		return int32_t();
-	}
-	if (FAILED(_graphic_device->SetTransform(D3DTS_PROJECTION, &IdentityMatrix)))
-	{
-		return int32_t();
-	}
+	auto result = _shader_com->SetUpConstantTable("g_WorldMatrix", &scaleMatrix, sizeof(_matrix));
+	result = _shader_com->SetUpConstantTable("g_ViewMatrix", &identityMatrix, sizeof(_matrix));
+	result = _shader_com->SetUpConstantTable("g_ProjMatrix", &identityMatrix, sizeof(_matrix));
+	result = _shader_com->SetUpTextureConstantTable("g_DiffuseTexture", _texture_com, 0);
+
+
+	result = _shader_com->BeginShader(0);
 	_vi_buffer_com->RenderViBuffer();
-	return int32_t();
+	result = _shader_com->EndShader();
+
+	return S_OK;
 }
 
 auto BackGround::Create(const ComPtr<IDirect3DDevice9>& device) -> std::shared_ptr<BackGround>
@@ -121,7 +90,6 @@ auto BackGround::Clone(void* arg) -> std::shared_ptr<GameObject>
 
 auto BackGround::AddComponents() -> HRESULT
 {
-
 	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic),
 		L"Prototype_Transform",
 		L"Com_Transform",

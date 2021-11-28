@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "camera_free.h"
 
-#include "client_defines.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/transform/transform.h"
 

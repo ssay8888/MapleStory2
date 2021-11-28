@@ -9,6 +9,9 @@
     <ContentFile>
       <FullPath>C:\MapleStory2Project\Binary\shader_rect.cso</FullPath>
     </ContentFile>
+    <ContentFile>
+      <FullPath>C:\MapleStory2Project\Binary\shader_terrain.cso</FullPath>
+    </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
   <NonRecipeFileRefs />

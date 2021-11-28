@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "main_app.h"
 
-#include "client_defines.h"
 #include "src/game_object/back_ground/back_ground.h"
 #include "src/game_object/camera/camera_free.h"
 #include "src/scene/logo/scene_logo.h"

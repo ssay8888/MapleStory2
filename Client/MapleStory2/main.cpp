@@ -4,10 +4,16 @@
 #include "pch.h"
 #include "main.h"
 
-#include "client_defines.h"
 #include "src/main/main_app.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/timers/timer_manager.h"
+#ifdef _DEBUG
+#ifdef UNICODE
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+#else
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+#endif
+#endif
 
 #define MAX_LOADSTRING 100
 

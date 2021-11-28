@@ -26,17 +26,17 @@ auto Texture::NativeConstructPrototype(kType eType, const std::wstring& textureF
 		wsprintf(szTexturePath, textureFilePath.c_str(), i);
 
 		//TODO : 이미지 출력이 안된다면 이곳을 확인하자.
-		LPDIRECT3DTEXTURE9 tex = nullptr;
+		IDirect3DBaseTexture9* tex = nullptr;
 		if (eType == kType::kTypeGeneral)
 		{
-			if (FAILED(D3DXCreateTextureFromFile(_graphic_device.Get(), szTexturePath, &tex)))
+			if (FAILED(D3DXCreateTextureFromFile(_graphic_device.Get(), szTexturePath, reinterpret_cast<LPDIRECT3DTEXTURE9*>(&tex))))
 			{
 				return E_FAIL;
 			}
 		}
 		else
 		{
-			if (FAILED(D3DXCreateCubeTextureFromFile(_graphic_device.Get(), szTexturePath, reinterpret_cast<LPDIRECT3DCUBETEXTURE9*>(tex))))
+			if (FAILED(D3DXCreateCubeTextureFromFile(_graphic_device.Get(), szTexturePath, reinterpret_cast<LPDIRECT3DCUBETEXTURE9*>(&tex))))
 			{
 				return E_FAIL;
 			}

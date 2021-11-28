@@ -12,7 +12,7 @@ public:
 		_float3		at; /* 카메라가 보는 점. */
 		_float3		axis_y = _float3(0.f, 1.f, 0.f);
 
-		float		fovy;
+		float		fovy{};
 		float		aspect;
 		float		near_;
 		float		far_;

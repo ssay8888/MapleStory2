@@ -16,9 +16,6 @@
     <ClInclude Include="src\main\main_app.h">
       <Filter>main</Filter>
     </ClInclude>
-    <ClInclude Include="src\scene\logo\scene_logo.h">
-      <Filter>scene\logo</Filter>
-    </ClInclude>
     <ClInclude Include="src\game_object\back_ground\back_ground.h">
       <Filter>game_object\back_ground</Filter>
     </ClInclude>
@@ -34,6 +31,21 @@
     <ClInclude Include="src\game_object\sky\sky.h">
       <Filter>game_object\sky</Filter>
     </ClInclude>
+    <ClInclude Include="src\scene\game_play\game_play.h">
+      <Filter>scene\game_play</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\logo\scene_logo.h">
+      <Filter>scene\logo</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\loading\scene_loading.h">
+      <Filter>scene\loading</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\loading\loader\loading.h">
+      <Filter>scene\loading\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\terrain\terrain.h">
+      <Filter>game_object\terrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -44,9 +56,6 @@
     </ClCompile>
     <ClCompile Include="src\main\main_app.cpp">
       <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scene\logo\scene_logo.cpp">
-      <Filter>scene\logo</Filter>
     </ClCompile>
     <ClCompile Include="src\game_object\back_ground\back_ground.cpp">
       <Filter>game_object\back_ground</Filter>
@@ -59,6 +68,24 @@
     </ClCompile>
     <ClCompile Include="src\game_object\sky\sky.cpp">
       <Filter>game_object\sky</Filter>
+    </ClCompile>
+    <ClCompile Include="client_pch.cpp">
+      <Filter>default</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\game_play\game_play.cpp">
+      <Filter>scene\game_play</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\logo\scene_logo.cpp">
+      <Filter>scene\logo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\loading\scene_loading.cpp">
+      <Filter>scene\loading</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\loading\loader\loading.cpp">
+      <Filter>scene\loading\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\terrain\terrain.cpp">
+      <Filter>game_object\terrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +130,18 @@
     <Filter Include="shader_files">
       <UniqueIdentifier>{582c4967-c54f-4a5f-842c-fbce5d31e264}</UniqueIdentifier>
     </Filter>
+    <Filter Include="scene\loading">
+      <UniqueIdentifier>{d16c21b9-2fab-45c9-a8ed-ea01ff67902b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\loading\loader">
+      <UniqueIdentifier>{d24418da-da35-4fd5-8470-b084a38860f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\game_play">
+      <UniqueIdentifier>{3324abf2-dd1f-4ea0-a15a-f41e70a6e3b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\terrain">
+      <UniqueIdentifier>{023a3bd1-a4bc-47f3-9fb9-5fcd629a3dbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="maplestory2.rc">
@@ -111,6 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_rect.hlsl">
+      <Filter>shader_files</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\Binary\ShaderFiles\shader_terrain.hlsl">
       <Filter>shader_files</Filter>
     </FxCompile>
   </ItemGroup>
