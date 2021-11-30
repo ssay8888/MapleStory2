@@ -171,6 +171,8 @@
     <ClInclude Include="src\system\input\input_device.h" />
     <ClInclude Include="src\utility\components\component.h" />
     <ClInclude Include="src\utility\components\manager\component_manager.h" />
+    <ClInclude Include="src\utility\components\meshes\mesh.h" />
+    <ClInclude Include="src\utility\components\meshes\static\mesh_static.h" />
     <ClInclude Include="src\utility\components\picking\picking.h" />
     <ClInclude Include="src\utility\components\renderer\renderer.h" />
     <ClInclude Include="src\utility\components\shader\shader.h" />
@@ -185,6 +187,8 @@
     <ClInclude Include="src\utility\game_objects\game_object.h" />
     <ClInclude Include="src\utility\game_objects\manager\layer\layer.h" />
     <ClInclude Include="src\utility\game_objects\manager\object_manager.h" />
+    <ClInclude Include="src\utility\light\light.h" />
+    <ClInclude Include="src\utility\light\light_manager.h" />
     <ClInclude Include="src\utility\pipe_line\pipe_line.h" />
     <ClInclude Include="src\utility\scene_utility\scene.h" />
     <ClInclude Include="src\utility\scene_utility\scene_manager.h" />
@@ -202,6 +206,8 @@
     <ClCompile Include="src\system\input\input_device.cpp" />
     <ClCompile Include="src\utility\components\component.cpp" />
     <ClCompile Include="src\utility\components\manager\component_manager.cpp" />
+    <ClCompile Include="src\utility\components\meshes\mesh.cpp" />
+    <ClCompile Include="src\utility\components\meshes\static\mesh_static.cpp" />
     <ClCompile Include="src\utility\components\picking\picking.cpp" />
     <ClCompile Include="src\utility\components\renderer\renderer.cpp" />
     <ClCompile Include="src\utility\components\shader\shader.cpp" />
@@ -216,6 +222,8 @@
     <ClCompile Include="src\utility\game_objects\game_object.cpp" />
     <ClCompile Include="src\utility\game_objects\manager\layer\layer.cpp" />
     <ClCompile Include="src\utility\game_objects\manager\object_manager.cpp" />
+    <ClCompile Include="src\utility\light\light.cpp" />
+    <ClCompile Include="src\utility\light\light_manager.cpp" />
     <ClCompile Include="src\utility\pipe_line\pipe_line.cpp" />
     <ClCompile Include="src\utility\scene_utility\scene.cpp" />
     <ClCompile Include="src\utility\scene_utility\scene_manager.cpp" />

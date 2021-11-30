@@ -34,6 +34,7 @@ auto SceneLoading::NativeConstruct(const kScene nextScene) -> HRESULT
 
 int32_t SceneLoading::Tick(const double timeDelta)
 {
+	Scene::Tick(timeDelta);
 	if (_loader->IsFinished())
 	{
 		if (GetAsyncKeyState(VK_RETURN) & 0x0001)
@@ -52,12 +53,12 @@ int32_t SceneLoading::Tick(const double timeDelta)
 			}
 
 			//pGameInstance->Clear(LEVEL_LOADING);
-			GameLogicManager::Clear(static_cast<uint32_t>(kScene::kSceneLogo));
+			GameLogicManager::Clear(static_cast<uint32_t>(kScene::kSceneLoading));
 			SceneManager::GetInstance().SetUpScene(scene);
 
 		}
 	}
-	return Scene::Tick(timeDelta);
+	return S_OK;
 }
 
 HRESULT SceneLoading::Render()

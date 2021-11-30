@@ -1,4 +1,5 @@
 #pragma once
+class Transform;
 class Component;
 
 class GameObject : public std::enable_shared_from_this<GameObject>
@@ -21,11 +22,16 @@ public:
 public:
 	virtual auto Clone(void* arg = nullptr)->std::shared_ptr<GameObject> = 0;
 
+protected:
+	void ComputeCameraDistance(const std::shared_ptr<Transform>& transform);
+	void ComputeViewZ(const std::shared_ptr<Transform>& transform);
+
 private:
 	auto FindComponent(const std::wstring& componentTag)->std::shared_ptr<Component>; 
 
 protected:
-	ComPtr<IDirect3DDevice9> _graphic_device = nullptr;
+	ComPtr<IDirect3DDevice9>	_graphic_device = nullptr;
+	float						_cam_distance = 0.f;
 
 protected:
 	std::map<std::wstring, std::shared_ptr<Component>> _components;

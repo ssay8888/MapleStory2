@@ -6,6 +6,7 @@
 #include "src/game_object/sky/sky.h"
 #include "src/game_object/terrain/terrain.h"
 #include "src/utility/components/manager/component_manager.h"
+#include "src/utility/components/meshes/static/mesh_static.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/textures/texture.h"
 #include "src/utility/components/vi_buffer/vi_buffer_cube/vi_buffer_cube.h"
@@ -22,11 +23,12 @@ auto Loading::NativeConstruct(const kScene scene)->HRESULT
 	_next_level = scene;
 
 	_system_message.append(L"로딩을 시작합니다.");
-	std::thread thread([&]()
-	{
+	std::thread a = std::thread([=]()
+		{
 			ThreadMain();
-	});
-	thread.join();
+		});
+	a.detach();
+
 	return S_OK;
 }
 
@@ -100,6 +102,11 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	auto& componentManager = ComponentManager::GetInstance();
 	/* 원형 리소스 객체를 생성한다. */
 
+	/* For.Prototype_Mesh_Stone*/
+	if (FAILED(componentManager.AddPrototype(static_cast<int32>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Stone"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/TombStone/"), TEXT("TombStone.x")))))
+		return E_FAIL;
+
+
 	/* For.Prototype_Texture_Robby */
 	if (FAILED(componentManager.AddPrototype(static_cast<int32>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Robby"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Robby.png")))))
 		return E_FAIL;
@@ -112,7 +119,7 @@ auto Loading::ReadyGamePlay0()->HRESULT
 		return E_FAIL;
 
 	/* For.Prototype_VIBuffer_Terrain*/
-	if (FAILED(componentManager.AddPrototype(static_cast<int32>(kScene::kSceneGamePlay0), TEXT("Prototype_VIBuffer_Terrain"), ViBufferTerrain::Create(_graphic_device, 129, 129))))
+	if (FAILED(componentManager.AddPrototype(static_cast<int32>(kScene::kSceneGamePlay0), TEXT("Prototype_VIBuffer_Terrain"), ViBufferTerrain::Create(_graphic_device, TEXT("../../Binary/Resources/Textures/Terrain/Height.bmp")))))
 		return E_FAIL;
 
 	if (FAILED(componentManager.AddPrototype(static_cast<int32>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Filter"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Terrain/Filter.bmp")))))

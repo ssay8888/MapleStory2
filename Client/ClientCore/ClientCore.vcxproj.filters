@@ -88,6 +88,18 @@
     <ClInclude Include="src\utility\components\shader\shader.h">
       <Filter>utility\components\shader</Filter>
     </ClInclude>
+    <ClInclude Include="src\utility\light\light_manager.h">
+      <Filter>utility\light</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\light\light.h">
+      <Filter>utility\light</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\meshes\mesh.h">
+      <Filter>utility\components\meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\meshes\static\mesh_static.h">
+      <Filter>utility\components\meshes\static</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -161,6 +173,18 @@
     </ClCompile>
     <ClCompile Include="src\utility\components\textures\texture.cpp">
       <Filter>utility\components\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\light\light_manager.cpp">
+      <Filter>utility\light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\light\light.cpp">
+      <Filter>utility\light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\meshes\mesh.cpp">
+      <Filter>utility\components\meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\meshes\static\mesh_static.cpp">
+      <Filter>utility\components\meshes\static</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +262,18 @@
     </Filter>
     <Filter Include="utility\game_objects\camera">
       <UniqueIdentifier>{e49e6909-c8a0-46ef-8bba-5e984000b988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\light">
+      <UniqueIdentifier>{832b6694-35a1-460f-bffe-4ba92f92bce7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\meshes">
+      <UniqueIdentifier>{ca27fe25-f55f-471c-a83f-461ee1269cb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\meshes\dynamic">
+      <UniqueIdentifier>{cd759842-f970-4c89-a763-37bb66107fb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\meshes\static">
+      <UniqueIdentifier>{260eb25f-4eca-4785-9e5a-646525418dd5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

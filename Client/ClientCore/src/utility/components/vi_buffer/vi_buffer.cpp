@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "vi_buffer.h"
 
-ViBuffer::ViBuffer(const ComPtr<IDirect3DDevice9>& graphicDevice):
+ViBuffer::ViBuffer(const ComPtr<IDirect3DDevice9>& graphicDevice) :
 	Component(graphicDevice)
 {
 }
@@ -33,9 +33,9 @@ auto ViBuffer::GetPolygonVertexPositions(const uint32_t polygonIndex, _float3* p
 	}
 	else
 	{
-		points[0] = _vertices_pos[((uint32_t*)_indices)[index]];
-		points[1] = _vertices_pos[static_cast<uint64_t*>(_indices)[index + 1]];
-		points[2] = _vertices_pos[static_cast<uint64_t*>(_indices)[index + 2]];
+		points[0] = _vertices_pos[static_cast<uint32_t*>(_indices)[index]];
+		points[1] = _vertices_pos[static_cast<uint32_t*>(_indices)[index + 1]];
+		points[2] = _vertices_pos[static_cast<uint32_t*>(_indices)[index + 2]];
 	}
 }
 
@@ -45,8 +45,8 @@ HRESULT ViBuffer::NativeConstructPrototype()
 		return E_FAIL;
 
 	if (FAILED(_graphic_device->CreateVertexBuffer(_stride * _num_vertices, _vb_usage, _fvf, D3DPOOL_MANAGED, &_vb, nullptr)))
-			return E_FAIL;
-	
+		return E_FAIL;
+
 	if (FAILED(_graphic_device->CreateIndexBuffer(_one_index_size * _num_primitive * _num_vertices_per_primitive, _ib_usage, _one_index_size == 2 ? D3DFMT_INDEX16 : D3DFMT_INDEX32, D3DPOOL_MANAGED, &_ib, nullptr)))
 		return E_FAIL;
 

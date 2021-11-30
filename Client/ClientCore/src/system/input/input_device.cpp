@@ -41,7 +41,7 @@ auto InputDevice::GetDirectMouseKeyState(const kDirectInMouseButton mouseKey) ->
 	return _mouse_state.rgbButtons[static_cast<int8_t>(mouseKey)];
 }
 
-auto InputDevice::GetDirectMouseMoveState(const kDirectInMouseState mouseMove) -> int64_t
+auto InputDevice::GetDirectMouseMoveState(const kDirectInMouseState mouseMove) -> int32_t
 {
-	return reinterpret_cast<int64_t*>(&_mouse_state)[static_cast<int8_t>(mouseMove)];
+	return reinterpret_cast<int32_t*>(&_mouse_state)[static_cast<int8_t>(mouseMove)];
 }

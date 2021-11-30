@@ -1,6 +1,7 @@
 #pragma once
 #include "src/utility/game_objects/game_object.h"
 
+class MeshStatic;
 class Texture;
 class ViBufferRect;
 class Transform;
@@ -27,8 +28,7 @@ public:
 
 private:
 	std::shared_ptr<Transform>		_transform_com = nullptr;
-	std::shared_ptr<ViBufferRect>	_vi_buffer_com = nullptr;
-	std::shared_ptr<Texture>		_texture_com = nullptr;
+	std::shared_ptr<MeshStatic>		_mesh_com = nullptr;
 
 	_float3				_target_pos;
 };

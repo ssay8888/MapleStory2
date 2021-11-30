@@ -24,7 +24,7 @@ private:
 	kScene						_next_level = kScene::kSceneEnd;
 	std::wstring				_system_message;
 	ComPtr<IDirect3DDevice9>	_graphic_device;
-
+	//std::thread					_thread;
 
 	USE_LOCK;
 };

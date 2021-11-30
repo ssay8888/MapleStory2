@@ -3,6 +3,7 @@
 
 #include "src/utility/game_objects/camera/camera.h"
 #include "src/utility/game_objects/manager/object_manager.h"
+#include "src/utility/light/light_manager.h"
 
 GamePlay::GamePlay(const ComPtr<IDirect3DDevice9>& device):
 	Scene(device)
@@ -42,25 +43,15 @@ auto GamePlay::Render()->HRESULT
 auto GamePlay::ReadyLight() -> HRESULT
 {
 	/* 방향성 광원을 셋팅한다. */
-	D3DLIGHT9			LightDesc;
-	ZeroMemory(&LightDesc, sizeof(D3DLIGHT9));
-	LightDesc.Type = D3DLIGHT_DIRECTIONAL;
-	LightDesc.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	LightDesc.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	LightDesc.Direction = _float3(1.f, -1.f, 1.f);
-	_graphic_device->SetLight(0, &LightDesc);
-	_graphic_device->LightEnable(0, TRUE);
+	D3DLIGHT9			lightDesc;
+	ZeroMemory(&lightDesc, sizeof(D3DLIGHT9));
+	lightDesc.Type = D3DLIGHT_DIRECTIONAL;
+	lightDesc.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	lightDesc.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	lightDesc.Direction = _float3(1.f, -1.f, 1.f);
 
-	ZeroMemory(&LightDesc, sizeof(D3DLIGHT9));
-	LightDesc.Type = D3DLIGHT_POINT;
-	LightDesc.Diffuse = D3DXCOLOR(1.f, 0.0f, 0.f, 1.f);
-	LightDesc.Ambient = D3DXCOLOR(1.f, 0.2f, 0.2f, 1.f);
-	LightDesc.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	LightDesc.Position = _float3(5.0f, 3.f, 5.f);
-	LightDesc.Range = 15.f;
-	LightDesc.Attenuation1 = 1.f;
-	_graphic_device->SetLight(1, &LightDesc);
-	_graphic_device->LightEnable(1, TRUE);
+	LightManager::GetInstance().AddLight(lightDesc);
+
 	return S_OK;
 }
 

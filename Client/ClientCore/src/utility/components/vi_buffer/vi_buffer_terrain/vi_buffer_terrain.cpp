@@ -102,15 +102,15 @@ auto ViBufferTerrain::NativeConstructPrototype(const int32_t numVerticesX, const
 			int32_t index = i * numVerticesX + j;
 
 			// ¿ì»ó´Ü »ï°¢Çü. 
-			pIndices[iVertexIndex++] = index + numVerticesX;
-			pIndices[iVertexIndex++] = index + numVerticesX + 1;
-			pIndices[iVertexIndex++] = index + 1;
+			pIndices[iVertexIndex++] = static_cast<int32_t*>(_indices)[iVertexIndex] = index + numVerticesX;
+			pIndices[iVertexIndex++] = static_cast<int32_t*>(_indices)[iVertexIndex] = index + numVerticesX + 1;
+			pIndices[iVertexIndex++] = static_cast<int32_t*>(_indices)[iVertexIndex] = index + 1;
 
 
 			// ÁÂÇÏ´Ü »ï°¢Çü. 
-			pIndices[iVertexIndex++] = index + numVerticesX;
-			pIndices[iVertexIndex++] = index + 1;
-			pIndices[iVertexIndex++] = index;
+			pIndices[iVertexIndex++] = static_cast<int32_t*>(_indices)[iVertexIndex] = index + numVerticesX;
+			pIndices[iVertexIndex++] = static_cast<int32_t*>(_indices)[iVertexIndex] = index + 1;
+			pIndices[iVertexIndex++] = static_cast<int32_t*>(_indices)[iVertexIndex] = index;
 		}
 	}
 
@@ -142,9 +142,9 @@ auto ViBufferTerrain::NativeConstructPrototype(const std::wstring& heightMapPath
 	numVerticesZ = ih.biHeight;
 
 	const int32_t arraySize = numVerticesX * numVerticesZ;
-	const auto pixel = new uint64_t[arraySize];
+	const auto pixel = new uint32_t[arraySize];
 
-	check = ReadFile(hFile, pixel, sizeof(int64_t) * numVerticesX * numVerticesZ, dwByte, nullptr);
+	check = ReadFile(hFile, pixel, sizeof(int32_t) * numVerticesX * numVerticesZ, dwByte, nullptr);
 
 	CloseHandle(hFile);
 

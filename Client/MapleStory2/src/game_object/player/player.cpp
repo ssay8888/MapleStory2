@@ -2,6 +2,7 @@
 #include "player.h"
 
 #include "client_defines.h"
+#include "src/utility/components/meshes/static/mesh_static.h"
 #include "src/utility/components/picking/picking.h"
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/textures/texture.h"
@@ -34,7 +35,7 @@ HRESULT Player::NativeConstruct(void* arg)
 
 int32_t Player::Tick(const double timeDelta)
 {
-	__super::Tick(timeDelta);
+	GameObject::Tick(timeDelta);
 
 	if (GetKeyState(VK_UP) & 0x8000)
 	{
@@ -55,23 +56,26 @@ int32_t Player::Tick(const double timeDelta)
 		_transform_com->BackStraight(timeDelta);
 	}
 
-	auto& object_manager = ObjectManager::GetInstance();
-	std::shared_ptr<ViBufferTerrain> pVIBuffer = std::static_pointer_cast<ViBufferTerrain>(object_manager.GetComponentPtr(
-		static_cast<uint32_t>(kScene::kSceneGamePlay0), L"Layer_BackGround", L"Com_VIBuffer"));
+	const auto& object_manager = ObjectManager::GetInstance();
+	const std::shared_ptr<ViBufferTerrain> viBuffer = std::static_pointer_cast<ViBufferTerrain>(
+		object_manager.GetComponentPtr(
+		static_cast<uint32_t>(kScene::kSceneGamePlay0), 
+			L"Layer_BackGround", 
+			L"Com_VIBuffer"));
 
 
-	std::shared_ptr<Transform> pTransform = std::static_pointer_cast<Transform>(object_manager.GetComponentPtr(static_cast<uint32_t>(kScene::kSceneGamePlay0),
-		L"Layer_BackGround",
-		L"Com_Transform"));
+	const std::shared_ptr<Transform> transform = std::static_pointer_cast<Transform>(object_manager.GetComponentPtr(static_cast<uint32_t>(kScene::kSceneGamePlay0),
+	                                                                                                                 L"Layer_BackGround",
+	                                                                                                                 L"Com_Transform"));
 
-	_transform_com->StandOnTerrain(pVIBuffer, &pTransform->GetWorldMatrix());
+	_transform_com->StandOnTerrain(viBuffer, &transform->GetWorldMatrix());
 
 
 	auto& picking = Picking::GetInstance();
 
 	if (GetKeyState(VK_LBUTTON) & 0x8000)
 	{
-		const _float3* pTargetPos = picking.ComputePickingPoint(pVIBuffer, pTransform->GetWorldMatrix());
+		const _float3* pTargetPos = picking.ComputePickingPoint(viBuffer, transform->GetWorldMatrix());
 
 		if (nullptr != pTargetPos)
 		{
@@ -81,11 +85,10 @@ int32_t Player::Tick(const double timeDelta)
 	}
 
 	_transform_com->ChaseTarget(_target_pos, timeDelta);
-
-	if (GetKeyState(VK_RBUTTON) & 0x8000)
-	{
-		const _float3*	vPickingPos = picking.ComputePickingPoint(_vi_buffer_com, _transform_com->GetWorldMatrix());
-	}
+	//if (GetKeyState(VK_RBUTTON) & 0x8000)
+	//{
+	//	const _float3*	vPickingPos = picking.ComputePickingPoint(_vi_buffer_com, _transform_com->GetWorldMatrix());
+	//}
 
 
 	return GameObject::Tick(timeDelta);
@@ -101,7 +104,7 @@ int32_t Player::LateTick(const double timeDelta)
 HRESULT Player::Render()
 {
 
-	__super::Render();
+	GameObject::Render();
 
 	_graphic_device->SetTransform(D3DTS_WORLD, &_transform_com->GetWorldMatrix());
 	const auto view_matrix = PipeLine::GetInstance().GetTransform(D3DTS_VIEW);
@@ -117,15 +120,10 @@ HRESULT Player::Render()
 	mtrlDesc.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 	_graphic_device->SetMaterial(&mtrlDesc);
 
-	if (FAILED(_texture_com->SetUpOnGraphicDevice(0)))
+
+	if (FAILED(_mesh_com->Render()))
 		return E_FAIL;
 
-	_graphic_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	if (FAILED(_vi_buffer_com->RenderViBuffer()))
-		return E_FAIL;
-
-	_graphic_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	_graphic_device->SetRenderState(D3DRS_LIGHTING, TRUE);
 
@@ -142,14 +140,9 @@ auto Player::AddComponents() -> HRESULT
 	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
 		return E_FAIL;
 
-	/* Com_VIBuffer */
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Stone"), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
 		return E_FAIL;
-
-	/* Com_Texture */
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Robby"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
-		return E_FAIL;
-
+	
 	return S_OK;
 }
 
@@ -159,7 +152,7 @@ auto Player::Create(const ComPtr<IDirect3DDevice9>& device) -> std::shared_ptr<P
 
 	if (FAILED(instance->NativeConstructPrototype()))
 	{
-		MSGBOX("Failed to Creating CPlayer");
+		MSGBOX("Failed to Creating Player");
 		return nullptr;
 	}
 	return instance;
@@ -171,7 +164,7 @@ auto Player::Clone(void* arg) -> std::shared_ptr<GameObject>
 
 	if (FAILED(instance->NativeConstruct(arg)))
 	{
-		MSGBOX("Failed to Clone CPlayer");
+		MSGBOX("Failed to Clone Player");
 		return nullptr;
 	}
 	return instance;

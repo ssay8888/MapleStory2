@@ -29,7 +29,7 @@ public:
 public:
 	auto GetDirectKeyState(const int8_t key)->int8_t;
 	auto GetDirectMouseKeyState(const kDirectInMouseButton mouseKey)->uint8_t;
-	auto GetDirectMouseMoveState(const kDirectInMouseState mouseMove)->int64_t;
+	auto GetDirectMouseMoveState(const kDirectInMouseState mouseMove)->int32_t;
 
 private:
 	ComPtr<IDirectInput8W>			_input_sdk = nullptr;

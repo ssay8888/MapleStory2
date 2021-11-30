@@ -46,6 +46,12 @@
     <ClInclude Include="src\game_object\terrain\terrain.h">
       <Filter>game_object\terrain</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\effect\effect.h">
+      <Filter>game_object\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\ui.h">
+      <Filter>game_object\ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,6 +92,12 @@
     </ClCompile>
     <ClCompile Include="src\game_object\terrain\terrain.cpp">
       <Filter>game_object\terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\effect\effect.cpp">
+      <Filter>game_object\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\ui.cpp">
+      <Filter>game_object\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +153,12 @@
     </Filter>
     <Filter Include="game_object\terrain">
       <UniqueIdentifier>{023a3bd1-a4bc-47f3-9fb9-5fcd629a3dbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\effect">
+      <UniqueIdentifier>{658f4ca2-a249-4d08-88d6-20bdcd7f13e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui">
+      <UniqueIdentifier>{cdb1de50-a467-457a-9a6f-7dfd0f7867e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

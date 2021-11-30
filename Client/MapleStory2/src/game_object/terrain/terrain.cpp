@@ -6,6 +6,7 @@
 #include "src/utility/components/textures/texture.h"
 #include "src/utility/components/transform/transform.h"
 #include "src/utility/components/vi_buffer/vi_buffer_terrain/vi_buffer_terrain.h"
+#include "src/utility/light/light_manager.h"
 #include "src/utility/pipe_line/pipe_line.h"
 
 Terrain::Terrain(const ComPtr<IDirect3DDevice9>& device):
@@ -52,6 +53,24 @@ HRESULT Terrain::Render()
 	result = _shader_com->SetUpTextureConstantTable("g_DiffuseSourTexture", _texture_com, 0);
 	result = _shader_com->SetUpTextureConstantTable("g_DiffuseDestTexture", _texture_com, 1);
 	result = _shader_com->SetUpTextureConstantTable("g_FilterTexture", _filter_com);
+
+	auto tmp = _float4(7.f, 0.f, 7.f, 1.f);
+	result = _shader_com->SetUpConstantTable("g_vBrushPos", &tmp, sizeof(_float4));
+	constexpr float		range = 7.f;
+	result = _shader_com->SetUpConstantTable("g_fRange", &range, sizeof(range));
+
+	D3DLIGHT9	LightDesc = LightManager::GetInstance().GetLightDesc();
+
+	const auto light = _float4(LightDesc.Direction, 0.f);
+	result = _shader_com->SetUpConstantTable("g_vLightDir", &light, sizeof(_float4));
+	result = _shader_com->SetUpConstantTable("g_vLightDiffuse", &LightDesc.Diffuse, sizeof(_float4));
+	result = _shader_com->SetUpConstantTable("g_vLightAmbient", &LightDesc.Ambient, sizeof(_float4));
+	result = _shader_com->SetUpConstantTable("g_vLightSpecular", &LightDesc.Specular, sizeof(_float4));
+
+	_matrix		ViewMatrix;
+	D3DXMatrixInverse(&ViewMatrix, nullptr, &view);
+	result = _shader_com->SetUpConstantTable("g_vCamPosition", &ViewMatrix.m[3][0], sizeof(_float4));
+
 
 	result = _shader_com->BeginShader(0);
 

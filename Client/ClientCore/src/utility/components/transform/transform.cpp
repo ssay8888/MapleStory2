@@ -197,6 +197,7 @@ auto Transform::LookAtTarget(const std::shared_ptr<Transform>& targetTransform) 
 	const _float3 targetPos = targetTransform->GetState(kState::kStatePosition);
 	const _float3 position = GetState(kState::kStatePosition);
 
+
 	_float3	look = targetPos - position;
 	D3DXVec3Normalize(&look, &look);
 	look = look * GetScale().z;
@@ -211,7 +212,7 @@ auto Transform::LookAtTarget(const std::shared_ptr<Transform>& targetTransform) 
 	SetState(kState::kStateRight, right);
 }
 
-auto Transform::LookAtTarget(_float3 targetPos) -> void
+auto Transform::LookAtTarget(const _float3 targetPos) -> void
 {
 	const _float3 position = GetState(kState::kStatePosition);
 

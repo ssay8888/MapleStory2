@@ -1,0 +1,34 @@
+#pragma once
+#include "src/utility/game_objects/game_object.h"
+
+class ViBufferRect;
+class Texture;
+
+class Ui : public GameObject
+{
+public:
+	explicit Ui(LPDIRECT3DDEVICE9 pGraphic_Device);
+	virtual ~Ui() = default;
+public:
+	virtual HRESULT NativeConstruct_Prototype() override;
+	virtual HRESULT NativeConstruct(void* pArg) override;
+	virtual int32_t Tick(double timeDelta) override;
+	virtual int32_t Late_Tick(double timeDelta) override;
+	virtual HRESULT Render() override;
+
+private:
+	std::shared_ptr<Texture> _TextureCom = nullptr;
+	std::shared_ptr<ViBufferRect>* _VIBufferCom = nullptr;
+
+private:
+	_matrix				m_ProjMatrix;
+	float				m_fX, m_fY, m_fSizeX, m_fSizeY;
+
+private:
+	HRESULT Add_Components();
+
+public:
+	static CUI* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	virtual CGameObject* Clone(void* pArg) override;
+};
+
