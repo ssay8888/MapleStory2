@@ -79,9 +79,9 @@ auto ViBufferTerrain::NativeConstructPrototype(const int32_t numVerticesX, const
 #pragma warning(push)
 #pragma warning(disable: 6385)
 #pragma warning(disable: 6386)
-			vertices[index].v_position = _vertices_pos[index] = _float3(j * interval, 0.0f, i * interval);
-			vertices[index].v_normal = _float3(0.0f, 1.f, 0.f);
-			vertices[index].v_tex_uv = _float2(static_cast<float>(j) / (numVerticesX - 1) * 20.f, static_cast<float>(i) / (numVerticesZ - 1) * 20.f);
+			vertices[index].position = _vertices_pos[index] = _float3(j * interval, 0.0f, i * interval);
+			vertices[index].normal = _float3(0.0f, 1.f, 0.f);
+			vertices[index].tex_uv = _float2(static_cast<float>(j) / (numVerticesX - 1) * 20.f, static_cast<float>(i) / (numVerticesZ - 1) * 20.f);
 #pragma warning(pop)
 		}
 	}
@@ -184,10 +184,10 @@ auto ViBufferTerrain::NativeConstructPrototype(const std::wstring& heightMapPath
 #pragma warning(push)
 #pragma warning(disable: 6385)
 #pragma warning(disable: 6386)
-			_vertices_pos[index] = vertices[index].v_position = _float3(j * interval, (pixel[index] & 0x000000ff) / 10.0f, i * interval);
-			vertices[index].v_normal = _float3(0.0f, 0.f, 0.f);
-			D3DXVec3Normalize(&vertices[index].v_normal, &vertices[index].v_normal);
-			vertices[index].v_tex_uv = _float2(static_cast<float>(j) / (numVerticesX - 1) * 20.f, static_cast<float>(i) / (numVerticesZ - 1) * 20.f);
+			_vertices_pos[index] = vertices[index].position = _float3(j * interval, (pixel[index] & 0x000000ff) / 10.0f, i * interval);
+			vertices[index].normal = _float3(0.0f, 0.f, 0.f);
+			D3DXVec3Normalize(&vertices[index].normal, &vertices[index].normal);
+			vertices[index].tex_uv = _float2(static_cast<float>(j) / (numVerticesX - 1) * 20.f, static_cast<float>(i) / (numVerticesZ - 1) * 20.f);
 #pragma warning(pop)
 		}
 	}
@@ -211,15 +211,15 @@ auto ViBufferTerrain::NativeConstructPrototype(const std::wstring& heightMapPath
 
 			_float3	v_normal, vSour, vDest;
 
-			vSour = vertices[index + 1].v_position - vertices[index + numVerticesX + 1].v_position;
-			vDest = vertices[index + numVerticesX + 1].v_position - vertices[index + numVerticesX].v_position;
+			vSour = vertices[index + 1].position - vertices[index + numVerticesX + 1].position;
+			vDest = vertices[index + numVerticesX + 1].position - vertices[index + numVerticesX].position;
 
 			D3DXVec3Cross(&v_normal, &vDest, &vSour);
 			D3DXVec3Normalize(&v_normal, &v_normal);
 
-			vertices[index + numVerticesX].v_normal += v_normal;
-			vertices[index + numVerticesX + 1].v_normal += v_normal;
-			vertices[index + 1].v_normal += v_normal;
+			vertices[index + numVerticesX].normal += v_normal;
+			vertices[index + numVerticesX + 1].normal += v_normal;
+			vertices[index + 1].normal += v_normal;
 
 
 			// ÁÂÇÏ´Ü »ï°¢Çü. 
@@ -227,22 +227,22 @@ auto ViBufferTerrain::NativeConstructPrototype(const std::wstring& heightMapPath
 			indices[vertexIndex++] = static_cast<int32_t*>(_indices)[vertexIndex] = index + 1;
 			indices[vertexIndex++] = static_cast<int32_t*>(_indices)[vertexIndex] = index;
 
-			vSour = vertices[index].v_position - vertices[index + 1].v_position;
-			vDest = vertices[index + 1].v_position - vertices[index + numVerticesX].v_position;
+			vSour = vertices[index].position - vertices[index + 1].position;
+			vDest = vertices[index + 1].position - vertices[index + numVerticesX].position;
 
 			D3DXVec3Cross(&v_normal, &vDest, &vSour);
 			D3DXVec3Normalize(&v_normal, &v_normal);
 
-			vertices[index + numVerticesX].v_normal += v_normal;
-			vertices[index + 1].v_normal += v_normal;
-			vertices[index].v_normal += v_normal;
+			vertices[index + numVerticesX].normal += v_normal;
+			vertices[index + 1].normal += v_normal;
+			vertices[index].normal += v_normal;
 
 		}
 	}
 
 	for (int32_t i = 0; i < numVerticesX * numVerticesZ; ++i)
 	{
-		D3DXVec3Normalize(&vertices[i].v_normal, &vertices[i].v_normal);
+		D3DXVec3Normalize(&vertices[i].normal, &vertices[i].normal);
 	}
 
 

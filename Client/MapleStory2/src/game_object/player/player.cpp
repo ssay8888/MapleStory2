@@ -1,7 +1,12 @@
 #include "pch.h"
 #include "player.h"
 
+#include <iostream>
+#include <ostream>
+
 #include "client_defines.h"
+#include "resource.h"
+#include "src/system/graphic/graphic_device.h"
 #include "src/utility/components/meshes/static/mesh_static.h"
 #include "src/utility/components/picking/picking.h"
 #include "src/utility/components/renderer/renderer.h"
@@ -55,7 +60,22 @@ int32_t Player::Tick(const double timeDelta)
 	{
 		_transform_com->BackStraight(timeDelta);
 	}
+	if (GetKeyState(VK_RETURN) & 0x8000)
+	{
+		SetFocus(g_hEdit);
+		wchar_t* a = new wchar_t[100];
+		GetWindowText(g_hEdit, a, 100);
+		std::wcout.imbue(std::locale("kor"));
+		std::wcout << a << std::endl;
+		SetWindowText(g_hEdit, L"");
+		delete a;
+	}
+	if (GetKeyState('P') & 0x8000)
+	{
+		SetFocus(0);
+	}
 
+	
 	const auto& object_manager = ObjectManager::GetInstance();
 	const std::shared_ptr<ViBufferTerrain> viBuffer = std::static_pointer_cast<ViBufferTerrain>(
 		object_manager.GetComponentPtr(
@@ -119,7 +139,6 @@ HRESULT Player::Render()
 	mtrlDesc.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	mtrlDesc.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 	_graphic_device->SetMaterial(&mtrlDesc);
-
 
 	if (FAILED(_mesh_com->Render()))
 		return E_FAIL;

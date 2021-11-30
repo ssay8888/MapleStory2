@@ -68,5 +68,11 @@ auto SceneLogo::ReadyLayerBackGround(const std::wstring& layerTag) -> HRESULT
 	if (FAILED(ObjectManager::GetInstance().AddGameObject(static_cast<int32_t>(kScene::kSceneLogo), TEXT("Prototype_BackGround"), layerTag)))
 		return E_FAIL;
 
+	TagTextBoxInformation info;
+	info.pos = { 250, 250 };
+	info.size = {300, 36};
+
+	if (FAILED(ObjectManager::GetInstance().AddGameObject(static_cast<int32_t>(kScene::kSceneLogo), TEXT("Prototype_Login_Textbox"), layerTag, &info)))
+		return E_FAIL;
 	return S_OK;
 }

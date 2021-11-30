@@ -4,6 +4,9 @@
 
 #define IDS_APP_TITLE			103
 
+#define IDI_ICON         101
+
+#define IDC_EDITBOX_TEXT 1000
 #define IDR_MAINFRAME			128
 #define IDD_MAPLESTORY2_DIALOG	102
 #define IDD_ABOUTBOX			103

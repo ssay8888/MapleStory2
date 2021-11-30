@@ -58,11 +58,11 @@ auto GraphicDevice::ReadyGraphicDevice(HWND hWnd, GraphicDevice::kWindowMode mod
 
 	D3DXFONT_DESCW tFontDesc;
 	ZeroMemory(&tFontDesc, sizeof(D3DXFONT_DESCW));
-	tFontDesc.Height = 15;
-	tFontDesc.Width = 16;
+	tFontDesc.Height = 11;
+	tFontDesc.Width = 11;
 	tFontDesc.Weight = FW_HEAVY;
 	tFontDesc.CharSet = HANGUL_CHARSET;
-	lstrcpy(tFontDesc.FaceName, L"@³Ø½¼Lv1°íµñ Bold");
+	lstrcpy(tFontDesc.FaceName, L"µ¸¿òÃ¼");
 
 	if (FAILED(D3DXCreateFontIndirectW(_device.Get(), &tFontDesc, &_font)))
 	{

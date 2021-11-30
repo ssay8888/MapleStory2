@@ -38,17 +38,17 @@ HRESULT ViBufferRect::NativeConstructPrototype()
 	_vb->Lock(0, 0, reinterpret_cast<void**>(&vertices), 0);
 
 
-	vertices[0].v_position = _vertices_pos[0] = _float3(-0.5f, 0.5f, 0.f);
-	vertices[0].v_tex_uv	= _float2(0.f, 0.f);
+	vertices[0].position = _vertices_pos[0] = _float3(-0.5f, 0.5f, 0.f);
+	vertices[0].tex_uv	= _float2(0.f, 0.f);
 
-	vertices[1].v_position = _vertices_pos[1] = _float3(0.5f, 0.5f, 0.f);
-	vertices[1].v_tex_uv	= _float2(1.f, 0.f);
+	vertices[1].position = _vertices_pos[1] = _float3(0.5f, 0.5f, 0.f);
+	vertices[1].tex_uv	= _float2(1.f, 0.f);
 
-	vertices[2].v_position = _vertices_pos[2] = _float3(0.5f, -0.5f, 0.f);
-	vertices[2].v_tex_uv	= _float2(1.f, 1.f);
+	vertices[2].position = _vertices_pos[2] = _float3(0.5f, -0.5f, 0.f);
+	vertices[2].tex_uv	= _float2(1.f, 1.f);
 
-	vertices[3].v_position = _vertices_pos[3] = _float3(-0.5f, -0.5f, 0.f);
-	vertices[3].v_tex_uv	= _float2(0.f, 1.f);
+	vertices[3].position = _vertices_pos[3] = _float3(-0.5f, -0.5f, 0.f);
+	vertices[3].tex_uv	= _float2(0.f, 1.f);
 
 	_vb->Unlock();
 

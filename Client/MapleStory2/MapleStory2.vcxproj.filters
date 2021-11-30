@@ -52,6 +52,9 @@
     <ClInclude Include="src\game_object\ui\ui.h">
       <Filter>game_object\ui</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\ui\login\text_box_ui.h">
+      <Filter>game_object\ui\login</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -98,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="src\game_object\ui\ui.cpp">
       <Filter>game_object\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\login\text_box_ui.cpp">
+      <Filter>game_object\ui\login</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +165,9 @@
     </Filter>
     <Filter Include="game_object\ui">
       <UniqueIdentifier>{cdb1de50-a467-457a-9a6f-7dfd0f7867e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\login">
+      <UniqueIdentifier>{a3a27b9f-89ab-46ac-b0b9-2f00d169f850}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

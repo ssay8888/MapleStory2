@@ -1,8 +1,11 @@
 #include "pch.h"
 #include "main_app.h"
 
+#include <iostream>
+
 #include "src/game_object/back_ground/back_ground.h"
 #include "src/game_object/camera/camera_free.h"
+#include "src/game_object/ui/login/text_box_ui.h"
 #include "src/scene/logo/scene_logo.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/components/manager/component_manager.h"
@@ -19,6 +22,7 @@
 MainApp::MainApp()
 {
 	NativeConstruct();
+	std::wcout.imbue(std::locale("kor"));
 }
 
 auto MainApp::NativeConstruct() -> HRESULT
@@ -28,9 +32,7 @@ auto MainApp::NativeConstruct() -> HRESULT
 
 	if (FAILED(GraphicDevice::GetInstance().ReadyGraphicDevice(g_Wnd, GraphicDevice::kWindowMode::kModeWin, g_WinCX, g_WinCY, &_graphic_device)))
 		return E_FAIL;
-
-	GraphicDevice::GetInstance().GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
-
+	
 	if (FAILED(AddPrototypeComponent()))
 		return E_FAIL;
 
@@ -62,7 +64,7 @@ auto MainApp::RenderMainApp() -> HRESULT
 
 	if (FAILED(sceneManager.Render()))
 		return E_FAIL;
-
+	
 	device.RenderEnd();
 	return S_OK;
 }
@@ -75,8 +77,11 @@ HRESULT MainApp::AddPrototypeGameObject()
 
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Camera_Free"), CameraFree::Create(_graphic_device))))
 		return E_FAIL;
+	
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Login_Textbox"), TextBoxUi::Create())))
+		return E_FAIL;
 
-	return S_OK;
+	return S_OK; 
 }
 
 HRESULT MainApp::AddPrototypeComponent()
@@ -95,6 +100,8 @@ HRESULT MainApp::AddPrototypeComponent()
 	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Texture_Default"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Default.jpg")))))
 		return E_FAIL;
 
+	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Texture_Default2"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Default2.jpg")))))
+		return E_FAIL;
 
 	return S_OK;
 }

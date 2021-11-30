@@ -175,6 +175,7 @@
     <ClInclude Include="src\game_object\player\player.h" />
     <ClInclude Include="src\game_object\sky\sky.h" />
     <ClInclude Include="src\game_object\terrain\terrain.h" />
+    <ClInclude Include="src\game_object\ui\login\text_box_ui.h" />
     <ClInclude Include="src\game_object\ui\ui.h" />
     <ClInclude Include="src\main\main_app.h" />
     <ClInclude Include="src\scene\game_play\game_play.h" />
@@ -209,6 +210,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\game_object\terrain\terrain.cpp" />
+    <ClCompile Include="src\game_object\ui\login\text_box_ui.cpp" />
     <ClCompile Include="src\game_object\ui\ui.cpp" />
     <ClCompile Include="src\main\main_app.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>

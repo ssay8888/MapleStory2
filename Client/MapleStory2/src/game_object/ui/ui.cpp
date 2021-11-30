@@ -125,7 +125,7 @@ auto Ui::AddComponents() -> HRESULT
 		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Texture_Default"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
+	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Texture_Default2"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
 		return E_FAIL;
 
 	return S_OK;

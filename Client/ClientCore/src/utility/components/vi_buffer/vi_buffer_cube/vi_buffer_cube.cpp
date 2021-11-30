@@ -34,24 +34,24 @@ HRESULT ViBufferCube::NativeConstructPrototype()
 
 
 	/* ¾Õ¸é */
-	pVertices[0].v_position = _float3(-0.5f, 0.5f, -0.5f);
-	pVertices[0].v_tex_uv = pVertices[0].v_position;
-	pVertices[1].v_position = _float3(0.5f, 0.5f, -0.5f);
-	pVertices[1].v_tex_uv = pVertices[1].v_position;
-	pVertices[2].v_position = _float3(0.5f, -0.5f, -0.5f);
-	pVertices[2].v_tex_uv = pVertices[2].v_position;
-	pVertices[3].v_position = _float3(-0.5f, -0.5f, -0.5f);
-	pVertices[3].v_tex_uv = pVertices[3].v_position;
+	pVertices[0].position = _float3(-0.5f, 0.5f, -0.5f);
+	pVertices[0].tex_uv = pVertices[0].position;
+	pVertices[1].position = _float3(0.5f, 0.5f, -0.5f);
+	pVertices[1].tex_uv = pVertices[1].position;
+	pVertices[2].position = _float3(0.5f, -0.5f, -0.5f);
+	pVertices[2].tex_uv = pVertices[2].position;
+	pVertices[3].position = _float3(-0.5f, -0.5f, -0.5f);
+	pVertices[3].tex_uv = pVertices[3].position;
 
 	/* µÞ¸é */
-	pVertices[4].v_position = _float3(-0.5f, 0.5f, 0.5f);
-	pVertices[4].v_tex_uv = pVertices[4].v_position;
-	pVertices[5].v_position = _float3(0.5f, 0.5f, 0.5f);
-	pVertices[5].v_tex_uv = pVertices[5].v_position;
-	pVertices[6].v_position = _float3(0.5f, -0.5f, 0.5f);
-	pVertices[6].v_tex_uv = pVertices[6].v_position;
-	pVertices[7].v_position = _float3(-0.5f, -0.5f, 0.5f);
-	pVertices[7].v_tex_uv = pVertices[7].v_position;
+	pVertices[4].position = _float3(-0.5f, 0.5f, 0.5f);
+	pVertices[4].tex_uv = pVertices[4].position;
+	pVertices[5].position = _float3(0.5f, 0.5f, 0.5f);
+	pVertices[5].tex_uv = pVertices[5].position;
+	pVertices[6].position = _float3(0.5f, -0.5f, 0.5f);
+	pVertices[6].tex_uv = pVertices[6].position;
+	pVertices[7].position = _float3(-0.5f, -0.5f, 0.5f);
+	pVertices[7].tex_uv = pVertices[7].position;
 
 	_vb->Unlock();
 
