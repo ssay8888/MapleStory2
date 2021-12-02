@@ -78,8 +78,13 @@ auto Shader::EndShader() const -> HRESULT
 	return S_OK;
 }
 
+auto Shader::Commit() const -> void
+{
+	_effect->CommitChanges();
+}
+
 auto Shader::Create(const ComPtr<IDirect3DDevice9>& graphicDevice,
-	const std::wstring& shaderFilePath) -> std::shared_ptr<Shader>
+                    const std::wstring& shaderFilePath) -> std::shared_ptr<Shader>
 {
 	auto pInstance = std::make_shared<Shader>(graphicDevice);
 

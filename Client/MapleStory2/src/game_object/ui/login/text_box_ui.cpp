@@ -37,6 +37,7 @@ HRESULT TextBoxUi::NativeConstruct(void* arg)
 	}
 	_size = information->size;
 	_pos = information->pos;
+	_is_password = information->is_password;
 	D3DXMatrixOrthoLH(&_proj_matrix, g_WinCX, g_WinCY, 0.f, 1.f);
 	_max_content_length = max(information->max_content_length, 13);
 	_rc = { static_cast<LONG>(_pos.x - (_size.x / 2)), static_cast<LONG>(_pos.y - (_size.y / 2)), static_cast<LONG>(_pos.x + (_size.x / 2)), static_cast<LONG>(_pos.y + (_size.y / 2)) };
@@ -177,7 +178,19 @@ auto TextBoxUi::IsFocus() const -> bool
 
 auto TextBoxUi::UiDrawText() -> void
 {
-	_font->DrawTextW(NULL, _contents.c_str(), -1, &_rc, DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
+	if(_is_password)
+	{
+		std::wstring contents;
+		for (int i = 0; i  < _contents.size(); ++i)
+		{
+			contents.append(L"*");
+		}
+		_font->DrawTextW(NULL, contents.c_str(), -1, &_rc, DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
+	}
+	else
+	{
+		_font->DrawTextW(NULL, _contents.c_str(), -1, &_rc, DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
+	}
 }
 
 auto TextBoxUi::AddComponents() -> HRESULT

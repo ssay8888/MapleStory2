@@ -34,8 +34,14 @@ typedef struct TagTextBoxInformation
 	D3DXVECTOR2 		pos{1.f, 1.f};
 	D3DXVECTOR2			size{1.f, 1.f};
 	int32_t				max_content_length{13};
+	bool				is_password = false;
 } TextBoxInformation;
 
+typedef struct MeshMaterialTexture
+{
+	enum class kType { kTypeDiffuse, kTypeNormal, kTypeSpecular, kTypeEnd };
 
-
-
+	Microsoft::WRL::ComPtr<IDirect3DTexture9>		diffuse_map;
+	Microsoft::WRL::ComPtr<IDirect3DTexture9>		normal_map;
+	Microsoft::WRL::ComPtr<IDirect3DTexture9>		specular_map;
+}MeshMaterialTexture;

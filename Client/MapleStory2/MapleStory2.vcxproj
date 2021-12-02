@@ -184,37 +184,23 @@
     <ClInclude Include="src\scene\logo\scene_logo.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="client_pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="client_pch.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\game_object\back_ground\back_ground.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\game_object\camera\camera_free.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="src\game_object\back_ground\back_ground.cpp" />
+    <ClCompile Include="src\game_object\camera\camera_free.cpp" />
     <ClCompile Include="src\game_object\effect\effect.cpp" />
-    <ClCompile Include="src\game_object\player\player.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\game_object\sky\sky.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="src\game_object\player\player.cpp" />
+    <ClCompile Include="src\game_object\sky\sky.cpp" />
     <ClCompile Include="src\game_object\terrain\terrain.cpp" />
     <ClCompile Include="src\game_object\ui\login\text_box_ui.cpp" />
     <ClCompile Include="src\game_object\ui\ui.cpp" />
-    <ClCompile Include="src\main\main_app.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="src\main\main_app.cpp" />
     <ClCompile Include="src\scene\game_play\game_play.cpp" />
     <ClCompile Include="src\scene\loading\loader\loading.cpp" />
     <ClCompile Include="src\scene\loading\scene_loading.cpp" />
@@ -228,6 +214,7 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\..\Binary\ShaderFiles\shader_mesh.hlsl" />
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_rect.hlsl" />
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_terrain.hlsl" />
   </ItemGroup>

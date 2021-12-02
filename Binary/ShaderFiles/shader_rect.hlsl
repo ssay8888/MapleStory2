@@ -71,9 +71,7 @@ PS_OUT PS_MAIN(PS_IN In)
 	PS_OUT			Out;
 
 	Out.vColor = tex2D(DiffuseSampler, In.vTexUV);
-
-	Out.vColor.gb = Out.vColor.r;
-
+	
 	return Out;
 }
 

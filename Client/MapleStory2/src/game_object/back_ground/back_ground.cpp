@@ -103,7 +103,7 @@ auto BackGround::AddComponents() -> HRESULT
 		return E_FAIL;
 
 	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic),
-		L"Prototype_Texture_Default",
+		L"Prototype_Texture_Login_Logo",
 		L"Com_Texture",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
 		return E_FAIL;

@@ -23,7 +23,7 @@ auto Loading::NativeConstruct(const kScene scene)->HRESULT
 	_next_level = scene;
 
 	_system_message.append(L"로딩을 시작합니다.");
-	std::thread a = std::thread([=]()
+	auto a = std::thread([=]()
 		{
 			ThreadMain();
 		});
@@ -103,7 +103,7 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	/* 원형 리소스 객체를 생성한다. */
 
 	/* For.Prototype_Mesh_Stone*/
-	if (FAILED(componentManager.AddPrototype(static_cast<int32>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Stone"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/TombStone/"), TEXT("TombStone.x")))))
+	if (FAILED(componentManager.AddPrototype(static_cast<int32>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Man"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Player/"), TEXT("man.x")))))
 		return E_FAIL;
 
 
@@ -127,9 +127,13 @@ auto Loading::ReadyGamePlay0()->HRESULT
 
 	if (FAILED(componentManager.AddPrototype(static_cast<int32>(kScene::kSceneGamePlay0), TEXT("Prototype_VIBuffer_Cube"), ViBufferCube::Create(_graphic_device))))
 		return E_FAIL;		   
-							   
+
 	if (FAILED(componentManager.AddPrototype(static_cast<int32>(kScene::kSceneGamePlay0), TEXT("Prototype_Shader_Terrain"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Terrain.hlsl")))))
 		return E_FAIL;
+
+	if (FAILED(componentManager.AddPrototype(static_cast<int32>(kScene::kSceneGamePlay0), TEXT("Prototype_Shader_Mesh"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Mesh.hlsl")))))
+		return E_FAIL;
+
 
 	_system_message.clear();
 	_system_message.append(L"로딩이 완료되었습니다.");

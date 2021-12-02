@@ -10,6 +10,7 @@
 #include "src/utility/components/meshes/static/mesh_static.h"
 #include "src/utility/components/picking/picking.h"
 #include "src/utility/components/renderer/renderer.h"
+#include "src/utility/components/shader/shader.h"
 #include "src/utility/components/textures/texture.h"
 #include "src/utility/components/transform/transform.h"
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
@@ -35,6 +36,7 @@ HRESULT Player::NativeConstruct(void* arg)
 	if (FAILED(AddComponents()))
 		return E_FAIL;
 
+	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
 	return S_OK;
 }
 
@@ -68,7 +70,7 @@ int32_t Player::Tick(const double timeDelta)
 		std::wcout.imbue(std::locale("kor"));
 		std::wcout << a << std::endl;
 		SetWindowText(g_hEdit, L"");
-		delete a;
+		delete[] a;
 	}
 	if (GetKeyState('P') & 0x8000)
 	{
@@ -126,25 +128,25 @@ HRESULT Player::Render()
 
 	GameObject::Render();
 
-	_graphic_device->SetTransform(D3DTS_WORLD, &_transform_com->GetWorldMatrix());
-	const auto view_matrix = PipeLine::GetInstance().GetTransform(D3DTS_VIEW);
-	_graphic_device->SetTransform(D3DTS_VIEW, &view_matrix);
-	const auto projection_matrix = PipeLine::GetInstance().GetTransform(D3DTS_PROJECTION);
-	_graphic_device->SetTransform(D3DTS_PROJECTION, &projection_matrix);
-
-	_graphic_device->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-	D3DMATERIAL9		mtrlDesc;
-	ZeroMemory(&mtrlDesc, sizeof(D3DMATERIAL9));
-	mtrlDesc.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	mtrlDesc.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
-	_graphic_device->SetMaterial(&mtrlDesc);
-
-	if (FAILED(_mesh_com->Render()))
+	if (FAILED(SetUpConstantTable()))
 		return E_FAIL;
 
+	const uint32_t dwNumMaterials = _mesh_com->GetNumMaterials();
 
-	_graphic_device->SetRenderState(D3DRS_LIGHTING, TRUE);
+	auto result = _shader_com->BeginShader(0);
+
+	for (uint32_t i = 0; i < dwNumMaterials; ++i)
+	{
+		if (FAILED(_mesh_com->SetUpTextureOnShader(_shader_com, "g_DiffuseTexture", MeshMaterialTexture::kType::kTypeDiffuse, i)))
+			return E_FAIL;
+
+		_shader_com->Commit();
+
+		if (FAILED(_mesh_com->Render(i)))
+			return E_FAIL;
+	}
+
+	result = _shader_com->EndShader();
 
 	return GameObject::Render();
 }
@@ -159,9 +161,24 @@ auto Player::AddComponents() -> HRESULT
 	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
 		return E_FAIL;
 
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Stone"), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
+	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Man"), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
+		return E_FAIL;
+
+	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;
 	
+	return S_OK;
+}
+
+auto Player::SetUpConstantTable() const -> HRESULT
+{
+	auto& pipeline = PipeLine::GetInstance();
+	const auto view = pipeline.GetTransform(D3DTS_VIEW);
+	const auto project = pipeline.GetTransform(D3DTS_PROJECTION);
+
+	auto result = _shader_com->SetUpConstantTable("g_WorldMatrix", _transform_com->GetWorldMatrix(), sizeof(_matrix));
+	result = _shader_com->SetUpConstantTable("g_ViewMatrix", &view, sizeof(_matrix));
+	result = _shader_com->SetUpConstantTable("g_ProjMatrix", &project, sizeof(_matrix));
 	return S_OK;
 }
 

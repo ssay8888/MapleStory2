@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "mesh_static.h"
 
+#include "src/utility/components/shader/shader.h"
+
 MeshStatic::MeshStatic(const ComPtr<IDirect3DDevice9>& device):
 	Mesh(device)
 {
@@ -14,10 +16,54 @@ auto MeshStatic::NativeConstructPrototype(const std::wstring& filePath, const st
 	lstrcat(szFullPath, fileName.c_str());
 	LPD3DXMESH	mesh = nullptr;
 
-	if (FAILED(D3DXLoadMeshFromX(szFullPath, D3DXMESH_MANAGED, _graphic_device.Get(), &_adjacency, &_materials, nullptr, &_num_materials, &mesh)))
+	if (FAILED(D3DXLoadMeshFromX(szFullPath, D3DXMESH_MANAGED, _graphic_device.Get(), &_adjacency, &_buffer_material, nullptr, &_num_materials, &mesh)))
 		return E_FAIL;
 
 	_mesh.Attach(mesh);
+
+	/* ∏ﬁΩ√¿« µ«ª¡Ó ∏  + ≥Î∏÷∏  + Ω∫∆Â≈ß∑Ø∏  ¿ª ∑ŒµÂ«œ≥Æ. */
+	for (uint32_t i = 0; i < _num_materials; ++i)
+	{
+		const D3DXMATERIAL* pMaterial = static_cast<D3DXMATERIAL*>(_buffer_material->GetBufferPointer()) + i;
+
+		MeshMaterialTexture* pMeshMaterialTexture = new MeshMaterialTexture;
+		ZeroMemory(pMeshMaterialTexture, sizeof(MeshMaterialTexture));
+
+		wchar_t		szTextureFileName[MAX_PATH] = TEXT("");
+		/* char -> tchar */
+		MultiByteToWideChar(CP_ACP, 
+			0, pMaterial->pTextureFilename, 
+			static_cast<int>(strlen(pMaterial->pTextureFilename)), 
+			szTextureFileName,
+			MAX_PATH);
+
+
+		wchar_t	szFileName[MAX_PATH] = TEXT("");
+
+		/* µ«ª¡Ó ∏  ∑ŒµÂ */
+		wsprintf(szFileName, szTextureFileName, L"D");
+
+		lstrcpy(szFullPath, filePath.c_str());
+		lstrcat(szFullPath, szFileName);
+		auto result = D3DXCreateTextureFromFile(_graphic_device.Get(), szFullPath, &pMeshMaterialTexture->diffuse_map);
+
+		/* ≥Î∏÷ ∏  ∑ŒµÂ. */
+		wsprintf(szFileName, szTextureFileName, L"N");
+
+		lstrcpy(szFullPath, filePath.c_str());
+		lstrcat(szFullPath, szFileName);
+		result = D3DXCreateTextureFromFile(_graphic_device.Get(), szFullPath, &pMeshMaterialTexture->normal_map);
+
+
+		/* Ω∫∆Â≈ß∑Ø ∏  ∑ŒµÂ. */
+		wsprintf(szFileName, szTextureFileName, L"S");
+
+		lstrcpy(szFullPath, filePath.c_str());
+		lstrcat(szFullPath, szFileName);
+		result = D3DXCreateTextureFromFile(_graphic_device.Get(), szFullPath, &pMeshMaterialTexture->specular_map);
+
+		_materials.push_back(pMeshMaterialTexture);
+	}
 
 	return S_OK;
 }
@@ -39,18 +85,43 @@ std::shared_ptr<Component> MeshStatic::Clone(void* arg)
 	return pInstance;
 }
 
-auto MeshStatic::Render() -> HRESULT
+auto MeshStatic::SetUpTextureOnShader(const std::shared_ptr<Shader>& shader, const D3DXHANDLE parameter,
+                                      const MeshMaterialTexture::kType type, const uint32_t materialIndex) -> HRESULT
 {
-	if (nullptr == _mesh)
+	LPDIRECT3DTEXTURE9		pTexture = nullptr;
+
+	switch (type)
+	{
+	case MeshMaterialTexture::kType::kTypeDiffuse:
+		pTexture = _materials[materialIndex]->diffuse_map.Get();
+		break;
+	case MeshMaterialTexture::kType::kTypeNormal:
+		pTexture = _materials[materialIndex]->normal_map.Get();
+		break;
+	case MeshMaterialTexture::kType::kTypeSpecular:
+		pTexture = _materials[materialIndex]->specular_map.Get();
+		break;
+	}
+
+	if (FAILED(shader->SetUpTextureConstantTable(parameter, pTexture)))
 		return E_FAIL;
 
-	for (uint32_t i = 0; i < _num_materials; ++i)
-		_mesh->DrawSubset(i);
 	return S_OK;
 }
 
+auto MeshStatic::Render(const int32_t index) const -> HRESULT
+{
+	_mesh->DrawSubset(index);
+	return S_OK;
+}
+
+auto MeshStatic::GetNumMaterials() const -> uint32_t
+{
+	return _num_materials;
+}
+
 auto MeshStatic::Create(const ComPtr<IDirect3DDevice9>& device, const std::wstring& filePath,
-	const std::wstring& fileName) -> std::shared_ptr<MeshStatic>
+                        const std::wstring& fileName) -> std::shared_ptr<MeshStatic>
 {
 	auto pInstance = std::make_shared<MeshStatic>(device);
 

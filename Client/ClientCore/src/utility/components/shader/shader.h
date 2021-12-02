@@ -19,6 +19,7 @@ public:
 	auto SetUpTextureConstantTable(D3DXHANDLE hHandle, ComPtr<IDirect3DBaseTexture9> texture) const ->HRESULT;
 	auto BeginShader(int32_t passIndex) const ->HRESULT;
 	auto EndShader() const ->HRESULT;
+	auto Commit() const ->void;
 
 public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& graphicDevice, const std::wstring& shaderFilePath)->std::shared_ptr<Shader>;

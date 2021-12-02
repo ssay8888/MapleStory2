@@ -7,6 +7,9 @@
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
+      <FullPath>C:\MapleStory2Project\Binary\shader_mesh.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\MapleStory2Project\Binary\shader_rect.cso</FullPath>
     </ContentFile>
     <ContentFile>

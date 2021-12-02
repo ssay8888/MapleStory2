@@ -37,9 +37,6 @@
     <ClInclude Include="src\scene\logo\scene_logo.h">
       <Filter>scene\logo</Filter>
     </ClInclude>
-    <ClInclude Include="src\scene\loading\scene_loading.h">
-      <Filter>scene\loading</Filter>
-    </ClInclude>
     <ClInclude Include="src\scene\loading\loader\loading.h">
       <Filter>scene\loading\loader</Filter>
     </ClInclude>
@@ -54,6 +51,9 @@
     </ClInclude>
     <ClInclude Include="src\game_object\ui\login\text_box_ui.h">
       <Filter>game_object\ui\login</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\loading\scene_loading.h">
+      <Filter>scene\loading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +180,9 @@
       <Filter>shader_files</Filter>
     </FxCompile>
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_terrain.hlsl">
+      <Filter>shader_files</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\Binary\ShaderFiles\shader_mesh.hlsl">
       <Filter>shader_files</Filter>
     </FxCompile>
   </ItemGroup>

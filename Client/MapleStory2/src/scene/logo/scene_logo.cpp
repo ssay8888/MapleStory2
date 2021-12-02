@@ -74,5 +74,9 @@ auto SceneLogo::ReadyLayerBackGround(const std::wstring& layerTag) -> HRESULT
 
 	if (FAILED(ObjectManager::GetInstance().AddGameObject(static_cast<int32_t>(kScene::kSceneLogo), TEXT("Prototype_Login_Textbox"), layerTag, &info)))
 		return E_FAIL;
+	info.pos = { 250, 300 };
+	info.is_password = true;
+	if (FAILED(ObjectManager::GetInstance().AddGameObject(static_cast<int32_t>(kScene::kSceneLogo), TEXT("Prototype_Login_Textbox"), layerTag, &info)))
+		return E_FAIL;
 	return S_OK;
 }

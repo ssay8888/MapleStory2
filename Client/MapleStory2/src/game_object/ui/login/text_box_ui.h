@@ -36,6 +36,7 @@ private:
 private:
 	RECT							_rc;
 	bool							_is_focus;
+	bool							_is_password;
 	_float2							_size;
 	_float2							_pos;
 	_matrix							_proj_matrix;

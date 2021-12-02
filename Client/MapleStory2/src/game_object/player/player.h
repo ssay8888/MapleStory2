@@ -1,6 +1,7 @@
 #pragma once
 #include "src/utility/game_objects/game_object.h"
 
+class Shader;
 class MeshStatic;
 class Texture;
 class ViBufferRect;
@@ -21,6 +22,7 @@ public:
 
 private:
 	auto AddComponents()->HRESULT;
+	auto SetUpConstantTable() const ->HRESULT;
 
 public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& device)->std::shared_ptr<Player>;
@@ -29,6 +31,7 @@ public:
 private:
 	std::shared_ptr<Transform>		_transform_com = nullptr;
 	std::shared_ptr<MeshStatic>		_mesh_com = nullptr;
+	std::shared_ptr<Shader>			 _shader_com = nullptr;
 
 	_float3				_target_pos;
 };
