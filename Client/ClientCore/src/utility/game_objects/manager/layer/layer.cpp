@@ -29,6 +29,18 @@ HRESULT Layer::AddGameObject(const std::shared_ptr<GameObject>& gameObject)
 	return S_OK;
 }
 
+auto Layer::GetGameObject(const uint32_t index) -> std::shared_ptr<GameObject>
+{
+	if (index >= _objects.size())
+		return nullptr;
+
+	auto iter = _objects.begin();
+
+	iter += index;
+
+	return (*iter);
+}
+
 int32_t Layer::Tick(const double timeDelta)
 {
 	for (const auto& gameObject : _objects)

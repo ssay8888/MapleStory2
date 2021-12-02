@@ -37,7 +37,7 @@ auto ThreadManager::Join() -> void
 
 auto ThreadManager::InitTls() -> void
 {
-	static Atomic<uint32> sThreadId = 1;
+	static Atomic<uint32_t> sThreadId = 1;
 	LThreadId = sThreadId.fetch_add(1);
 }
 
@@ -50,7 +50,7 @@ auto ThreadManager::DoGlobalQueueWork() -> void
 {
 	while (true)
 	{
-		const uint64 now = ::GetTickCount64();
+		const uint64_t now = ::GetTickCount64();
 		if (now > LEndTickCount)
 			break;
 
@@ -64,7 +64,7 @@ auto ThreadManager::DoGlobalQueueWork() -> void
 
 auto ThreadManager::DistributeReservedJobs() -> void
 {
-	const uint64 now = ::GetTickCount64();
+	const uint64_t now = ::GetTickCount64();
 
 	JobTimer::GetInstance().Distribute(now);
 }

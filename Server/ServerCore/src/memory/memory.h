@@ -21,7 +21,7 @@ public:
 		static Memory instance;
 		return instance;
 	}
-	auto Allocate(int32 size) -> void*;
+	auto Allocate(int32_t size) -> void*;
 	auto Release(void* ptr) -> void;
 
 private:

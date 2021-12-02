@@ -61,7 +61,7 @@ int main()
 	ASSERT_CRASH(service->Start());
 
 	auto& threadManager = ThreadManager::GetInstance();
-	for (int32 i = 0; i < 6; i++)
+	for (int32_t i = 0; i < 6; i++)
 	{
 		threadManager.Launch([&service]()
 			{

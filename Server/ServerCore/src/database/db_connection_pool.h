@@ -14,7 +14,7 @@ public:
 		return instance;
 	}
 
-	auto Connect(int32 connectionCount, const WCHAR* connectionString) -> bool;
+	auto Connect(int32_t connectionCount, const WCHAR* connectionString) -> bool;
 	auto Clear() -> void;
 
 	auto Pop() -> DBConnection*;

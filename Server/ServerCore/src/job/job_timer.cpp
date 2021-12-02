@@ -14,9 +14,9 @@ auto TimerItem::operator<(const TimerItem& other) const -> bool
 	return execute_tick > other.execute_tick;
 }
 
-auto JobTimer::Reserve(const uint64 tickAfter, std::weak_ptr<JobQueue> owner, JobRef job) -> void 
+auto JobTimer::Reserve(const uint64_t tickAfter, std::weak_ptr<JobQueue> owner, JobRef job) -> void 
 {
-	const uint64 executeTick = ::GetTickCount64() + tickAfter;
+	const uint64_t executeTick = ::GetTickCount64() + tickAfter;
 	JobData* jobData = ObjectPool<JobData>::Pop(owner, job);
 
 	WRITE_LOCK;
@@ -24,7 +24,7 @@ auto JobTimer::Reserve(const uint64 tickAfter, std::weak_ptr<JobQueue> owner, Jo
 	_items.push(TimerItem{ executeTick, jobData });
 }
 
-auto JobTimer::Distribute(const uint64 now) -> void
+auto JobTimer::Distribute(const uint64_t now) -> void
 {
 	// 한 번에 1 쓰레드만 통과
 	if (_distributing.exchange(true) == true)

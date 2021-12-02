@@ -17,7 +17,7 @@ public:
 
 public:
 	virtual auto GetHandle() ->HANDLE override;
-	virtual auto Dispatch(class IocpEvent* iocpEvent, int32 numOfBytes = 0) -> void override;
+	virtual auto Dispatch(class IocpEvent* iocpEvent, int32_t numOfBytes = 0) -> void override;
 
 private:
 	auto RegisterAccept(AcceptEvent* acceptEvent) -> void;

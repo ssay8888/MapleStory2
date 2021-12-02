@@ -1,0 +1,16 @@
+syntax = "proto3";
+package Protocol;
+
+import "enum.proto";
+import "struct.proto";
+
+message ClientLogin
+{
+	string id = 1;
+	string pw = 2;
+}
+
+message ServerLogin
+{
+	bool success = 1;
+}

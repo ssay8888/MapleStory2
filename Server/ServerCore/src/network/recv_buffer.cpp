@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "recv_buffer.h"
 
-RecvBuffer::RecvBuffer(int32 bufferSize) : _buffer_size(bufferSize)
+RecvBuffer::RecvBuffer(int32_t bufferSize) : _buffer_size(bufferSize)
 {
 	_capacity = bufferSize * BUFFER_COUNT;
 	_buffer.resize(_capacity);
@@ -13,7 +13,7 @@ RecvBuffer::~RecvBuffer()
 
 auto RecvBuffer::Clean() -> void
 {
-	int32 dataSize = DataSize();
+	int32_t dataSize = DataSize();
 	std::cout << dataSize << "dataSize" << std::endl;
 	if (dataSize == 0)
 	{
@@ -30,7 +30,7 @@ auto RecvBuffer::Clean() -> void
 	}
 }
 
-auto RecvBuffer::OnRead(int32 numOfBytes) -> bool
+auto RecvBuffer::OnRead(int32_t numOfBytes) -> bool
 {
 	if (numOfBytes > DataSize())
 		return false;
@@ -39,7 +39,7 @@ auto RecvBuffer::OnRead(int32 numOfBytes) -> bool
 	return true;
 }
 
-auto RecvBuffer::OnWrite(int32 numOfBytes) -> bool
+auto RecvBuffer::OnWrite(int32_t numOfBytes) -> bool
 {
 	if (numOfBytes > FreeSize())
 		return false;
@@ -58,12 +58,12 @@ auto RecvBuffer::WritePos() -> BYTE*
 	return &_buffer[_write_pos];
 }
 
-auto RecvBuffer::DataSize() const -> int32
+auto RecvBuffer::DataSize() const -> int32_t
 {
 	return _write_pos - _read_pos;
 }
 
-auto RecvBuffer::FreeSize() const -> int32
+auto RecvBuffer::FreeSize() const -> int32_t
 {
 	return _capacity - _write_pos;
 }

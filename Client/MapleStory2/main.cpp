@@ -1,7 +1,7 @@
 ﻿// MapleStory2.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
-#include "pch.h"
+#include "c_pch.h"
 #include "main.h"
 
 #include "src/main/main_app.h"
@@ -29,6 +29,8 @@ HWND	g_Wnd;
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND g_hEdit;
+ClientServiceRef g_service;
+MainApp* g_mainApp;
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -58,16 +60,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	MSG msg;
 
-	MainApp mainApp;
 	auto& graphicDevice = GraphicDevice::GetInstance();
 	auto& timerManager = TimerManager::GetInstance();
-
+	g_mainApp = new MainApp;
 	if (FAILED(timerManager.AddTimers(TEXT("Timer_Default"))))
 		return FALSE;
 
 	if (FAILED(timerManager.AddTimers(TEXT("Timer_60"))))
 		return FALSE;
 
+	g_mainApp->NativeConstruct();
 	// 기본 메시지 루프입니다:
 	float		fTimeAcc = 0.f;
 	while (true)
@@ -91,12 +93,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		{
 			const double timeDelta60 = timerManager.ComputeTimeDelta(TEXT("Timer_60"));
 
-			if (0x80000000 & mainApp.Tick(timeDelta60))
+			if (0x80000000 & g_mainApp->Tick(timeDelta60))
 			{
 				break;
 			}
 
-			if (FAILED(mainApp.RenderMainApp()))
+			if (FAILED(g_mainApp->RenderMainApp()))
 			{
 				break;
 			}
@@ -105,6 +107,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 
 	}
+	g_mainApp->SetConnected(false);
 	return (int)msg.wParam;
 }
 

@@ -2,7 +2,7 @@
 
 class Session;
 
-enum class EventType : uint8
+enum class EventType : uint8_t
 {
 	kConnect,
 	kDisconnect,

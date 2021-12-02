@@ -4,8 +4,8 @@
 
 Memory::Memory()
 {
-	int32 size = 0;
-	int32 tableIndex = 0;
+	int32_t size = 0;
+	int32_t tableIndex = 0;
 
 	for (size = 32; size <= 1024; size += 32)
 	{
@@ -52,22 +52,22 @@ Memory::~Memory()
 	_pools.clear();
 }
 
-auto Memory::Allocate(const int32 size) -> void*
+auto Memory::Allocate(const int32_t size) -> void*
 {
 	MemoryHeader* header = nullptr;
-	const int32 allocSize = size + sizeof(MemoryHeader);
+	const int32_t allocSize = size + sizeof(MemoryHeader);
 
 #ifdef _STOMP
 	header = reinterpret_cast<MemoryHeader*>(StompAllocator::Alloc(allocSize));
 #else
 	if (allocSize > MAX_ALLOC_SIZE)
 	{
-		// ¸Þ¸ð¸® Ç®¸µ ÃÖ´ë Å©±â¸¦ ¹þ¾î³ª¸é ÀÏ¹Ý ÇÒ´ç
+		// ï¿½Þ¸ï¿½ Ç®ï¿½ï¿½ ï¿½Ö´ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½î³ªï¿½ï¿½ ï¿½Ï¹ï¿½ ï¿½Ò´ï¿½
 		header = reinterpret_cast<MemoryHeader*>(::_aligned_malloc(allocSize, SLIST_ALIGNMENT));
 	}
 	else
 	{
-		// ¸Þ¸ð¸® Ç®¿¡¼­ ²¨³»¿Â´Ù
+		// ï¿½Þ¸ï¿½ Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½
 		header = _poolTable[allocSize]->Pop();
 	}
 #endif	
@@ -79,7 +79,7 @@ auto Memory::Release(void* ptr) -> void
 {
 	MemoryHeader* header = MemoryHeader::DetachHeader(ptr);
 
-	const int32 allocSize = header->alloc_size;
+	const int32_t allocSize = header->alloc_size;
 	ASSERT_CRASH(allocSize > 0);
 
 #ifdef _STOMP
@@ -87,12 +87,12 @@ auto Memory::Release(void* ptr) -> void
 #else
 	if (allocSize > MAX_ALLOC_SIZE)
 	{
-		// ¸Þ¸ð¸® Ç®¸µ ÃÖ´ë Å©±â¸¦ ¹þ¾î³ª¸é ÀÏ¹Ý ÇØÁ¦
+		// ï¿½Þ¸ï¿½ Ç®ï¿½ï¿½ ï¿½Ö´ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½î³ªï¿½ï¿½ ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 		::_aligned_free(header);
 	}
 	else
 	{
-		// ¸Þ¸ð¸® Ç®¿¡ ¹Ý³³ÇÑ´Ù
+		// ï¿½Þ¸ï¿½ Ç®ï¿½ï¿½ ï¿½Ý³ï¿½ï¿½Ñ´ï¿½
 		_poolTable[allocSize]->Push(header);
 	}
 #endif	

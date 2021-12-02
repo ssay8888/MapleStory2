@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "c_pch.h"
 #include "player.h"
 
 #include <iostream>
@@ -16,6 +16,7 @@
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
 #include "src/utility/components/vi_buffer/vi_buffer_terrain/vi_buffer_terrain.h"
 #include "src/utility/game_objects/manager/object_manager.h"
+#include "src/utility/light/light_manager.h"
 #include "src/utility/pipe_line/pipe_line.h"
 
 Player::Player(const ComPtr<IDirect3DDevice9>& device):
@@ -179,6 +180,15 @@ auto Player::SetUpConstantTable() const -> HRESULT
 	auto result = _shader_com->SetUpConstantTable("g_WorldMatrix", _transform_com->GetWorldMatrix(), sizeof(_matrix));
 	result = _shader_com->SetUpConstantTable("g_ViewMatrix", &view, sizeof(_matrix));
 	result = _shader_com->SetUpConstantTable("g_ProjMatrix", &project, sizeof(_matrix));
+
+	const D3DLIGHT9	lightDesc = LightManager::GetInstance().GetLightDesc(0);
+	const auto lightDir = _float4(lightDesc.Direction, 0.f);
+	result = _shader_com->SetUpConstantTable("g_vLightDir", &lightDir, sizeof(_float4));
+	result = _shader_com->SetUpConstantTable("g_vLightDiffuse", &lightDesc.Diffuse, sizeof(_float4));
+	result = _shader_com->SetUpConstantTable("g_vLightAmbient", &lightDesc.Ambient, sizeof(_float4));
+	result = _shader_com->SetUpConstantTable("g_vLightSpecular", &lightDesc.Specular, sizeof(_float4));
+	const auto camPos = _float4(pipeline.GetCamPosition(), 1.f);
+	result = _shader_com->SetUpConstantTable("g_vCamPosition", &camPos, sizeof(_float4));
 	return S_OK;
 }
 

@@ -72,8 +72,8 @@ String Index::CreateColumnsText()
 {
 	String ret;
 
-	const int32 size = static_cast<int32>(_columns.size());
-	for (int32 i = 0; i < size; i++)
+	const int32_t size = static_cast<int32_t>(_columns.size());
+	for (int32_t i = 0; i < size; i++)
 	{
 		if (i > 0)
 			ret += L", ";
@@ -131,8 +131,8 @@ String Procedure::GenerateParamString()
 {
 	String str;
 
-	const int32 size = static_cast<int32>(_parameters.size());
-	for (int32 i = 0; i < size; i++)
+	const int32_t size = static_cast<int32_t>(_parameters.size());
+	for (int32_t i = 0; i < size; i++)
 	{
 		if (i < size - 1)
 			str += DBModel::Helpers::Format(L"\t%s %s,\n", _parameters[i]._name.c_str(), _parameters[i]._type.c_str());
@@ -192,7 +192,7 @@ String Helpers::RemoveWhiteSpace(const String& str)
 	return ret;
 }
 
-DataType Helpers::String2DataType(const WCHAR* str, OUT int32& maxLen)
+DataType Helpers::String2DataType(const WCHAR* str, OUT int32_t& maxLen)
 {
 	std::wregex reg(L"([a-z]+)(\\((max|\\d+)\\))?");
 	std::wcmatch ret;

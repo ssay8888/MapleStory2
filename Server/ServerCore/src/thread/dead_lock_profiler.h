@@ -22,19 +22,19 @@ public:
 	auto CheckCycle() -> void;
 
 private:
-	auto Dfs(int32 index) -> void;
+	auto Dfs(int32_t index) -> void;
 
 private:
-	std::unordered_map<const char*, int32>	_name_to_id;
-	std::unordered_map<int32, const char*>	_id_to_name;
-	std::map<int32, std::set<int32>>		_lock_history;
+	std::unordered_map<const char*, int32_t>	_name_to_id;
+	std::unordered_map<int32_t, const char*>	_id_to_name;
+	std::map<int32_t, std::set<int32_t>>		_lock_history;
 
 	Mutex _lock;
 
 private:
-	std::vector<int32>	_discovered_order;
-	int32				_discovered_count = 0;
+	std::vector<int32_t>	_discovered_order;
+	int32_t				_discovered_count = 0;
 	std::vector<bool>	_finished;
-	std::vector<int32>	_parent;
+	std::vector<int32_t>	_parent;
 };
 

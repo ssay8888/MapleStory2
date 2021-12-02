@@ -7,7 +7,7 @@
 	Service
 --------------*/
 
-Service::Service(ServiceType type, NetAddress address, IocpCoreRef core, SessionFactory factory, int32 maxSessionCount) :
+Service::Service(ServiceType type, NetAddress address, IocpCoreRef core, SessionFactory factory, int32_t maxSessionCount) :
 	_type(type),
 	_netAddress(address),
 	_iocp_core(core),
@@ -65,12 +65,12 @@ auto Service::ReleaseSession(const SessionRef session) -> void
 	_session_count--;
 }
 
-auto Service::GetCurrentSessionCount() const -> int32
+auto Service::GetCurrentSessionCount() const -> int32_t
 {
 	return _session_count;
 }
 
-auto Service::GetMaxSessionCount() const -> int32
+auto Service::GetMaxSessionCount() const -> int32_t
 {
 	return _max_session_count;
 }
@@ -94,7 +94,7 @@ auto Service::GetIocpCore() -> IocpCoreRef&
 	ClientService
 ------------------*/
 
-ClientService::ClientService(NetAddress targetAddress, IocpCoreRef core, SessionFactory factory, int32 maxSessionCount)
+ClientService::ClientService(NetAddress targetAddress, IocpCoreRef core, SessionFactory factory, int32_t maxSessionCount)
 	: Service(ServiceType::Client, targetAddress, core, factory, maxSessionCount)
 {
 }
@@ -104,8 +104,8 @@ auto ClientService::Start() -> bool
 	if (CanStart() == false)
 		return false;
 
-	const int32 sessionCount = GetMaxSessionCount();
-	for (int32 i = 0; i < sessionCount; i++)
+	const int32_t sessionCount = GetMaxSessionCount();
+	for (int32_t i = 0; i < sessionCount; i++)
 	{
 		const SessionRef session = CreateSession();
 		if (session && session->Connect() == false)
@@ -115,7 +115,7 @@ auto ClientService::Start() -> bool
 	return true;
 }
 
-ServerService::ServerService(NetAddress address, IocpCoreRef core, SessionFactory factory, int32 maxSessionCount)
+ServerService::ServerService(NetAddress address, IocpCoreRef core, SessionFactory factory, int32_t maxSessionCount)
 	: Service(ServiceType::Server, address, core, factory, maxSessionCount)
 {
 }

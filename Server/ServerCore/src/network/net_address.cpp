@@ -10,7 +10,7 @@ NetAddress::NetAddress(const SOCKADDR_IN sockAddr) :
 {
 }
 
-NetAddress::NetAddress(const std::wstring ip, const uint16 port)
+NetAddress::NetAddress(const std::wstring ip, const uint16_t port)
 {
 	::memset(&_sock_addr, 0, sizeof(_sock_addr));
 	_sock_addr.sin_family = AF_INET;
@@ -30,7 +30,7 @@ auto NetAddress::GetIpAddress() -> std::wstring
 	return std::wstring(buffer);
 }
 
-auto NetAddress::GetPort() const -> uint16
+auto NetAddress::GetPort() const -> uint16_t
 {
 	return ::ntohs(_sock_addr.sin_port);
 }

@@ -60,5 +60,5 @@ auto ConsoleLog::SetColor(const bool stdOut, kColor color) -> void
 		FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY
 	};
 
-	::SetConsoleTextAttribute(stdOut ? _std_out : _std_err, SColors[static_cast<int32>(color)]);
+	::SetConsoleTextAttribute(stdOut ? _std_out : _std_err, SColors[static_cast<int32_t>(color)]);
 }

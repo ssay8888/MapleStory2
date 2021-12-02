@@ -5,18 +5,18 @@ class SendBufferChunk;
 class SendBuffer
 {
 public:
-	SendBuffer(SendBufferChunkRef owner, BYTE* buffer, uint32 allocSize);
+	SendBuffer(SendBufferChunkRef owner, BYTE* buffer, uint32_t allocSize);
 	~SendBuffer();
 
 	auto Buffer() const -> BYTE* ;
-	auto AllocSize() const -> uint32 ;
-	auto WriteSize() const -> uint32 ;
-	auto Close(uint32 writeSize) -> void;
+	auto AllocSize() const -> uint32_t ;
+	auto WriteSize() const -> uint32_t ;
+	auto Close(uint32_t writeSize) -> void;
 
 private:
 	BYTE*				_buffer;
-	uint32				_alloc_size = 0;
-	uint32				_write_size = 0;
+	uint32_t				_alloc_size = 0;
+	uint32_t				_write_size = 0;
 	SendBufferChunkRef	_owner;
 };
 
@@ -32,17 +32,17 @@ public:
 	~SendBufferChunk() = default;
 
 	auto Reset() -> void;
-	auto Open(uint32 allocSize) -> SendBufferRef;
-	auto Close(uint32 writeSize) -> void;
+	auto Open(uint32_t allocSize) -> SendBufferRef;
+	auto Close(uint32_t writeSize) -> void;
 
 	auto IsOpen() const -> bool { return _open; }
 	auto Buffer() -> BYTE* { return &_buffer[_used_size]; }
-	auto FreeSize() const -> uint32 { return static_cast<uint32>(_buffer.size()) - _used_size; }
+	auto FreeSize() const -> uint32_t { return static_cast<uint32_t>(_buffer.size()) - _used_size; }
 
 private:
 	Array<BYTE, SEND_BUFFER_CHUNK_SIZE>		_buffer = {};
 	bool									_open = false;
-	uint32									_used_size = 0;
+	uint32_t									_used_size = 0;
 };
 
 /*---------------------
@@ -61,7 +61,7 @@ public:
 		return instance;
 	}
 
-	SendBufferRef		Open(uint32 size);
+	SendBufferRef		Open(uint32_t size);
 
 private:
 	auto Pop() -> SendBufferChunkRef;

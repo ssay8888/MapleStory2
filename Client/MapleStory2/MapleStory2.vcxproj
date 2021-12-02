@@ -125,11 +125,12 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>c_pch.h</PrecompiledHeaderFile>
       <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
       <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
       <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,7 +168,10 @@
     <ClInclude Include="client_defines.h" />
     <ClInclude Include="client_pch.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="c_pch.h" />
+    <ClInclude Include="protocol\enum.pb.h" />
+    <ClInclude Include="protocol\protocol.pb.h" />
+    <ClInclude Include="protocol\struct.pb.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\game_object\back_ground\back_ground.h" />
     <ClInclude Include="src\game_object\camera\camera_free.h" />
@@ -178,6 +182,9 @@
     <ClInclude Include="src\game_object\ui\login\text_box_ui.h" />
     <ClInclude Include="src\game_object\ui\ui.h" />
     <ClInclude Include="src\main\main_app.h" />
+    <ClInclude Include="src\network\send_manager.h" />
+    <ClInclude Include="src\network\server_packet_handler.h" />
+    <ClInclude Include="src\network\server_session.h" />
     <ClInclude Include="src\scene\game_play\game_play.h" />
     <ClInclude Include="src\scene\loading\loader\loading.h" />
     <ClInclude Include="src\scene\loading\scene_loading.h" />
@@ -186,11 +193,20 @@
   <ItemGroup>
     <ClCompile Include="client_pch.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="c_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="protocol\enum.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="protocol\protocol.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="protocol\struct.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\game_object\back_ground\back_ground.cpp" />
     <ClCompile Include="src\game_object\camera\camera_free.cpp" />
@@ -201,6 +217,9 @@
     <ClCompile Include="src\game_object\ui\login\text_box_ui.cpp" />
     <ClCompile Include="src\game_object\ui\ui.cpp" />
     <ClCompile Include="src\main\main_app.cpp" />
+    <ClCompile Include="src\network\send_manager.cpp" />
+    <ClCompile Include="src\network\server_packet_handler.cpp" />
+    <ClCompile Include="src\network\server_session.cpp" />
     <ClCompile Include="src\scene\game_play\game_play.cpp" />
     <ClCompile Include="src\scene\loading\loader\loading.cpp" />
     <ClCompile Include="src\scene\loading\scene_loading.cpp" />

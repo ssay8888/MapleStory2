@@ -31,18 +31,6 @@
     <ClCompile Include="game_session\packet_creator.cpp">
       <Filter>game_session</Filter>
     </ClCompile>
-    <ClCompile Include="game_contents\game_room\game_room.cpp">
-      <Filter>game_contents\game_room</Filter>
-    </ClCompile>
-    <ClCompile Include="game_contents\game_room\game_room_manager.cpp">
-      <Filter>game_contents\game_room</Filter>
-    </ClCompile>
-    <ClCompile Include="game_contents\game_objects\game_object.cpp">
-      <Filter>game_contents\game_objects</Filter>
-    </ClCompile>
-    <ClCompile Include="game_contents\game_objects\monster\monster.cpp">
-      <Filter>game_contents\game_objects\monster</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="game_session">
@@ -56,18 +44,6 @@
     </Filter>
     <Filter Include="main">
       <UniqueIdentifier>{713985d8-a984-4024-bb64-ae04de0f5fd0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game_contents">
-      <UniqueIdentifier>{fc03240f-92a4-47f4-b69b-c30548f5d569}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game_contents\game_room">
-      <UniqueIdentifier>{6d572985-69a0-41e2-a00a-91661b2f93c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game_contents\game_objects">
-      <UniqueIdentifier>{c8637f75-22bd-47cf-8c93-73e15046a528}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game_contents\game_objects\monster">
-      <UniqueIdentifier>{28725f08-6f77-4ae7-bb96-f70f050dc3e6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -97,18 +73,6 @@
     </ClInclude>
     <ClInclude Include="game_session\packet_creator.h">
       <Filter>game_session</Filter>
-    </ClInclude>
-    <ClInclude Include="game_contents\game_room\game_room.h">
-      <Filter>game_contents\game_room</Filter>
-    </ClInclude>
-    <ClInclude Include="game_contents\game_room\game_room_manager.h">
-      <Filter>game_contents\game_room</Filter>
-    </ClInclude>
-    <ClInclude Include="game_contents\game_objects\game_object.h">
-      <Filter>game_contents\game_objects</Filter>
-    </ClInclude>
-    <ClInclude Include="game_contents\game_objects\monster\monster.h">
-      <Filter>game_contents\game_objects\monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

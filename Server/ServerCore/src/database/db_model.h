@@ -41,14 +41,14 @@ public:
 
 public:
 	String				_name;
-	int32				_columnId = 0; // DB
+	int32_t				_columnId = 0; // DB
 	DataType			_type = DataType::kNone;
 	String				_typeText;
-	int32				_maxLength = 0;
+	int32_t				_maxLength = 0;
 	bool				_nullable = false;
 	bool				_identity = false;
-	int64				_seedValue = 0;
-	int64				_incrementValue = 0;
+	int64_t				_seedValue = 0;
+	int64_t				_incrementValue = 0;
 	String				_default;
 	String				_defaultConstraintName; // DB
 };
@@ -75,7 +75,7 @@ public:
 
 public:
 	String				_name; // DB
-	int32				_indexId = 0; // DB
+	int32_t				_indexId = 0; // DB
 	IndexType			_type = IndexType::NonClustered;
 	bool				_primaryKey = false;
 	bool				_uniqueConstraint = false;
@@ -92,7 +92,7 @@ public:
 	ColumnRef			FindColumn(const String& columnName);
 
 public:
-	int32				_objectId = 0; // DB
+	int32_t				_objectId = 0; // DB
 	String				_name;
 	Vector<ColumnRef>	_columns;
 	Vector<IndexRef>	_indexes;
@@ -132,7 +132,7 @@ public:
 	static String		Format(const WCHAR* format, ...);
 	static String		DataType2String(DataType type);
 	static String		RemoveWhiteSpace(const String& str);
-	static DataType		String2DataType(const WCHAR* str, OUT int32& maxLen);
+	static DataType		String2DataType(const WCHAR* str, OUT int32_t& maxLen);
 };
 
 NAMESPACE_END

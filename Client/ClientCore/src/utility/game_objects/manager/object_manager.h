@@ -18,6 +18,7 @@ public:
 
 public:
 	auto GetComponentPtr(uint32_t levelIndex, const std::wstring& layerTag, const std::wstring& componentTag, uint32_t index = 0) const ->std::shared_ptr<Component>;
+	auto GetGameObjectPtr(uint32_t levelIndex, const std::wstring& layerTag, const std::wstring& componentTag, uint32_t iIndex)->std::shared_ptr<GameObject>;
 
 public:
 	auto ReserveContainer(uint32_t numLevel)->HRESULT;

@@ -17,25 +17,25 @@ bool XmlNode::GetBoolAttr(const WCHAR* key, bool defaultValue)
 	return defaultValue;
 }
 
-int8 XmlNode::GetInt8Attr(const WCHAR* key, int8 defaultValue)
+int8_t XmlNode::GetInt8Attr(const WCHAR* key, int8_t defaultValue)
 {
 	XmlAttributeType* attr = _node->first_attribute(key);
 	if (attr)
-		return static_cast<int8>(::_wtoi(attr->value()));
+		return static_cast<int8_t>(::_wtoi(attr->value()));
 
 	return defaultValue;
 }
 
-int16 XmlNode::GetInt16Attr(const WCHAR* key, int16 defaultValue)
+int16_t XmlNode::GetInt16Attr(const WCHAR* key, int16_t defaultValue)
 {
 	XmlAttributeType* attr = _node->first_attribute(key);
 	if (attr)
-		return static_cast<int16>(::_wtoi(attr->value()));
+		return static_cast<int16_t>(::_wtoi(attr->value()));
 
 	return defaultValue;
 }
 
-int32 XmlNode::GetInt32Attr(const WCHAR* key, int32 defaultValue)
+int32_t XmlNode::GetInt32Attr(const WCHAR* key, int32_t defaultValue)
 {
 	XmlAttributeType* attr = _node->first_attribute(key);
 	if (attr)
@@ -44,7 +44,7 @@ int32 XmlNode::GetInt32Attr(const WCHAR* key, int32 defaultValue)
 	return defaultValue;
 }
 
-int64 XmlNode::GetInt64Attr(const WCHAR* key, int64 defaultValue)
+int64_t XmlNode::GetInt64Attr(const WCHAR* key, int64_t defaultValue)
 {
 	xml_attribute<WCHAR>* attr = _node->first_attribute(key);
 	if (attr)
@@ -89,37 +89,37 @@ bool XmlNode::GetBoolValue(bool defaultValue)
 	return defaultValue;
 }
 
-int8 XmlNode::GetInt8Value(int8 defaultValue)
+int8_t XmlNode::GetInt8Value(int8_t defaultValue)
 {
 	WCHAR* val = _node->value();
 	if (val)
-		return static_cast<int8>(::_wtoi(val));
+		return static_cast<int8_t>(::_wtoi(val));
 
 	return defaultValue;
 }
 
-int16 XmlNode::GetInt16Value(int16 defaultValue)
+int16_t XmlNode::GetInt16Value(int16_t defaultValue)
 {
 	WCHAR* val = _node->value();
 	if (val)
-		return static_cast<int16>(::_wtoi(val));
+		return static_cast<int16_t>(::_wtoi(val));
 	return defaultValue;
 }
 
-int32 XmlNode::GetInt32Value(int32 defaultValue)
+int32_t XmlNode::GetInt32Value(int32_t defaultValue)
 {
 	WCHAR* val = _node->value();
 	if (val)
-		return static_cast<int32>(::_wtoi(val));
+		return static_cast<int32_t>(::_wtoi(val));
 
 	return defaultValue;
 }
 
-int64 XmlNode::GetInt64Value(int64 defaultValue)
+int64_t XmlNode::GetInt64Value(int64_t defaultValue)
 {
 	WCHAR* val = _node->value();
 	if (val)
-		return static_cast<int64>(::_wtoi64(val));
+		return static_cast<int64_t>(::_wtoi64(val));
 
 	return defaultValue;
 }

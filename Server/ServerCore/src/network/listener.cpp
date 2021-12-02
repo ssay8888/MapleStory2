@@ -40,8 +40,8 @@ auto Listener::StartAccept(ServerServiceRef service) -> bool
 	if (SocketUtils::Listen(_socket) == false)
 		return false;
 
-	const int32 acceptCount = _service->GetMaxSessionCount();
-	for (int32 i = 0; i < acceptCount; i++)
+	const int32_t acceptCount = _service->GetMaxSessionCount();
+	for (int32_t i = 0; i < acceptCount; i++)
 	{
 		AcceptEvent* acceptEvent = xnew<AcceptEvent>();
 		acceptEvent->owner = shared_from_this();
@@ -62,7 +62,7 @@ auto Listener::GetHandle() -> HANDLE
 	return reinterpret_cast<HANDLE>(_socket);
 }
 
-auto Listener::Dispatch(IocpEvent* iocpEvent, int32 numOfBytes) -> void
+auto Listener::Dispatch(IocpEvent* iocpEvent, int32_t numOfBytes) -> void
 {
 	ASSERT_CRASH(iocpEvent->event_type == EventType::kAccept);
 	AcceptEvent* acceptEvent = static_cast<AcceptEvent*>(iocpEvent);
@@ -79,7 +79,7 @@ auto Listener::RegisterAccept(AcceptEvent* acceptEvent) -> void
 	DWORD bytesReceived = 0;
 	if (false == SocketUtils::AcceptEx(_socket, session->GetSocket(), session->_recv_buffer.WritePos(), 0, sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, OUT & bytesReceived, static_cast<LPOVERLAPPED>(acceptEvent)))
 	{
-		const int32 errorCode = ::WSAGetLastError();
+		const int32_t errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			// 일단 다시 Accept 걸어준다
@@ -99,7 +99,7 @@ auto Listener::ProcessAccept(AcceptEvent* acceptEvent) -> void
 	}
 
 	SOCKADDR_IN sockAddress;
-	int32 sizeOfSockAddr = sizeof(sockAddress);
+	int32_t sizeOfSockAddr = sizeof(sockAddress);
 	if (SOCKET_ERROR == ::getpeername(session->GetSocket(), OUT reinterpret_cast<SOCKADDR*>(&sockAddress), &sizeOfSockAddr))
 	{
 		RegisterAccept(acceptEvent);

@@ -6,7 +6,7 @@ BufferWriter::BufferWriter()
 
 }
 
-BufferWriter::BufferWriter(BYTE* buffer, uint32 size, uint32 pos) :
+BufferWriter::BufferWriter(BYTE* buffer, uint32_t size, uint32_t pos) :
 	_buffer(buffer),
 	_size(size),
 	_pos(pos)
@@ -19,22 +19,22 @@ auto BufferWriter::Buffer() const -> BYTE*
 	return _buffer;
 }
 
-auto BufferWriter::Size() const -> uint32
+auto BufferWriter::Size() const -> uint32_t
 {
 	return _size;
 }
 
-auto BufferWriter::WriteSize() const -> uint32
+auto BufferWriter::WriteSize() const -> uint32_t
 {
 	return _pos;
 }
 
-auto BufferWriter::FreeSize() const -> uint32
+auto BufferWriter::FreeSize() const -> uint32_t
 {
 	return _size - _pos;
 }
 
-bool BufferWriter::Write(const void* src, const uint32 len)
+bool BufferWriter::Write(const void* src, const uint32_t len)
 {
 	if (FreeSize() < len)
 		return false;

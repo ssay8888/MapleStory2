@@ -12,10 +12,10 @@ public:
 	template<typename T, typename Ret, typename... Args>
 	auto DoAsync(Ret(T::*memFunc)(Args...), Args... args) -> void;
 
-	auto DoTimer(uint64 tickAfter, CallbackType&& callback) -> void;
+	auto DoTimer(uint64_t tickAfter, CallbackType&& callback) -> void;
 
 	template<typename T, typename Ret, typename... Args>
-	auto DoTimer(uint64 tickAfter, Ret(T::* memFunc)(Args...), Args... args) -> void;
+	auto DoTimer(uint64_t tickAfter, Ret(T::* memFunc)(Args...), Args... args) -> void;
 
 	auto ClearJobs() -> void;
 
@@ -25,7 +25,7 @@ public:
 
 protected:
 	LockQueue<JobRef>		_jobs;
-	Atomic<int32>			_job_count = 0;
+	Atomic<int32_t>			_job_count = 0;
 };
 
 template <typename T, typename Ret, typename ... Args>
@@ -36,7 +36,7 @@ auto JobQueue::DoAsync(Ret(T::* memFunc)(Args...), Args... args) -> void
 }
 
 template <typename T, typename Ret, typename ... Args>
-auto JobQueue::DoTimer(uint64 tickAfter, Ret(T::* memFunc)(Args...), Args... args) -> void
+auto JobQueue::DoTimer(uint64_t tickAfter, Ret(T::* memFunc)(Args...), Args... args) -> void
 {
 	std::shared_ptr<T> owner = std::static_pointer_cast<T>(shared_from_this());
 	const JobRef job = ObjectPool<Job>::MakeShared(owner, memFunc, std::forward<Args>(args)...);

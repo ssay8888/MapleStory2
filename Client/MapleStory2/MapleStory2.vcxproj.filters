@@ -4,7 +4,7 @@
     <ClInclude Include="main.h">
       <Filter>default</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="c_pch.h">
       <Filter>default</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -55,12 +55,30 @@
     <ClInclude Include="src\scene\loading\scene_loading.h">
       <Filter>scene\loading</Filter>
     </ClInclude>
+    <ClInclude Include="src\network\server_session.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\network\send_manager.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\network\server_packet_handler.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\enum.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\protocol.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\struct.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>default</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="c_pch.cpp">
       <Filter>default</Filter>
     </ClCompile>
     <ClCompile Include="src\main\main_app.cpp">
@@ -104,6 +122,24 @@
     </ClCompile>
     <ClCompile Include="src\game_object\ui\login\text_box_ui.cpp">
       <Filter>game_object\ui\login</Filter>
+    </ClCompile>
+    <ClCompile Include="src\network\server_packet_handler.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\network\send_manager.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\network\server_session.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\enum.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\protocol.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\struct.pb.cc">
+      <Filter>protocol</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +204,12 @@
     </Filter>
     <Filter Include="game_object\ui\login">
       <UniqueIdentifier>{a3a27b9f-89ab-46ac-b0b9-2f00d169f850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{c7aae913-0039-48c7-a0a7-9298e8411948}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="protocol">
+      <UniqueIdentifier>{fa70be99-5406-4d8e-ba98-14ed7ece0f7c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

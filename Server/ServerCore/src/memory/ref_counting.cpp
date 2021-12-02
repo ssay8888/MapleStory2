@@ -7,19 +7,19 @@ RefCountable::RefCountable() :
 	
 }
 
-auto RefCountable::GetRefCount() const -> int32
+auto RefCountable::GetRefCount() const -> int32_t
 {
 	return _ref_count;
 }
 
-auto RefCountable::AddRef() -> int32
+auto RefCountable::AddRef() -> int32_t
 {
 	return ++_ref_count;
 }
 
-auto RefCountable::ReleaseRef() -> int32
+auto RefCountable::ReleaseRef() -> int32_t
 {
-	const int32 refCount = --_ref_count;
+	const int32_t refCount = --_ref_count;
 	if (refCount == 0)
 	{
 		delete this;

@@ -13,7 +13,7 @@ class DBSynchronizer
 		kProcedureMaxLen = 10000
 	};
 
-	enum UpdateStep : uint8
+	enum UpdateStep : uint8_t
 	{
 		kDropIndex,
 		kAlterColumn,
@@ -28,7 +28,7 @@ class DBSynchronizer
 		kMax
 	};
 
-	enum ColumnFlag : uint8
+	enum ColumnFlag : uint8_t
 	{
 		kType = 1 << 0,
 		kNullable = 1 << 1,

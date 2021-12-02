@@ -8,9 +8,9 @@ enum
 DECLSPEC_ALIGN(kListAlignment)
 struct MemoryHeader : public SLIST_ENTRY
 {
-	MemoryHeader(const int32 size) : alloc_size(size) { }
+	MemoryHeader(const int32_t size) : alloc_size(size) { }
 
-	static void* AttachHeader(MemoryHeader* header, int32 size)
+	static void* AttachHeader(MemoryHeader* header, int32_t size)
 	{
 		new(header)MemoryHeader(size); 
 		return ++header;
@@ -22,7 +22,7 @@ struct MemoryHeader : public SLIST_ENTRY
 		return header;
 	}
 
-	int32 alloc_size;
+	int32_t alloc_size;
 	// TODO : 필요한 추가 정보
 };
 
@@ -30,7 +30,7 @@ DECLSPEC_ALIGN(kListAlignment)
 class MemoryPool
 {
 public:
-	MemoryPool(int32 allocSize);
+	MemoryPool(int32_t allocSize);
 	~MemoryPool();
 
 	auto Push(MemoryHeader* ptr) -> void;
@@ -38,8 +38,8 @@ public:
 
 private:
 	SLIST_HEADER		_header{};
-	int32				_alloc_size = 0;
-	std::atomic<int32>	_use_count = 0;
-	std::atomic<int32>	_reserve_count = 0;
+	int32_t				_alloc_size = 0;
+	std::atomic<int32_t>	_use_count = 0;
+	std::atomic<int32_t>	_reserve_count = 0;
 };
 

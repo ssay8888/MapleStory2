@@ -11,7 +11,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-template<typename Type, uint32 Size>
+template<typename Type, uint32_t Size>
 using Array = std::array<Type, Size>;
 
 template<typename Type>

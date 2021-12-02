@@ -37,12 +37,12 @@ public:
 	}
 
 private:
-	static int32		_s_alloc_size;
+	static int32_t		_s_alloc_size;
 	static MemoryPool	_s_pool;
 };
 
 template<typename Type>
-int32 ObjectPool<Type>::_s_alloc_size = sizeof(Type) + sizeof(MemoryHeader);
+int32_t ObjectPool<Type>::_s_alloc_size = sizeof(Type) + sizeof(MemoryHeader);
 
 template<typename Type>
 MemoryPool ObjectPool<Type>::_s_pool { _s_alloc_size };

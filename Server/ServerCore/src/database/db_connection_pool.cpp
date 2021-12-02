@@ -11,7 +11,7 @@ DBConnectionPool::~DBConnectionPool()
 	Clear();
 }
 
-auto DBConnectionPool::Connect(const int32 connectionCount, const WCHAR* connectionString) -> bool
+auto DBConnectionPool::Connect(const int32_t connectionCount, const WCHAR* connectionString) -> bool
 {
 	WRITE_LOCK;
 
@@ -21,7 +21,7 @@ auto DBConnectionPool::Connect(const int32 connectionCount, const WCHAR* connect
 	if (::SQLSetEnvAttr(_environment, SQL_ATTR_ODBC_VERSION, reinterpret_cast<SQLPOINTER>(SQL_OV_ODBC3), 0) != SQL_SUCCESS)
 		return false;
 
-	for (int32 i = 0; i < connectionCount; i++)
+	for (int32_t i = 0; i < connectionCount; i++)
 	{
 		auto connection = xnew<DBConnection>();
 		if (connection->Connect(_environment, connectionString) == false)

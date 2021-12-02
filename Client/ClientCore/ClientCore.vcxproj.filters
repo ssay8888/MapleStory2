@@ -100,6 +100,12 @@
     <ClInclude Include="src\utility\components\meshes\static\mesh_static.h">
       <Filter>utility\components\meshes\static</Filter>
     </ClInclude>
+    <ClInclude Include="src\utility\components\meshes\dynamic\mesh_dynamic.h">
+      <Filter>utility\components\meshes\dynamic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\components\meshes\dynamic\loader\hierarchy_loader.h">
+      <Filter>utility\components\meshes\dynamic\loader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -185,6 +191,12 @@
     </ClCompile>
     <ClCompile Include="src\utility\components\meshes\static\mesh_static.cpp">
       <Filter>utility\components\meshes\static</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\meshes\dynamic\mesh_dynamic.cpp">
+      <Filter>utility\components\meshes\dynamic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\meshes\dynamic\loader\hierarchy_loader.cpp">
+      <Filter>utility\components\meshes\dynamic\loader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +286,9 @@
     </Filter>
     <Filter Include="utility\components\meshes\static">
       <UniqueIdentifier>{260eb25f-4eca-4785-9e5a-646525418dd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\meshes\dynamic\loader">
+      <UniqueIdentifier>{07aa6d0e-4722-43d6-93fd-5d86699f21b4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

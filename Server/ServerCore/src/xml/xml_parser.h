@@ -20,19 +20,19 @@ public:
 	bool				IsValid() { return _node != nullptr; }
 
 	bool				GetBoolAttr(const WCHAR* key, bool defaultValue = false);
-	int8				GetInt8Attr(const WCHAR* key, int8 defaultValue = 0);
-	int16				GetInt16Attr(const WCHAR* key, int16 defaultValue = 0);
-	int32				GetInt32Attr(const WCHAR* key, int32 defaultValue = 0);
-	int64				GetInt64Attr(const WCHAR* key, int64 defaultValue = 0);
+	int8_t				GetInt8Attr(const WCHAR* key, int8_t defaultValue = 0);
+	int16_t				GetInt16Attr(const WCHAR* key, int16_t defaultValue = 0);
+	int32_t				GetInt32Attr(const WCHAR* key, int32_t defaultValue = 0);
+	int64_t				GetInt64Attr(const WCHAR* key, int64_t defaultValue = 0);
 	float				GetFloatAttr(const WCHAR* key, float defaultValue = 0.0f);
 	double				GetDoubleAttr(const WCHAR* key, double defaultValue = 0.0);
 	const WCHAR*		GetStringAttr(const WCHAR* key, const WCHAR* defaultValue = L"");
 
 	bool				GetBoolValue(bool defaultValue = false);
-	int8				GetInt8Value(int8 defaultValue = 0);
-	int16				GetInt16Value(int16 defaultValue = 0);
-	int32				GetInt32Value(int32 defaultValue = 0);
-	int64				GetInt64Value(int64 defaultValue = 0);
+	int8_t				GetInt8Value(int8_t defaultValue = 0);
+	int16_t				GetInt16Value(int16_t defaultValue = 0);
+	int32_t				GetInt32Value(int32_t defaultValue = 0);
+	int64_t				GetInt64Value(int64_t defaultValue = 0);
 	float				GetFloatValue(float defaultValue = 0.0f);
 	double				GetDoubleValue(double defaultValue = 0.0);
 	const WCHAR*		GetStringValue(const WCHAR* defaultValue = L"");

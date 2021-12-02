@@ -9,11 +9,11 @@ class NetAddress
 public:
 	NetAddress() = default;
 	NetAddress(SOCKADDR_IN sockAddr);
-	NetAddress(std::wstring ip, uint16 port);
+	NetAddress(std::wstring ip, uint16_t port);
 
 	auto GetSockAddr() -> SOCKADDR_IN& ;
 	auto GetIpAddress() ->std::wstring;
-	auto GetPort() const -> uint16 ;
+	auto GetPort() const -> uint16_t ;
 
 public:
 	static IN_ADDR	Ip2Address(const WCHAR* ip);

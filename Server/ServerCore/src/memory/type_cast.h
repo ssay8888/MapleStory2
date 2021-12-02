@@ -38,7 +38,7 @@ struct Length<TypeList<T, U...>>
 #pragma endregion
 
 #pragma region TypeAt
-template<typename TL, int32 index>
+template<typename TL, int32_t index>
 struct TypeAt;
 
 template<typename Head, typename... Tail>
@@ -47,7 +47,7 @@ struct TypeAt<TypeList<Head, Tail...>, 0>
 	using Result = Head;
 };
 
-template<typename Head, typename... Tail, int32 index>
+template<typename Head, typename... Tail, int32_t index>
 struct TypeAt<TypeList<Head, Tail...>, index>
 {
 	using Result = typename TypeAt<TypeList<Tail...>, index - 1>::Result;
@@ -103,7 +103,7 @@ public:
 
 #pragma region TypeCast
 
-template<int32 v>
+template<int32_t v>
 struct Int2Type
 {
 	enum { value = v };
@@ -123,7 +123,7 @@ public:
 		MakeTable(Int2Type<0>(), Int2Type<0>());
 	}
 
-	template<int32 i, int32 j>
+	template<int32_t i, int32_t j>
 	static void MakeTable(Int2Type<i>, Int2Type<j>)
 	{
 		using FromType = typename TypeAt<TL, i>::Result;
@@ -137,7 +137,7 @@ public:
 		MakeTable(Int2Type<i>(), Int2Type<j + 1>());
 	}
 
-	template<int32 i>
+	template<int32_t i>
 	static void MakeTable(Int2Type<i>, Int2Type<length>)
 	{
 		MakeTable(Int2Type<i + 1>(), Int2Type<0>());
@@ -148,7 +148,7 @@ public:
 	{
 	}
 
-	static inline bool CanConvert(int32 from, int32 to)
+	static inline bool CanConvert(int32_t from, int32_t to)
 	{
 		static TypeConversion conversion;
 		return s_convert[from][to];
@@ -213,5 +213,5 @@ bool CanCast(std::shared_ptr<From> ptr)
 
 #pragma endregion
 
-#define DECLARE_TL		using TL = TL; int32 _typeId;
+#define DECLARE_TL		using TL = TL; int32_t _typeId;
 #define INIT_TL(Type)	_typeId = IndexOf<TL, Type>::value;

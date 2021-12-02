@@ -9,7 +9,7 @@ R : ReadFlag (Shared Lock Count)
 
 class Lock
 {
-    enum : uint32
+    enum : uint32_t
     {
         kAcquireTimeoutTick = 10000,
         kMaxSpinCount = 5000,
@@ -25,8 +25,8 @@ public:
     auto ReadUnlock(const char* name) -> void;
 
 private:
-    Atomic<uint32> _lock_flag = kEmptyFlag;
-    uint16 _write_count = 0;
+    Atomic<uint32_t> _lock_flag = kEmptyFlag;
+    uint16_t _write_count = 0;
 };
 
 class ReadLockGuard

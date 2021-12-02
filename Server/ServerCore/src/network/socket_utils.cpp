@@ -33,7 +33,7 @@ auto SocketUtils::CreateSocket() -> SOCKET
 	return ::WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
 }
 
-auto SocketUtils::SetLinger(const SOCKET socket, const uint16 onoff, const uint16 linger)-> bool
+auto SocketUtils::SetLinger(const SOCKET socket, const uint16_t onoff, const uint16_t linger)-> bool
 {
 	LINGER option;
 	option.l_onoff = onoff;
@@ -46,12 +46,12 @@ auto SocketUtils::SetReuseAddress(const SOCKET socket, const bool flag)-> bool
 	return SetSockOpt(socket, SOL_SOCKET, SO_REUSEADDR, flag);
 }
 
-auto SocketUtils::SetRecvBufferSize(const SOCKET socket, const int32 size)-> bool
+auto SocketUtils::SetRecvBufferSize(const SOCKET socket, const int32_t size)-> bool
 {
 	return SetSockOpt(socket, SOL_SOCKET, SO_RCVBUF, size);
 }
 
-auto SocketUtils::SetSendBufferSize(const SOCKET socket, const int32 size)-> bool
+auto SocketUtils::SetSendBufferSize(const SOCKET socket, const int32_t size)-> bool
 {
 	return SetSockOpt(socket, SOL_SOCKET, SO_SNDBUF, size);
 }
@@ -72,7 +72,7 @@ auto SocketUtils::Bind(const SOCKET socket, NetAddress netAddr)-> bool
 	return SOCKET_ERROR != ::bind(socket, reinterpret_cast<const SOCKADDR*>(&netAddr.GetSockAddr()), sizeof(SOCKADDR_IN));
 }
 
-auto SocketUtils::BindAnyAddress(const SOCKET socket, const uint16 port)-> bool
+auto SocketUtils::BindAnyAddress(const SOCKET socket, const uint16_t port)-> bool
 {
 	SOCKADDR_IN myAddress;
 	myAddress.sin_family = AF_INET;
@@ -82,7 +82,7 @@ auto SocketUtils::BindAnyAddress(const SOCKET socket, const uint16 port)-> bool
 	return SOCKET_ERROR != ::bind(socket, reinterpret_cast<const SOCKADDR*>(&myAddress), sizeof(myAddress));
 }
 
-auto SocketUtils::Listen(const SOCKET socket, const  int32 backlog)-> bool
+auto SocketUtils::Listen(const SOCKET socket, const  int32_t backlog)-> bool
 {
 	return SOCKET_ERROR != ::listen(socket, backlog);
 }

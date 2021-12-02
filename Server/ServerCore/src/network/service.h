@@ -4,7 +4,7 @@
 #include "listener.h"
 #include <functional>
 
-enum class ServiceType : uint8
+enum class ServiceType : uint8_t
 {
 	Server,
 	Client
@@ -19,7 +19,7 @@ using SessionFactory = std::function<SessionRef(void)>;
 class Service : public std::enable_shared_from_this<Service>
 {
 public:
-	Service(ServiceType type, NetAddress address, IocpCoreRef core, SessionFactory factory, int32 maxSessionCount = 1);
+	Service(ServiceType type, NetAddress address, IocpCoreRef core, SessionFactory factory, int32_t maxSessionCount = 1);
 	virtual ~Service() = default;
 
 	virtual auto Start() -> bool abstract;
@@ -32,8 +32,8 @@ public:
 	auto CreateSession() -> SessionRef;
 	auto AddSession(SessionRef session) -> void;
 	auto ReleaseSession(SessionRef session) -> void;
-	auto GetCurrentSessionCount() const -> int32 ;
-	auto GetMaxSessionCount() const -> int32 ;
+	auto GetCurrentSessionCount() const -> int32_t ;
+	auto GetMaxSessionCount() const -> int32_t ;
 		 
 public:	 
 	auto GetServiceType() const -> ServiceType ;
@@ -47,8 +47,8 @@ protected:
 	IocpCoreRef			_iocp_core;
 
 	Set<SessionRef>		_sessions;
-	int32				_session_count = 0;
-	int32				_max_session_count = 0;
+	int32_t				_session_count = 0;
+	int32_t				_max_session_count = 0;
 	SessionFactory		_session_factory;
 };
 
@@ -59,7 +59,7 @@ protected:
 class ClientService : public Service
 {
 public:
-	ClientService(NetAddress targetAddress, IocpCoreRef core, SessionFactory factory, int32 maxSessionCount = 1);
+	ClientService(NetAddress targetAddress, IocpCoreRef core, SessionFactory factory, int32_t maxSessionCount = 1);
 	virtual ~ClientService()
 	{
 	}
@@ -76,7 +76,7 @@ public:
 class ServerService : public Service
 {
 public:
-	ServerService(NetAddress targetAddress, IocpCoreRef core, SessionFactory factory, int32 maxSessionCount = 1);
+	ServerService(NetAddress targetAddress, IocpCoreRef core, SessionFactory factory, int32_t maxSessionCount = 1);
 	virtual ~ServerService() = default;
 
 	virtual auto Start() -> bool override;

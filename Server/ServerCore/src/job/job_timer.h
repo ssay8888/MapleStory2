@@ -12,7 +12,7 @@ struct TimerItem
 {
 	auto operator<(const TimerItem& other) const -> bool;
 
-	uint64 execute_tick = 0;
+	uint64_t execute_tick = 0;
 	JobData* job_data = nullptr;
 };
 
@@ -29,8 +29,8 @@ public:
 		return instance;
 	}
 
-	void			Reserve(uint64 tickAfter, std::weak_ptr<JobQueue> owner, JobRef job);
-	void			Distribute(uint64 now);
+	void			Reserve(uint64_t tickAfter, std::weak_ptr<JobQueue> owner, JobRef job);
+	void			Distribute(uint64_t now);
 	void			Clear();
 
 private:

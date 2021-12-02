@@ -10,14 +10,14 @@ public:
 	RefCountable();
 	virtual ~RefCountable() = default;
 
-	auto GetRefCount() const -> int32;
+	auto GetRefCount() const -> int32_t;
 
-	auto AddRef() -> int32;
+	auto AddRef() -> int32_t;
 
-	auto ReleaseRef() -> int32;
+	auto ReleaseRef() -> int32_t;
 
 protected:
-	std::atomic<int32> _ref_count;
+	std::atomic<int32_t> _ref_count;
 };
 
 /*---------------

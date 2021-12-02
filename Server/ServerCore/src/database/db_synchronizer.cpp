@@ -29,19 +29,19 @@ namespace SP
 	public:
 		GetDBTables(DBConnection& conn) : DBBind(conn, QTablesAndColumns) {}
 
-		void Out_ObjectId(OUT int32& value) { BindCol(0, value); }
-		template<int32 N> void Out_TableName(OUT WCHAR(&value)[N]) { BindCol(1, value); }
-		template<int32 N> void Out_ColumnName(OUT WCHAR(&value)[N]) { BindCol(2, value); }
-		void Out_ColumnId(OUT int32& value) { BindCol(3, value); }
-		void Out_UserType(OUT int32& value) { BindCol(4, value); }
-		void Out_MaxLength(OUT int32& value) { BindCol(5, value); }
+		void Out_ObjectId(OUT int32_t& value) { BindCol(0, value); }
+		template<int32_t N> void Out_TableName(OUT WCHAR(&value)[N]) { BindCol(1, value); }
+		template<int32_t N> void Out_ColumnName(OUT WCHAR(&value)[N]) { BindCol(2, value); }
+		void Out_ColumnId(OUT int32_t& value) { BindCol(3, value); }
+		void Out_UserType(OUT int32_t& value) { BindCol(4, value); }
+		void Out_MaxLength(OUT int32_t& value) { BindCol(5, value); }
 		void Out_IsNullable(OUT bool& value) { BindCol(6, value); }
 		void Out_IsIdentity(OUT bool& value) { BindCol(7, value); }
-		void Out_SeedValue(OUT int64& value) { BindCol(8, value); }
-		void Out_IncrementValue(OUT int64& value) { BindCol(9, value); }
-		void Out_DefaultObjectId(OUT int32& value) { BindCol(10, value); }
-		template<int32 N> void Out_DefaultDefinition(OUT WCHAR(&value)[N]) { BindCol(11, value); }
-		template<int32 N> void Out_DefaultConstraintName(OUT WCHAR(&value)[N]) { BindCol(12, value); }
+		void Out_SeedValue(OUT int64_t& value) { BindCol(8, value); }
+		void Out_IncrementValue(OUT int64_t& value) { BindCol(9, value); }
+		void Out_DefaultObjectId(OUT int32_t& value) { BindCol(10, value); }
+		template<int32_t N> void Out_DefaultDefinition(OUT WCHAR(&value)[N]) { BindCol(11, value); }
+		template<int32_t N> void Out_DefaultConstraintName(OUT WCHAR(&value)[N]) { BindCol(12, value); }
 	};
 
 	const WCHAR* QIndexes =
@@ -58,14 +58,14 @@ namespace SP
 	public:
 		GetDBIndexes(DBConnection& conn) : DBBind(conn, QIndexes) {}
 
-		void Out_ObjectId(OUT int32& value) { BindCol(0, value); }
-		template<int32 N> void Out_IndexName(OUT WCHAR(&value)[N]) { BindCol(1, value); }
-		void Out_IndexId(OUT int32& value) { BindCol(2, value); }
-		void Out_IndexType(OUT int32& value) { BindCol(3, value); }
+		void Out_ObjectId(OUT int32_t& value) { BindCol(0, value); }
+		template<int32_t N> void Out_IndexName(OUT WCHAR(&value)[N]) { BindCol(1, value); }
+		void Out_IndexId(OUT int32_t& value) { BindCol(2, value); }
+		void Out_IndexType(OUT int32_t& value) { BindCol(3, value); }
 		void Out_IsPrimaryKey(OUT bool& value) { BindCol(4, value); }
 		void Out_IsUniqueConstraint(OUT bool& value) { BindCol(5, value); }
-		void Out_ColumnId(OUT int32& value) { BindCol(6, value); }
-		template<int32 N> void Out_ColumnName(OUT WCHAR(&value)[N]) { BindCol(7, value); }
+		void Out_ColumnId(OUT int32_t& value) { BindCol(6, value); }
+		template<int32_t N> void Out_ColumnName(OUT WCHAR(&value)[N]) { BindCol(7, value); }
 	};
 
 	const WCHAR* QStoredProcedures =
@@ -76,8 +76,8 @@ namespace SP
 	public:
 		GetDBStoredProcedures(DBConnection& conn) : DBBind(conn, QStoredProcedures) {}
 
-		template<int32 N> void Out_Name(OUT WCHAR(&value)[N]) { BindCol(0, value); }
-		void Out_Body(OUT WCHAR* value, int32 len) { BindCol(1, value, len); }
+		template<int32_t N> void Out_Name(OUT WCHAR(&value)[N]) { BindCol(0, value); }
+		void Out_Body(OUT WCHAR* value, int32_t len) { BindCol(1, value, len); }
 	};
 }
 
@@ -198,17 +198,17 @@ void DBSynchronizer::ParseXmlDB(const WCHAR* path)
 
 bool DBSynchronizer::GatherDBTables()
 {
-	int32 objectId;
+	int32_t objectId;
 	WCHAR tableName[101] = { 0 };
 	WCHAR columnName[101] = { 0 };
-	int32 columnId;
-	int32 userTypeId;
-	int32 maxLength;
+	int32_t columnId;
+	int32_t userTypeId;
+	int32_t maxLength;
 	bool isNullable;
 	bool isIdentity;
-	int64 seedValue;
-	int64 incValue;
-	int32 defaultObjectId;
+	int64_t seedValue;
+	int64_t incValue;
+	int32_t defaultObjectId;
 	WCHAR defaultDefinition[101] = { 0 };
 	WCHAR defaultConstraintName[101] = { 0 };
 
@@ -262,7 +262,7 @@ bool DBSynchronizer::GatherDBTables()
 			if (defaultObjectId > 0)
 			{
 				column->_default = defaultDefinition;
-				uint64 p = column->_default.find_first_not_of('(');
+				uint64_t p = column->_default.find_first_not_of('(');
 				column->_default = column->_default.substr(p, column->_default.size() - p * 2);
 				column->_defaultConstraintName = defaultConstraintName;
 			}
@@ -276,13 +276,13 @@ bool DBSynchronizer::GatherDBTables()
 
 bool DBSynchronizer::GatherDBIndexes()
 {
-	int32 objectId;
+	int32_t objectId;
 	WCHAR indexName[101] = { 0 };
-	int32 indexId;
-	int32 indexType;
+	int32_t indexId;
+	int32_t indexType;
 	bool isPrimaryKey;
 	bool isUniqueConstraint;
-	int32 columnId;
+	int32_t columnId;
 	WCHAR columnName[101] = { 0 };
 
 	SP::GetDBIndexes getDBIndexes(_dbConn);
@@ -391,8 +391,8 @@ void DBSynchronizer::CompareDBModel()
 		DBModel::TableRef& xmlTable = mapIt.second;
 
 		String columnsStr;
-		const int32 size = static_cast<int32>(xmlTable->_columns.size());
-		for (int32 i = 0; i < size; i++)
+		const int32_t size = static_cast<int32_t>(xmlTable->_columns.size());
+		for (int32_t i = 0; i < size; i++)
 		{
 			if (i != 0)
 				columnsStr += L",";
@@ -445,7 +445,7 @@ void DBSynchronizer::CompareDBModel()
 
 void DBSynchronizer::ExecuteUpdateQueries()
 {
-	for (int32 step = 0; step < UpdateStep::kMax; step++)
+	for (int32_t step = 0; step < UpdateStep::kMax; step++)
 	{
 		for (String& query : _updateQueries[step])
 		{
@@ -556,7 +556,7 @@ void DBSynchronizer::CompareTables(DBModel::TableRef dbTable, DBModel::TableRef 
 
 void DBSynchronizer::CompareColumns(DBModel::TableRef dbTable, DBModel::ColumnRef dbColumn, DBModel::ColumnRef xmlColumn)
 {
-	uint8 flag = 0;
+	uint8_t flag = 0;
 
 	if (dbColumn->_type != xmlColumn->_type)
 		flag |= ColumnFlag::kType;

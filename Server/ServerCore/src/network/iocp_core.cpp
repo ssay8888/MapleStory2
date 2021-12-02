@@ -27,7 +27,7 @@ auto IocpCore::Register(const IocpObjectRef iocpObject) -> bool
 	return ::CreateIoCompletionPort(iocpObject->GetHandle(), _iocp_handle, /*key*/0, 0);
 }
 
-auto IocpCore::Dispatch(const uint32 timeoutMs) -> bool
+auto IocpCore::Dispatch(const uint32_t timeoutMs) -> bool
 {
 	DWORD numOfBytes = 0;
 	ULONG_PTR key = 0;	
@@ -41,7 +41,7 @@ auto IocpCore::Dispatch(const uint32 timeoutMs) -> bool
 	}
 	else
 	{
-		switch (int32 errCode = ::WSAGetLastError())
+		switch (int32_t errCode = ::WSAGetLastError())
 		{
 		case WAIT_TIMEOUT:
 			return false;

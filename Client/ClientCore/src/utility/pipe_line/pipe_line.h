@@ -14,6 +14,7 @@ public:
 
 public:
 	auto GetTransform(const D3DTRANSFORMSTATETYPE stateType)->_matrix;
+	auto GetCamPosition() const->_float3;
 
 public:
 	auto SetTransform(D3DTRANSFORMSTATETYPE eStateType, const _matrix& transformMatrix)->void;
@@ -21,5 +22,6 @@ public:
 private:
 	_matrix			_view_matrix;
 	_matrix			_proj_matrix;
+	_float3			_cam_position;
 };
 

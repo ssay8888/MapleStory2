@@ -42,7 +42,7 @@ public:
 private:
 						/* 인터페이스 구현 */
 	virtual auto GetHandle() -> HANDLE	 override;
-	virtual auto Dispatch(class IocpEvent* iocpEvent, int32 numOfBytes = 0) -> void override;
+	virtual auto Dispatch(class IocpEvent* iocpEvent, int32_t numOfBytes = 0) -> void override;
 
 private:
 						/* 전송 관련 */
@@ -53,16 +53,16 @@ private:
 		 
 	auto ProcessConnect() -> void;
 	auto ProcessDisconnect() -> void;
-	auto ProcessRecv(int32 numOfBytes) -> void;
-	auto ProcessSend(int32 numOfBytes) -> void;
+	auto ProcessRecv(int32_t numOfBytes) -> void;
+	auto ProcessSend(int32_t numOfBytes) -> void;
 		 
-	auto HandleError(int32 errorCode) -> void;
+	auto HandleError(int32_t errorCode) -> void;
 
 protected:
 						/* 컨텐츠 코드에서 재정의 */
 	virtual auto OnConnected() -> void { }
-	virtual auto OnRecv(BYTE* buffer, int32 len) -> int32 ;
-	virtual auto OnSend(int32 len) -> void { }
+	virtual auto OnRecv(BYTE* buffer, int32_t len) -> int32_t ;
+	virtual auto OnSend(int32_t len) -> void { }
 	virtual auto OnDisconnected() -> void { }
 
 private:
@@ -91,8 +91,8 @@ private:
 
 struct PacketHeader
 {
-	uint16 size;
-	uint16 id;
+	uint16_t size;
+	uint16_t id;
 };
 
 class PacketSession : public Session
@@ -104,6 +104,6 @@ public:
 	auto GetPacketSessionRef() -> PacketSessionRef ;
 
 protected:
-	virtual auto OnRecv(BYTE* buffer, int32 len) -> int32 sealed;
-	virtual auto OnRecvPacket(BYTE* buffer, int32 len) ->void abstract;
+	virtual auto OnRecv(BYTE* buffer, int32_t len) -> int32_t sealed;
+	virtual auto OnRecvPacket(BYTE* buffer, int32_t len) ->void abstract;
 };

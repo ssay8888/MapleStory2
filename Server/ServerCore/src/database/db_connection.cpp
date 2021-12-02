@@ -73,13 +73,13 @@ auto DBConnection::Fetch() -> bool
 	}
 }
 
-auto DBConnection::GetRowCount() -> int32
+auto DBConnection::GetRowCount() -> int32_t
 {
 	SQLLEN count = 0;
 	SQLRETURN ret = ::SQLRowCount(_statement, OUT &count);
 
 	if (ret == SQL_SUCCESS || ret == SQL_SUCCESS_WITH_INFO)
-		return static_cast<int32>(count);
+		return static_cast<int32_t>(count);
 
 	return -1;
 }
@@ -91,47 +91,47 @@ auto DBConnection::Unbind() -> void
 	::SQLFreeStmt(_statement, SQL_CLOSE);
 }
 
-auto DBConnection::BindParam(const int32 paramIndex, bool* value, SQLLEN* index) -> bool
+auto DBConnection::BindParam(const int32_t paramIndex, bool* value, SQLLEN* index) -> bool
 {
 	return BindParam(paramIndex, SQL_C_TINYINT, SQL_TINYINT, size32(bool), value, index);
 }
 
-auto DBConnection::BindParam(const int32 paramIndex, float* value, SQLLEN* index) -> bool
+auto DBConnection::BindParam(const int32_t paramIndex, float* value, SQLLEN* index) -> bool
 {
 	return BindParam(paramIndex, SQL_C_FLOAT, SQL_REAL, 0, value, index);
 }
 
-auto DBConnection::BindParam(const int32 paramIndex, double* value, SQLLEN* index) -> bool
+auto DBConnection::BindParam(const int32_t paramIndex, double* value, SQLLEN* index) -> bool
 {
 	return BindParam(paramIndex, SQL_C_DOUBLE, SQL_DOUBLE, 0, value, index);
 }
 
-auto DBConnection::BindParam(const int32 paramIndex, int8* value, SQLLEN* index) -> bool
+auto DBConnection::BindParam(const int32_t paramIndex, int8_t* value, SQLLEN* index) -> bool
 {
-	return BindParam(paramIndex, SQL_C_TINYINT, SQL_TINYINT, size32(int8), value, index);
+	return BindParam(paramIndex, SQL_C_TINYINT, SQL_TINYINT, size32(int8_t), value, index);
 }
 
-auto DBConnection::BindParam(const int32 paramIndex, int16* value, SQLLEN* index) -> bool
+auto DBConnection::BindParam(const int32_t paramIndex, int16_t* value, SQLLEN* index) -> bool
 {
-	return BindParam(paramIndex, SQL_C_SHORT, SQL_SMALLINT, size32(int16), value, index);
+	return BindParam(paramIndex, SQL_C_SHORT, SQL_SMALLINT, size32(int16_t), value, index);
 }
 
-auto DBConnection::BindParam(const int32 paramIndex, int32* value, SQLLEN* index) -> bool
+auto DBConnection::BindParam(const int32_t paramIndex, int32_t* value, SQLLEN* index) -> bool
 {
-	return BindParam(paramIndex, SQL_C_LONG, SQL_INTEGER, size32(int32), value, index);
+	return BindParam(paramIndex, SQL_C_LONG, SQL_INTEGER, size32(int32_t), value, index);
 }
 
-auto DBConnection::BindParam(const int32 paramIndex, int64* value, SQLLEN* index) -> bool
+auto DBConnection::BindParam(const int32_t paramIndex, int64_t* value, SQLLEN* index) -> bool
 {
-	return BindParam(paramIndex, SQL_C_SBIGINT, SQL_BIGINT, size32(int64), value, index);
+	return BindParam(paramIndex, SQL_C_SBIGINT, SQL_BIGINT, size32(int64_t), value, index);
 }
 
-auto DBConnection::BindParam(const int32 paramIndex, TIMESTAMP_STRUCT* value, SQLLEN* index) -> bool
+auto DBConnection::BindParam(const int32_t paramIndex, TIMESTAMP_STRUCT* value, SQLLEN* index) -> bool
 {
 	return BindParam(paramIndex, SQL_C_TYPE_TIMESTAMP, SQL_TYPE_TIMESTAMP, size32(TIMESTAMP_STRUCT), value, index);
 }
 
-auto DBConnection::BindParam(const int32 paramIndex, const WCHAR* str, SQLLEN* index) -> bool
+auto DBConnection::BindParam(const int32_t paramIndex, const WCHAR* str, SQLLEN* index) -> bool
 {
 	const SQLULEN size = static_cast<SQLULEN>((::wcslen(str) + 1) * 2);
 	*index = SQL_NTSL;
@@ -142,7 +142,7 @@ auto DBConnection::BindParam(const int32 paramIndex, const WCHAR* str, SQLLEN* i
 		return BindParam(paramIndex, SQL_C_WCHAR, SQL_WVARCHAR, size, (SQLPOINTER)str, index);
 }
 
-auto DBConnection::BindParam(const int32 paramIndex, const BYTE* bin, int32 size, SQLLEN* index) -> bool
+auto DBConnection::BindParam(const int32_t paramIndex, const BYTE* bin, int32_t size, SQLLEN* index) -> bool
 {
 	if (bin == nullptr)
 	{
@@ -158,52 +158,52 @@ auto DBConnection::BindParam(const int32 paramIndex, const BYTE* bin, int32 size
 		return BindParam(paramIndex, SQL_C_BINARY, SQL_BINARY, size, (BYTE*)bin, index);
 }
 
-auto DBConnection::BindCol(const int32 columnIndex, bool* value, SQLLEN* index) -> bool
+auto DBConnection::BindCol(const int32_t columnIndex, bool* value, SQLLEN* index) -> bool
 {
 	return BindCol(columnIndex, SQL_C_TINYINT, size32(bool), value, index);
 }
 
-auto DBConnection::BindCol(const int32 columnIndex, float* value, SQLLEN* index) -> bool
+auto DBConnection::BindCol(const int32_t columnIndex, float* value, SQLLEN* index) -> bool
 {
 	return BindCol(columnIndex, SQL_C_FLOAT, size32(float), value, index);
 }
 
-auto DBConnection::BindCol(const int32 columnIndex, double* value, SQLLEN* index) -> bool
+auto DBConnection::BindCol(const int32_t columnIndex, double* value, SQLLEN* index) -> bool
 {
 	return BindCol(columnIndex, SQL_C_DOUBLE, size32(double), value, index);
 }
 
-auto DBConnection::BindCol(const int32 columnIndex, int8* value, SQLLEN* index) -> bool
+auto DBConnection::BindCol(const int32_t columnIndex, int8_t* value, SQLLEN* index) -> bool
 {
-	return BindCol(columnIndex, SQL_C_TINYINT, size32(int8), value, index);
+	return BindCol(columnIndex, SQL_C_TINYINT, size32(int8_t), value, index);
 }
 
-auto DBConnection::BindCol(const int32 columnIndex, int16* value, SQLLEN* index) -> bool
+auto DBConnection::BindCol(const int32_t columnIndex, int16_t* value, SQLLEN* index) -> bool
 {
-	return BindCol(columnIndex, SQL_C_SHORT, size32(int16), value, index);
+	return BindCol(columnIndex, SQL_C_SHORT, size32(int16_t), value, index);
 }
 
-auto DBConnection::BindCol(const int32 columnIndex, int32* value, SQLLEN* index) -> bool
+auto DBConnection::BindCol(const int32_t columnIndex, int32_t* value, SQLLEN* index) -> bool
 {
-	return BindCol(columnIndex, SQL_C_LONG, size32(int32), value, index);
+	return BindCol(columnIndex, SQL_C_LONG, size32(int32_t), value, index);
 }
 
-auto DBConnection::BindCol(const int32 columnIndex, int64* value, SQLLEN* index) -> bool
+auto DBConnection::BindCol(const int32_t columnIndex, int64_t* value, SQLLEN* index) -> bool
 {
-	return BindCol(columnIndex, SQL_C_SBIGINT, size32(int64), value, index);
+	return BindCol(columnIndex, SQL_C_SBIGINT, size32(int64_t), value, index);
 }
 
-auto DBConnection::BindCol(const int32 columnIndex, TIMESTAMP_STRUCT* value, SQLLEN* index) -> bool
+auto DBConnection::BindCol(const int32_t columnIndex, TIMESTAMP_STRUCT* value, SQLLEN* index) -> bool
 {
 	return BindCol(columnIndex, SQL_C_TYPE_TIMESTAMP, size32(TIMESTAMP_STRUCT), value, index);
 }
 
-auto DBConnection::BindCol(const int32 columnIndex, WCHAR* str, int32 size, SQLLEN* index) -> bool
+auto DBConnection::BindCol(const int32_t columnIndex, WCHAR* str, int32_t size, SQLLEN* index) -> bool
 {
 	return BindCol(columnIndex, SQL_C_WCHAR, size, str, index);
 }
 
-auto DBConnection::BindCol(const int32 columnIndex, BYTE* bin, int32 size, SQLLEN* index) -> bool
+auto DBConnection::BindCol(const int32_t columnIndex, BYTE* bin, int32_t size, SQLLEN* index) -> bool
 {
 	return BindCol(columnIndex, SQL_BINARY, size, bin, index);
 }

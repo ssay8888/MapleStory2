@@ -13,6 +13,7 @@ public:
 
 public:
 	HRESULT AddGameObject(const std::shared_ptr<GameObject>& gameObject);
+	auto GetGameObject(uint32_t index)->std::shared_ptr<GameObject>;
 	int32_t Tick(double timeDelta);
 	int32_t LateTick(double timeDelta);
 

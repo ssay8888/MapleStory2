@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "c_pch.h"
 #include "camera_free.h"
 
 #include "src/system/input/input_device.h"

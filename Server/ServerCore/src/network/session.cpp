@@ -100,7 +100,7 @@ auto Session::GetHandle() -> HANDLE
 	return reinterpret_cast<HANDLE>(_socket);
 }
 
-auto Session::Dispatch(IocpEvent* iocpEvent, const int32 numOfBytes) -> void
+auto Session::Dispatch(IocpEvent* iocpEvent, const int32_t numOfBytes) -> void
 {
 	switch (iocpEvent->event_type)
 	{
@@ -142,7 +142,7 @@ auto Session::RegisterConnect() -> bool
 	SOCKADDR_IN sockAddr = GetService()->GetNetAddress().GetSockAddr();
 	if (false == SocketUtils::ConnectEx(_socket, reinterpret_cast<SOCKADDR*>(&sockAddr), sizeof(sockAddr), nullptr, 0, &numOfBytes, &_connect_event))
 	{
-		int32 errorCode = ::WSAGetLastError();
+		int32_t errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			_connect_event.owner = nullptr;
@@ -160,7 +160,7 @@ auto Session::RegisterDisconnect() -> bool
 
 	if (false == SocketUtils::DisconnectEx(_socket, &_disconnect_event, TF_REUSE_SOCKET, 0))
 	{
-		int32 errorCode = ::WSAGetLastError();
+		int32_t errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			_disconnect_event.owner = nullptr;
@@ -187,7 +187,7 @@ auto Session::RegisterRecv() -> void
 	DWORD flags = 0;
 	if (SOCKET_ERROR == ::WSARecv(_socket, &wsaBuf, 1, OUT &numOfBytes, OUT &flags, &_recv_event, nullptr))
 	{
-		int32 errorCode = ::WSAGetLastError();
+		int32_t errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			HandleError(errorCode);
@@ -207,7 +207,7 @@ auto Session::RegisterSend() -> void
 	{
 		WRITE_LOCK;
 
-		int32 writeSize = 0;
+		int32_t writeSize = 0;
 		while (_send_queue.empty() == false)
 		{
 			SendBufferRef sendBuffer = _send_queue.front();
@@ -233,7 +233,7 @@ auto Session::RegisterSend() -> void
 	DWORD numOfBytes = 0;
 	if (SOCKET_ERROR == ::WSASend(_socket, wsaBufs.data(), static_cast<DWORD>(wsaBufs.size()), OUT &numOfBytes, 0, &_send_event, nullptr))
 	{
-		int32 errorCode = ::WSAGetLastError();
+		int32_t errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			HandleError(errorCode);
@@ -265,7 +265,7 @@ auto Session::ProcessDisconnect()-> void
 	GetService()->ReleaseSession(GetSessionRef());
 }
 
-auto Session::ProcessRecv(const int32 numOfBytes)-> void
+auto Session::ProcessRecv(const int32_t numOfBytes)-> void
 {
 	_recv_event.owner = nullptr;
 
@@ -281,8 +281,8 @@ auto Session::ProcessRecv(const int32 numOfBytes)-> void
 		return;
 	}
 
-	int32 dataSize = _recv_buffer.DataSize();
-	int32 processLen = OnRecv(_recv_buffer.ReadPos(), dataSize);
+	int32_t dataSize = _recv_buffer.DataSize();
+	int32_t processLen = OnRecv(_recv_buffer.ReadPos(), dataSize);
 	if (processLen < 0 || dataSize < processLen || _recv_buffer.OnRead(processLen) == false)
 	{
 		Disconnect(L"OnRead Overflow");
@@ -292,7 +292,7 @@ auto Session::ProcessRecv(const int32 numOfBytes)-> void
 	RegisterRecv();
 }
 
-auto Session::ProcessSend(const int32 numOfBytes) -> void
+auto Session::ProcessSend(const int32_t numOfBytes) -> void
 {
 	_send_event.owner = nullptr;
 	_send_event.send_buffers.clear();
@@ -312,7 +312,7 @@ auto Session::ProcessSend(const int32 numOfBytes) -> void
 		RegisterSend();
 }
 
-auto Session::HandleError(const int32 errorCode) -> void
+auto Session::HandleError(const int32_t errorCode) -> void
 {
 	switch (errorCode)
 	{
@@ -327,7 +327,7 @@ auto Session::HandleError(const int32 errorCode) -> void
 	}
 }
 
-auto Session::OnRecv(BYTE* buffer, const int32 len) -> int32
+auto Session::OnRecv(BYTE* buffer, const int32_t len) -> int32_t
 {
 	return len;
 }
@@ -341,13 +341,13 @@ auto PacketSession::GetPacketSessionRef() -> PacketSessionRef
 	return std::static_pointer_cast<PacketSession>(shared_from_this());
 }
 
-int32 PacketSession::OnRecv(BYTE* buffer, const int32 len)
+int32_t PacketSession::OnRecv(BYTE* buffer, const int32_t len)
 {
-	int32 processLen = 0;
+	int32_t processLen = 0;
 
 	while (true)
 	{
-		int32 dataSize = len - processLen;
+		int32_t dataSize = len - processLen;
 		if (dataSize < sizeof(PacketHeader))
 			break;
 

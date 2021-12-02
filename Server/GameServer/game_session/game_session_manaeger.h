@@ -16,7 +16,7 @@ public:
 	auto Add(GameSessionRef session) -> void;
 	auto Remove(GameSessionRef session) -> void;
 	auto Broadcast(SendBufferRef sendBuffer) -> void;
-	auto GetSessionSize() ->int64;
+	auto GetSessionSize() ->int64_t;
 
 private:
 	int a = 0;

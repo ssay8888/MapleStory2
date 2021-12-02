@@ -23,7 +23,7 @@ auto GameSessionManager::Broadcast(const SendBufferRef sendBuffer) -> void
 	}
 }
 
-auto GameSessionManager::GetSessionSize() -> int64
+auto GameSessionManager::GetSessionSize() -> int64_t
 {
 	READ_LOCK;
 	return _sessions.size();

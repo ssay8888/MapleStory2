@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "memory_pool.h"
 
-MemoryPool::MemoryPool(const int32 allocSize) :
+MemoryPool::MemoryPool(const int32_t allocSize) :
 	_alloc_size(allocSize)
 {
 	::InitializeSListHead(&_header);

@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "c_pch.h"
 #include "terrain.h"
 
 #include "src/utility/components/renderer/renderer.h"
@@ -54,22 +54,20 @@ HRESULT Terrain::Render()
 	result = _shader_com->SetUpTextureConstantTable("g_DiffuseDestTexture", _texture_com, 1);
 	result = _shader_com->SetUpTextureConstantTable("g_FilterTexture", _filter_com);
 
-	auto tmp = _float4(7.f, 0.f, 7.f, 1.f);
-	result = _shader_com->SetUpConstantTable("g_vBrushPos", &tmp, sizeof(_float4));
+	auto bushPos = _float4(7.f, 0.f, 7.f, 1.f);
+	result = _shader_com->SetUpConstantTable("g_vBrushPos", &bushPos, sizeof(_float4));
 	constexpr float		range = 7.f;
 	result = _shader_com->SetUpConstantTable("g_fRange", &range, sizeof(range));
 
-	D3DLIGHT9	LightDesc = LightManager::GetInstance().GetLightDesc();
-
-	const auto light = _float4(LightDesc.Direction, 0.f);
+	const D3DLIGHT9	lightDesc = LightManager::GetInstance().GetLightDesc();
+	const auto light = _float4(lightDesc.Direction, 0.f);
 	result = _shader_com->SetUpConstantTable("g_vLightDir", &light, sizeof(_float4));
-	result = _shader_com->SetUpConstantTable("g_vLightDiffuse", &LightDesc.Diffuse, sizeof(_float4));
-	result = _shader_com->SetUpConstantTable("g_vLightAmbient", &LightDesc.Ambient, sizeof(_float4));
-	result = _shader_com->SetUpConstantTable("g_vLightSpecular", &LightDesc.Specular, sizeof(_float4));
+	result = _shader_com->SetUpConstantTable("g_vLightDiffuse", &lightDesc.Diffuse, sizeof(_float4));
+	result = _shader_com->SetUpConstantTable("g_vLightAmbient", &lightDesc.Ambient, sizeof(_float4));
+	result = _shader_com->SetUpConstantTable("g_vLightSpecular", &lightDesc.Specular, sizeof(_float4));
 
-	_matrix		ViewMatrix;
-	D3DXMatrixInverse(&ViewMatrix, nullptr, &view);
-	result = _shader_com->SetUpConstantTable("g_vCamPosition", &ViewMatrix.m[3][0], sizeof(_float4));
+	const auto campos= _float4(PipeLine::GetInstance().GetCamPosition(), 0);
+	result = _shader_com->SetUpConstantTable("g_vCamPosition", &campos, sizeof(_float4));
 
 
 	result = _shader_com->BeginShader(0);

@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "c_pch.h"
 #include "main_app.h"
 
 #include <iostream>
@@ -6,8 +6,14 @@
 #include "src/game_object/back_ground/back_ground.h"
 #include "src/game_object/camera/camera_free.h"
 #include "src/game_object/ui/login/text_box_ui.h"
+#include "src/network/send_manager.h"
+#include "src/network/server_packet_handler.h"
+#include "src/network/server_session.h"
+#include "src/network/service.h"
+#include "src/network/socket_utils.h"
 #include "src/scene/logo/scene_logo.h"
 #include "src/system/graphic/graphic_device.h"
+#include "src/thread/thread_manager.h"
 #include "src/utility/components/manager/component_manager.h"
 #include "src/utility/components/picking/picking.h"
 #include "src/utility/components/renderer/renderer.h"
@@ -19,9 +25,10 @@
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/scene_utility/scene_manager.h"
 
+std::atomic<bool> MainApp::_exit = false;
+
 MainApp::MainApp()
 {
-	NativeConstruct();
 	std::wcout.imbue(std::locale("kor"));
 }
 
@@ -29,6 +36,7 @@ auto MainApp::NativeConstruct() -> HRESULT
 {
 	GameLogicManager::InitDevice(g_hInst, g_Wnd, static_cast<int32_t>(kScene::kSceneEnd));
 
+	NetworkThreadInit();
 
 	if (FAILED(GraphicDevice::GetInstance().ReadyGraphicDevice(g_Wnd, GraphicDevice::kWindowMode::kModeWin, g_WinCX, g_WinCY, &_graphic_device)))
 		return E_FAIL;
@@ -67,6 +75,65 @@ auto MainApp::RenderMainApp() -> HRESULT
 	
 	device.RenderEnd();
 	return S_OK;
+}
+
+auto MainApp::NetworkThreadInit() -> ClientServiceRef
+{
+	SocketUtils::Init();
+	ServerPacketHandler::Init();
+
+	ClientServiceRef service = MakeShared<ClientService>(
+		NetAddress(L"127.0.0.1", 7777),
+		MakeShared<IocpCore>(),
+		MakeShared<ServerSession>, // TODO : SessionManager µî
+		1);
+
+	ASSERT_CRASH(service->Start());
+
+	for (int32_t i = 0; i < 2; i++)
+	{
+		ThreadManager::GetInstance().Launch([=]()
+			{
+				while (!_exit)
+				{
+					service->GetIocpCore()->Dispatch(10);
+					SendManager::GetInstance().Execute();
+				}
+			});
+	}
+
+	WaitConnectServer();
+	return service;
+}
+
+auto MainApp::WaitConnectServer() -> void
+{
+	constexpr auto maxWaitTime = 5000;
+
+	const auto startTime = GetTickCount64() + maxWaitTime;
+	while (!this->IsConnected())
+	{
+		if (startTime < GetTickCount64())
+		{
+			_exit = true;
+			::exit(0);
+		}
+		std::this_thread::sleep_for(10ms);
+	}
+}
+
+auto MainApp::IsConnected() const -> bool
+{
+	return _is_connected;
+}
+
+auto MainApp::SetConnected(const bool connected) -> void
+{
+	_is_connected.store(connected);
+	if (!_is_connected)
+	{
+		_exit = true;
+	}
 }
 
 HRESULT MainApp::AddPrototypeGameObject()

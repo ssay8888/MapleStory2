@@ -1,5 +1,11 @@
 #pragma once
 
+typedef struct D3DxFrameDerived : public D3DXFRAME
+{
+	D3DXMATRIX		CombinedTransformationMatrix;
+}D3DxFrameDerived;
+
+
 typedef struct TagVertexTexture
 {
 	D3DXVECTOR3		position{};

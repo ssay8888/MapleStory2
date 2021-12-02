@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "c_pch.h"
 #include "effect.h"
 
 #include "src/utility/components/renderer/renderer.h"
