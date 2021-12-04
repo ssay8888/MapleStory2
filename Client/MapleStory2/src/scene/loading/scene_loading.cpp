@@ -43,17 +43,17 @@ int32_t SceneLoading::Tick(const double timeDelta)
 
 			switch (_next_scene)
 			{
-			case kScene::kSceneGamePlay0:
+			case kSceneGamePlay0:
 				scene = GamePlay::Create(_graphic_device);
 				break;
-			case kScene::kSceneGamePlay1:
+			case kSceneGamePlay1:
 				break;
 			default: 
 				break;
 			}
 
 			//pGameInstance->Clear(LEVEL_LOADING);
-			GameLogicManager::Clear(static_cast<uint32_t>(kScene::kSceneLoading));
+			GameLogicManager::Clear(static_cast<uint32_t>(kSceneLoading));
 			SceneManager::GetInstance().SetUpScene(scene);
 
 		}

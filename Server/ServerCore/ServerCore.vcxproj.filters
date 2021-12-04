@@ -132,6 +132,9 @@
     <ClCompile Include="core_tls.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="src\database\db_bind_helper.cpp">
+      <Filter>db</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\database\db_bind.h">
@@ -262,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="core_tls.h">
       <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\database\db_bind_helper.h">
+      <Filter>db</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

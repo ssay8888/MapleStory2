@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "mesh_static.h"
 
+#include <iostream>
+
 #include "src/utility/components/shader/shader.h"
 
 MeshStatic::MeshStatic(const ComPtr<IDirect3DDevice9>& device):
@@ -29,6 +31,29 @@ auto MeshStatic::NativeConstructPrototype(const std::wstring& filePath, const st
 		MeshMaterialTexture* pMeshMaterialTexture = new MeshMaterialTexture;
 		ZeroMemory(pMeshMaterialTexture, sizeof(MeshMaterialTexture));
 
+		if (pMaterial->pTextureFilename == nullptr)
+		{
+			std::wstring str = szFullPath;
+			if (str.find(L"co_fluid_water_C01.X") != std::wstring::npos)
+			{
+				wchar_t		szTextureFileName[MAX_PATH] = TEXT("");
+				/* char -> tchar */
+				wchar_t	szFileName[MAX_PATH] = TEXT("");
+
+				/* 디퓨즈 맵 로드 */
+				wsprintf(szFileName, szTextureFileName, L"D");
+
+				lstrcpy(szFullPath, filePath.c_str());
+				lstrcat(szFullPath, L"co_fluid_water_c01.dds");
+				auto result = D3DXCreateTextureFromFile(_graphic_device.Get(), szFullPath, &pMeshMaterialTexture->diffuse_map);
+
+				_materials.push_back(pMeshMaterialTexture);
+
+				continue;
+			}
+			std::wcout << szFullPath << std::endl;
+			continue;
+		}
 		wchar_t		szTextureFileName[MAX_PATH] = TEXT("");
 		/* char -> tchar */
 		MultiByteToWideChar(CP_ACP, 
@@ -46,7 +71,10 @@ auto MeshStatic::NativeConstructPrototype(const std::wstring& filePath, const st
 		lstrcpy(szFullPath, filePath.c_str());
 		lstrcat(szFullPath, szFileName);
 		auto result = D3DXCreateTextureFromFile(_graphic_device.Get(), szFullPath, &pMeshMaterialTexture->diffuse_map);
-
+		if (FAILED(result))
+		{
+			std::wcout << szFullPath << std::endl;
+		}
 		/* 노멀 맵 로드. */
 		wsprintf(szFileName, szTextureFileName, L"N");
 
@@ -89,7 +117,10 @@ auto MeshStatic::SetUpTextureOnShader(const std::shared_ptr<Shader>& shader, con
                                       const MeshMaterialTexture::kType type, const uint32_t materialIndex) -> HRESULT
 {
 	LPDIRECT3DTEXTURE9		pTexture = nullptr;
-
+	if(_materials.empty())
+	{
+		return E_FAIL;
+	}
 	switch (type)
 	{
 	case MeshMaterialTexture::kType::kTypeDiffuse:
@@ -127,7 +158,8 @@ auto MeshStatic::Create(const ComPtr<IDirect3DDevice9>& device, const std::wstri
 
 	if (FAILED(pInstance->NativeConstructPrototype(filePath, fileName)))
 	{
-		MSGBOX("Failed to Creating MeshStatic");
+		//MSGBOX("Failed to Creating MeshStatic");
+		std::wcout << "Not Found File : " << fileName << std::endl;
 		return nullptr;
 	}
 	return pInstance;

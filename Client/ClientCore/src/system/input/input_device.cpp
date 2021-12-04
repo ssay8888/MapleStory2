@@ -31,7 +31,37 @@ auto InputDevice::InvalidateInputDevice() -> int32_t
 	return int32_t();
 }
 
-auto InputDevice::GetDirectKeyState(const int8_t key) -> int8_t
+auto InputDevice::GetKeyUp(const uint8_t key) -> uint8_t
+{
+	if (_key_state[key])
+	{
+		_key_state_up[key] |= key;
+		return false;
+	}
+	else if (_key_state_up[key])
+	{
+		_key_state_up[key] ^= key;
+		return true;
+	}
+	return false;
+}
+
+auto InputDevice::GetKeyDown(const uint8_t key) -> uint8_t
+{
+	if (_key_state[key] && !_key_state_down[key])
+	{
+		_key_state_down[key] |= key;
+		return true;
+	}
+	else if (!_key_state[key] && _key_state_down[key])
+	{
+		_key_state_down[key] ^= key;
+		return false;
+	}
+	return false;
+}
+
+auto InputDevice::GetKeyPressing(const uint8_t key) -> uint8_t
 {
 	return _key_state[key];
 }

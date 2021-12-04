@@ -50,7 +50,7 @@ auto ThreadManager::DoGlobalQueueWork() -> void
 {
 	while (true)
 	{
-		const uint64_t now = ::GetTickCount64();
+		const uint64_t now = GetTickCount64();
 		if (now > LEndTickCount)
 			break;
 
@@ -64,7 +64,7 @@ auto ThreadManager::DoGlobalQueueWork() -> void
 
 auto ThreadManager::DistributeReservedJobs() -> void
 {
-	const uint64_t now = ::GetTickCount64();
+	const uint64_t now = GetTickCount64();
 
 	JobTimer::GetInstance().Distribute(now);
 }

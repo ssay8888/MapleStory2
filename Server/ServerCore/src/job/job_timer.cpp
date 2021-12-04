@@ -16,7 +16,7 @@ auto TimerItem::operator<(const TimerItem& other) const -> bool
 
 auto JobTimer::Reserve(const uint64_t tickAfter, std::weak_ptr<JobQueue> owner, JobRef job) -> void 
 {
-	const uint64_t executeTick = ::GetTickCount64() + tickAfter;
+	const uint64_t executeTick = GetTickCount64() + tickAfter;
 	JobData* jobData = ObjectPool<JobData>::Pop(owner, job);
 
 	WRITE_LOCK;

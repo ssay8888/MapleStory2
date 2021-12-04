@@ -4,20 +4,20 @@
 MemoryPool::MemoryPool(const int32_t allocSize) :
 	_alloc_size(allocSize)
 {
-	::InitializeSListHead(&_header);
+	InitializeSListHead(&_header);
 }
 
 MemoryPool::~MemoryPool()
 {
-	while (auto memory = static_cast<MemoryHeader*>(::InterlockedPopEntrySList(&_header)))
-		::_aligned_free(memory);
+	while (auto memory = static_cast<MemoryHeader*>(InterlockedPopEntrySList(&_header)))
+		_aligned_free(memory);
 }
 
 auto MemoryPool::Push(MemoryHeader* ptr) -> void
 {
 	ptr->alloc_size = 0;
 
-	::InterlockedPushEntrySList(&_header, ptr);
+	InterlockedPushEntrySList(&_header, ptr);
 
 	_use_count.fetch_sub(1);
 	_reserve_count.fetch_add(1);
@@ -25,11 +25,11 @@ auto MemoryPool::Push(MemoryHeader* ptr) -> void
 
 auto MemoryPool::Pop() -> MemoryHeader*
 {
-	auto memory = static_cast<MemoryHeader*>(::InterlockedPopEntrySList(&_header));
+	auto memory = static_cast<MemoryHeader*>(InterlockedPopEntrySList(&_header));
 
 	if (memory == nullptr)
 	{
-		memory = static_cast<MemoryHeader*>(::_aligned_malloc(_alloc_size, kListAlignment));
+		memory = static_cast<MemoryHeader*>(_aligned_malloc(_alloc_size, kListAlignment));
 	}
 	else
 	{

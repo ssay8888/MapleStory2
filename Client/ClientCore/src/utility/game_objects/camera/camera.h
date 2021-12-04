@@ -13,9 +13,9 @@ public:
 		_float3		axis_y = _float3(0.f, 1.f, 0.f);
 
 		float		fovy{};
-		float		aspect;
-		float		near_;
-		float		far_;
+		float		aspect{};
+		float		near_{};
+		float		far_{};
 	};
 
 public:

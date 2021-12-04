@@ -16,7 +16,7 @@ auto GraphicDevice::GetLine() const -> ComPtr<ID3DXLine>
 	return _line;
 }
 
-auto GraphicDevice::ReadyGraphicDevice(HWND hWnd, GraphicDevice::kWindowMode mode, uint32_t winCx, uint32_t winCy,
+auto GraphicDevice::ReadyGraphicDevice(HWND hWnd, kWindowMode mode, uint32_t winCx, uint32_t winCy,
 	ComPtr<IDirect3DDevice9>* ppGraphicDevice) -> HRESULT
 {
 	D3DCAPS9 d3dcaps;

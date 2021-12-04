@@ -142,7 +142,7 @@ auto Session::RegisterConnect() -> bool
 	SOCKADDR_IN sockAddr = GetService()->GetNetAddress().GetSockAddr();
 	if (false == SocketUtils::ConnectEx(_socket, reinterpret_cast<SOCKADDR*>(&sockAddr), sizeof(sockAddr), nullptr, 0, &numOfBytes, &_connect_event))
 	{
-		int32_t errorCode = ::WSAGetLastError();
+		int32_t errorCode = WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			_connect_event.owner = nullptr;
@@ -160,7 +160,7 @@ auto Session::RegisterDisconnect() -> bool
 
 	if (false == SocketUtils::DisconnectEx(_socket, &_disconnect_event, TF_REUSE_SOCKET, 0))
 	{
-		int32_t errorCode = ::WSAGetLastError();
+		int32_t errorCode = WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			_disconnect_event.owner = nullptr;
@@ -185,9 +185,9 @@ auto Session::RegisterRecv() -> void
 
 	DWORD numOfBytes = 0;
 	DWORD flags = 0;
-	if (SOCKET_ERROR == ::WSARecv(_socket, &wsaBuf, 1, OUT &numOfBytes, OUT &flags, &_recv_event, nullptr))
+	if (SOCKET_ERROR == WSARecv(_socket, &wsaBuf, 1, OUT &numOfBytes, OUT &flags, &_recv_event, nullptr))
 	{
-		int32_t errorCode = ::WSAGetLastError();
+		int32_t errorCode = WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			HandleError(errorCode);
@@ -231,9 +231,9 @@ auto Session::RegisterSend() -> void
 	}
 
 	DWORD numOfBytes = 0;
-	if (SOCKET_ERROR == ::WSASend(_socket, wsaBufs.data(), static_cast<DWORD>(wsaBufs.size()), OUT &numOfBytes, 0, &_send_event, nullptr))
+	if (SOCKET_ERROR == WSASend(_socket, wsaBufs.data(), static_cast<DWORD>(wsaBufs.size()), OUT &numOfBytes, 0, &_send_event, nullptr))
 	{
-		int32_t errorCode = ::WSAGetLastError();
+		int32_t errorCode = WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			HandleError(errorCode);

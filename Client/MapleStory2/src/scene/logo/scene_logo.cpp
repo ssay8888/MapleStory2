@@ -7,6 +7,7 @@
 
 #include "src/game_object/back_ground/back_ground.h"
 #include "src/game_object/ui/login/text_box_ui.h"
+#include "src/network/send_manager.h"
 #include "src/network/server_packet_handler.h"
 #include "src/scene/loading/scene_loading.h"
 #include "src/system/input/input_device.h"
@@ -40,29 +41,32 @@ int32_t SceneLogo::Tick(const double timeDelta)
 {
 	Scene::Tick(timeDelta);
 
-	auto a = InputDevice::GetInstance().GetDirectKeyState(DIK_RETURN);
-	if (a & 0x80)
+	if (InputDevice::GetInstance().GetKeyDown(DIK_RETURN))
 	{
-		/*	const auto scene = SceneLoading::Create(_graphic_device, kScene::kSceneGamePlay0);
+			const auto scene = SceneLoading::Create(_graphic_device, kSceneGamePlay0);
 			if (SUCCEEDED(SceneManager::GetInstance().SetUpScene(scene)))
 			{
-				GameLogicManager::Clear(static_cast<uint32_t>(kScene::kSceneLogo));
-			}*/
-		auto& objectManager = ObjectManager::GetInstance();
-		Protocol::ClientLogin pkt;
-		auto id = std::static_pointer_cast<TextBoxUi>(objectManager.GetGameObjectPtr(static_cast<int32_t>(kScene::kSceneLogo),
-			TEXT("Layer_LoginBox"),
-			TEXT("Prototype_BackGround"),
-			0));
-		auto pw = std::static_pointer_cast<TextBoxUi>(objectManager.GetGameObjectPtr(static_cast<int32_t>(kScene::kSceneLogo),
-			TEXT("Layer_LoginBox"),
-			TEXT("Prototype_BackGround"),
-			1));
-		if (id && pw)
-		{
-			pkt.set_id(FileUtils::ConvertWtoC(id->GetText().c_str()).c_str());
-			pkt.set_pw(FileUtils::ConvertWtoC(pw->GetText().c_str()).c_str());
-		}
+				GameLogicManager::Clear(static_cast<uint32_t>(kSceneLogo));
+			}
+
+		//auto& objectManager = ObjectManager::GetInstance();
+		//Protocol::ClientLogin pkt;
+		//auto id = std::static_pointer_cast<TextBoxUi>(objectManager.GetGameObjectPtr(kScene::kSceneLogo,
+		//	TEXT("Layer_LoginBox"),
+		//	TEXT("Prototype_BackGround"),
+		//	0));
+		//auto pw = std::static_pointer_cast<TextBoxUi>(objectManager.GetGameObjectPtr(kScene::kSceneLogo,
+		//	TEXT("Layer_LoginBox"),
+		//	TEXT("Prototype_BackGround"),
+		//	1));
+		//if (id && pw)
+		//{
+		//	pkt.set_id(FileUtils::ConvertWtoC(id->GetText().c_str()).c_str());
+		//	pkt.set_pw(FileUtils::ConvertWtoC(pw->GetText().c_str()).c_str());
+		//}
+
+		//	const auto send_packet =	ServerPacketHandler::MakeSendBuffer(pkt);
+		//SendManager::GetInstance().Push(send_packet);
 	}
 	return S_OK;
 }

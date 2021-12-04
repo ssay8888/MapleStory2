@@ -27,22 +27,22 @@ HRESULT CameraFree::NativeConstruct(void* arg)
 
 int32_t CameraFree::Tick(const double timeDelta)
 {
-	if (InputDevice::GetInstance().GetDirectKeyState(DIK_W) & 0x80)
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_W))
 	{
 		_transform->GoStraight(timeDelta);
 	}
 
-	if (GetKeyState('S') < 0)
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_S))
 	{
 		_transform->BackStraight(timeDelta);
 	}
 
-	if (GetKeyState('A') < 0)
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_A))
 	{
 		_transform->WalkLeft(timeDelta);
 	}
 
-	if (GetKeyState('D') < 0)
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_D))
 	{
 		_transform->WalkRight(timeDelta);
 	}

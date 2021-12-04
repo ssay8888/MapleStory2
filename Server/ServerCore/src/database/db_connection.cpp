@@ -3,16 +3,16 @@
 
 auto DBConnection::Connect(const SQLHENV henv, const WCHAR* connectionString) -> bool
 {
-	if (::SQLAllocHandle(SQL_HANDLE_DBC, henv, &_connection) != SQL_SUCCESS)
+	if (SQLAllocHandle(SQL_HANDLE_DBC, henv, &_connection) != SQL_SUCCESS)
 		return false;
 
 	WCHAR stringBuffer[MAX_PATH] = { 0 };
-	::wcscpy_s(stringBuffer, connectionString);
+	wcscpy_s(stringBuffer, connectionString);
 
 	WCHAR resultString[MAX_PATH] = { 0 };
 	SQLSMALLINT resultStringLen = 0;
 
-	const SQLRETURN ret = ::SQLDriverConnectW(
+	const SQLRETURN ret = SQLDriverConnectW(
 		_connection,
 		NULL,
 		reinterpret_cast<SQLWCHAR*>(stringBuffer),
@@ -23,7 +23,7 @@ auto DBConnection::Connect(const SQLHENV henv, const WCHAR* connectionString) ->
 		SQL_DRIVER_NOPROMPT
 	);
 
-	if (::SQLAllocHandle(SQL_HANDLE_STMT, _connection, &_statement) != SQL_SUCCESS)
+	if (SQLAllocHandle(SQL_HANDLE_STMT, _connection, &_statement) != SQL_SUCCESS)
 		return false;
 
 	return (ret == SQL_SUCCESS || ret == SQL_SUCCESS_WITH_INFO);
@@ -33,20 +33,20 @@ auto DBConnection::Clear() -> void
 {
 	if (_connection != SQL_NULL_HANDLE)
 	{
-		::SQLFreeHandle(SQL_HANDLE_DBC, _connection);
+		SQLFreeHandle(SQL_HANDLE_DBC, _connection);
 		_connection = SQL_NULL_HANDLE;
 	}
 
 	if (_statement != SQL_NULL_HANDLE)
 	{
-		::SQLFreeHandle(SQL_HANDLE_STMT, _statement);
+		SQLFreeHandle(SQL_HANDLE_STMT, _statement);
 		_statement = SQL_NULL_HANDLE;
 	}
 }
 
 auto DBConnection::Execute(const WCHAR* query) -> bool
 {
-	SQLRETURN ret = ::SQLExecDirectW(_statement, (SQLWCHAR*)query, SQL_NTSL);
+	SQLRETURN ret = SQLExecDirectW(_statement, (SQLWCHAR*)query, SQL_NTSL);
 	if (ret == SQL_SUCCESS || ret == SQL_SUCCESS_WITH_INFO)
 		return true;
 
@@ -56,7 +56,7 @@ auto DBConnection::Execute(const WCHAR* query) -> bool
 
 auto DBConnection::Fetch() -> bool
 {
-	SQLRETURN ret = ::SQLFetch(_statement);
+	SQLRETURN ret = SQLFetch(_statement);
 
 	switch (ret)
 	{
@@ -76,7 +76,7 @@ auto DBConnection::Fetch() -> bool
 auto DBConnection::GetRowCount() -> int32_t
 {
 	SQLLEN count = 0;
-	SQLRETURN ret = ::SQLRowCount(_statement, OUT &count);
+	SQLRETURN ret = SQLRowCount(_statement, OUT &count);
 
 	if (ret == SQL_SUCCESS || ret == SQL_SUCCESS_WITH_INFO)
 		return static_cast<int32_t>(count);
@@ -86,9 +86,9 @@ auto DBConnection::GetRowCount() -> int32_t
 
 auto DBConnection::Unbind() -> void
 {
-	::SQLFreeStmt(_statement, SQL_UNBIND);
-	::SQLFreeStmt(_statement, SQL_RESET_PARAMS);
-	::SQLFreeStmt(_statement, SQL_CLOSE);
+	SQLFreeStmt(_statement, SQL_UNBIND);
+	SQLFreeStmt(_statement, SQL_RESET_PARAMS);
+	SQLFreeStmt(_statement, SQL_CLOSE);
 }
 
 auto DBConnection::BindParam(const int32_t paramIndex, bool* value, SQLLEN* index) -> bool
@@ -133,7 +133,7 @@ auto DBConnection::BindParam(const int32_t paramIndex, TIMESTAMP_STRUCT* value, 
 
 auto DBConnection::BindParam(const int32_t paramIndex, const WCHAR* str, SQLLEN* index) -> bool
 {
-	const SQLULEN size = static_cast<SQLULEN>((::wcslen(str) + 1) * 2);
+	const SQLULEN size = static_cast<SQLULEN>((wcslen(str) + 1) * 2);
 	*index = SQL_NTSL;
 
 	if (size > kWvarcharMax)
@@ -210,7 +210,7 @@ auto DBConnection::BindCol(const int32_t columnIndex, BYTE* bin, int32_t size, S
 
 auto DBConnection::BindParam(const SQLUSMALLINT paramIndex, const SQLSMALLINT cType, const SQLSMALLINT sqlType, const SQLULEN len, const SQLPOINTER ptr, SQLLEN* index) -> bool
 {
-	SQLRETURN ret = ::SQLBindParameter(_statement, paramIndex, SQL_PARAM_INPUT, cType, sqlType, len, 0, ptr, 0, index);
+	SQLRETURN ret = SQLBindParameter(_statement, paramIndex, SQL_PARAM_INPUT, cType, sqlType, len, 0, ptr, 0, index);
 	if (ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO)
 	{
 		HandleError(ret);
@@ -222,7 +222,7 @@ auto DBConnection::BindParam(const SQLUSMALLINT paramIndex, const SQLSMALLINT cT
 
 auto DBConnection::BindCol(const SQLUSMALLINT columnIndex, const SQLSMALLINT cType, const SQLULEN len, const SQLPOINTER value, SQLLEN* index) -> bool
 {
-	SQLRETURN ret = ::SQLBindCol(_statement, columnIndex, cType, value, len, index);
+	SQLRETURN ret = SQLBindCol(_statement, columnIndex, cType, value, len, index);
 	if (ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO)
 	{
 		HandleError(ret);
@@ -246,7 +246,7 @@ auto DBConnection::HandleError(const SQLRETURN ret) -> void
 
 	while (true)
 	{
-		errorRet = ::SQLGetDiagRecW(
+		errorRet = SQLGetDiagRecW(
 			SQL_HANDLE_STMT,
 			_statement,
 			index,

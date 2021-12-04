@@ -60,6 +60,8 @@ auto GamePlay::ReadyLayerCamera(const std::wstring& pLayerTag) -> HRESULT
 	auto& objectManager = ObjectManager::GetInstance();
 	Camera::CameraDesc			cameraDesc;
 	cameraDesc.at = _float3(0.f, 0.f, 0.f);
+
+	//_transform->SetState(Transform::kState::kStatePosition, _float3(885.f, 413.f, 1180.f));
 	cameraDesc.eye = _float3(0.0f, 5.0f, -8.f);
 	cameraDesc.fovy = D3DXToRadian(60.0f);
 	cameraDesc.aspect = static_cast<float>(g_WinCX) / g_WinCY;
@@ -76,11 +78,11 @@ auto GamePlay::ReadyLayerCamera(const std::wstring& pLayerTag) -> HRESULT
 auto GamePlay::ReadyLayerPlayer(const std::wstring& pLayerTag) -> HRESULT
 {
 	auto& objectManager = ObjectManager::GetInstance();
-	if (FAILED(objectManager.AddGameObject(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Player"), pLayerTag)))
+	if (FAILED(objectManager.AddGameObject(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Player"), pLayerTag, _float3(0.58f, 0, 0))))
 	{
 		return E_FAIL;
 	}
-	
+
 	return S_OK;
 }
 
@@ -96,7 +98,6 @@ auto GamePlay::ReadyLayerBackGround(const std::wstring& pLayerTag) -> HRESULT
 	{
 		return E_FAIL;
 	}
-
 	return S_OK;
 }
 

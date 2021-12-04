@@ -16,7 +16,7 @@ void Lock::WriteLock(const char* name)
 		return;
 	}
 	
-	const int64_t beginTick = ::GetTickCount64();
+	const int64_t beginTick = GetTickCount64();
 	const uint32_t desired = ((LThreadId << 16) & kWriteThreadMask);
 	while (true)
 	{
@@ -30,7 +30,7 @@ void Lock::WriteLock(const char* name)
 			}
 		}
 
-		if (::GetTickCount64() - beginTick >= kAcquireTimeoutTick)
+		if (GetTickCount64() - beginTick >= kAcquireTimeoutTick)
 			CRASH("LOCK_TIMEOUT");
 		_mm_pause();
 	}
@@ -63,7 +63,7 @@ void Lock::ReadLock(const char* name)
 		return;
 	}
 	
-	const int64_t beginTick = ::GetTickCount64();
+	const int64_t beginTick = GetTickCount64();
 	while (true)
 	{
 		for (uint32_t spinCount = 0; spinCount < kMaxSpinCount; spinCount++)
@@ -73,7 +73,7 @@ void Lock::ReadLock(const char* name)
 				return;
 		}
 
-		if (::GetTickCount64() - beginTick >= kAcquireTimeoutTick)
+		if (GetTickCount64() - beginTick >= kAcquireTimeoutTick)
 			CRASH("LOCK_TIMEOUT");
 
 		_mm_pause();

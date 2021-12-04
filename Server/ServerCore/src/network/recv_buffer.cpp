@@ -23,7 +23,7 @@ auto RecvBuffer::Clean() -> void
 	{
 		if (FreeSize() < _buffer_size)
 		{
-			::memcpy(&_buffer[0], &_buffer[_read_pos], dataSize);
+			memcpy(&_buffer[0], &_buffer[_read_pos], dataSize);
 			_read_pos = 0;
 			_write_pos = dataSize;
 		}

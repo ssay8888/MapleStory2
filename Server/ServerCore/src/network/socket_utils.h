@@ -31,5 +31,5 @@ public:
 template<typename T>
 static inline bool SetSockOpt(const SOCKET socket, const int32_t level, const int32_t optName, T optVal)
 {
-	return SOCKET_ERROR != ::setsockopt(socket, level, optName, reinterpret_cast<char*>(&optVal), sizeof(T));
+	return SOCKET_ERROR != setsockopt(socket, level, optName, reinterpret_cast<char*>(&optVal), sizeof(T));
 }

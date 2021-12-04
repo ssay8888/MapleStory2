@@ -96,6 +96,30 @@ auto ObjectManager::AddGameObject(const uint32_t levelIndex, const std::wstring&
 	return S_OK;
 }
 
+auto ObjectManager::AddGameObject(uint32_t levelIndex, const std::wstring& layerTag, std::shared_ptr<GameObject> gameObject) -> HRESULT
+{
+	if (_num_level <= levelIndex || gameObject == nullptr)
+	{
+		return E_FAIL;
+	}
+
+	std::shared_ptr<Layer> layer = FindLayer(levelIndex, layerTag);
+
+	if (layer == nullptr)
+	{
+		layer = std::make_shared<Layer>();
+
+		layer->AddGameObject(gameObject);
+
+		_layers[levelIndex].emplace(layerTag, layer);
+	}
+	else
+	{
+		layer->AddGameObject(gameObject);
+	}
+	return S_OK;
+}
+
 auto ObjectManager::Tick(const double timeDelta) const -> int32_t
 {
 	for (uint32_t i = 0; i < _num_level; ++i)

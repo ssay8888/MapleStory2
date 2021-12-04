@@ -79,7 +79,7 @@ auto Listener::RegisterAccept(AcceptEvent* acceptEvent) -> void
 	DWORD bytesReceived = 0;
 	if (false == SocketUtils::AcceptEx(_socket, session->GetSocket(), session->_recv_buffer.WritePos(), 0, sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, OUT & bytesReceived, static_cast<LPOVERLAPPED>(acceptEvent)))
 	{
-		const int32_t errorCode = ::WSAGetLastError();
+		const int32_t errorCode = WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			// 일단 다시 Accept 걸어준다
@@ -100,7 +100,7 @@ auto Listener::ProcessAccept(AcceptEvent* acceptEvent) -> void
 
 	SOCKADDR_IN sockAddress;
 	int32_t sizeOfSockAddr = sizeof(sockAddress);
-	if (SOCKET_ERROR == ::getpeername(session->GetSocket(), OUT reinterpret_cast<SOCKADDR*>(&sockAddress), &sizeOfSockAddr))
+	if (SOCKET_ERROR == getpeername(session->GetSocket(), OUT reinterpret_cast<SOCKADDR*>(&sockAddress), &sizeOfSockAddr))
 	{
 		RegisterAccept(acceptEvent);
 		return;

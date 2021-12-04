@@ -21,7 +21,7 @@ private:
 
 private:
 	bool						_is_finish = false;
-	kScene						_next_level = kScene::kSceneEnd;
+	kScene						_next_level = kSceneEnd;
 	std::wstring				_system_message;
 	ComPtr<IDirect3DDevice9>	_graphic_device;
 	//std::thread					_thread;

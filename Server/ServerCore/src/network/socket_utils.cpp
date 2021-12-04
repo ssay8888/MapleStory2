@@ -19,13 +19,13 @@ auto SocketUtils::Init() -> void
 
 auto SocketUtils::Clear() -> void
 {
-	::WSACleanup();
+	WSACleanup();
 }
 
 auto SocketUtils::BindWindowsFunction(const SOCKET socket, GUID guid, LPVOID* fn) -> bool
 {
 	DWORD bytes = 0;
-	return SOCKET_ERROR != ::WSAIoctl(socket, SIO_GET_EXTENSION_FUNCTION_POINTER, &guid, sizeof(guid), fn, sizeof(*fn), OUT & bytes, NULL, NULL);
+	return SOCKET_ERROR != WSAIoctl(socket, SIO_GET_EXTENSION_FUNCTION_POINTER, &guid, sizeof(guid), fn, sizeof(*fn), OUT & bytes, NULL, NULL);
 }
 
 auto SocketUtils::CreateSocket() -> SOCKET
@@ -69,27 +69,27 @@ auto SocketUtils::SetUpdateAcceptSocket(const SOCKET socket, const SOCKET listen
 
 auto SocketUtils::Bind(const SOCKET socket, NetAddress netAddr)-> bool
 {
-	return SOCKET_ERROR != ::bind(socket, reinterpret_cast<const SOCKADDR*>(&netAddr.GetSockAddr()), sizeof(SOCKADDR_IN));
+	return SOCKET_ERROR != bind(socket, reinterpret_cast<const SOCKADDR*>(&netAddr.GetSockAddr()), sizeof(SOCKADDR_IN));
 }
 
 auto SocketUtils::BindAnyAddress(const SOCKET socket, const uint16_t port)-> bool
 {
 	SOCKADDR_IN myAddress;
 	myAddress.sin_family = AF_INET;
-	myAddress.sin_addr.s_addr = ::htonl(INADDR_ANY);
-	myAddress.sin_port = ::htons(port);
+	myAddress.sin_addr.s_addr = htonl(INADDR_ANY);
+	myAddress.sin_port = htons(port);
 
-	return SOCKET_ERROR != ::bind(socket, reinterpret_cast<const SOCKADDR*>(&myAddress), sizeof(myAddress));
+	return SOCKET_ERROR != bind(socket, reinterpret_cast<const SOCKADDR*>(&myAddress), sizeof(myAddress));
 }
 
 auto SocketUtils::Listen(const SOCKET socket, const  int32_t backlog)-> bool
 {
-	return SOCKET_ERROR != ::listen(socket, backlog);
+	return SOCKET_ERROR != listen(socket, backlog);
 }
 
 auto SocketUtils::Close(SOCKET& socket)  -> void
 {
 	if (socket != INVALID_SOCKET)
-		::closesocket(socket);
+		closesocket(socket);
 	socket = INVALID_SOCKET;
 }

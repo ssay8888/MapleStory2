@@ -3,8 +3,8 @@
 
 ConsoleLog::ConsoleLog()
 {
-	_std_out = ::GetStdHandle(STD_OUTPUT_HANDLE);
-	_std_err = ::GetStdHandle(STD_ERROR_HANDLE);
+	_std_out = GetStdHandle(STD_OUTPUT_HANDLE);
+	_std_err = GetStdHandle(STD_ERROR_HANDLE);
 }
 
 ConsoleLog::~ConsoleLog()
@@ -20,7 +20,7 @@ auto ConsoleLog::WriteStdOut(const kColor color, const WCHAR* format, ...) -> vo
 
 	va_list ap;
 	va_start(ap, format);
-	::vwprintf(format, ap);
+	vwprintf(format, ap);
 	va_end(ap);
 
 	fflush(stdout);
@@ -39,10 +39,10 @@ auto ConsoleLog::WriteStdErr(const kColor color, const WCHAR* format, ...) -> vo
 
 	va_list ap;
 	va_start(ap, format);
-	::vswprintf_s(buffer, BUFFER_SIZE, format, ap);
+	vswprintf_s(buffer, BUFFER_SIZE, format, ap);
 	va_end(ap);
 
-	::fwprintf_s(stderr, buffer);
+	fwprintf_s(stderr, buffer);
 	fflush(stderr);
 
 	SetColor(false, kColor::kWhite);
@@ -60,5 +60,5 @@ auto ConsoleLog::SetColor(const bool stdOut, kColor color) -> void
 		FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY
 	};
 
-	::SetConsoleTextAttribute(stdOut ? _std_out : _std_err, SColors[static_cast<int32_t>(color)]);
+	SetConsoleTextAttribute(stdOut ? _std_out : _std_err, SColors[static_cast<int32_t>(color)]);
 }

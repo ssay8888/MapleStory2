@@ -12,7 +12,7 @@ bool XmlNode::GetBoolAttr(const WCHAR* key, bool defaultValue)
 {
 	XmlAttributeType* attr = _node->first_attribute(key);
 	if (attr)
-		return ::_wcsicmp(attr->value(), L"true") == 0;
+		return _wcsicmp(attr->value(), L"true") == 0;
 
 	return defaultValue;
 }
@@ -21,7 +21,7 @@ int8_t XmlNode::GetInt8Attr(const WCHAR* key, int8_t defaultValue)
 {
 	XmlAttributeType* attr = _node->first_attribute(key);
 	if (attr)
-		return static_cast<int8_t>(::_wtoi(attr->value()));
+		return static_cast<int8_t>(_wtoi(attr->value()));
 
 	return defaultValue;
 }
@@ -30,7 +30,7 @@ int16_t XmlNode::GetInt16Attr(const WCHAR* key, int16_t defaultValue)
 {
 	XmlAttributeType* attr = _node->first_attribute(key);
 	if (attr)
-		return static_cast<int16_t>(::_wtoi(attr->value()));
+		return static_cast<int16_t>(_wtoi(attr->value()));
 
 	return defaultValue;
 }
@@ -39,7 +39,7 @@ int32_t XmlNode::GetInt32Attr(const WCHAR* key, int32_t defaultValue)
 {
 	XmlAttributeType* attr = _node->first_attribute(key);
 	if (attr)
-		return ::_wtoi(attr->value());
+		return _wtoi(attr->value());
 
 	return defaultValue;
 }
@@ -48,7 +48,7 @@ int64_t XmlNode::GetInt64Attr(const WCHAR* key, int64_t defaultValue)
 {
 	xml_attribute<WCHAR>* attr = _node->first_attribute(key);
 	if (attr)
-		return ::_wtoi64(attr->value());
+		return _wtoi64(attr->value());
 
 	return defaultValue;
 }
@@ -57,7 +57,7 @@ float XmlNode::GetFloatAttr(const WCHAR* key, float defaultValue)
 {
 	XmlAttributeType* attr = _node->first_attribute(key);
 	if (attr)
-		return static_cast<float>(::_wtof(attr->value()));
+		return static_cast<float>(_wtof(attr->value()));
 
 	return defaultValue;
 }
@@ -66,7 +66,7 @@ double XmlNode::GetDoubleAttr(const WCHAR* key, double defaultValue)
 {
 	XmlAttributeType* attr = _node->first_attribute(key);
 	if (attr)
-		return ::_wtof_l(attr->value(), kr);
+		return _wtof_l(attr->value(), kr);
 
 	return defaultValue;
 }
@@ -84,7 +84,7 @@ bool XmlNode::GetBoolValue(bool defaultValue)
 {
 	WCHAR* val = _node->value();
 	if (val)
-		return ::_wcsicmp(val, L"true") == 0;
+		return _wcsicmp(val, L"true") == 0;
 
 	return defaultValue;
 }
@@ -93,7 +93,7 @@ int8_t XmlNode::GetInt8Value(int8_t defaultValue)
 {
 	WCHAR* val = _node->value();
 	if (val)
-		return static_cast<int8_t>(::_wtoi(val));
+		return static_cast<int8_t>(_wtoi(val));
 
 	return defaultValue;
 }
@@ -102,7 +102,7 @@ int16_t XmlNode::GetInt16Value(int16_t defaultValue)
 {
 	WCHAR* val = _node->value();
 	if (val)
-		return static_cast<int16_t>(::_wtoi(val));
+		return static_cast<int16_t>(_wtoi(val));
 	return defaultValue;
 }
 
@@ -110,7 +110,7 @@ int32_t XmlNode::GetInt32Value(int32_t defaultValue)
 {
 	WCHAR* val = _node->value();
 	if (val)
-		return static_cast<int32_t>(::_wtoi(val));
+		return static_cast<int32_t>(_wtoi(val));
 
 	return defaultValue;
 }
@@ -119,7 +119,7 @@ int64_t XmlNode::GetInt64Value(int64_t defaultValue)
 {
 	WCHAR* val = _node->value();
 	if (val)
-		return static_cast<int64_t>(::_wtoi64(val));
+		return static_cast<int64_t>(_wtoi64(val));
 
 	return defaultValue;
 }
@@ -128,7 +128,7 @@ float XmlNode::GetFloatValue(float defaultValue)
 {
 	WCHAR* val = _node->value();
 	if (val)
-		return static_cast<float>(::_wtof(val));
+		return static_cast<float>(_wtof(val));
 
 	return defaultValue;
 }
@@ -137,7 +137,7 @@ double XmlNode::GetDoubleValue(double defaultValue)
 {
 	WCHAR* val = _node->value();
 	if (val)
-		return ::_wtof_l(val, kr);
+		return _wtof_l(val, kr);
 
 	return defaultValue;
 }

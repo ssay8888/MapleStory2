@@ -36,7 +36,11 @@ HRESULT Player::NativeConstruct(void* arg)
 
 	if (FAILED(AddComponents()))
 		return E_FAIL;
-
+	if (arg)
+	{
+		const _float3 pos = *static_cast<_float3*>(arg);
+		_transform_com->SetState(Transform::kState::kStatePosition, pos);
+	}
 	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
 	return S_OK;
 }
@@ -82,12 +86,13 @@ int32_t Player::Tick(const double timeDelta)
 	const auto& object_manager = ObjectManager::GetInstance();
 	const std::shared_ptr<ViBufferTerrain> viBuffer = std::static_pointer_cast<ViBufferTerrain>(
 		object_manager.GetComponentPtr(
-		static_cast<uint32_t>(kScene::kSceneGamePlay0), 
+		static_cast<uint32_t>(kSceneGamePlay0), 
 			L"Layer_BackGround", 
 			L"Com_VIBuffer"));
 
 
-	const std::shared_ptr<Transform> transform = std::static_pointer_cast<Transform>(object_manager.GetComponentPtr(static_cast<uint32_t>(kScene::kSceneGamePlay0),
+	const std::shared_ptr<Transform> transform = std::static_pointer_cast<Transform>(object_manager.GetComponentPtr(static_cast<uint32_t>(
+			kSceneGamePlay0),
 	                                                                                                                 L"Layer_BackGround",
 	                                                                                                                 L"Com_Transform"));
 
@@ -162,7 +167,7 @@ auto Player::AddComponents() -> HRESULT
 	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
 		return E_FAIL;
 
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Man"), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
+	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Cube_co_fi_prop_bench_A01"), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
 		return E_FAIL;
 
 	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))

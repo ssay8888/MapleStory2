@@ -9,11 +9,11 @@ IocpEvent::IocpEvent(const EventType type) :
 
 auto IocpEvent::Init() -> void
 {
-	OVERLAPPED::hEvent = nullptr;
-	OVERLAPPED::Internal = 0;
-	OVERLAPPED::InternalHigh = 0;
-	OVERLAPPED::Offset = 0;
-	OVERLAPPED::OffsetHigh = 0;
+	hEvent = nullptr;
+	Internal = 0;
+	InternalHigh = 0;
+	Offset = 0;
+	OffsetHigh = 0;
 }
 
 ConnectEvent::ConnectEvent(): IocpEvent(EventType::kConnect)

@@ -46,20 +46,61 @@ HRESULT BackGround::Render()
 	GameObject::Render();
 	_matrix		identityMatrix, scaleMatrix;
 
-	D3DXMatrixScaling(&scaleMatrix, 2.f, 2.f, 1.f);
-	D3DXMatrixIdentity(&identityMatrix);
-
-	/* 쉐이더 전역변수로 값을 전달한다. */
-
-	auto result = _shader_com->SetUpConstantTable("g_WorldMatrix", &scaleMatrix, sizeof(_matrix));
-	result = _shader_com->SetUpConstantTable("g_ViewMatrix", &identityMatrix, sizeof(_matrix));
-	result = _shader_com->SetUpConstantTable("g_ProjMatrix", &identityMatrix, sizeof(_matrix));
-	result = _shader_com->SetUpTextureConstantTable("g_DiffuseTexture", _texture_com, 0);
+	float _size_x = 1280;
+	float _size_y = 720;
+	float _x = 1280 >> 1;
+	float _y = 720 - _size_y * 0.5f;
+	_matrix _proj_matrix;
+	D3DXMatrixOrthoLH(&_proj_matrix, 1280, 720, 0.f, 1.f);
 
 
-	result = _shader_com->BeginShader(0);
+	_matrix			transformMatrix, viewMatrix, projMatrix;
+
+	D3DXMatrixIdentity(&transformMatrix);
+
+	/* 로컬스페이스 기준으로 크기변환과 위치변환만 셋팅한다. */
+	transformMatrix._11 = _size_x;
+	transformMatrix._22 = _size_y;
+
+	transformMatrix._41 = _x - (1280 >> 1);
+	transformMatrix._42 = -_y + (720 >> 1);
+
+	_graphic_device->SetTransform(D3DTS_WORLD, &transformMatrix);
+
+	/* 뷰변환행렬. */
+	_graphic_device->SetTransform(D3DTS_VIEW, D3DXMatrixIdentity(&viewMatrix));
+
+	/* 투영변환행렬 */
+	_graphic_device->SetTransform(D3DTS_PROJECTION, &_proj_matrix);
+
+	_graphic_device->SetRenderState(D3DRS_LIGHTING, FALSE);
+	_graphic_device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	_graphic_device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	_texture_com->SetUpOnGraphicDevice(0, 0);
+
 	_vi_buffer_com->RenderViBuffer();
-	result = _shader_com->EndShader();
+
+	_graphic_device->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+
+	//_matrix			transformMatrix, viewMatrix, projMatrix;
+	//D3DXMatrixOrthoLH(&projMatrix, 1280, 720, 0.f, 1.f);
+	//D3DXMatrixIdentity(&transformMatrix);
+	//D3DXMatrixIdentity(&viewMatrix);
+	//transformMatrix._11 = 1280;
+	//transformMatrix._22 = 720;
+	//transformMatrix._41 = (1280>>1) - (1280 >> 1);
+	//transformMatrix._42 = -(720 - (720 * 0.5f)) + (720 >> 1);
+
+	//auto result = _shader_com->SetUpConstantTable("g_WorldMatrix", &transformMatrix, sizeof(_matrix));
+	//result = _shader_com->SetUpConstantTable("g_ViewMatrix", &viewMatrix, sizeof(_matrix));
+	//result = _shader_com->SetUpConstantTable("g_ProjMatrix", &projMatrix, sizeof(_matrix));
+	//result = _shader_com->SetUpTextureConstantTable("g_DiffuseTexture", _texture_com, 0);
+
+
+	//result = _shader_com->BeginShader(0);
+	//_vi_buffer_com->RenderViBuffer();
+	//result = _shader_com->EndShader();
 
 	return S_OK;
 }

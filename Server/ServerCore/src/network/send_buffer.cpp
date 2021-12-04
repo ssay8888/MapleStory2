@@ -108,5 +108,5 @@ auto SendBufferManager::PushGlobal(SendBufferChunk* buffer) -> void
 {
 	std::cout << "PushGlobal SENDBUFFERCHUNK" << std::endl;
 
-	SendBufferManager::GetInstance().Push(SendBufferChunkRef(buffer, PushGlobal));
+	GetInstance().Push(SendBufferChunkRef(buffer, PushGlobal));
 }

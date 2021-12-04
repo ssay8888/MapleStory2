@@ -21,6 +21,6 @@ private:
 
 private:
 	std::shared_ptr<class Loading> _loader = nullptr;
-	kScene _next_scene = kScene::kSceneEnd;
+	kScene _next_scene = kSceneEnd;
 };
 

@@ -73,6 +73,18 @@
     <ClInclude Include="protocol\struct.pb.h">
       <Filter>protocol</Filter>
     </ClInclude>
+    <ClInclude Include="src\common\xml\map_parser.h">
+      <Filter>common\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\map\map_instance.h">
+      <Filter>game_object\map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\map\cube\map_object.h">
+      <Filter>game_object\map\object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\map\map_manager.h">
+      <Filter>game_object\map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -140,6 +152,18 @@
     </ClCompile>
     <ClCompile Include="protocol\struct.pb.cc">
       <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="src\common\xml\map_parser.cpp">
+      <Filter>common\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\map\map_instance.cpp">
+      <Filter>game_object\map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\map\cube\map_object.cpp">
+      <Filter>game_object\map\object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\map\map_manager.cpp">
+      <Filter>game_object\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +234,18 @@
     </Filter>
     <Filter Include="protocol">
       <UniqueIdentifier>{fa70be99-5406-4d8e-ba98-14ed7ece0f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{22d8bb07-b733-4bb1-8e46-e79e6c19afd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\xml">
+      <UniqueIdentifier>{55084123-7946-46bf-8ae0-2b6613fc5d65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\map">
+      <UniqueIdentifier>{965e74a5-41aa-4761-a1d7-ec5ded897c36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\map\object">
+      <UniqueIdentifier>{19cdd32a-0344-4d17-a50d-6ac19c61584d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

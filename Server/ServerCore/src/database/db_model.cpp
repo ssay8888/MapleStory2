@@ -9,12 +9,12 @@ using namespace DBModel;
 
 String Column::CreateText()
 {
-	return DBModel::Helpers::Format(
+	return Helpers::Format(
 		L"[%s] %s %s %s",
 		_name.c_str(),
 		_typeText.c_str(),
 		_nullable ? L"NULL" : L"NOT NULL",
-		_identity ? DBModel::Helpers::Format(L"IDENTITY(%d, %d)", _seedValue, _incrementValue).c_str() : L"");
+		_identity ? Helpers::Format(L"IDENTITY(%d, %d)", _seedValue, _incrementValue).c_str() : L"");
 }
 
 /*-----------
@@ -78,7 +78,7 @@ String Index::CreateColumnsText()
 		if (i > 0)
 			ret += L", ";
 
-		ret += DBModel::Helpers::Format(L"[%s]", _columns[i]->_name.c_str());
+		ret += Helpers::Format(L"[%s]", _columns[i]->_name.c_str());
 	}
 
 	return ret;
@@ -116,7 +116,7 @@ String Procedure::GenerateCreateQuery()
 	const WCHAR* query = L"CREATE PROCEDURE [dbo].[%s] %s AS BEGIN %s END";
 
 	String paramString = GenerateParamString();
-	return DBModel::Helpers::Format(query, _name.c_str(), paramString.c_str(), _body.c_str());
+	return Helpers::Format(query, _name.c_str(), paramString.c_str(), _body.c_str());
 }
 
 String Procedure::GenerateAlterQuery()
@@ -124,7 +124,7 @@ String Procedure::GenerateAlterQuery()
 	const WCHAR* query = L"ALTER PROCEDURE [dbo].[%s] %s AS	BEGIN %s END";
 
 	String paramString = GenerateParamString();
-	return DBModel::Helpers::Format(query, _name.c_str(), paramString.c_str(), _body.c_str());
+	return Helpers::Format(query, _name.c_str(), paramString.c_str(), _body.c_str());
 }
 
 String Procedure::GenerateParamString()
@@ -135,9 +135,9 @@ String Procedure::GenerateParamString()
 	for (int32_t i = 0; i < size; i++)
 	{
 		if (i < size - 1)
-			str += DBModel::Helpers::Format(L"\t%s %s,\n", _parameters[i]._name.c_str(), _parameters[i]._type.c_str());
+			str += Helpers::Format(L"\t%s %s,\n", _parameters[i]._name.c_str(), _parameters[i]._type.c_str());
 		else
-			str += DBModel::Helpers::Format(L"\t%s %s", _parameters[i]._name.c_str(), _parameters[i]._type.c_str());
+			str += Helpers::Format(L"\t%s %s", _parameters[i]._name.c_str(), _parameters[i]._type.c_str());
 	}
 
 	return str;
@@ -154,7 +154,7 @@ String Helpers::Format(const WCHAR* format, ...)
 
 	va_list ap;
 	va_start(ap, format);
-	::vswprintf_s(buf, 4096, format, ap);
+	vswprintf_s(buf, 4096, format, ap);
 	va_end(ap);
 
 	return String(buf);
@@ -186,7 +186,7 @@ String Helpers::RemoveWhiteSpace(const String& str)
 	String ret = str;
 
 	ret.erase(
-		std::remove_if(ret.begin(), ret.end(), [=](WCHAR ch) { return ::isspace(ch); }),
+		std::remove_if(ret.begin(), ret.end(), [=](WCHAR ch) { return isspace(ch); }),
 		ret.end());
 
 	return ret;
@@ -201,23 +201,23 @@ DataType Helpers::String2DataType(const WCHAR* str, OUT int32_t& maxLen)
 		return DataType::kNone;
 
 	if (ret[3].matched)
-		maxLen = ::_wcsicmp(ret[3].str().c_str(), L"max") == 0 ? -1 : _wtoi(ret[3].str().c_str());
+		maxLen = _wcsicmp(ret[3].str().c_str(), L"max") == 0 ? -1 : _wtoi(ret[3].str().c_str());
 	else
 		maxLen = 0;
 
-	if (::_wcsicmp(ret[1].str().c_str(), L"TinyInt") == 0) return DataType::kTinyInt;
-	if (::_wcsicmp(ret[1].str().c_str(), L"SmallInt") == 0) return DataType::kSmallInt;
-	if (::_wcsicmp(ret[1].str().c_str(), L"Int") == 0) return DataType::kInt;
-	if (::_wcsicmp(ret[1].str().c_str(), L"Real") == 0) return DataType::kReal;
-	if (::_wcsicmp(ret[1].str().c_str(), L"DateTime") == 0) return DataType::kDateTime;
-	if (::_wcsicmp(ret[1].str().c_str(), L"Float") == 0) return DataType::kFloat;
-	if (::_wcsicmp(ret[1].str().c_str(), L"Bit") == 0) return DataType::kBit;
-	if (::_wcsicmp(ret[1].str().c_str(), L"Numeric") == 0) return DataType::kNumeric;
-	if (::_wcsicmp(ret[1].str().c_str(), L"BigInt") == 0) return DataType::kBigInt;
-	if (::_wcsicmp(ret[1].str().c_str(), L"VarBinary") == 0) return DataType::kVarBinary;
-	if (::_wcsicmp(ret[1].str().c_str(), L"Varchar") == 0) return DataType::kVarchar;
-	if (::_wcsicmp(ret[1].str().c_str(), L"Binary") == 0) return DataType::kBinary;
-	if (::_wcsicmp(ret[1].str().c_str(), L"NVarChar") == 0) return DataType::kNVarChar;
+	if (_wcsicmp(ret[1].str().c_str(), L"TinyInt") == 0) return DataType::kTinyInt;
+	if (_wcsicmp(ret[1].str().c_str(), L"SmallInt") == 0) return DataType::kSmallInt;
+	if (_wcsicmp(ret[1].str().c_str(), L"Int") == 0) return DataType::kInt;
+	if (_wcsicmp(ret[1].str().c_str(), L"Real") == 0) return DataType::kReal;
+	if (_wcsicmp(ret[1].str().c_str(), L"DateTime") == 0) return DataType::kDateTime;
+	if (_wcsicmp(ret[1].str().c_str(), L"Float") == 0) return DataType::kFloat;
+	if (_wcsicmp(ret[1].str().c_str(), L"Bit") == 0) return DataType::kBit;
+	if (_wcsicmp(ret[1].str().c_str(), L"Numeric") == 0) return DataType::kNumeric;
+	if (_wcsicmp(ret[1].str().c_str(), L"BigInt") == 0) return DataType::kBigInt;
+	if (_wcsicmp(ret[1].str().c_str(), L"VarBinary") == 0) return DataType::kVarBinary;
+	if (_wcsicmp(ret[1].str().c_str(), L"Varchar") == 0) return DataType::kVarchar;
+	if (_wcsicmp(ret[1].str().c_str(), L"Binary") == 0) return DataType::kBinary;
+	if (_wcsicmp(ret[1].str().c_str(), L"NVarChar") == 0) return DataType::kNVarChar;
 
 	return DataType::kNone;
 }

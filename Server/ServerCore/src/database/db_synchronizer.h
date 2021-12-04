@@ -68,5 +68,5 @@ private:
 
 private:
 	Set<String>							_dependentIndexes;
-	Vector<String>						_updateQueries[UpdateStep::kMax];
+	Vector<String>						_updateQueries[kMax];
 };

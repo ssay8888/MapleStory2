@@ -126,7 +126,7 @@ void DBSynchronizer::ParseXmlDB(const WCHAR* path)
 			c->_nullable = !column.GetBoolAttr(L"notnull", false);
 
 			const WCHAR* identityStr = column.GetStringAttr(L"identity");
-			if (::wcslen(identityStr) > 0)
+			if (wcslen(identityStr) > 0)
 			{
 				std::wregex pt(L"(\\d+),(\\d+)");
 				std::wcmatch match;
@@ -145,9 +145,9 @@ void DBSynchronizer::ParseXmlDB(const WCHAR* path)
 		{
 			DBModel::IndexRef i = MakeShared<DBModel::Index>();
 			const WCHAR* typeStr = index.GetStringAttr(L"type");
-			if (::_wcsicmp(typeStr, L"clustered") == 0)
+			if (_wcsicmp(typeStr, L"clustered") == 0)
 				i->_type = DBModel::IndexType::Clustered;
-			else if (::_wcsicmp(typeStr, L"nonclustered") == 0)
+			else if (_wcsicmp(typeStr, L"nonclustered") == 0)
 				i->_type = DBModel::IndexType::NonClustered;
 			else
 				CRASH("Invalid Index Type");
@@ -380,7 +380,7 @@ void DBSynchronizer::CompareDBModel()
 			if (_xmlRemovedTables.find(dbTable->_name) != _xmlRemovedTables.end())
 			{
 				ConsoleLog::GetInstance().WriteStdOut(kColor::kYellow, L"Removing Table : [dbo].[%s]\n", dbTable->_name.c_str());
-				_updateQueries[UpdateStep::kDropTable].push_back(DBModel::Helpers::Format(L"DROP TABLE [dbo].[%s]", dbTable->_name.c_str()));
+				_updateQueries[kDropTable].push_back(DBModel::Helpers::Format(L"DROP TABLE [dbo].[%s]", dbTable->_name.c_str()));
 			}
 		}
 	}
@@ -401,14 +401,14 @@ void DBSynchronizer::CompareDBModel()
 		}
 
 		ConsoleLog::GetInstance().WriteStdOut(kColor::kYellow, L"Creating Table : [dbo].[%s]\n", xmlTable->_name.c_str());
-		_updateQueries[UpdateStep::kCreateTable].push_back(DBModel::Helpers::Format(L"CREATE TABLE [dbo].[%s] (%s)", xmlTable->_name.c_str(), columnsStr.c_str()));
+		_updateQueries[kCreateTable].push_back(DBModel::Helpers::Format(L"CREATE TABLE [dbo].[%s] (%s)", xmlTable->_name.c_str(), columnsStr.c_str()));
 
 		for (DBModel::ColumnRef& xmlColumn : xmlTable->_columns)
 		{
 			if (xmlColumn->_default.empty())
 				continue;
 
-			_updateQueries[UpdateStep::kDefaultConstraint].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] ADD CONSTRAINT [%s] DEFAULT (%s) FOR [%s]",
+			_updateQueries[kDefaultConstraint].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] ADD CONSTRAINT [%s] DEFAULT (%s) FOR [%s]",
 				xmlTable->_name.c_str(),
 				DBModel::Helpers::Format(L"DF_%s_%s", xmlTable->_name.c_str(), xmlColumn->_name.c_str()).c_str(),
 				xmlColumn->_default.c_str(),
@@ -420,7 +420,7 @@ void DBSynchronizer::CompareDBModel()
 			ConsoleLog::GetInstance().WriteStdOut(kColor::kYellow, L"Creating Index : [%s] %s %s [%s]\n", xmlTable->_name.c_str(), xmlIndex->GetKeyText().c_str(), xmlIndex->GetTypeText().c_str(), xmlIndex->GetUniqueName().c_str());
 			if (xmlIndex->_primaryKey || xmlIndex->_uniqueConstraint)
 			{
-				_updateQueries[UpdateStep::kCreateIndex].push_back(DBModel::Helpers::Format(
+				_updateQueries[kCreateIndex].push_back(DBModel::Helpers::Format(
 					L"ALTER TABLE [dbo].[%s] ADD CONSTRAINT [%s] %s %s (%s)",
 					xmlTable->_name.c_str(),
 					xmlIndex->CreateName(xmlTable->_name).c_str(),
@@ -430,7 +430,7 @@ void DBSynchronizer::CompareDBModel()
 			}
 			else
 			{
-				_updateQueries[UpdateStep::kCreateIndex].push_back(DBModel::Helpers::Format(
+				_updateQueries[kCreateIndex].push_back(DBModel::Helpers::Format(
 					L"CREATE %s INDEX [%s] ON [dbo].[%s] (%s)",
 					xmlIndex->GetTypeText().c_str(),
 					xmlIndex->CreateName(xmlTable->_name).c_str(),
@@ -445,7 +445,7 @@ void DBSynchronizer::CompareDBModel()
 
 void DBSynchronizer::ExecuteUpdateQueries()
 {
-	for (int32_t step = 0; step < UpdateStep::kMax; step++)
+	for (int32_t step = 0; step < kMax; step++)
 	{
 		for (String& query : _updateQueries[step])
 		{
@@ -476,9 +476,9 @@ void DBSynchronizer::CompareTables(DBModel::TableRef dbTable, DBModel::TableRef 
 		{
 			ConsoleLog::GetInstance().WriteStdOut(kColor::kYellow, L"Dropping Column : [%s].[%s]\n", dbTable->_name.c_str(), dbColumn->_name.c_str());
 			if (dbColumn->_defaultConstraintName.empty() == false)
-				_updateQueries[UpdateStep::kDropColumn].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] DROP CONSTRAINT [%s]", dbTable->_name.c_str(), dbColumn->_defaultConstraintName.c_str()));
+				_updateQueries[kDropColumn].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] DROP CONSTRAINT [%s]", dbTable->_name.c_str(), dbColumn->_defaultConstraintName.c_str()));
 
-			_updateQueries[UpdateStep::kDropColumn].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] DROP COLUMN [%s]", dbTable->_name.c_str(), dbColumn->_name.c_str()));
+			_updateQueries[kDropColumn].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] DROP COLUMN [%s]", dbTable->_name.c_str(), dbColumn->_name.c_str()));
 		}
 	}
 
@@ -490,25 +490,25 @@ void DBSynchronizer::CompareTables(DBModel::TableRef dbTable, DBModel::TableRef 
 		newColumn._nullable = true;
 
 		ConsoleLog::GetInstance().WriteStdOut(kColor::kYellow, L"Adding Column : [%s].[%s]\n", dbTable->_name.c_str(), xmlColumn->_name.c_str());
-		_updateQueries[UpdateStep::kAddColumn].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] ADD %s %s",
-			dbTable->_name.c_str(), xmlColumn->_name.c_str(), xmlColumn->_typeText.c_str()));
+		_updateQueries[kAddColumn].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] ADD %s %s",
+		                                                              dbTable->_name.c_str(), xmlColumn->_name.c_str(), xmlColumn->_typeText.c_str()));
 
 		if (xmlColumn->_nullable == false && xmlColumn->_default.empty() == false)
 		{
-			_updateQueries[UpdateStep::kAddColumn].push_back(DBModel::Helpers::Format(L"SET NOCOUNT ON; UPDATE [dbo].[%s] SET [%s] = %s WHERE [%s] IS NULL",
-				dbTable->_name.c_str(), xmlColumn->_name.c_str(), xmlColumn->_default.c_str(), xmlColumn->_name.c_str()));
+			_updateQueries[kAddColumn].push_back(DBModel::Helpers::Format(L"SET NOCOUNT ON; UPDATE [dbo].[%s] SET [%s] = %s WHERE [%s] IS NULL",
+			                                                              dbTable->_name.c_str(), xmlColumn->_name.c_str(), xmlColumn->_default.c_str(), xmlColumn->_name.c_str()));
 		}
 
 		if (xmlColumn->_nullable == false)
 		{
-			_updateQueries[UpdateStep::kAddColumn].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] ALTER COLUMN %s",
-				dbTable->_name.c_str(), xmlColumn->CreateText().c_str()));
+			_updateQueries[kAddColumn].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] ALTER COLUMN %s",
+			                                                              dbTable->_name.c_str(), xmlColumn->CreateText().c_str()));
 		}
 
 		if (xmlColumn->_default.empty() == false)
 		{
-			_updateQueries[UpdateStep::kAddColumn].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] ADD CONSTRAINT [DF_%s_%s] DEFAULT (%s) FOR [%s]",
-				dbTable->_name.c_str(), dbTable->_name.c_str(), xmlColumn->_name.c_str(), xmlColumn->_default.c_str(), xmlColumn->_name.c_str()));
+			_updateQueries[kAddColumn].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] ADD CONSTRAINT [DF_%s_%s] DEFAULT (%s) FOR [%s]",
+			                                                              dbTable->_name.c_str(), dbTable->_name.c_str(), xmlColumn->_name.c_str(), xmlColumn->_default.c_str(), xmlColumn->_name.c_str()));
 		}
 	}
 
@@ -530,9 +530,9 @@ void DBSynchronizer::CompareTables(DBModel::TableRef dbTable, DBModel::TableRef 
 		{
 			ConsoleLog::GetInstance().WriteStdOut(kColor::kYellow, L"Dropping Index : [%s] [%s] %s %s\n", dbTable->_name.c_str(), dbIndex->_name.c_str(), dbIndex->GetKeyText().c_str(), dbIndex->GetTypeText().c_str());
 			if (dbIndex->_primaryKey || dbIndex->_uniqueConstraint)
-				_updateQueries[UpdateStep::kDropIndex].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] DROP CONSTRAINT [%s]", dbTable->_name.c_str(), dbIndex->_name.c_str()));
+				_updateQueries[kDropIndex].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] DROP CONSTRAINT [%s]", dbTable->_name.c_str(), dbIndex->_name.c_str()));
 			else
-				_updateQueries[UpdateStep::kDropIndex].push_back(DBModel::Helpers::Format(L"DROP INDEX [%s] ON [dbo].[%s]", dbIndex->_name.c_str(), dbTable->_name.c_str()));
+				_updateQueries[kDropIndex].push_back(DBModel::Helpers::Format(L"DROP INDEX [%s] ON [dbo].[%s]", dbIndex->_name.c_str(), dbTable->_name.c_str()));
 		}
 	}
 
@@ -543,13 +543,13 @@ void DBSynchronizer::CompareTables(DBModel::TableRef dbTable, DBModel::TableRef 
 		ConsoleLog::GetInstance().WriteStdOut(kColor::kYellow, L"Creating Index : [%s] %s %s [%s]\n", dbTable->_name.c_str(), xmlIndex->GetKeyText().c_str(), xmlIndex->GetTypeText().c_str(), xmlIndex->GetUniqueName().c_str());
 		if (xmlIndex->_primaryKey || xmlIndex->_uniqueConstraint)
 		{
-			_updateQueries[UpdateStep::kCreateIndex].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] ADD CONSTRAINT [%s] %s %s (%s)",
-				dbTable->_name.c_str(), xmlIndex->CreateName(dbTable->_name).c_str(), xmlIndex->GetKeyText().c_str(), xmlIndex->GetTypeText().c_str(), xmlIndex->CreateColumnsText().c_str()));
+			_updateQueries[kCreateIndex].push_back(DBModel::Helpers::Format(L"ALTER TABLE [dbo].[%s] ADD CONSTRAINT [%s] %s %s (%s)",
+			                                                                dbTable->_name.c_str(), xmlIndex->CreateName(dbTable->_name).c_str(), xmlIndex->GetKeyText().c_str(), xmlIndex->GetTypeText().c_str(), xmlIndex->CreateColumnsText().c_str()));
 		}
 		else
 		{
-			_updateQueries[UpdateStep::kCreateIndex].push_back(DBModel::Helpers::Format(L"CREATE %s INDEX [%s] ON [dbo].[%s] (%s)",
-				xmlIndex->GetTypeText(), xmlIndex->CreateName(dbTable->_name).c_str(), dbTable->_name.c_str(), xmlIndex->CreateColumnsText().c_str()));
+			_updateQueries[kCreateIndex].push_back(DBModel::Helpers::Format(L"CREATE %s INDEX [%s] ON [dbo].[%s] (%s)",
+			                                                                xmlIndex->GetTypeText(), xmlIndex->CreateName(dbTable->_name).c_str(), dbTable->_name.c_str(), xmlIndex->CreateColumnsText().c_str()));
 		}
 	}
 }
@@ -559,15 +559,15 @@ void DBSynchronizer::CompareColumns(DBModel::TableRef dbTable, DBModel::ColumnRe
 	uint8_t flag = 0;
 
 	if (dbColumn->_type != xmlColumn->_type)
-		flag |= ColumnFlag::kType;
+		flag |= kType;
 	if (dbColumn->_maxLength != xmlColumn->_maxLength && xmlColumn->_maxLength > 0)
-		flag |= ColumnFlag::kLength;
+		flag |= kLength;
 	if (dbColumn->_nullable != xmlColumn->_nullable)
-		flag |= ColumnFlag::kNullable;
+		flag |= kNullable;
 	if (dbColumn->_identity != xmlColumn->_identity || (dbColumn->_identity && dbColumn->_incrementValue != xmlColumn->_incrementValue))
-		flag |= ColumnFlag::kIdentity;
+		flag |= kIdentity;
 	if (dbColumn->_default != xmlColumn->_default)
-		flag |= ColumnFlag::kDefault;
+		flag |= kDefault;
 
 	if (flag)
 	{
@@ -575,20 +575,20 @@ void DBSynchronizer::CompareColumns(DBModel::TableRef dbTable, DBModel::ColumnRe
 	}
 
 	// 연관된 인덱스가 있으면 나중에 삭제하기 위해 기록한다.
-	if (flag & (ColumnFlag::kType | ColumnFlag::kLength | ColumnFlag::kNullable))
+	if (flag & (kType | kLength | kNullable))
 	{
 		for (DBModel::IndexRef& dbIndex : dbTable->_indexes)
 			if (dbIndex->DependsOn(dbColumn->_name))
 				_dependentIndexes.insert(dbIndex->GetUniqueName());
 
-		flag |= ColumnFlag::kDefault;
+		flag |= kDefault;
 	}
 
-	if (flag & ColumnFlag::kDefault)
+	if (flag & kDefault)
 	{
 		if (dbColumn->_defaultConstraintName.empty() == false)
 		{
-			_updateQueries[UpdateStep::kAlterColumn].push_back(DBModel::Helpers::Format(
+			_updateQueries[kAlterColumn].push_back(DBModel::Helpers::Format(
 				L"ALTER TABLE [dbo].[%s] DROP CONSTRAINT [%s]",
 				dbTable->_name.c_str(),
 				dbColumn->_defaultConstraintName.c_str()));
@@ -603,20 +603,20 @@ void DBSynchronizer::CompareColumns(DBModel::TableRef dbTable, DBModel::ColumnRe
 	newColumn._seedValue = xmlColumn->_seedValue;
 	newColumn._incrementValue = xmlColumn->_incrementValue;
 
-	if (flag & (ColumnFlag::kType | ColumnFlag::kLength | ColumnFlag::kIdentity))
+	if (flag & (kType | kLength | kIdentity))
 	{
-		_updateQueries[UpdateStep::kAlterColumn].push_back(DBModel::Helpers::Format(
+		_updateQueries[kAlterColumn].push_back(DBModel::Helpers::Format(
 			L"ALTER TABLE [dbo].[%s] ALTER COLUMN %s",
 			dbTable->_name.c_str(),
 			newColumn.CreateText().c_str()));
 	}
 
 	newColumn._nullable = xmlColumn->_nullable;
-	if (flag & ColumnFlag::kNullable)
+	if (flag & kNullable)
 	{
 		if (xmlColumn->_default.empty() == false)
 		{
-			_updateQueries[UpdateStep::kAlterColumn].push_back(DBModel::Helpers::Format(
+			_updateQueries[kAlterColumn].push_back(DBModel::Helpers::Format(
 				L"SET NOCOUNT ON; UPDATE [dbo].[%s] SET [%s] = %s WHERE [%s] IS NULL",
 				dbTable->_name.c_str(),
 				xmlColumn->_name.c_str(),
@@ -624,17 +624,17 @@ void DBSynchronizer::CompareColumns(DBModel::TableRef dbTable, DBModel::ColumnRe
 				xmlColumn->_name.c_str()));
 		}
 
-		_updateQueries[UpdateStep::kAlterColumn].push_back(DBModel::Helpers::Format(
+		_updateQueries[kAlterColumn].push_back(DBModel::Helpers::Format(
 			L"ALTER TABLE [dbo].[%s] ALTER COLUMN %s",
 			dbTable->_name.c_str(),
 			newColumn.CreateText().c_str()));
 	}
 
-	if (flag & ColumnFlag::kDefault)
+	if (flag & kDefault)
 	{
 		if (dbColumn->_defaultConstraintName.empty() == false)
 		{
-			_updateQueries[UpdateStep::kAlterColumn].push_back(DBModel::Helpers::Format(
+			_updateQueries[kAlterColumn].push_back(DBModel::Helpers::Format(
 				L"ALTER TABLE [dbo].[%s] ADD CONSTRAINT [%s] DEFAULT (%s) FOR [%s]",
 				dbTable->_name.c_str(),
 				DBModel::Helpers::Format(L"DF_%s_%s", dbTable->_name.c_str(), dbColumn->_name.c_str()).c_str(),
@@ -661,7 +661,7 @@ void DBSynchronizer::CompareStoredProcedures()
 			if (DBModel::Helpers::RemoveWhiteSpace(dbProcedure->_fullBody) != DBModel::Helpers::RemoveWhiteSpace(xmlBody))
 			{
 				ConsoleLog::GetInstance().WriteStdOut(kColor::kYellow, L"Updating Procedure : %s\n", dbProcedure->_name.c_str());
-				_updateQueries[UpdateStep::kStoredProcecure].push_back(xmlProcedure->GenerateAlterQuery());
+				_updateQueries[kStoredProcecure].push_back(xmlProcedure->GenerateAlterQuery());
 			}
 			xmlProceduresMap.erase(findProcedure);
 		}
@@ -671,6 +671,6 @@ void DBSynchronizer::CompareStoredProcedures()
 	for (auto& mapIt : xmlProceduresMap)
 	{
 		ConsoleLog::GetInstance().WriteStdOut(kColor::kYellow, L"Updating Procedure : %s\n", mapIt.first.c_str());
-		_updateQueries[UpdateStep::kStoredProcecure].push_back(mapIt.second->GenerateCreateQuery());
+		_updateQueries[kStoredProcecure].push_back(mapIt.second->GenerateCreateQuery());
 	}
 }

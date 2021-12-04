@@ -39,7 +39,7 @@ bool BufferWriter::Write(const void* src, const uint32_t len)
 	if (FreeSize() < len)
 		return false;
 
-	::memcpy(&_buffer[_pos], src, len);
+	memcpy(&_buffer[_pos], src, len);
 	_pos += len;
 	return true;
 }

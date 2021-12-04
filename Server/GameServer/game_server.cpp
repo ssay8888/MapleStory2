@@ -12,6 +12,9 @@
 #include "src/thread/thread_manager.h"
 #include "src/network/service.h"
 #include "src/network/socket_utils.h"
+#include "src/database/db_connection_pool.h"
+#include "src/database/db_bind.h"
+#include "src/database/db_bind_helper.h"
 
 enum
 {
@@ -22,7 +25,7 @@ void DoWorkerJob(ServerServiceRef& service)
 {
 	while (true)
 	{
-		LEndTickCount = ::GetTickCount64() + WORKER_TICK;
+		LEndTickCount = GetTickCount64() + WORKER_TICK;
 
 		// 네트워크 입출력 처리
 		service->GetIocpCore()->Dispatch(10);
@@ -52,6 +55,11 @@ int main()
 {
 	SocketUtils::Init();
 	ClientPacketHandler::Init();
+	ASSERT_CRASH(DBConnectionPool::GetInstance().Connect(1, L"Driver={SQL Server Native Client 11.0};Server=(localdb)\\MSSQLLocalDB;Database=maplestory2;Trusted_Connection=Yes;"));
+
+	wchar_t account[MAX_PATH];
+	wchar_t password[MAX_PATH];
+	
 	ServerServiceRef service = MakeShared<ServerService>(
 		NetAddress(L"127.0.0.1", 7777),
 		MakeShared<IocpCore>(),

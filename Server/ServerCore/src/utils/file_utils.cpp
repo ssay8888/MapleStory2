@@ -11,7 +11,7 @@ Vector<BYTE> FileUtils::ReadFile(const WCHAR* path)
 
 	const fs::path filePath{ path };
 
-	const auto fileSize = static_cast<uint32_t>(fs::file_size(filePath));
+	const auto fileSize = static_cast<uint32_t>(file_size(filePath));
 	ret.resize(fileSize);
 
 	std::basic_ifstream<BYTE> inputStream{ filePath };
@@ -28,9 +28,9 @@ String FileUtils::Convert(std::string str)
 	if (srcLen == 0)
 		return ret;
 
-	const int32_t retLen = ::MultiByteToWideChar(CP_UTF8, 0, reinterpret_cast<char*>(&str[0]), srcLen, NULL, 0);
+	const int32_t retLen = MultiByteToWideChar(CP_UTF8, 0, reinterpret_cast<char*>(&str[0]), srcLen, NULL, 0);
 	ret.resize(retLen);
-	::MultiByteToWideChar(CP_UTF8, 0, reinterpret_cast<char*>(&str[0]), srcLen, &ret[0], retLen);
+	MultiByteToWideChar(CP_UTF8, 0, reinterpret_cast<char*>(&str[0]), srcLen, &ret[0], retLen);
 
 	return ret;
 }

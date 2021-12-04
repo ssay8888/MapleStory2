@@ -34,7 +34,7 @@ bool BufferReader::Peek(void* dest, const uint32_t len) const
 	if (FreeSize() < len)
 		return false;
 
-	::memcpy(dest, &_buffer[_pos], len);
+	memcpy(dest, &_buffer[_pos], len);
 	return true;
 }
 

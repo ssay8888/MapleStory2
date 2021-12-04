@@ -24,6 +24,7 @@
 #include "src/utility/game_logic_manager/game_logic_manager.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/scene_utility/scene_manager.h"
+#include "src/common/xml/map_parser.h"
 
 std::atomic<bool> MainApp::_exit = false;
 
@@ -34,9 +35,9 @@ MainApp::MainApp()
 
 auto MainApp::NativeConstruct() -> HRESULT
 {
-	GameLogicManager::InitDevice(g_hInst, g_Wnd, static_cast<int32_t>(kScene::kSceneEnd));
+	GameLogicManager::InitDevice(g_hInst, g_Wnd, static_cast<int32_t>(kSceneEnd));
 
-	NetworkThreadInit();
+	g_service = NetworkThreadInit();
 
 	if (FAILED(GraphicDevice::GetInstance().ReadyGraphicDevice(g_Wnd, GraphicDevice::kWindowMode::kModeWin, g_WinCX, g_WinCY, &_graphic_device)))
 		return E_FAIL;
@@ -81,7 +82,6 @@ auto MainApp::NetworkThreadInit() -> ClientServiceRef
 {
 	SocketUtils::Init();
 	ServerPacketHandler::Init();
-
 	ClientServiceRef service = MakeShared<ClientService>(
 		NetAddress(L"127.0.0.1", 7777),
 		MakeShared<IocpCore>(),
@@ -116,7 +116,7 @@ auto MainApp::WaitConnectServer() -> void
 		if (startTime < GetTickCount64())
 		{
 			_exit = true;
-			::exit(0);
+			exit(0);
 		}
 		std::this_thread::sleep_for(10ms);
 	}

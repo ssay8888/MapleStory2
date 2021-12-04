@@ -1,7 +1,7 @@
 #pragma once
 
 
-enum class kScene
+enum kScene
 {
 	kSceneStatic,
 	kSceneLogo,

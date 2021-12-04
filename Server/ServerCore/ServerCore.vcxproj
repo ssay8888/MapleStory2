@@ -25,6 +25,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\database\db_bind.cpp" />
+    <ClCompile Include="src\database\db_bind_helper.cpp" />
     <ClCompile Include="src\database\db_connection.cpp" />
     <ClCompile Include="src\database\db_connection_pool.cpp" />
     <ClCompile Include="src\database\db_model.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="core_tls.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="src\database\db_bind.h" />
+    <ClInclude Include="src\database\db_bind_helper.h" />
     <ClInclude Include="src\database\db_connection.h" />
     <ClInclude Include="src\database\db_connection_pool.h" />
     <ClInclude Include="src\database\db_model.h" />

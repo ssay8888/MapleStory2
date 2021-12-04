@@ -173,9 +173,13 @@
     <ClInclude Include="protocol\protocol.pb.h" />
     <ClInclude Include="protocol\struct.pb.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="src\common\xml\map_parser.h" />
     <ClInclude Include="src\game_object\back_ground\back_ground.h" />
     <ClInclude Include="src\game_object\camera\camera_free.h" />
     <ClInclude Include="src\game_object\effect\effect.h" />
+    <ClInclude Include="src\game_object\map\cube\map_object.h" />
+    <ClInclude Include="src\game_object\map\map_instance.h" />
+    <ClInclude Include="src\game_object\map\map_manager.h" />
     <ClInclude Include="src\game_object\player\player.h" />
     <ClInclude Include="src\game_object\sky\sky.h" />
     <ClInclude Include="src\game_object\terrain\terrain.h" />
@@ -208,9 +212,13 @@
     <ClCompile Include="protocol\struct.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\common\xml\map_parser.cpp" />
     <ClCompile Include="src\game_object\back_ground\back_ground.cpp" />
     <ClCompile Include="src\game_object\camera\camera_free.cpp" />
     <ClCompile Include="src\game_object\effect\effect.cpp" />
+    <ClCompile Include="src\game_object\map\cube\map_object.cpp" />
+    <ClCompile Include="src\game_object\map\map_instance.cpp" />
+    <ClCompile Include="src\game_object\map\map_manager.cpp" />
     <ClCompile Include="src\game_object\player\player.cpp" />
     <ClCompile Include="src\game_object\sky\sky.cpp" />
     <ClCompile Include="src\game_object\terrain\terrain.cpp" />

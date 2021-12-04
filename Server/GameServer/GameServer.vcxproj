@@ -199,6 +199,11 @@
     <None Include="..\..\Common\Protobuf\bin\protocol.proto" />
     <None Include="..\..\Common\Protobuf\bin\struct.proto" />
   </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Include="..\..\Common\Protobuf\bin\enum.proto" />
+    <UpToDateCheckInput Include="..\..\Common\Protobuf\bin\protocol.proto" />
+    <UpToDateCheckInput Include="..\..\Common\Protobuf\bin\struct.proto" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

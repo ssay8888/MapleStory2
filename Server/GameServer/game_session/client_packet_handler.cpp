@@ -12,5 +12,6 @@ bool HandleInvalid(PacketSessionRef& session, BYTE* buffer, int32_t len)
 
 bool HandleClientLogin(PacketSessionRef& session, Protocol::ClientLogin& pkt)
 {
+	std::cout << pkt.id() << " / " << pkt.pw() << std::endl;
 	return true;
 }
