@@ -177,6 +177,7 @@
     <ClInclude Include="src\game_object\back_ground\back_ground.h" />
     <ClInclude Include="src\game_object\camera\camera_free.h" />
     <ClInclude Include="src\game_object\effect\effect.h" />
+    <ClInclude Include="src\game_object\fittingdoll\fittingdoll.h" />
     <ClInclude Include="src\game_object\map\cube\map_object.h" />
     <ClInclude Include="src\game_object\map\map_instance.h" />
     <ClInclude Include="src\game_object\map\map_manager.h" />
@@ -189,9 +190,12 @@
     <ClInclude Include="src\network\send_manager.h" />
     <ClInclude Include="src\network\server_packet_handler.h" />
     <ClInclude Include="src\network\server_session.h" />
+    <ClInclude Include="src\scene\character_select\character_select.h" />
     <ClInclude Include="src\scene\game_play\game_play.h" />
     <ClInclude Include="src\scene\loading\loader\loading.h" />
     <ClInclude Include="src\scene\loading\scene_loading.h" />
+    <ClInclude Include="src\scene\logo\login_manager\login_job_queue.h" />
+    <ClInclude Include="src\scene\logo\login_manager\login_manager.h" />
     <ClInclude Include="src\scene\logo\scene_logo.h" />
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +220,7 @@
     <ClCompile Include="src\game_object\back_ground\back_ground.cpp" />
     <ClCompile Include="src\game_object\camera\camera_free.cpp" />
     <ClCompile Include="src\game_object\effect\effect.cpp" />
+    <ClCompile Include="src\game_object\fittingdoll\fittingdoll.cpp" />
     <ClCompile Include="src\game_object\map\cube\map_object.cpp" />
     <ClCompile Include="src\game_object\map\map_instance.cpp" />
     <ClCompile Include="src\game_object\map\map_manager.cpp" />
@@ -228,9 +233,12 @@
     <ClCompile Include="src\network\send_manager.cpp" />
     <ClCompile Include="src\network\server_packet_handler.cpp" />
     <ClCompile Include="src\network\server_session.cpp" />
+    <ClCompile Include="src\scene\character_select\character_select.cpp" />
     <ClCompile Include="src\scene\game_play\game_play.cpp" />
     <ClCompile Include="src\scene\loading\loader\loading.cpp" />
     <ClCompile Include="src\scene\loading\scene_loading.cpp" />
+    <ClCompile Include="src\scene\logo\login_manager\login_job_queue.cpp" />
+    <ClCompile Include="src\scene\logo\login_manager\login_manager.cpp" />
     <ClCompile Include="src\scene\logo\scene_logo.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 #include <thread>
 
 #include "src/common/xml/map_parser.h"
+#include "src/game_object/fittingdoll/fittingdoll.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
 #include "src/game_object/player/player.h"
@@ -36,6 +37,20 @@ auto Loading::NativeConstruct(const kScene scene)->HRESULT
 	return S_OK;
 }
 
+auto Loading::Create(const ComPtr<IDirect3DDevice9>& device, const kScene nextLevel) -> std::shared_ptr<Loading>
+{
+	auto pInstance = std::make_shared<Loading>(device);
+
+	if (FAILED(pInstance->NativeConstruct(nextLevel)))
+	{
+		MSGBOX("Failed to Creating Loading");
+		return nullptr;
+	}
+
+
+	return pInstance;
+}
+
 auto Loading::ThreadMain()->HRESULT
 {
 	WRITE_LOCK;
@@ -43,6 +58,9 @@ auto Loading::ThreadMain()->HRESULT
 
 	switch (this->_next_level)
 	{
+	case kSceneCharacterSelect:
+		hr = this->ReadyCharacterSelect();
+		break;
 	case kSceneGamePlay0:
 		hr = this->ReadyGamePlay0();
 		break;
@@ -60,19 +78,27 @@ auto Loading::ThreadMain()->HRESULT
 	return S_OK;
 }
 
-auto Loading::Create(const ComPtr<IDirect3DDevice9>& device, const kScene nextLevel) -> std::shared_ptr<Loading>
+auto Loading::ReadyCharacterSelect() -> HRESULT
 {
-	auto pInstance = std::make_shared<Loading>(device);
+	_system_message.append(L"Ä³¼±Ã¢");
+	auto& objectManager = ObjectManager::GetInstance();
+	auto& componentManager = ComponentManager::GetInstance();
 
-	if (FAILED(pInstance->NativeConstruct(nextLevel)))
-	{
-		MSGBOX("Failed to Creating Loading");
-		return nullptr;
-	}
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Fittingdool"), Fittingdoll::Create(_graphic_device))))
+		return E_FAIL;
 
+	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Mesh_Man"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Player/"), TEXT("man.x")))))
+		return E_FAIL;
 
-	return pInstance;
+	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Texture_Filter"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Terrain/Filter.bmp")))))
+		return E_FAIL;
+
+	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Shader_Mesh"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Mesh.hlsl")))))
+		return E_FAIL;
+	_is_finish = true;
+	return S_OK;
 }
+
 
 auto Loading::ReadyGamePlay0()->HRESULT
 {

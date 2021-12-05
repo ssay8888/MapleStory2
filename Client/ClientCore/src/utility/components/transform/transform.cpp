@@ -129,9 +129,27 @@ auto Transform::RotationAxis(const _float3 axis, const double timeDelta) -> void
 	SetState(kState::kStateLook, *D3DXVec3TransformNormal(&look, &look, &rotationMatrix));
 }
 
+auto Transform::RotationAxis(_float3 axis, double timeDelta, float perSecRadian) -> void
+{
+	_float3	right, up, look;
+
+	right = GetState(kState::kStateRight);
+	up = GetState(kState::kStateUp);
+	look = GetState(kState::kStateLook);
+
+	_matrix	rotationMatrix;
+
+	D3DXMatrixRotationAxis(&rotationMatrix, &axis, static_cast<float>(perSecRadian * timeDelta));
+
+	SetState(kState::kStateRight, *D3DXVec3TransformNormal(&right, &right, &rotationMatrix));
+	SetState(kState::kStateUp, *D3DXVec3TransformNormal(&up, &up, &rotationMatrix));
+	SetState(kState::kStateLook, *D3DXVec3TransformNormal(&look, &look, &rotationMatrix));
+}
+
 auto Transform::SetUpRotation(_float3 axis, float radian) -> void
 {
 	_float3	right(1.f, 0.f, 0.f), up(0.f, 1.f, 0.f), look(0.f, 0.f, 1.f);
+
 	const _float3	scale = GetScale();
 
 	right *= scale.x;

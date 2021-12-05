@@ -43,30 +43,33 @@ int32_t SceneLogo::Tick(const double timeDelta)
 
 	if (InputDevice::GetInstance().GetKeyDown(DIK_RETURN))
 	{
-			const auto scene = SceneLoading::Create(_graphic_device, kSceneGamePlay0);
-			if (SUCCEEDED(SceneManager::GetInstance().SetUpScene(scene)))
-			{
-				GameLogicManager::Clear(static_cast<uint32_t>(kSceneLogo));
-			}
-
-		//auto& objectManager = ObjectManager::GetInstance();
-		//Protocol::ClientLogin pkt;
-		//auto id = std::static_pointer_cast<TextBoxUi>(objectManager.GetGameObjectPtr(kScene::kSceneLogo,
-		//	TEXT("Layer_LoginBox"),
-		//	TEXT("Prototype_BackGround"),
-		//	0));
-		//auto pw = std::static_pointer_cast<TextBoxUi>(objectManager.GetGameObjectPtr(kScene::kSceneLogo,
-		//	TEXT("Layer_LoginBox"),
-		//	TEXT("Prototype_BackGround"),
-		//	1));
-		//if (id && pw)
+		//const auto scene = SceneLoading::Create(_graphic_device, kSceneGamePlay0);
+		//if (SUCCEEDED(SceneManager::GetInstance().SetUpScene(scene)))
 		//{
-		//	pkt.set_id(FileUtils::ConvertWtoC(id->GetText().c_str()).c_str());
-		//	pkt.set_pw(FileUtils::ConvertWtoC(pw->GetText().c_str()).c_str());
+		//	GameLogicManager::Clear(static_cast<uint32_t>(kSceneLogo));
 		//}
 
-		//	const auto send_packet =	ServerPacketHandler::MakeSendBuffer(pkt);
-		//SendManager::GetInstance().Push(send_packet);
+		auto& objectManager = ObjectManager::GetInstance();
+		Protocol::ClientLogin pkt;
+		auto id = std::static_pointer_cast<TextBoxUi>(objectManager.GetGameObjectPtr(kScene::kSceneLogo,
+			TEXT("Layer_LoginBox"),
+			TEXT("Prototype_BackGround"),
+			0));
+		auto pw = std::static_pointer_cast<TextBoxUi>(objectManager.GetGameObjectPtr(kScene::kSceneLogo,
+			TEXT("Layer_LoginBox"),
+			TEXT("Prototype_BackGround"),
+			1));
+		if (id && pw)
+		{
+			pkt.set_id(FileUtils::ConvertWtoC(id->GetText().c_str()).c_str());
+			pkt.set_pw(FileUtils::ConvertWtoC(pw->GetText().c_str()).c_str());
+			pkt.set_auth("");
+		}
+
+		const auto send_packet =	ServerPacketHandler::MakeSendBuffer(pkt);
+		SendManager::GetInstance().Push(send_packet);
+
+		EnableWindow(g_hEdit, false);
 	}
 	return S_OK;
 }

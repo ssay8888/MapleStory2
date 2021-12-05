@@ -25,14 +25,13 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = n
 static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_enum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\nenum.proto\022\010Protocol*h\n\nPlayerType\022\024\n\020"
-  "PLAYER_TYPE_NONE\020\000\022\026\n\022PLAYER_TYPE_KNIGHT"
-  "\020\001\022\024\n\020PLAYER_TYPE_MAGE\020\002\022\026\n\022PLAYER_TYPE_"
-  "ARCHER\020\003b\006proto3"
+  "\n\nenum.proto\022\010Protocol*N\n\rkLoginMessage\022"
+  "\007\n\003kOk\020\000\022\016\n\nkIdInvalid\020\001\022\r\n\tkPwInvlid\020\002\022"
+  "\025\n\021kAlreadyConnected\020\003b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_enum_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_enum_2eproto = {
-  false, false, 136, descriptor_table_protodef_enum_2eproto, "enum.proto", 
+  false, false, 110, descriptor_table_protodef_enum_2eproto, "enum.proto", 
   &descriptor_table_enum_2eproto_once, nullptr, 0, 0,
   schemas, file_default_instances, TableStruct_enum_2eproto::offsets,
   nullptr, file_level_enum_descriptors_enum_2eproto, file_level_service_descriptors_enum_2eproto,
@@ -44,11 +43,11 @@ PROTOBUF_ATTRIBUTE_WEAK const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_enum_2eproto(&descriptor_table_enum_2eproto);
 namespace Protocol {
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PlayerType_descriptor() {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kLoginMessage_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_enum_2eproto);
   return file_level_enum_descriptors_enum_2eproto[0];
 }
-bool PlayerType_IsValid(int value) {
+bool kLoginMessage_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:

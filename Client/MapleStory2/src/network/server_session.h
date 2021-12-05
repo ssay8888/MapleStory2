@@ -5,7 +5,7 @@ class ServerSession final : public PacketSession
 {
 public:
 	ServerSession();
-	~ServerSession() = default;
+	virtual ~ServerSession() = default;
 
 	virtual void OnConnected() override;
 

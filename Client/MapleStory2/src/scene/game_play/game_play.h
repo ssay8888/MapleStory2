@@ -18,6 +18,6 @@ private:
 	auto ReadyLayerPlayer(const std::wstring& pLayerTag)->HRESULT;
 	auto ReadyLayerBackGround(const std::wstring& pLayerTag)->HRESULT;
 public:
-	static std::shared_ptr<GamePlay> Create(const ComPtr<IDirect3DDevice9>& device);
+	static auto Create(const ComPtr<IDirect3DDevice9>& device)->std::shared_ptr<GamePlay>;
 };
 

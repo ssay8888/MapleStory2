@@ -54,11 +54,16 @@ auto MainApp::NativeConstruct() -> HRESULT
 
 auto MainApp::Tick(const double timeDelta) -> int32_t
 {
+	constexpr int32_t workerTick = 64;
+
 	GameLogicManager::Tick(timeDelta);
 
 	Picking::GetInstance().ComputeMouseCursorPosInWorld(g_Wnd);
 
 	GameLogicManager::LateTick(timeDelta);
+
+	LEndTickCount = GetTickCount64() + workerTick;
+	ThreadManager::DoGlobalQueueWork();
 	return int32_t();
 }
 
@@ -97,8 +102,11 @@ auto MainApp::NetworkThreadInit() -> ClientServiceRef
 				while (!_exit)
 				{
 					service->GetIocpCore()->Dispatch(10);
+
 					SendManager::GetInstance().Execute();
+
 				}
+
 			});
 	}
 

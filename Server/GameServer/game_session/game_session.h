@@ -1,8 +1,6 @@
 #pragma once
 #include "src/network/session.h"
 
-class Player;
-
 class GameSession : public PacketSession
 {
 public:
@@ -19,10 +17,7 @@ public:
 	virtual auto OnSend(int32_t len) -> void override;
 
 public:
-	auto GetPlayer() const-> std::shared_ptr<Player>;
 	auto GetSessionId() const -> int64_t ;
 private:
 	int64_t						_session_id = -1;
-	std::shared_ptr<Player>		_current_player;
-	std::weak_ptr<class Room>	_room; 
 };

@@ -39,7 +39,7 @@ HRESULT TextBoxUi::NativeConstruct(void* arg)
 	_pos = information->pos;
 	_is_password = information->is_password;
 	D3DXMatrixOrthoLH(&_proj_matrix, g_WinCX, g_WinCY, 0.f, 1.f);
-	_max_content_length = max(information->max_content_length, 13);
+	_max_content_length = std::max(information->max_content_length, 13);
 	_rc = { static_cast<LONG>(_pos.x - (_size.x / 2)), static_cast<LONG>(_pos.y - (_size.y / 2)), static_cast<LONG>(_pos.x + (_size.x / 2)), static_cast<LONG>(_pos.y + (_size.y / 2)) };
 	return GameObject::NativeConstruct(arg);
 }

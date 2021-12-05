@@ -181,6 +181,7 @@ class ClientLogin final :
   enum : int {
     kIdFieldNumber = 1,
     kPwFieldNumber = 2,
+    kAuthFieldNumber = 3,
   };
   // string id = 1;
   void clear_id();
@@ -210,6 +211,20 @@ class ClientLogin final :
   std::string* _internal_mutable_pw();
   public:
 
+  // string auth = 3;
+  void clear_auth();
+  const std::string& auth() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_auth(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_auth();
+  PROTOBUF_FUTURE_MUST_USE_RESULT std::string* release_auth();
+  void set_allocated_auth(std::string* auth);
+  private:
+  const std::string& _internal_auth() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_auth(const std::string& value);
+  std::string* _internal_mutable_auth();
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.ClientLogin)
  private:
   class _Internal;
@@ -219,6 +234,7 @@ class ClientLogin final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr id_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr pw_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr auth_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_protocol_2eproto;
 };
@@ -332,15 +348,15 @@ class ServerLogin final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kSuccessFieldNumber = 1,
+    kResultFieldNumber = 1,
   };
-  // bool success = 1;
-  void clear_success();
-  bool success() const;
-  void set_success(bool value);
+  // .Protocol.kLoginMessage result = 1;
+  void clear_result();
+  ::Protocol::kLoginMessage result() const;
+  void set_result(::Protocol::kLoginMessage value);
   private:
-  bool _internal_success() const;
-  void _internal_set_success(bool value);
+  ::Protocol::kLoginMessage _internal_result() const;
+  void _internal_set_result(::Protocol::kLoginMessage value);
   public:
 
   // @@protoc_insertion_point(class_scope:Protocol.ServerLogin)
@@ -350,7 +366,7 @@ class ServerLogin final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  bool success_;
+  int result_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_protocol_2eproto;
 };
@@ -455,28 +471,73 @@ inline void ClientLogin::set_allocated_pw(std::string* pw) {
   // @@protoc_insertion_point(field_set_allocated:Protocol.ClientLogin.pw)
 }
 
+// string auth = 3;
+inline void ClientLogin::clear_auth() {
+  auth_.ClearToEmpty();
+}
+inline const std::string& ClientLogin::auth() const {
+  // @@protoc_insertion_point(field_get:Protocol.ClientLogin.auth)
+  return _internal_auth();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ClientLogin::set_auth(ArgT0&& arg0, ArgT... args) {
+ 
+ auth_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.ClientLogin.auth)
+}
+inline std::string* ClientLogin::mutable_auth() {
+  // @@protoc_insertion_point(field_mutable:Protocol.ClientLogin.auth)
+  return _internal_mutable_auth();
+}
+inline const std::string& ClientLogin::_internal_auth() const {
+  return auth_.Get();
+}
+inline void ClientLogin::_internal_set_auth(const std::string& value) {
+  
+  auth_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* ClientLogin::_internal_mutable_auth() {
+  
+  return auth_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* ClientLogin::release_auth() {
+  // @@protoc_insertion_point(field_release:Protocol.ClientLogin.auth)
+  return auth_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void ClientLogin::set_allocated_auth(std::string* auth) {
+  if (auth != nullptr) {
+    
+  } else {
+    
+  }
+  auth_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), auth,
+      GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set_allocated:Protocol.ClientLogin.auth)
+}
+
 // -------------------------------------------------------------------
 
 // ServerLogin
 
-// bool success = 1;
-inline void ServerLogin::clear_success() {
-  success_ = false;
+// .Protocol.kLoginMessage result = 1;
+inline void ServerLogin::clear_result() {
+  result_ = 0;
 }
-inline bool ServerLogin::_internal_success() const {
-  return success_;
+inline ::Protocol::kLoginMessage ServerLogin::_internal_result() const {
+  return static_cast< ::Protocol::kLoginMessage >(result_);
 }
-inline bool ServerLogin::success() const {
-  // @@protoc_insertion_point(field_get:Protocol.ServerLogin.success)
-  return _internal_success();
+inline ::Protocol::kLoginMessage ServerLogin::result() const {
+  // @@protoc_insertion_point(field_get:Protocol.ServerLogin.result)
+  return _internal_result();
 }
-inline void ServerLogin::_internal_set_success(bool value) {
+inline void ServerLogin::_internal_set_result(::Protocol::kLoginMessage value) {
   
-  success_ = value;
+  result_ = value;
 }
-inline void ServerLogin::set_success(bool value) {
-  _internal_set_success(value);
-  // @@protoc_insertion_point(field_set:Protocol.ServerLogin.success)
+inline void ServerLogin::set_result(::Protocol::kLoginMessage value) {
+  _internal_set_result(value);
+  // @@protoc_insertion_point(field_set:Protocol.ServerLogin.result)
 }
 
 #ifdef __GNUC__

@@ -34,11 +34,35 @@ HRESULT Camera::NativeConstruct(void* arg)
 	_float3		vUp;
 	D3DXVec3Cross(&vUp, &vLook, &vRight);
 	D3DXVec3Normalize(&vUp, &vUp);
-
-	_transform->SetState(Transform::kState::kStateRight, vRight);
-	_transform->SetState(Transform::kState::kStateUp, vUp);
-	_transform->SetState(Transform::kState::kStateLook, vLook);
+	_matrix matrix;
+	D3DXMatrixIdentity(&matrix);
+	_transform->SetState(Transform::kState::kStateRight, *((_float3*)&matrix.m[0][0]));
+	_transform->SetState(Transform::kState::kStateUp, *((_float3*)&matrix.m[1][0]));
+	_transform->SetState(Transform::kState::kStateLook, *((_float3*)&matrix.m[2][0]));
 	_transform->SetState(Transform::kState::kStatePosition, _camera_desc.eye);
+
+
+
+	/*
+
+	if (0 != mouseMove)
+		_transform->RotationAxis(_float3(0.f, 1.f, 0.f), timeDelta * mouseMove * 0.02f);
+
+	mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kY);
+
+	if (0 != mouseMove)
+		_transform->RotationAxis(_transform->GetState(Transform::kState::kStateRight), timeDelta * mouseMove * 0.02f);
+	*/
+
+
+	_float3 axis{ 0, 1,  0 };
+	//_transform->RotationAxis(axis, 1, D3DXToRadian(90.f));
+
+	axis = { 1, 0, 0 };
+	_transform->RotationAxis(axis, 1, D3DXToRadian(20.f));
+
+	axis = { 0, 0, 1 };
+	_transform->RotationAxis(axis, 1, D3DXToRadian(360 - 3.21383667f));
 
 	SetTransform();
 	return S_OK;

@@ -2,6 +2,7 @@
 #include "scene_loading.h"
 
 #include "loader/loading.h"
+#include "src/scene/character_select/character_select.h"
 #include "src/scene/game_play/game_play.h"
 #include "src/utility/game_logic_manager/game_logic_manager.h"
 #include "src/utility/scene_utility/scene_manager.h"
@@ -43,6 +44,9 @@ int32_t SceneLoading::Tick(const double timeDelta)
 
 			switch (_next_scene)
 			{
+			case kSceneCharacterSelect:
+				scene = CharacterSelect::Create(_graphic_device);
+				break;
 			case kSceneGamePlay0:
 				scene = GamePlay::Create(_graphic_device);
 				break;

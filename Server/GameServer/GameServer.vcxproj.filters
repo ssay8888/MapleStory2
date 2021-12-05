@@ -25,11 +25,14 @@
     <ClCompile Include="protocol\struct.pb.cc">
       <Filter>protocol</Filter>
     </ClCompile>
-    <ClCompile Include="player\player.cpp">
-      <Filter>player</Filter>
-    </ClCompile>
     <ClCompile Include="game_session\packet_creator.cpp">
       <Filter>game_session</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_handler\login_handler\login_handler_manager.cpp">
+      <Filter>packet_handling\login_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_handler\login_handler\login_handler.cpp">
+      <Filter>packet_handling\login_handler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,11 +42,14 @@
     <Filter Include="protocol">
       <UniqueIdentifier>{a848330f-0f22-4d0b-b098-a196851131a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="player">
-      <UniqueIdentifier>{8c632bdb-80e5-4f42-ad6c-a43c56da0e04}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main">
       <UniqueIdentifier>{713985d8-a984-4024-bb64-ae04de0f5fd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="packet_handling">
+      <UniqueIdentifier>{553b40c1-8d09-4682-8805-2dbb1885fac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="packet_handling\login_handler">
+      <UniqueIdentifier>{f6f203d8-442d-4591-bbb8-791dae23bfe2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -68,11 +74,14 @@
     <ClInclude Include="protocol\struct.pb.h">
       <Filter>protocol</Filter>
     </ClInclude>
-    <ClInclude Include="player\player.h">
-      <Filter>player</Filter>
-    </ClInclude>
     <ClInclude Include="game_session\packet_creator.h">
       <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_handler\login_handler\login_handler_manager.h">
+      <Filter>packet_handling\login_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_handler\login_handler\login_handler.h">
+      <Filter>packet_handling\login_handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

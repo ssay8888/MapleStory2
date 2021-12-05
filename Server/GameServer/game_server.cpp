@@ -56,9 +56,6 @@ int main()
 	SocketUtils::Init();
 	ClientPacketHandler::Init();
 	ASSERT_CRASH(DBConnectionPool::GetInstance().Connect(1, L"Driver={SQL Server Native Client 11.0};Server=(localdb)\\MSSQLLocalDB;Database=maplestory2;Trusted_Connection=Yes;"));
-
-	wchar_t account[MAX_PATH];
-	wchar_t password[MAX_PATH];
 	
 	ServerServiceRef service = MakeShared<ServerService>(
 		NetAddress(L"127.0.0.1", 7777),

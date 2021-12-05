@@ -43,6 +43,7 @@ public:
 	auto WalkLeft(const double timeDelta)->void;
 	auto WalkRight(const double timeDelta)->void;
 	auto RotationAxis(_float3 axis, double timeDelta)->void;
+	auto RotationAxis(_float3 axis, double timeDelta, float perSecRadian)->void;
 	auto SetUpRotation(_float3 axis, float radian)->void;
 	auto ChaseTarget(const std::shared_ptr<Transform>& targetTransform, double timeDelta)->void;
 	auto ChaseTarget(_float3 vTargetPos, double timeDelta)->void;

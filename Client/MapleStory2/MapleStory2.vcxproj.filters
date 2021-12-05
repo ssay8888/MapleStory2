@@ -85,6 +85,18 @@
     <ClInclude Include="src\game_object\map\map_manager.h">
       <Filter>game_object\map</Filter>
     </ClInclude>
+    <ClInclude Include="src\scene\logo\login_manager\login_job_queue.h">
+      <Filter>scene\logo\login_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\logo\login_manager\login_manager.h">
+      <Filter>scene\logo\login_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\character_select\character_select.h">
+      <Filter>scene\character_select</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\fittingdoll\fittingdoll.h">
+      <Filter>game_object\fittingdoll</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -164,6 +176,18 @@
     </ClCompile>
     <ClCompile Include="src\game_object\map\map_manager.cpp">
       <Filter>game_object\map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\logo\login_manager\login_job_queue.cpp">
+      <Filter>scene\logo\login_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\logo\login_manager\login_manager.cpp">
+      <Filter>scene\logo\login_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\character_select\character_select.cpp">
+      <Filter>scene\character_select</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\fittingdoll\fittingdoll.cpp">
+      <Filter>game_object\fittingdoll</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,6 +270,15 @@
     </Filter>
     <Filter Include="game_object\map\object">
       <UniqueIdentifier>{19cdd32a-0344-4d17-a50d-6ac19c61584d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\character_select">
+      <UniqueIdentifier>{364815ed-43a9-4dea-9dbc-1e291658689a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\logo\login_manager">
+      <UniqueIdentifier>{886dd815-adf9-4f6f-b5e2-4575d80febc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\fittingdoll">
+      <UniqueIdentifier>{e8f047e4-fde6-47de-a8aa-cf65f4992d2c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

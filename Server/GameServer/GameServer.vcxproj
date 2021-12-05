@@ -162,13 +162,14 @@
     <ClCompile Include="game_session\game_session.cpp" />
     <ClCompile Include="game_session\game_session_manager.cpp" />
     <ClCompile Include="game_session\packet_creator.cpp" />
+    <ClCompile Include="packet_handler\login_handler\login_handler.cpp" />
+    <ClCompile Include="packet_handler\login_handler\login_handler_manager.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="player\player.cpp" />
     <ClCompile Include="protocol\enum.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
@@ -187,8 +188,9 @@
     <ClInclude Include="game_session\game_session.h" />
     <ClInclude Include="game_session\game_session_manaeger.h" />
     <ClInclude Include="game_session\packet_creator.h" />
+    <ClInclude Include="packet_handler\login_handler\login_handler.h" />
+    <ClInclude Include="packet_handler\login_handler\login_handler_manager.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="player\player.h" />
     <ClInclude Include="protocol\enum.pb.h" />
     <ClInclude Include="protocol\protocol.pb.h" />
     <ClInclude Include="protocol\struct.pb.h" />

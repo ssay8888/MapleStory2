@@ -79,7 +79,7 @@ int32_t Player::Tick(const double timeDelta)
 	}
 	if (GetKeyState('P') & 0x8000)
 	{
-		SetFocus(0);
+		EnableWindow(g_hEdit, true);
 	}
 
 	
@@ -154,7 +154,7 @@ HRESULT Player::Render()
 
 	result = _shader_com->EndShader();
 
-	return GameObject::Render();
+	return S_OK;
 }
 
 auto Player::AddComponents() -> HRESULT

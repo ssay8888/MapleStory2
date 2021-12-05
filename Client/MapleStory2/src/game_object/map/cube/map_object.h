@@ -9,7 +9,7 @@ class MapObject : public GameObject
 {
 public:
 	MapObject();
-	~MapObject() = default;
+	virtual ~MapObject() = default;
 
 public:
 	auto NativeConstructPrototype()->HRESULT override;

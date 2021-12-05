@@ -27,24 +27,31 @@ HRESULT CameraFree::NativeConstruct(void* arg)
 
 int32_t CameraFree::Tick(const double timeDelta)
 {
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_W))
-	{
-		_transform->GoStraight(timeDelta);
-	}
+	//if (InputDevice::GetInstance().GetKeyPressing(DIK_W))
+	//{
+	//	_transform->GoStraight(timeDelta);
+	//}
 
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_S))
-	{
-		_transform->BackStraight(timeDelta);
-	}
+	//if (InputDevice::GetInstance().GetKeyPressing(DIK_S))
+	//{
+	//	_transform->BackStraight(timeDelta);
+	//}
 
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_A))
-	{
-		_transform->WalkLeft(timeDelta);
-	}
+	//if (InputDevice::GetInstance().GetKeyPressing(DIK_A))
+	//{
+	//	_transform->WalkLeft(timeDelta);
+	//}
 
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_D))
+	//if (InputDevice::GetInstance().GetKeyPressing(DIK_D))
+	//{
+	//	_transform->WalkRight(timeDelta);
+	//}
+
+
+	if (InputDevice::GetInstance().GetKeyDown(DIK_Z))
 	{
-		_transform->WalkRight(timeDelta);
+		_float3 axis{ 0, 1,  0 };
+		_transform->RotationAxis(axis, 1, D3DXToRadian(90.f));
 	}
 
 	int64_t			mouseMove = 0;

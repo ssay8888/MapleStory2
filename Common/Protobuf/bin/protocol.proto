@@ -8,9 +8,10 @@ message ClientLogin
 {
 	string id = 1;
 	string pw = 2;
+	string auth = 3;
 }
 
 message ServerLogin
 {
-	bool success = 1;
+	kLoginMessage result = 1;
 }
