@@ -1,7 +1,9 @@
 #include "c_pch.h"
 #include "camera_free.h"
 
+#include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
+#include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/transform/transform.h"
 
 CameraFree::CameraFree(const ComPtr<IDirect3DDevice9>& device):
@@ -27,25 +29,45 @@ HRESULT CameraFree::NativeConstruct(void* arg)
 
 int32_t CameraFree::Tick(const double timeDelta)
 {
-	//if (InputDevice::GetInstance().GetKeyPressing(DIK_W))
-	//{
-	//	_transform->GoStraight(timeDelta);
-	//}
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_W))
+	{
+		_transform->GoStraight(timeDelta);
+	}
 
-	//if (InputDevice::GetInstance().GetKeyPressing(DIK_S))
-	//{
-	//	_transform->BackStraight(timeDelta);
-	//}
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_S))
+	{
+		_transform->BackStraight(timeDelta);
+	}
 
-	//if (InputDevice::GetInstance().GetKeyPressing(DIK_A))
-	//{
-	//	_transform->WalkLeft(timeDelta);
-	//}
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_A))
+	{
+		_transform->WalkLeft(timeDelta);
+	}
 
-	//if (InputDevice::GetInstance().GetKeyPressing(DIK_D))
-	//{
-	//	_transform->WalkRight(timeDelta);
-	//}
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_D))
+	{
+		_transform->WalkRight(timeDelta);
+	}
+
+	if (InputDevice::GetInstance().GetKeyDown(DIK_T))
+	{
+		_transform->GoStraight(timeDelta);
+	}
+
+	if (InputDevice::GetInstance().GetKeyDown(DIK_G))
+	{
+		_transform->BackStraight(timeDelta);
+	}
+
+	if (InputDevice::GetInstance().GetKeyDown(DIK_F))
+	{
+		_transform->WalkLeft(timeDelta);
+	}
+
+	if (InputDevice::GetInstance().GetKeyDown(DIK_H))
+	{
+		_transform->WalkRight(timeDelta);
+	}
 
 
 	if (InputDevice::GetInstance().GetKeyDown(DIK_Z))
@@ -66,17 +88,40 @@ int32_t CameraFree::Tick(const double timeDelta)
 	if (0 != mouseMove)
 		_transform->RotationAxis(_transform->GetState(Transform::kState::kStateRight) , timeDelta * mouseMove * 0.02f);
 
-
 	return Camera::Tick(timeDelta);
 }
 
 int32_t CameraFree::LateTick(const double timeDelta)
 {
+	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderUi, shared_from_this());
 	return Camera::LateTick(timeDelta);
 }
 
 HRESULT CameraFree::Render()
 {
+	std::wstring str;
+
+	RECT rc = {
+		0, 0,
+		1000, 1000
+	};
+	str.append(L"¶ó : ").append(std::to_wstring(_transform->GetState(Transform::kState::kStateRight).x)).append(L" / ")
+		.append(std::to_wstring(_transform->GetState(Transform::kState::kStateRight).y)).append(L" / ")
+		.append(std::to_wstring(_transform->GetState(Transform::kState::kStateRight).z)).append(L"\r\n");
+
+	str.append(L"¾÷ : ").append(std::to_wstring(_transform->GetState(Transform::kState::kStateUp).x)).append(L" / ")
+		.append(std::to_wstring(_transform->GetState(Transform::kState::kStateUp).y)).append(L" / ")
+		.append(std::to_wstring(_transform->GetState(Transform::kState::kStateUp).z)).append(L"\r\n");
+
+	str.append(L"·è : ").append(std::to_wstring(_transform->GetState(Transform::kState::kStateLook).x)).append(L" / ")
+		.append(std::to_wstring(_transform->GetState(Transform::kState::kStateLook).y)).append(L" / ")
+		.append(std::to_wstring(_transform->GetState(Transform::kState::kStateLook).z)).append(L"\r\n");
+
+	str.append(L"Æ÷ : ").append(std::to_wstring(_transform->GetState(Transform::kState::kStatePosition).x)).append(L" / ")
+		.append(std::to_wstring(_transform->GetState(Transform::kState::kStatePosition).y)).append(L" / ")
+		.append(std::to_wstring(_transform->GetState(Transform::kState::kStatePosition).z)).append(L"\r\n");
+
+	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rc, DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
 	return S_OK;
 }
 

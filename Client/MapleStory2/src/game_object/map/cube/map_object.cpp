@@ -84,43 +84,45 @@ auto MapObject::AddComponents(MapParser::MapEntity& entity) -> HRESULT
 
 	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
 		return E_FAIL;
-	if (entity.propertise.size() > 0 && entity.propertise[0].property.size() > 0)
+	if (!entity.propertise.empty())
 	{
-		auto en = entity.propertise[0].property.find("Position");
-		if (en != entity.propertise[0].property.end())
+		auto en = entity.propertise.find("Scale");
+		if (en != entity.propertise.end())
 		{
-			_transform_com->SetState(Transform::kState::kStatePosition, en->second / 150.f * 0.58f);
+			_scale = en->second.x;
 		}
-
-		if (entity.propertise.size() >= 2 && entity.propertise[1].property.size() > 0)
+		en = entity.propertise.find("Position"); 
+		if (en != entity.propertise.end())
 		{
-			auto en2 = entity.propertise[1].property.find("Rotation");
-			if (en2 != entity.propertise[1].property.end())
+			_transform_com->SetState(Transform::kState::kStatePosition, (en->second / 150.f * 0.58f));
+		}
+		en = entity.propertise.find("Rotation");
+		if (en != entity.propertise.end())
+		{
+			if (en->second.x != 0)
 			{
-				if (en2->second.x != 0)
-				{
-					_float3 axis{ 0, 0,  -1};
-					_transform_com->SetUpRotation(axis, D3DXToRadian(en2->second.x ));
-				}
-				if (en2->second.z != 0)
-				{
-					_float3 axis{ -1, 0, 0 };
-					_transform_com->SetUpRotation(axis, D3DXToRadian(en2->second.z));
-				}
-				if (en2->second.y != 0)
-				{
-					_float3 axis{ 0, -1, 0};
-					_transform_com->SetUpRotation(axis, D3DXToRadian(en2->second.y));
-					
-				}
+				_float3 axis{ 0, 0,  -1 };
+				_transform_com->SetUpRotation(axis, D3DXToRadian(en->second.x));
+			}
+			if (en->second.z != 0)
+			{
+				_float3 axis{ -1, 0, 0 };
+				_transform_com->SetUpRotation(axis, D3DXToRadian(en->second.z));
+			}
+			if (en->second.y != 0)
+			{
+				_float3 axis{ 0, -1, 0 };
+				_transform_com->SetUpRotation(axis, D3DXToRadian(en->second.y));
+
 			}
 		}
+
 		//_transform_com->SetUpRotation(_float3{ 0, 1, 0 }, D3DXToRadian(270.f));
 
 	}
-	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
+	_transform_com->SetScale((_scale * 0.01f), (_scale * 0.01f), (_scale * 0.01f));
 
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), std::wstring(L"Prototype_Mesh_Cube_").append(FileUtils::ConvertCtoW(entity.modelName.c_str())), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
+	if (FAILED(AddComponent(entity.scene, std::wstring(L"Prototype_Mesh_Cube_").append(FileUtils::ConvertCtoW(entity.modelName.c_str())), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
 		return E_FAIL;
 
 	return S_OK;

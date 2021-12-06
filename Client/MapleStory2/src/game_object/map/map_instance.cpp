@@ -60,7 +60,7 @@ auto MapInstance::AddMapObject(MapParser::MapEntity modelName) -> bool
 	_map_objects.push_back(object);
 
 
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
+	if (FAILED(AddComponent(modelName.scene, TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 	{
 		return false;
 	}

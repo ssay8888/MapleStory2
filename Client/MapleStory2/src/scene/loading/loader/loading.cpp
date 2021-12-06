@@ -95,6 +95,17 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 
 	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Shader_Mesh"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Mesh.hlsl")))))
 		return E_FAIL;
+
+	const auto modelList = MapParser::MapModelNameListExport();
+	for (auto& model : modelList)
+	{
+		componentManager.AddPrototype(kSceneCharacterSelect,
+			std::wstring(L"Prototype_Mesh_Cube_").append(FileUtils::ConvertCtoW(model.c_str())),
+			MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Cube/"),
+				FileUtils::ConvertCtoW(model.c_str()).append(L".X")));
+	}
+
+	MapManager::GetInstance().LoadCharacterInstance(kSceneCharacterSelect);
 	_is_finish = true;
 	return S_OK;
 }
@@ -178,7 +189,7 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	_system_message.clear();
 	_system_message.append(L"로딩이 완료되었습니다.");
 
-	MapManager::GetInstance().LoadMapInstance();
+	MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0);
 	_is_finish = true;
 	return S_OK;
 }

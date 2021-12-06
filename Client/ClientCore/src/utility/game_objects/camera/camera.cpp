@@ -36,11 +36,15 @@ HRESULT Camera::NativeConstruct(void* arg)
 	D3DXVec3Normalize(&vUp, &vUp);
 	_matrix matrix;
 	D3DXMatrixIdentity(&matrix);
-	_transform->SetState(Transform::kState::kStateRight, *((_float3*)&matrix.m[0][0]));
-	_transform->SetState(Transform::kState::kStateUp, *((_float3*)&matrix.m[1][0]));
-	_transform->SetState(Transform::kState::kStateLook, *((_float3*)&matrix.m[2][0]));
+	_transform->SetState(Transform::kState::kStateRight, vRight);
+	_transform->SetState(Transform::kState::kStateUp, vUp);
+	_transform->SetState(Transform::kState::kStateLook, vLook);
 	_transform->SetState(Transform::kState::kStatePosition, _camera_desc.eye);
 
+
+	//_transform->SetState(Transform::kState::kStateRight, *((_float3*)&matrix.m[0][0]));
+	//_transform->SetState(Transform::kState::kStateUp, *((_float3*)&matrix.m[1][0]));
+	//_transform->SetState(Transform::kState::kStateLook, *((_float3*)&matrix.m[2][0]));
 
 
 	/*
@@ -59,10 +63,10 @@ HRESULT Camera::NativeConstruct(void* arg)
 	//_transform->RotationAxis(axis, 1, D3DXToRadian(90.f));
 
 	axis = { 1, 0, 0 };
-	_transform->RotationAxis(axis, 1, D3DXToRadian(20.f));
+	//_transform->RotationAxis(axis, 1, D3DXToRadian(20.f));
 
 	axis = { 0, 0, 1 };
-	_transform->RotationAxis(axis, 1, D3DXToRadian(360 - 3.21383667f));
+	//_transform->RotationAxis(axis, 1, D3DXToRadian(360 - 3.21383667f));
 
 	SetTransform();
 	return S_OK;

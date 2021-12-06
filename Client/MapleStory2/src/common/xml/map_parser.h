@@ -2,19 +2,19 @@
 class MapParser
 {
 public:
-	struct Property
-	{
-		std::map<std::string, _float3> property;
-	};
 	struct MapEntity
 	{
 		std::string id;
 		std::string modelName;
 		std::string name;
 		std::string iterations;
-		std::vector<Property> propertise;
+		std::map<std::string, _float3> propertise;
+		kScene scene;
 	};
 	static auto MapModelNameListExport()->std::list<std::string>;
 	static auto MapParsing()->std::vector<MapEntity>;
+
+
+	static auto CharacterSelectMapParsing()->std::vector<MapEntity>;
 };
 

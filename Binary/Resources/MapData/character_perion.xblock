@@ -1,0 +1,538 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<game>
+	<entitySet>
+		<entity id="0125dc5cf43d48f58e310854dc9a37d6" modelName="pe_fi_prop_egg_A01_" name="pe_fi_prop_egg_A01_0" iterations="94">
+			<property name="Position">
+				<set value="-607.3269, 112.161949, 1027.16174" />
+			</property>
+			<property name="Rotation">
+				<set value="8.70609, 355.404419, 333.945953" />
+			</property>
+			<property name="Scale">
+				<set value="0.232503" />
+			</property>
+		</entity>
+		<entity id="05100930d78c40b8b8dd37292242efb7" modelName="pe_fi_prop_fountain_B01_" name="pe_fi_prop_fountain_B01_1" iterations="14">
+			<property name="Position">
+				<set value="-509.0488, 97.1284, 1059.34265" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.00042" />
+			</property>
+			<property name="Scale">
+				<set value="0.170637" />
+			</property>
+		</entity>
+		<entity id="0d5da56d889b4772a1c0285befb24408" modelName="pe_fi_prop_totem_B01_" name="pe_fi_prop_totem_B01_1" iterations="17">
+			<property name="Position">
+				<set value="-513.1428, -0.954386, 1058.94189" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.00042" />
+			</property>
+			<property name="Scale">
+				<set value="0.224591" />
+			</property>
+			<property name="MaterialColor">
+				<set value="0.8039216, 0.8039216, 0.8039216" />
+			</property>
+		</entity>
+		<entity id="1943b4f2581142b6b438a4865520017a" modelName="pe_fi_prop_firepot_A01_" name="pe_fi_prop_firepot_A01_0" iterations="33">
+			<property name="Position">
+				<set value="-224.822067, 42.41841, 1091.45911" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.000435" />
+			</property>
+			<property name="Scale">
+				<set value="0.249702" />
+			</property>
+		</entity>
+		<entity id="1f91f58f5f944158a3551f21f8808a58" modelName="eff_co_sunline_01_" name="eff_co_sunline_01_4" iterations="109">
+			<property name="Position">
+				<set value="-1109.99829, -95.6002, 585.5482" />
+			</property>
+			<property name="Rotation">
+				<set value="252.590088, 347.169067, 34.7640381" />
+			</property>
+			<property name="Scale">
+				<set value="0.885676" />
+			</property>
+		</entity>
+		<entity id="26ed968d6ede4acfb748535edafe7a3c" modelName="pe_in_prop_eaglecage_A01_" name="pe_in_prop_eaglecage_A01_0" iterations="26">
+			<property name="Position">
+				<set value="-637.865356, -113.775291, 1024.01306" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 25.0004158" />
+			</property>
+			<property name="Scale">
+				<set value="0.414214" />
+			</property>
+			<property name="MaterialColor">
+				<set value="0.7450981, 0.7450981, 0.7450981" />
+			</property>
+		</entity>
+		<entity id="289b36ad2b0644a48775e604ec3ccfe8" modelName="eff_co_sunline_01_" name="eff_co_sunline_01_3" iterations="332">
+			<property name="Position">
+				<set value="-353.833649, -151.115128, 1059.86633" />
+			</property>
+			<property name="Rotation">
+				<set value="248.166748, 321.664154, 24.79456" />
+			</property>
+			<property name="Scale">
+				<set value="2.315952" />
+			</property>
+		</entity>
+		<entity id="2a800e9b00ad4234ba17228515530ea1" modelName="pe_fi_prop_fountain_B01_" name="pe_fi_prop_fountain_B01_0" iterations="23">
+			<property name="Position">
+				<set value="-479.951416, 220.028244, 1025.9032" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.00042" />
+			</property>
+			<property name="Scale">
+				<set value="0.321305" />
+			</property>
+		</entity>
+		<entity id="432a1297f4cc4b0cbceac855f52a14cf" modelName="pe_fi_prop_statue_C01_" name="pe_fi_prop_statue_C01_0" iterations="49">
+			<property name="Position">
+				<set value="-277.2076, 161.52742, 1248.36865" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.00042" />
+			</property>
+			<property name="Scale">
+				<set value="0.139438" />
+			</property>
+		</entity>
+		<entity id="4585f5cb47af4401a40c7978b5f6c849" modelName="pe_in_prop_horn_A01_" name="pe_in_prop_horn_A01_1" iterations="16">
+			<property name="Position">
+				<set value="-523.2127, 117.992928, 1055.28442" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 105.000038" />
+			</property>
+			<property name="Scale">
+				<set value="0.459187" />
+			</property>
+			<property name="MaterialColor">
+				<set value="0.7647059, 0.7647059, 0.7647059" />
+			</property>
+		</entity>
+		<entity id="497214b4d9c44c47bd4e42220382c4e0" modelName="MS2PhysXProp" name="MS2PhysXProp0" iterations="36">
+			<property name="Position">
+				<set value="-505.038727, 71.81506, 1052.74255" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.00042" />
+			</property>
+			<property name="Scale">
+				<set value="0.22066" />
+			</property>
+			<property name="NifAsset">
+				<set value="urn:llid:9adf9b71-0000-0000-0000-000000000000" />
+			</property>
+			<property name="MaterialColor">
+				<set value="0.7450981, 0.7450981, 0.7450981" />
+			</property>
+		</entity>
+		<entity id="570303f6744a4448b2d33acbc93b435f" modelName="MS2Bounding" name="MS2Bounding0" iterations="5">
+			<property name="Position">
+				<set value="-2730.962, 2271.715, 202.713043" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 314.999359" />
+			</property>
+		</entity>
+		<entity id="60679f5e9c4040a2b02eaee6b3b9d395" modelName="pe_fi_nature_plant_A02_" name="pe_fi_nature_plant_A02_0" iterations="85">
+			<property name="Position">
+				<set value="-580.953247, -125.779106, 1027.91626" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 25.0004158" />
+			</property>
+			<property name="Scale">
+				<set value="0.25997" />
+			</property>
+		</entity>
+		<entity id="6c5056aeb81449f1ac492335554d199b" modelName="pe_fi_prop_bough_B01_" name="pe_fi_prop_bough_B01_0" iterations="22">
+			<property name="Position">
+				<set value="-675.41, -139.058533, 976.432434" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.0004" />
+			</property>
+			<property name="Scale">
+				<set value="0.197026" />
+			</property>
+		</entity>
+		<entity id="7935f3aee7234fa8b2ffb5eb7fbd5f20" modelName="pe_fi_nature_stack_A01_" name="pe_fi_nature_stack_A01_0" iterations="22">
+			<property name="Position">
+				<set value="-494.1299, -113.037766, 1025.90308" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 220.001068" />
+			</property>
+			<property name="Scale">
+				<set value="0.269357" />
+			</property>
+		</entity>
+		<entity id="8410e2fb6cd349779b0c892a91a0da96" modelName="pe_fi_nature_plant_A01_" name="pe_fi_nature_plant_A01_0" iterations="28">
+			<property name="Position">
+				<set value="-531.1409, -130.9797, 1026.94592" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 25.0004158" />
+			</property>
+			<property name="Scale">
+				<set value="0.289894" />
+			</property>
+			<property name="MaterialColor">
+				<set value="0.9019608, 0.9019608, 0.9019608" />
+			</property>
+		</entity>
+		<entity id="84777996509240b49b53b236048a6680" modelName="pe_fi_prop_statue_B01_" name="pe_fi_prop_statue_B01_0" iterations="56">
+			<property name="Position">
+				<set value="-483.200958, 102.911339, 1058.30847" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.00042" />
+			</property>
+			<property name="Scale">
+				<set value="0.23784" />
+			</property>
+			<property name="MaterialColor">
+				<set value="0.7647059, 0.7647059, 0.7647059" />
+			</property>
+		</entity>
+		<entity id="8bbc0c0ddf8b499f9c92e11ec4bb9bb1" modelName="eff_co_torchlight_big_01_" name="eff_co_torchlight_big_01_0" iterations="32">
+			<property name="Position">
+				<set value="-566.055237, 117.993889, 1063.65723" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 0" />
+			</property>
+			<property name="Scale">
+				<set value="0.15717" />
+			</property>
+		</entity>
+		<entity id="8efdbbe9aeac407ca16167b2209eb4c7" modelName="pe_fi_prop_statue_C01_" name="pe_fi_prop_statue_C01_1" iterations="54">
+			<property name="Position">
+				<set value="-279.25238, 283.077271, 1170.7876" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 295.001282" />
+			</property>
+			<property name="Scale">
+				<set value="0.113706" />
+			</property>
+		</entity>
+		<entity id="8f6539c9919340c0a6cded45be231efc" modelName="pe_fi_prop_fountain_B01_" name="pe_fi_prop_fountain_B01_2" iterations="6">
+			<property name="Position">
+				<set value="-488.719666, 53.5332375, 1059.34265" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.00042" />
+			</property>
+			<property name="Scale">
+				<set value="0.170637" />
+			</property>
+		</entity>
+		<entity id="97270ccd4a154dde96a90fe31a3fd1f3" modelName="pe_fi_prop_firepot_A01_" name="pe_fi_prop_firepot_A01_1" iterations="33">
+			<property name="Position">
+				<set value="-326.80484, 261.1169, 1091.45911" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.000435" />
+			</property>
+			<property name="Scale">
+				<set value="0.212374" />
+			</property>
+		</entity>
+		<entity id="9ad555c31f114126ba864567c3b1656a" modelName="MS2PhysXSceneForItem" name="MS2PhysXSceneForItem0" iterations="5">
+			<property name="Position">
+				<set value="-1314.59009, 138.3172, 453.353455" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 314.999359" />
+			</property>
+		</entity>
+		<entity id="9c7b41841dde46d39afdc70a17849526" modelName="Camera" name="Camera0" iterations="716">
+			<property name="FOV">
+				<set value="40" />
+			</property>
+			<property name="MaximumFarToNearRatio">
+				<set value="0.2" />
+			</property>
+			<property name="LODAdjust">
+				<set value="10000" />
+			</property>
+			<property name="ProxyScale">
+				<set value="50" />
+			</property>
+			<property name="Position">
+				<set value="-972.4966, 58.27349, 1088.36475" />
+			</property>
+			<property name="Rotation">
+				<set value="90, 340, 3.21383667" />
+			</property>
+			<property name="Scale">
+				<set value="1" />
+			</property>
+		</entity>
+		<entity id="9ea54ec9636c4caaabf978737a80917a" modelName="pe_in_prop_shield_A01_" name="pe_in_prop_shield_A01_0" iterations="36">
+			<property name="Position">
+				<set value="-604.1938, 96.60643, 1017.35059" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 114.999969" />
+			</property>
+			<property name="Scale">
+				<set value="0.300479" />
+			</property>
+		</entity>
+		<entity id="a48f4c5481ca4b46bf50c262b94ad898" modelName="Eff_BG_sandstorm_fast_" name="Eff_BG_sandstorm_fast_0" iterations="47">
+			<property name="Position">
+				<set value="-101.557587, 127.151276, 527.2798" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 29.99896" />
+			</property>
+			<property name="Scale">
+				<set value="0.840635" />
+			</property>
+		</entity>
+		<entity id="ab729ebcda724367a40eb8e3f581665d" modelName="MS2PhysXScene" name="MS2PhysXScene0" iterations="5">
+			<property name="Position">
+				<set value="-1195.12134, 256.1657, 480.33844" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 314.999359" />
+			</property>
+		</entity>
+		<entity id="ad1ae2b8b7fb4c2287aabc8efb0a98af" modelName="pe_fi_prop_weapon_A01_" name="pe_fi_prop_weapon_A01_0" iterations="19">
+			<property name="Position">
+				<set value="-493.489258, 156.3912, 1059.35059" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 295.000427" />
+			</property>
+			<property name="Scale">
+				<set value="0.333526" />
+			</property>
+		</entity>
+		<entity id="b0b7bf0d678d488b81e8f76be01ef76b" modelName="pe_fi_prop_entrance_A01_" name="pe_fi_prop_entrance_A01_1" iterations="9">
+			<property name="Position">
+				<set value="-212.943192, 114.55442, 1099.31641" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.000557" />
+			</property>
+			<property name="Scale">
+				<set value="0.282601" />
+			</property>
+		</entity>
+		<entity id="b8409c6e4a92439bb72964f689291575" modelName="pe_fi_nature_plant_A03_" name="pe_fi_nature_plant_A03_3" iterations="6">
+			<property name="Position">
+				<set value="-515.1587, 203.133911, 1026.95911" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 25.0004158" />
+			</property>
+			<property name="Scale">
+				<set value="0.354472" />
+			</property>
+		</entity>
+		<entity id="c0d74666d75b429babb94e3f8a43d280" modelName="pe_in_prop_shield_A01_" name="pe_in_prop_shield_A01_1" iterations="13">
+			<property name="Position">
+				<set value="-549.7717, -20.10226, 1017.35059" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 114.999969" />
+			</property>
+			<property name="Scale">
+				<set value="0.300479" />
+			</property>
+		</entity>
+		<entity id="c2a80e0778b34b89bb7925943f15a2ae" modelName="MS2PhysXProp" name="MS2PhysXProp1" iterations="14">
+			<property name="Position">
+				<set value="-598.813354, -20.8144379, 988.479736" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 295.35022" />
+			</property>
+			<property name="NifAsset">
+				<set value="urn:llid:3f3f06b3-0000-0000-0000-000000000000" />
+			</property>
+		</entity>
+		<entity id="c3d9fd5e50974533b24f54541c3ecf4b" modelName="MS2AmbientLight_Outside_" name="MS2AmbientLight_Outside_0" iterations="1">
+			<property name="Position">
+				<set value="-30.682373, -804.078857, 0" />
+			</property>
+		</entity>
+		<entity id="c697b6cf9ec94845bdef157891d57b14" modelName="pe_fi_prop_statue_B03_" name="pe_fi_prop_statue_B03_0" iterations="75">
+			<property name="Position">
+				<set value="-288.191376, 207.035309, 1089.93018" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 114.999863" />
+			</property>
+			<property name="Scale">
+				<set value="0.346654" />
+			</property>
+			<property name="MaterialColor">
+				<set value="0.7450981, 0.7450981, 0.7450981" />
+			</property>
+		</entity>
+		<entity id="c9ed720ac33d4abd92494f4c1999f2bc" modelName="pe_fi_nature_plant_A02_" name="pe_fi_nature_plant_A02_1" iterations="21">
+			<property name="Position">
+				<set value="-550.592468, 138.599258, 1027.38342" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 25.0004158" />
+			</property>
+			<property name="Scale">
+				<set value="0.253733" />
+			</property>
+		</entity>
+		<entity id="cda9ecd04a62413b91629e2fa23ef1c6" modelName="MS2DirectionalLight_Indoor_" name="MS2DirectionalLight_Indoor_0" iterations="2">
+			<property name="Position">
+				<set value="-87.2461548, -885.1404, 0" />
+			</property>
+			<property name="ShadowTechnique">
+				<set value="NiVSMShadowTechnique" />
+			</property>
+		</entity>
+		<entity id="d914ca75306f4501ba3f8b9e205a4305" modelName="eff_co_torchlight_big_01_" name="eff_co_torchlight_big_01_1" iterations="19">
+			<property name="Position">
+				<set value="-509.260529, -2.153674, 1063.65723" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 0" />
+			</property>
+			<property name="Scale">
+				<set value="0.15717" />
+			</property>
+		</entity>
+		<entity id="db44895050da4fe19e75e32e1c4dcc5b" modelName="pe_in_prop_horn_A01_" name="pe_in_prop_horn_A01_0" iterations="33">
+			<property name="Position">
+				<set value="-478.9713, 25.7694054, 1055.28442" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 290.0006" />
+			</property>
+			<property name="Scale">
+				<set value="0.459187" />
+			</property>
+			<property name="MaterialColor">
+				<set value="0.7647059, 0.7647059, 0.7647059" />
+			</property>
+		</entity>
+		<entity id="e6aead4dce0b4868b49ed4fd5858d943" modelName="pe_fi_nature_plant_A03_" name="pe_fi_nature_plant_A03_0" iterations="33">
+			<property name="Position">
+				<set value="-642.2964, 87.5273056, 1026.95911" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 25.0004158" />
+			</property>
+			<property name="Scale">
+				<set value="0.354472" />
+			</property>
+		</entity>
+		<entity id="ed900b75673342a7859d2ba3d26f45af" modelName="pe_fi_prop_fence_D02_" name="pe_fi_prop_fence_D02_3" iterations="9">
+			<property name="Position">
+				<set value="-432.9317, -77.46321, 1023.04883" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 25.0010262" />
+			</property>
+			<property name="Scale">
+				<set value="0.416571" />
+			</property>
+		</entity>
+		<entity id="ed97926ecde548bcb9f4db3b442016b9" modelName="pe_fi_prop_entrance_A01_" name="pe_fi_prop_entrance_A01_0" iterations="38">
+			<property name="Position">
+				<set value="-269.8388, 246.421753, 1094.10559" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.000557" />
+			</property>
+			<property name="Scale">
+				<set value="0.282601" />
+			</property>
+		</entity>
+		<entity id="f145b0b56c3a4d33b3ca28f3c09eb19f" modelName="MS2Bounding" name="MS2Bounding1" iterations="5">
+			<property name="Position">
+				<set value="1571.57544, -2493.00854, 2042.977" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 314.999359" />
+			</property>
+		</entity>
+		<entity id="f21b5da702f54840b1c3a76ca583d492" modelName="SpawnPointPC" name="SpawnPointPC0" iterations="343">
+			<property name="Position">
+				<set value="-622.779358, -16.07339, 1064.66284" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 255.924316" />
+			</property>
+		</entity>
+		<entity id="f335147c9bcf4861852c5290f690bf5d" modelName="pe_fi_prop_totem_B01_" name="pe_fi_prop_totem_B01_0" iterations="28">
+			<property name="Position">
+				<set value="-566.9003, 114.326912, 1058.94189" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 115.00042" />
+			</property>
+			<property name="Scale">
+				<set value="0.224591" />
+			</property>
+			<property name="MaterialColor">
+				<set value="0.8039216, 0.8039216, 0.8039216" />
+			</property>
+		</entity>
+		<entity id="f3d754097ec44e85abd8d5e636371fcf" modelName="pe_fi_prop_stone_B02_" name="pe_fi_prop_stone_B02_2" iterations="22">
+			<property name="Position">
+				<set value="-602.982239, 156.144638, 1024.70569" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 295.0004" />
+			</property>
+			<property name="Scale">
+				<set value="0.27254" />
+			</property>
+			<property name="MaterialColor">
+				<set value="0.7450981, 0.7450981, 0.7450981" />
+			</property>
+		</entity>
+		<entity id="faa840692ca147b9bb16b9abedd4fd0c" modelName="pe_fi_prop_stone_B02_" name="pe_fi_prop_stone_B02_0" iterations="28">
+			<property name="Position">
+				<set value="-714.0428, 51.93279, 1024.70569" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 24.9999638" />
+			</property>
+			<property name="Scale">
+				<set value="0.27254" />
+			</property>
+			<property name="MaterialColor">
+				<set value="0.7450981, 0.7450981, 0.7450981" />
+			</property>
+		</entity>
+		<entity id="faa840692ca147b9bb16b9abedd4fd0c" modelName="chs_perion_01" name="chs_perion_01_0" iterations="28">
+			<property name="Position">
+				<set value="-600, -21, 987" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 295" />
+			</property>
+			<property name="Scale">
+				<set value="1" />
+			</property>
+			<property name="MaterialColor">
+				<set value="0.7450981, 0.7450981, 0.7450981" />
+			</property>
+		</entity>
+	</entitySet>
+</game>

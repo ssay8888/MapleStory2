@@ -30,7 +30,7 @@ HRESULT Fittingdoll::NativeConstruct(void* arg)
 		_transform_com->SetState(Transform::kState::kStatePosition, pos);
 	}
 	_transform_com->SetUpRotation(_float3(0, -1, 0), D3DXToRadian(255.924316f));
-	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f, -16.07339f) / 150 * 0.59f);
+	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f-40.f, -16.07339f) / 150 * 0.58f);
 	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
 
 

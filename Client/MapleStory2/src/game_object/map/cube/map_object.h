@@ -24,9 +24,11 @@ public:
 
 private:
 	auto AddComponents(MapParser::MapEntity& entity)->HRESULT;
+
 private:
 	std::shared_ptr<Transform>		_transform_com = nullptr;
 	std::shared_ptr<MeshStatic>		_mesh_com = nullptr;
+	float							_scale = 1;
 
 };
 

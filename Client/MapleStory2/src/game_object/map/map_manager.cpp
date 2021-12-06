@@ -6,7 +6,7 @@
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 
-void MapManager::LoadMapInstance()
+void MapManager::LoadMapInstance(kScene scene)
 {
 	auto mapData = MapParser::MapParsing();
 
@@ -14,7 +14,22 @@ void MapManager::LoadMapInstance()
 
 	for (auto& entity : mapData)
 	{
+		entity.scene = scene;
 		mapInstance->AddMapObject(entity);
 	}
-	ObjectManager::GetInstance().AddGameObject(kSceneGamePlay0, L"MapLayer_", mapInstance);
+	ObjectManager::GetInstance().AddGameObject(scene, L"MapLayer_", mapInstance);
+}
+
+void MapManager::LoadCharacterInstance(kScene scene)
+{
+	auto mapData = MapParser::CharacterSelectMapParsing();
+
+	auto mapInstance = std::make_shared<MapInstance>(GraphicDevice::GetInstance().GetDevice());
+
+	for (auto& entity : mapData)
+	{
+		entity.scene = scene;
+		mapInstance->AddMapObject(entity);
+	}
+	ObjectManager::GetInstance().AddGameObject(scene, L"MapLayer_", mapInstance);
 }
