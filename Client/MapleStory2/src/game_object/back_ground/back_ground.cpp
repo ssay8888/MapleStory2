@@ -20,7 +20,11 @@ HRESULT BackGround::NativeConstructPrototype()
 HRESULT BackGround::NativeConstruct(void* arg)
 {
 	GameObject::NativeConstruct(arg);
-	
+
+	if (arg)
+	{
+		_info = *static_cast<BackGroundInfo*>(arg);
+	}
 
 	if (FAILED(AddComponents()))
 		return E_FAIL;
@@ -46,12 +50,12 @@ HRESULT BackGround::Render()
 	GameObject::Render();
 	_matrix		identityMatrix, scaleMatrix;
 
-	float _size_x = 1280;
-	float _size_y = 720;
-	float _x = 1280 >> 1;
-	float _y = 720 - _size_y * 0.5f;
+	int32_t sizeX = 1280;
+	int32_t sizeY = 720;
+	int32_t x = sizeX >> 1;
+	int32_t y = sizeY - int32_t(720 * 0.5f);
 	_matrix _proj_matrix;
-	D3DXMatrixOrthoLH(&_proj_matrix, 1280, 720, 0.f, 1.f);
+	D3DXMatrixOrthoLH(&_proj_matrix, g_WinCX, g_WinCY, 0.f, 1.f);
 
 
 	_matrix			transformMatrix, viewMatrix, projMatrix;
@@ -59,11 +63,11 @@ HRESULT BackGround::Render()
 	D3DXMatrixIdentity(&transformMatrix);
 
 	/* 로컬스페이스 기준으로 크기변환과 위치변환만 셋팅한다. */
-	transformMatrix._11 = _size_x;
-	transformMatrix._22 = _size_y;
+	transformMatrix._11 = static_cast<float>(_info.image_size_x);
+	transformMatrix._22 = static_cast<float>(_info.image_size_y);
 
-	transformMatrix._41 = _x - (1280 >> 1);
-	transformMatrix._42 = -_y + (720 >> 1);
+	transformMatrix._41 = static_cast<float>(_info.pos_x) - (g_WinCX >> 1);
+	transformMatrix._42 = static_cast<float>(-_info.pos_y) + (g_WinCY >> 1);
 
 	_graphic_device->SetTransform(D3DTS_WORLD, &transformMatrix);
 
@@ -72,14 +76,16 @@ HRESULT BackGround::Render()
 
 	/* 투영변환행렬 */
 	_graphic_device->SetTransform(D3DTS_PROJECTION, &_proj_matrix);
-
+	
 	_graphic_device->SetRenderState(D3DRS_LIGHTING, FALSE);
+	_graphic_device->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	_graphic_device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	_graphic_device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	_texture_com->SetUpOnGraphicDevice(0, 0);
 
 	_vi_buffer_com->RenderViBuffer();
 
+	_graphic_device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	_graphic_device->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 
@@ -144,7 +150,8 @@ auto BackGround::AddComponents() -> HRESULT
 		return E_FAIL;
 
 	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic),
-		L"Prototype_Texture_Login_Logo",
+	//	L"Prototype_Texture_Login_Logo",
+		_info.prototype_texture_name,
 		L"Com_Texture",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
 		return E_FAIL;

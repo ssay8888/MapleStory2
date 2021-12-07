@@ -1,7 +1,7 @@
 #pragma once
 #include "src/utility/game_objects/game_object.h"
 
-class MeshStatic;
+class MeshDynamic;
 class Shader;
 
 class Fittingdoll final : public GameObject
@@ -27,8 +27,11 @@ public:
 
 private:
 	std::shared_ptr<Transform>		_transform_com = nullptr;
-	std::shared_ptr<MeshStatic>		_mesh_com = nullptr;
+	std::shared_ptr<MeshDynamic>		_mesh_com = nullptr;
+	std::shared_ptr<MeshDynamic>		_mesh2_com = nullptr;
 	std::shared_ptr<Shader>			 _shader_com = nullptr;
+
+	bool _is_idle = true;
 
 	_float3				_target_pos;
 };

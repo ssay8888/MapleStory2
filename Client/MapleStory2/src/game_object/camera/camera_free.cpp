@@ -76,7 +76,7 @@ int32_t CameraFree::Tick(const double timeDelta)
 		_transform->RotationAxis(axis, 1, D3DXToRadian(90.f));
 	}
 
-	int64_t			mouseMove = 0;
+	/*int64_t			mouseMove = 0;
 
 	mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kX);
 
@@ -86,7 +86,7 @@ int32_t CameraFree::Tick(const double timeDelta)
 	mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kY);
 
 	if (0 != mouseMove)
-		_transform->RotationAxis(_transform->GetState(Transform::kState::kStateRight) , timeDelta * mouseMove * 0.02f);
+		_transform->RotationAxis(_transform->GetState(Transform::kState::kStateRight) , timeDelta * mouseMove * 0.02f);*/
 
 	return Camera::Tick(timeDelta);
 }

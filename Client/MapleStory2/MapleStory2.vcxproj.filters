@@ -97,6 +97,9 @@
     <ClInclude Include="src\game_object\fittingdoll\fittingdoll.h">
       <Filter>game_object\fittingdoll</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\ui\character_select\character_select_ui.h">
+      <Filter>game_object\ui\character_select</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -189,6 +192,9 @@
     <ClCompile Include="src\game_object\fittingdoll\fittingdoll.cpp">
       <Filter>game_object\fittingdoll</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\ui\character_select\character_select_ui.cpp">
+      <Filter>game_object\ui\character_select</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -279,6 +285,9 @@
     </Filter>
     <Filter Include="game_object\fittingdoll">
       <UniqueIdentifier>{e8f047e4-fde6-47de-a8aa-cf65f4992d2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\character_select">
+      <UniqueIdentifier>{2e1450df-eb4b-428a-b2b2-566db69c3157}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

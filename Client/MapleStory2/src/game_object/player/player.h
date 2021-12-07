@@ -2,7 +2,7 @@
 #include "src/utility/game_objects/game_object.h"
 
 class Shader;
-class MeshStatic;
+class MeshDynamic;
 class Texture;
 class ViBufferRect;
 class Transform;
@@ -30,7 +30,7 @@ public:
 
 private:
 	std::shared_ptr<Transform>		_transform_com = nullptr;
-	std::shared_ptr<MeshStatic>		_mesh_com = nullptr;
+	std::shared_ptr<MeshDynamic>		_mesh_com = nullptr;
 	std::shared_ptr<Shader>			 _shader_com = nullptr;
 
 	_float3				_target_pos;

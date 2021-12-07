@@ -9,8 +9,8 @@ Ui::Ui(const ComPtr<IDirect3DDevice9>& device):
 	GameObject(device),
 	_x(0),
 	_y(0),
-	_size_x(0),
-	_size_y(0)
+	_size_x(461),
+	_size_y(730)
 {
 }
  
@@ -23,11 +23,6 @@ HRESULT Ui::NativeConstruct(void* arg)
 {
 	if (FAILED(AddComponents()))
 		return E_FAIL;
-
-	_size_x = g_WinCX;
-	_size_y = 100;
-	_x = g_WinCX >> 1;
-	_y = g_WinCY - _size_y * 0.5f;
 	
 	D3DXMatrixOrthoLH(&_proj_matrix, g_WinCX, g_WinCY, 0.f, 1.f);
 	return GameObject::NativeConstruct(arg);

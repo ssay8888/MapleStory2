@@ -2,6 +2,7 @@
 #include "fittingdoll.h"
 
 #include "src/system/input/input_device.h"
+#include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
 #include "src/utility/components/meshes/static/mesh_static.h"
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/shader/shader.h"
@@ -53,6 +54,10 @@ int32_t Fittingdoll::Tick(double timeDelta)
 	//{
 	//	_transform_com->SetUpRotation(_float3(0, 0, 1), D3DXToRadian(radian++));
 	//}
+	if (InputDevice::GetInstance().GetKeyDown(DIK_C))
+	{
+		_is_idle = !_is_idle;
+	}
 	return GameObject::Tick(timeDelta);
 }
 
@@ -68,19 +73,27 @@ HRESULT Fittingdoll::Render()
 	if (FAILED(SetUpConstantTable()))
 		return E_FAIL;
 
-	const uint32_t dwNumMaterials = _mesh_com->GetNumMaterials();
-
 	auto result = _shader_com->BeginShader(0);
 
-	for (uint32_t i = 0; i < dwNumMaterials; ++i)
+	auto mesh = _is_idle ? _mesh_com : _mesh2_com;
+
+	const size_t iNumMeshContainers = mesh->GetNumMeshContainer();
+
+	for (uint32_t i = 0; i < iNumMeshContainers; ++i)
 	{
-		if (FAILED(_mesh_com->SetUpTextureOnShader(_shader_com, "g_DiffuseTexture", MeshMaterialTexture::kType::kTypeDiffuse, i)))
-			return E_FAIL;
+		const uint32_t iNumMaterials = mesh->GetNumMaterials(i);
 
-		_shader_com->Commit();
+		mesh->UpdateSkinnedMesh(i);
 
-		if (FAILED(_mesh_com->Render(i)))
-			return E_FAIL;
+		for (uint32_t j = 0; j < iNumMaterials; ++j)
+		{
+			if (FAILED(mesh->SetUpTextureOnShader(_shader_com, "g_DiffuseTexture", MeshMaterialTexture::kType::kTypeDiffuse, i, j)))
+				return E_FAIL;
+
+			_shader_com->Commit();
+
+			mesh->Render(i, j);
+		}
 	}
 
 	result = _shader_com->EndShader();
@@ -99,7 +112,10 @@ auto Fittingdoll::AddComponents() -> HRESULT
 		return E_FAIL;
 
 	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f, -16.07339f));
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Mesh_Man"), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
+	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Mesh_AniMan"), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
+		return E_FAIL;
+
+	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Mesh_AniMan2"), TEXT("Com_Mesh_2"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh2_com))))
 		return E_FAIL;
 
 	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))

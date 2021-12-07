@@ -9,7 +9,9 @@
 #include "src/game_object/player/player.h"
 #include "src/game_object/sky/sky.h"
 #include "src/game_object/terrain/terrain.h"
+#include "src/game_object/ui/character_select/character_select_ui.h"
 #include "src/utility/components/manager/component_manager.h"
+#include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
 #include "src/utility/components/meshes/static/mesh_static.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/textures/texture.h"
@@ -87,13 +89,22 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Fittingdool"), Fittingdoll::Create(_graphic_device))))
 		return E_FAIL;
 
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Mesh_Man"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Player/"), TEXT("man.x")))))
+	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_Man"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Player/"), TEXT("man.x")))))
+		return E_FAIL;						 
+											 
+	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_AniMan"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/MaplePlayer/"), TEXT("man.x")))))
+		return E_FAIL;						 
+											 
+	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_AniMan2"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/MaplePlayer/"), TEXT("airtaxi_a.x")))))
+		return E_FAIL;						 
+											 
+	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Texture_Filter"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Terrain/Filter.bmp")))))
+		return E_FAIL;						 
+											 
+	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Shader_Mesh"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Mesh.hlsl")))))
 		return E_FAIL;
 
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Texture_Filter"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Terrain/Filter.bmp")))))
-		return E_FAIL;
-
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Shader_Mesh"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Mesh.hlsl")))))
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_GameSky"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/bg_perion_ch.dds")))))
 		return E_FAIL;
 
 	const auto modelList = MapParser::MapModelNameListExport();
@@ -106,7 +117,21 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 	}
 
 	MapManager::GetInstance().LoadCharacterInstance(kSceneCharacterSelect);
+	LoadCharacterSelectUi();
 	_is_finish = true;
+	return S_OK;
+}
+
+auto Loading::LoadCharacterSelectUi() -> HRESULT
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	auto& componentManager = ComponentManager::GetInstance();
+
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Character_Select_Ui"), CharacterSelectUi::Create(_graphic_device))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SelectFrame"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/MainFrame.png")))))
+		return E_FAIL;
+
 	return S_OK;
 }
 

@@ -1,11 +1,5 @@
 #pragma once
 
-typedef struct D3DxFrameDerived : public D3DXFRAME
-{
-	D3DXMATRIX		CombinedTransformationMatrix;
-}D3DxFrameDerived;
-
-
 typedef struct TagVertexTexture
 {
 	D3DXVECTOR3		position{};
@@ -51,3 +45,22 @@ typedef struct MeshMaterialTexture
 	Microsoft::WRL::ComPtr<IDirect3DTexture9>		normal_map;
 	Microsoft::WRL::ComPtr<IDirect3DTexture9>		specular_map;
 }MeshMaterialTexture;
+
+typedef struct D3DXMeshContainerDerived : public D3DXMESHCONTAINER
+{
+	MeshMaterialTexture** ppMaterialTextures = nullptr;
+
+	Microsoft::WRL::ComPtr<ID3DXMesh> pOriginalMesh = nullptr;
+
+	unsigned int			iNumBones = 0;
+	D3DXMATRIX* pOffsetMatrices = nullptr;
+	D3DXMATRIX* pRenderingMatrices = nullptr;
+	D3DXMATRIX** ppCombindTransformationMatrices = nullptr;
+
+}D3DxMeshContainerDerived;
+
+typedef struct D3DxFrameDerived : public D3DXFRAME
+{
+	D3DXMATRIX		CombinedTransformationMatrix;
+}D3DxFrameDerived;
+

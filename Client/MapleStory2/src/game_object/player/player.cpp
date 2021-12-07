@@ -7,6 +7,7 @@
 #include "client_defines.h"
 #include "resource.h"
 #include "src/system/graphic/graphic_device.h"
+#include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
 #include "src/utility/components/meshes/static/mesh_static.h"
 #include "src/utility/components/picking/picking.h"
 #include "src/utility/components/renderer/renderer.h"
@@ -136,20 +137,27 @@ HRESULT Player::Render()
 
 	if (FAILED(SetUpConstantTable()))
 		return E_FAIL;
-
-	const uint32_t dwNumMaterials = _mesh_com->GetNumMaterials();
-
+	
 	auto result = _shader_com->BeginShader(0);
 
-	for (uint32_t i = 0; i < dwNumMaterials; ++i)
+
+	size_t iNumMeshContainers = _mesh_com->GetNumMeshContainer();
+
+	for (uint32_t i = 0; i < iNumMeshContainers; ++i)
 	{
-		if (FAILED(_mesh_com->SetUpTextureOnShader(_shader_com, "g_DiffuseTexture", MeshMaterialTexture::kType::kTypeDiffuse, i)))
-			return E_FAIL;
+		uint32_t iNumMaterials = _mesh_com->GetNumMaterials(i);
 
-		_shader_com->Commit();
+		_mesh_com->UpdateSkinnedMesh(i);
 
-		if (FAILED(_mesh_com->Render(i)))
-			return E_FAIL;
+		for (uint32_t j = 0; j < iNumMaterials; ++j)
+		{
+			if (FAILED(_mesh_com->SetUpTextureOnShader(_shader_com, "g_DiffuseTexture", MeshMaterialTexture::kType::kTypeDiffuse, i, j)))
+				return E_FAIL;
+
+			_shader_com->Commit();
+
+			_mesh_com->Render(i, j);
+		}
 	}
 
 	result = _shader_com->EndShader();

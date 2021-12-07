@@ -9,6 +9,14 @@ class Transform;
 class BackGround final : public GameObject
 {
 public:
+	struct BackGroundInfo
+	{
+		std::wstring prototype_texture_name;
+		int32_t pos_x{};
+		int32_t pos_y{};
+		int32_t image_size_x{};
+		int32_t image_size_y{};
+	};
 	explicit BackGround(const ComPtr<IDirect3DDevice9>& device);
 	virtual ~BackGround() = default;
 
@@ -31,5 +39,5 @@ private:
 	std::shared_ptr<Texture>		_texture_com = nullptr;
 	std::shared_ptr<Transform>		_transform_com = nullptr;
 	std::shared_ptr<ViBufferRect>	_vi_buffer_com = nullptr;
-
+	BackGroundInfo					_info;
 };

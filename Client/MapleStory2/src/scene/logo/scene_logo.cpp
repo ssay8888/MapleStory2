@@ -94,7 +94,13 @@ auto SceneLogo::Create(const ComPtr<IDirect3DDevice9>& device) -> std::shared_pt
 
 auto SceneLogo::ReadyLayerBackGround(const std::wstring& layerTag) -> HRESULT
 {
-	if (FAILED(ObjectManager::GetInstance().AddGameObject(static_cast<int32_t>(kScene::kSceneLogo), TEXT("Prototype_BackGround"), layerTag)))
+	BackGround::BackGroundInfo info;
+	info.prototype_texture_name = TEXT("Prototype_Texture_Login_Logo");
+	info.image_size_x = 1280;
+	info.image_size_y = 720;
+	info.pos_x = 1280 >> 1;
+	info.pos_y = 720 >> 1;
+	if (FAILED(ObjectManager::GetInstance().AddGameObject(static_cast<int32_t>(kScene::kSceneLogo), TEXT("Prototype_BackGround"), layerTag, &info)))
 		return E_FAIL;
 
 	return S_OK;

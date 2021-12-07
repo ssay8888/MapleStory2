@@ -1,6 +1,7 @@
 #include "c_pch.h"
 #include "character_select.h"
 
+#include "src/game_object/back_ground/back_ground.h"
 #include "src/utility/components/transform/transform.h"
 #include "src/utility/game_objects/camera/camera.h"
 #include "src/utility/game_objects/manager/object_manager.h"
@@ -14,6 +15,15 @@ CharacterSelect::CharacterSelect(const ComPtr<IDirect3DDevice9>& device):
 HRESULT CharacterSelect::NativeConstruct()
 {
 
+	BackGround::BackGroundInfo info;
+	info.prototype_texture_name = TEXT("Prototype_Texture_GameSky");
+	info.image_size_x = 1280;
+	info.image_size_y = 720;
+	info.pos_x = 1280 >> 1;
+	info.pos_y = 720 >> 1;
+	if (FAILED(ObjectManager::GetInstance().AddGameObject(kScene::kSceneCharacterSelect, TEXT("Prototype_BackGround"), TEXT("Layer_SKY"), &info)))
+		return E_FAIL;
+
 	if (FAILED(ReadyLight()))
 		return E_FAIL;
 
@@ -22,6 +32,10 @@ HRESULT CharacterSelect::NativeConstruct()
 
 	if (FAILED(ReadyLayerPlayer(TEXT("Layer_Player"))))
 		return E_FAIL;
+
+	if (FAILED(ReadyLayerSelectUi(TEXT("Layer_SelectUi"))))
+		return E_FAIL; 
+
 
 	const auto camera = ObjectManager::GetInstance().GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Camera"), TEXT("Prototype_Camera_Free"), 0);
 
@@ -89,7 +103,7 @@ auto CharacterSelect::ReadyLayerCamera(const std::wstring& pLayerTag) -> HRESULT
 	cameraDesc.near_ = 0.25f;
 	cameraDesc.far_ = 300;
 
-	if (FAILED(objectManager.AddGameObject(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Camera_Free"), pLayerTag, &cameraDesc)))
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Camera_Free"), pLayerTag, &cameraDesc)))
 	{
 		return E_FAIL;
 	}
@@ -99,10 +113,22 @@ auto CharacterSelect::ReadyLayerCamera(const std::wstring& pLayerTag) -> HRESULT
 auto CharacterSelect::ReadyLayerPlayer(const std::wstring& pLayerTag) -> HRESULT
 {
 	auto& objectManager = ObjectManager::GetInstance();
-	if (FAILED(objectManager.AddGameObject(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Mesh_Fittingdool"), pLayerTag, _float3(0.0f, 0, 0))))
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Fittingdool"), pLayerTag, _float3(0.0f, 0, 0))))
 	{
 		return E_FAIL;
 	}
+
+	return S_OK;
+}
+
+auto CharacterSelect::ReadyLayerSelectUi(const std::wstring& pLayerTag) -> HRESULT
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Character_Select_Ui"), pLayerTag)))
+	{
+		return E_FAIL;
+	}
+
 
 	return S_OK;
 }
