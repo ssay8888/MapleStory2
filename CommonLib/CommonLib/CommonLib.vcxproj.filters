@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="default">
+      <UniqueIdentifier>{54672f91-76cc-4626-a96f-7fcae2af3c27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data_reader">
+      <UniqueIdentifier>{22e6cc54-60e9-4bf9-a6b2-feacd59c2d5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="files_manager">
+      <UniqueIdentifier>{3a758f1b-aca2-4dcf-ac7c-bae162f179a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data_reader\items">
+      <UniqueIdentifier>{0631d728-70cf-462c-ba28-428783a2f855}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common_pch.h">
+      <Filter>default</Filter>
+    </ClInclude>
+    <ClInclude Include="data_reader\data_reader_manager.h">
+      <Filter>data_reader</Filter>
+    </ClInclude>
+    <ClInclude Include="files_manager\file_manager.h">
+      <Filter>files_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="files_manager\items\item_model.h">
+      <Filter>data_reader\items</Filter>
+    </ClInclude>
+    <ClInclude Include="files_manager\items\item_data.h">
+      <Filter>data_reader\items</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="common_pch.cpp">
+      <Filter>default</Filter>
+    </ClCompile>
+    <ClCompile Include="data_reader\data_reader_manager.cpp">
+      <Filter>data_reader</Filter>
+    </ClCompile>
+    <ClCompile Include="files_manager\file_manager.cpp">
+      <Filter>files_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="files_manager\items\item_model.cpp">
+      <Filter>data_reader\items</Filter>
+    </ClCompile>
+    <ClCompile Include="files_manager\items\item_data.cpp">
+      <Filter>data_reader\items</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

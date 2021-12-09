@@ -49,26 +49,6 @@ int32_t CameraFree::Tick(const double timeDelta)
 		_transform->WalkRight(timeDelta);
 	}
 
-	if (InputDevice::GetInstance().GetKeyDown(DIK_T))
-	{
-		_transform->GoStraight(timeDelta);
-	}
-
-	if (InputDevice::GetInstance().GetKeyDown(DIK_G))
-	{
-		_transform->BackStraight(timeDelta);
-	}
-
-	if (InputDevice::GetInstance().GetKeyDown(DIK_F))
-	{
-		_transform->WalkLeft(timeDelta);
-	}
-
-	if (InputDevice::GetInstance().GetKeyDown(DIK_H))
-	{
-		_transform->WalkRight(timeDelta);
-	}
-
 
 	if (InputDevice::GetInstance().GetKeyDown(DIK_Z))
 	{
@@ -76,17 +56,17 @@ int32_t CameraFree::Tick(const double timeDelta)
 		_transform->RotationAxis(axis, 1, D3DXToRadian(90.f));
 	}
 
-	/*int64_t			mouseMove = 0;
+	//int64_t			mouseMove = 0;
 
-	mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kX);
+	//mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kX);
 
-	if (0 != mouseMove)
-		_transform->RotationAxis(_float3(0.f, 1.f, 0.f), timeDelta * mouseMove * 0.02f);
+	//if (0 != mouseMove)
+	//	_transform->RotationAxis(_float3(0.f, 1.f, 0.f), timeDelta * mouseMove * 0.02f);
 
-	mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kY);
+	//mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kY);
 
-	if (0 != mouseMove)
-		_transform->RotationAxis(_transform->GetState(Transform::kState::kStateRight) , timeDelta * mouseMove * 0.02f);*/
+	//if (0 != mouseMove)
+	//	_transform->RotationAxis(_transform->GetState(Transform::kState::kStateRight) , timeDelta * mouseMove * 0.02f);
 
 	return Camera::Tick(timeDelta);
 }
@@ -131,7 +111,7 @@ HRESULT CameraFree::AddComponents()
 	transformDesc.speed_per_sec = 10.0f;
 	transformDesc.rotation_per_sec = D3DXToRadian(90.0);
 
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic), 
+	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, 
 		TEXT("Prototype_Transform"), 
 		TEXT("Com_Transform"), 
 		reinterpret_cast<std::shared_ptr<Component>*>(&_transform), 

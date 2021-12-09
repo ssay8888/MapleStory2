@@ -79,7 +79,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Binary\</OutDir>
-    <IncludePath>$(SolutionDir)Libraries\include;$(SolutionDir)Client\ClientCore;$(SolutionDir)Client\MapleStory2;$(SolutionDir)Server\ServerCore;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Libraries\include;$(SolutionDir)Client\ClientCore;$(SolutionDir)Client\MapleStory2;$(SolutionDir)Server\ServerCore;$(SolutionDir)CommonLib\CommonLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libraries\Libs\;$(LibraryPath)</LibraryPath>
     <ExternalIncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
@@ -178,6 +178,7 @@
     <ClInclude Include="src\game_object\camera\camera_free.h" />
     <ClInclude Include="src\game_object\effect\effect.h" />
     <ClInclude Include="src\game_object\fittingdoll\fittingdoll.h" />
+    <ClInclude Include="src\game_object\item\item.h" />
     <ClInclude Include="src\game_object\map\cube\map_object.h" />
     <ClInclude Include="src\game_object\map\map_instance.h" />
     <ClInclude Include="src\game_object\map\map_manager.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="src\game_object\camera\camera_free.cpp" />
     <ClCompile Include="src\game_object\effect\effect.cpp" />
     <ClCompile Include="src\game_object\fittingdoll\fittingdoll.cpp" />
+    <ClCompile Include="src\game_object\item\item.cpp" />
     <ClCompile Include="src\game_object\map\cube\map_object.cpp" />
     <ClCompile Include="src\game_object\map\map_instance.cpp" />
     <ClCompile Include="src\game_object\map\map_manager.cpp" />

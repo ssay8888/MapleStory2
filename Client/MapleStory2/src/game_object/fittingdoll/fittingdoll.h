@@ -17,6 +17,9 @@ public:
 	auto LateTick(double timeDelta)->int32_t override;
 	auto Render()->HRESULT override;
 
+public:
+	auto GetCurrentDynamicMesh() const ->std::shared_ptr<MeshDynamic>;
+
 private:
 	auto AddComponents()->HRESULT;
 	auto SetUpConstantTable() const->HRESULT;
@@ -26,13 +29,13 @@ public:
 	virtual auto Clone(void* arg = nullptr)->std::shared_ptr<GameObject> override;
 
 private:
-	std::shared_ptr<Transform>		_transform_com = nullptr;
-	std::shared_ptr<MeshDynamic>		_mesh_com = nullptr;
-	std::shared_ptr<MeshDynamic>		_mesh2_com = nullptr;
-	std::shared_ptr<Shader>			 _shader_com = nullptr;
+	std::shared_ptr<Transform>					_transform_com = nullptr;
+	std::shared_ptr<Shader>						_shader_com = nullptr;
+	std::vector<std::shared_ptr<MeshDynamic>>	_meshs;
 
 	bool _is_idle = true;
-
+	int32_t _current_mesh_num = 0;
+	int32_t _new_mesh_num = 0;
 	_float3				_target_pos;
 };
 

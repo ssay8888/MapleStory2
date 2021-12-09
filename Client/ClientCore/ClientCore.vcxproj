@@ -172,6 +172,7 @@
     <ClInclude Include="src\system\input\input_device.h" />
     <ClInclude Include="src\utility\components\component.h" />
     <ClInclude Include="src\utility\components\manager\component_manager.h" />
+    <ClInclude Include="src\utility\components\meshes\dynamic\animation\animation.h" />
     <ClInclude Include="src\utility\components\meshes\dynamic\loader\hierarchy_loader.h" />
     <ClInclude Include="src\utility\components\meshes\dynamic\mesh_dynamic.h" />
     <ClInclude Include="src\utility\components\meshes\mesh.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="src\system\input\input_device.cpp" />
     <ClCompile Include="src\utility\components\component.cpp" />
     <ClCompile Include="src\utility\components\manager\component_manager.cpp" />
+    <ClCompile Include="src\utility\components\meshes\dynamic\animation\animation.cpp" />
     <ClCompile Include="src\utility\components\meshes\dynamic\loader\hierarchy_loader.cpp" />
     <ClCompile Include="src\utility\components\meshes\dynamic\mesh_dynamic.cpp" />
     <ClCompile Include="src\utility\components\meshes\mesh.cpp" />

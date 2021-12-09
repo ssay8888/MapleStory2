@@ -3,6 +3,7 @@
 
 #include "src/system/input/input_device.h"
 #include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
+#include "src/utility/components/meshes/dynamic/animation/animation.h"
 #include "src/utility/components/meshes/static/mesh_static.h"
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/shader/shader.h"
@@ -34,7 +35,8 @@ HRESULT Fittingdoll::NativeConstruct(void* arg)
 	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f-40.f, -16.07339f) / 150 * 0.58f);
 	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
 
-
+	_meshs[0]->SetAnimationIndex(1);
+	_current_mesh_num = 1;
 	//_transform_com->SetUpRotation(_float3(1,  1, 0), D3DXToRadian(90));
 	return S_OK;
 }
@@ -54,16 +56,46 @@ int32_t Fittingdoll::Tick(double timeDelta)
 	//{
 	//	_transform_com->SetUpRotation(_float3(0, 0, 1), D3DXToRadian(radian++));
 	//}
-	if (InputDevice::GetInstance().GetKeyDown(DIK_C))
+	//_mesh2_com->SetAnimationIndex(0, _mesh_com->GetAnimation()->GetAnimationController());
+
+
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_X))
 	{
-		_is_idle = !_is_idle;
+		_is_idle = false;
+		_new_mesh_num = 1;
+		_meshs[0]->SetAnimationIndex(_new_mesh_num);
+		_meshs[_current_mesh_num]->ResetAnimation();
+		_current_mesh_num = 1;
 	}
+
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_C))
+	{
+		_is_idle = true;
+		_new_mesh_num = 3;
+		_meshs[0]->SetAnimationIndex(_new_mesh_num);
+		_meshs[_current_mesh_num]->ResetAnimation();
+		_current_mesh_num = 3;
+	}
+
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_V))
+	{
+		_is_idle = false;
+		_new_mesh_num = 2;
+		_meshs[0]->SetAnimationIndex(_new_mesh_num);
+		_meshs[_current_mesh_num]->ResetAnimation();
+		_current_mesh_num = 2;
+	}
+
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Fittingdoll::LateTick(double timeDelta)
+int32_t Fittingdoll::LateTick(const double timeDelta)
 {
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());
+	auto mesh = _meshs[0];
+	mesh->PlayAnimation(timeDelta);
+	mesh = _meshs[_current_mesh_num];
+	mesh->PlayAnimation(timeDelta);
 	return GameObject::LateTick(timeDelta);
 }
 
@@ -75,9 +107,9 @@ HRESULT Fittingdoll::Render()
 
 	auto result = _shader_com->BeginShader(0);
 
-	auto mesh = _is_idle ? _mesh_com : _mesh2_com;
+	auto mesh = _meshs[0];
 
-	const size_t iNumMeshContainers = mesh->GetNumMeshContainer();
+	size_t iNumMeshContainers = mesh->GetNumMeshContainer();
 
 	for (uint32_t i = 0; i < iNumMeshContainers; ++i)
 	{
@@ -101,6 +133,11 @@ HRESULT Fittingdoll::Render()
 	return S_OK;
 }
 
+auto Fittingdoll::GetCurrentDynamicMesh() const -> std::shared_ptr<MeshDynamic>
+{
+	return _meshs[_current_mesh_num];
+}
+
 auto Fittingdoll::AddComponents() -> HRESULT
 {
 	/* Com_Transform */
@@ -108,19 +145,44 @@ auto Fittingdoll::AddComponents() -> HRESULT
 	transformDesc.speed_per_sec = 5.0f;
 	transformDesc.rotation_per_sec = D3DXToRadian(90.0);
 
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
 		return E_FAIL;
 
 	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f, -16.07339f));
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Mesh_AniMan"), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
+	std::shared_ptr<MeshDynamic> mesh;
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_AniMan"), TEXT("Com_Mesh_0"), reinterpret_cast<std::shared_ptr<Component>*>(&mesh))))
+		return E_FAIL;
+	_meshs.push_back(mesh);
+
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_AniMan2"), TEXT("Com_Mesh_1"), reinterpret_cast<std::shared_ptr<Component>*>(&mesh))))
+		return E_FAIL;
+	_meshs.push_back(mesh);
+
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Player_Anim_Run"), TEXT("Com_Mesh_2"), reinterpret_cast<std::shared_ptr<Component>*>(&mesh))))
+		return E_FAIL;
+	_meshs.push_back(mesh);
+
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Player_Anim_Idle"), TEXT("Com_Mesh_3"), reinterpret_cast<std::shared_ptr<Component>*>(&mesh))))
+		return E_FAIL;
+	_meshs.push_back(mesh);
+
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;
 
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Mesh_AniMan2"), TEXT("Com_Mesh_2"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh2_com))))
-		return E_FAIL;
 
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneCharacterSelect), TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
-		return E_FAIL;
-
+	for (auto& mesh : _meshs)
+	{
+		if (_meshs[0] != mesh)
+		{
+			LPD3DXANIMATIONSET		pAS = nullptr;
+			mesh->GetAnimation()->GetAnimationController()->GetAnimationSet(0, &pAS);
+			if (FAILED(_meshs[0]->GetAnimation()->GetAnimationController()->RegisterAnimationSet(pAS)))
+			{
+				std::cout << "애니메이션 추가도중 실패함" << std::endl;
+			}
+			pAS->Release();
+		}
+	}
 	return S_OK;
 }
 

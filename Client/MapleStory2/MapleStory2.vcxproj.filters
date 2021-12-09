@@ -100,6 +100,9 @@
     <ClInclude Include="src\game_object\ui\character_select\character_select_ui.h">
       <Filter>game_object\ui\character_select</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\item\item.h">
+      <Filter>game_object\item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -195,6 +198,9 @@
     <ClCompile Include="src\game_object\ui\character_select\character_select_ui.cpp">
       <Filter>game_object\ui\character_select</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\item\item.cpp">
+      <Filter>game_object\item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -288,6 +294,9 @@
     </Filter>
     <Filter Include="game_object\ui\character_select">
       <UniqueIdentifier>{2e1450df-eb4b-428a-b2b2-566db69c3157}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\item">
+      <UniqueIdentifier>{15752a2b-92cd-441a-a277-8054aca0a25f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

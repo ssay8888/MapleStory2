@@ -106,6 +106,9 @@
     <ClInclude Include="src\utility\components\meshes\dynamic\loader\hierarchy_loader.h">
       <Filter>utility\components\meshes\dynamic\loader</Filter>
     </ClInclude>
+    <ClInclude Include="src\utility\components\meshes\dynamic\animation\animation.h">
+      <Filter>utility\components\meshes\dynamic\animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -198,6 +201,9 @@
     <ClCompile Include="src\utility\components\meshes\dynamic\loader\hierarchy_loader.cpp">
       <Filter>utility\components\meshes\dynamic\loader</Filter>
     </ClCompile>
+    <ClCompile Include="src\utility\components\meshes\dynamic\animation\animation.cpp">
+      <Filter>utility\components\meshes\dynamic\animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -289,6 +295,9 @@
     </Filter>
     <Filter Include="utility\components\meshes\dynamic\loader">
       <UniqueIdentifier>{07aa6d0e-4722-43d6-93fd-5d86699f21b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\meshes\dynamic\animation">
+      <UniqueIdentifier>{d7a1e426-a2ae-4b31-b504-7eb82cf8b9de}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

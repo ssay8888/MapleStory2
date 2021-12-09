@@ -117,6 +117,10 @@ auto CharacterSelect::ReadyLayerPlayer(const std::wstring& pLayerTag) -> HRESULT
 	{
 		return E_FAIL;
 	}
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Weapon"), pLayerTag, _float3(0.0f, 0, 0))))
+	{
+		return E_FAIL;
+	}
 
 	return S_OK;
 }

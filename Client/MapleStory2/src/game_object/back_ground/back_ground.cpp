@@ -137,26 +137,26 @@ auto BackGround::Clone(void* arg) -> std::shared_ptr<GameObject>
 
 auto BackGround::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic),
+	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
 		L"Prototype_Transform",
 		L"Com_Transform",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic),
+	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
 		L"Prototype_VIBuffer_Rect",
 		L"Com_VIBuffer",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic),
+	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
 	//	L"Prototype_Texture_Login_Logo",
 		_info.prototype_texture_name,
 		L"Com_Texture",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic),
+	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
 		L"Prototype_Shader_Rect",
 		L"Com_Shader",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))

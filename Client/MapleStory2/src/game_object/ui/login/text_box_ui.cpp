@@ -195,25 +195,25 @@ auto TextBoxUi::UiDrawText() -> void
 
 auto TextBoxUi::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic), 
+	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, 
 		TEXT("Prototype_Transform"), 
 		TEXT("Com_Transform"), 
 		reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic), 
+	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, 
 		TEXT("Prototype_Texture_Default2"), 
 		TEXT("Com_Texture"), 
 		reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic), 
+	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, 
 		TEXT("Prototype_VIBuffer_Rect"),
 		TEXT("Com_VIBuffer"), 
 		reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic),
+	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
 		L"Prototype_Shader_Rect",
 		L"Com_Shader",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))

@@ -107,7 +107,7 @@ auto HierarchyLoader::CreateMeshContainer(LPCSTR Name, const D3DXMESHDATA* pMesh
 	const uint64_t numFaces = pMeshContainer->MeshData.pMesh->GetNumFaces();
 	uint64_t size = static_cast<uint64_t>(numFaces * 3);
 	pMeshContainer->pAdjacency = new DWORD[size];
-	memcpy(pMeshContainer->pAdjacency, pAdjacency, sizeof(uint32_t) * pMeshContainer->MeshData.pMesh->GetNumFaces() * 3);
+	memcpy(pMeshContainer->pAdjacency, pAdjacency, sizeof(DWORD) * pMeshContainer->MeshData.pMesh->GetNumFaces() * 3);
 
 	/* 원래 메시. 위치 노말 유브이 탄젠트 바이노말 블렌드인데스, 블렌두에이트 */
 

@@ -105,7 +105,7 @@ auto Terrain::Create(const ComPtr<IDirect3DDevice9>& device) -> std::shared_ptr<
 auto Terrain::AddComponents()->HRESULT
 {
 	/* Com_Transform */
-	if (FAILED(GameObject::AddComponent(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com))))
+	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com))))
 		return E_FAIL;
 
 	/* Com_Texture*/

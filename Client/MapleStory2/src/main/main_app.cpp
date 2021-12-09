@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include "data_reader/data_reader_manager.h"
 #include "src/game_object/back_ground/back_ground.h"
 #include "src/game_object/camera/camera_free.h"
 #include "src/game_object/ui/login/text_box_ui.h"
@@ -35,6 +36,7 @@ MainApp::MainApp()
 
 auto MainApp::NativeConstruct() -> HRESULT
 {
+	DataReaderManager::GetInstance().LoadItemModel("../../Binary/Resources/Xml/itemmodel/150.xml");
 	GameLogicManager::InitDevice(g_hInst, g_Wnd, static_cast<int32_t>(kSceneEnd));
 
 	g_service = NetworkThreadInit();
@@ -163,19 +165,19 @@ HRESULT MainApp::AddPrototypeComponent()
 {
 	const auto& componentManager = ComponentManager::GetInstance();
 
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Transform"), Transform::Create(_graphic_device))))
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Transform"), Transform::Create(_graphic_device))))
 		return E_FAIL;
 
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_VIBuffer_Rect"), ViBufferRect::Create(_graphic_device))))
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), ViBufferRect::Create(_graphic_device))))
 		return E_FAIL;
 
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Shader_Rect"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/shader_rect.hlsl")))))
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Shader_Rect"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/shader_rect.hlsl")))))
 		return E_FAIL;
 
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Texture_Login_Logo"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/bg_christmas_login_i3.png")))))
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_Login_Logo"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/bg_christmas_login_i3.png")))))
 		return E_FAIL;
 
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Texture_Default2"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Default2.jpg")))))
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_Default2"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Default2.jpg")))))
 		return E_FAIL;
 
 	return S_OK;
