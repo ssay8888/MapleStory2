@@ -5,6 +5,7 @@
 #include "data_reader/data_reader_manager.h"
 #include "src/common/xml/map_parser.h"
 #include "src/game_object/fittingdoll/fittingdoll.h"
+#include "src/game_object/hair/hair.h"
 #include "src/game_object/item/item.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
@@ -95,6 +96,9 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Weapon"), Item::Create(_graphic_device))))
 		return E_FAIL;
 
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Hair"), Hair::Create(_graphic_device))))
+		return E_FAIL;
+
 	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_Man"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Player/"), TEXT("man.x")))))
 		return E_FAIL;
 
@@ -114,6 +118,16 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 		aniName.append(TEXT(".x"));
 
 		if (FAILED(componentManager.AddPrototype(kSceneStatic, prototypeName, MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/MaplePlayer/"), aniName))))
+			return E_FAIL;
+	}
+	for (const auto& animation : animationNames)
+	{
+		std::wstring prototypeName(TEXT("Prototype_Mesh_Ani_F_"));
+		auto aniName = FileUtils::ConvertCtoW(animation->animation_name.c_str());
+		prototypeName.append(aniName);
+		aniName.append(TEXT(".x"));
+
+		if (FAILED(componentManager.AddPrototype(kSceneStatic, prototypeName, MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/MaplePlayerF/"), aniName))))
 			return E_FAIL;
 	}
 											 
@@ -208,12 +222,43 @@ auto Loading::LoadCharacterBeautyUi() -> HRESULT
 	auto& componentManager = ComponentManager::GetInstance();
 
 
+
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Character_Beauty_Ui"), CharacterBeautyUi::Create(_graphic_device))))
 		return E_FAIL;
 
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_BeautyFrame"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/BeautyFrame.png")))))
 		return E_FAIL;
 
+	//남자고르기
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SexManBtn"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/SexManButton_%d.png"), 3))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SexManImage"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/SexMan_%d.png"), 2))))
+		return E_FAIL;
+
+	//여자고르기
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SexGirlBtn"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/SexGirlButton_%d.png"), 3))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SexGirlImage"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/SexGirl_%d.png"), 2))))
+		return E_FAIL;
+
+	//꾸밀아이템선택창
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_BeautyItem"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/Item_%d.png"), 3))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_BeautyItemOver"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/ItemOver.png")))))
+		return E_FAIL;
+
+	//돌아가기버튼
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_ReturnBtn"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/ReturnButton_%d.png"), 3))))
+		return E_FAIL;
+
+	//아이템리스트를 담아둘곳
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_BeautyList"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/ItemList.png")))))
+		return E_FAIL;
+
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Hair"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Hair/"), TEXT("11400001_f_vikingout.x")))))
+		return E_FAIL;
+	
 	return S_OK;
 }
 

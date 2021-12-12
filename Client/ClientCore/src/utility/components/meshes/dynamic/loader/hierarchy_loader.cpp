@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "hierarchy_loader.h"
 
+#include <iostream>
+
 #include "src/system/graphic/graphic_device.h"
 
 HierarchyLoader::HierarchyLoader(const ComPtr<IDirect3DDevice9>& device)
@@ -93,7 +95,6 @@ auto HierarchyLoader::CreateMeshContainer(LPCSTR Name, const D3DXMESHDATA* pMesh
 		/* For.Diffuse map */
 		szFullPath[iIndex] = L'D';
 		D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->diffuse_map);
-
 
 		/* For.Normal map */
 		szFullPath[iIndex] = L'N';

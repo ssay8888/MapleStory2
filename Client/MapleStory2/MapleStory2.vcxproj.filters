@@ -118,6 +118,18 @@
     <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_beauty_ui.h">
       <Filter>game_object\ui\character_select\character_beauty</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_beauty_select_sex.h">
+      <Filter>game_object\ui\character_select\character_beauty</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\character_select\character_beauty\item_list\character_beauty_item_list.h">
+      <Filter>game_object\ui\character_select\character_beauty\item_list</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\character_select\character_beauty\item_list\character_item.h">
+      <Filter>game_object\ui\character_select\character_beauty\item_list</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\hair\hair.h">
+      <Filter>game_object\hair</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -231,6 +243,18 @@
     <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_beauty_ui.cpp">
       <Filter>game_object\ui\character_select\character_beauty</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_beauty_select_sex.cpp">
+      <Filter>game_object\ui\character_select\character_beauty</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\character_select\character_beauty\item_list\character_beauty_item_list.cpp">
+      <Filter>game_object\ui\character_select\character_beauty\item_list</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\character_select\character_beauty\item_list\character_item.cpp">
+      <Filter>game_object\ui\character_select\character_beauty\item_list</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\hair\hair.cpp">
+      <Filter>game_object\hair</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -333,6 +357,12 @@
     </Filter>
     <Filter Include="game_object\ui\character_select\character_beauty">
       <UniqueIdentifier>{b909ecc2-a3c3-40ec-8b48-fd3afb31181d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\character_select\character_beauty\item_list">
+      <UniqueIdentifier>{ade88338-c9da-4645-b84f-08bce510e908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\hair">
+      <UniqueIdentifier>{96816cf8-b3a5-4837-995d-253afe85430d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

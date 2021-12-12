@@ -1,6 +1,8 @@
 #pragma once
 #include "src/utility/game_objects/game_object.h"
 
+class CharacterBeautyItemList;
+class CharacterBeautySelectSex;
 class CharacterJobBtn;
 class CharacterCreateBtn;
 class CharacterSelectItem;
@@ -23,6 +25,19 @@ public:
 	auto Clone(void* arg)->std::shared_ptr<GameObject> override;
 	static auto Create(const ComPtr<IDirect3DDevice9>& device)->std::shared_ptr<CharacterBeautyUi>;
 
+public:
+	enum class kBeautyStage
+	{
+		kSexChangeMan,
+		kSexChangeGirl,
+		kSexMan,
+		kSexGirl,
+	};
+	auto GetSexState()const->bool;
+
+	auto GetBeautyStage() const ->kBeautyStage;
+	auto ChangeBeautyStage(kBeautyStage stage)->void;
+
 private:
 	struct CharacterBeautyUiInfo
 	{
@@ -30,13 +45,23 @@ private:
 		_float3 size;
 	};
 	auto AddComponents()->HRESULT;
+	auto CreateSexButton()->HRESULT;
+	auto CreateItemList()->HRESULT;
+
+	auto SexBtnTick(double timeDelta)->HRESULT;
 
 private:
-	std::shared_ptr<Texture>							_texture_com = nullptr;
-	std::shared_ptr<ViBufferRect>						_vi_buffer_com = nullptr;
-	std::shared_ptr<Shader>								_shader_com = nullptr;
-	std::shared_ptr<Texture>							_texture_background = nullptr;
+	std::shared_ptr<Texture>										_texture_com = nullptr;
+	std::shared_ptr<ViBufferRect>									_vi_buffer_com = nullptr;
+	std::shared_ptr<Shader>											_shader_com = nullptr;
+	std::shared_ptr<Texture>										_texture_background = nullptr;
 
+	bool															_sex_select = false;
+	std::shared_ptr<CharacterBeautySelectSex>						_sex_btn[2];
+
+	std::vector<std::shared_ptr<CharacterBeautyItemList>>			_item_list;
+
+	kBeautyStage										_beauty_stage = kBeautyStage::kSexChangeMan;
 
 	_matrix					_proj_matrix;
 	CharacterBeautyUiInfo	_info;

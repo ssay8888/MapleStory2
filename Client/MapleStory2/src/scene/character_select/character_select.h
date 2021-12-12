@@ -18,5 +18,9 @@ private:
 	auto ReadyLayerPlayer(const std::wstring& pLayerTag)->HRESULT;
 	auto ReadyLayerSelectUi(const std::wstring& pLayerTag)->HRESULT;
 	auto ReadyLayerBeautyUi(const std::wstring& pLayerTag)->HRESULT;
+
+
+	auto ReadyLayerFittingdollMan(const std::wstring& pLayerTag)->HRESULT;
+	auto ReadyLayerFittingdollGirl(const std::wstring& pLayerTag)->HRESULT;
 };
 

@@ -27,19 +27,19 @@ HRESULT Fittingdoll::NativeConstructPrototype()
 HRESULT Fittingdoll::NativeConstruct(void* arg)
 {
 	GameObject::NativeConstruct(arg);
-	if (FAILED(AddComponents()))
-		return E_FAIL;
 	if (arg)
 	{
-		const _float3 pos = *static_cast<_float3*>(arg);
-		_transform_com->SetState(Transform::kState::kStatePosition, pos);
+		_info = *static_cast<FittingdollInfo*>(arg);
 	}
+	if (FAILED(AddComponents()))
+		return E_FAIL;
+	_transform_com->SetState(Transform::kState::kStatePosition, _info.pos);
 	_transform_com->SetUpRotation(_float3(0, -1, 0), D3DXToRadian(255.924316f));
 	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f-40.f, -16.07339f) / 150 * 0.58f);
 	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
 
-	_meshs[0]->SetAnimationIndex(0);
-	_current_mesh_num = 0;
+	_meshs[0]->SetAnimationIndex(1);
+	_current_mesh_num = 1;
 	//_transform_com->SetUpRotation(_float3(1,  1, 0), D3DXToRadian(90));
 	return S_OK;
 }
@@ -159,6 +159,10 @@ auto Fittingdoll::AddComponents() -> HRESULT
 	for (auto animation : animationNames)
 	{
 		std::wstring prototypeName(TEXT("Prototype_Mesh_Ani_"));
+		if (!_info.sex)
+		{
+			prototypeName.append(L"F_");
+		}
 		auto aniName = animation->animation_name;
 		prototypeName.append(StringUtils::ConvertCtoW(aniName.c_str()));
 		aniName.append(".x");

@@ -1,6 +1,9 @@
 #include "c_pch.h"
 #include "character_beauty_ui.h"
 
+#include "character_beauty_select_sex.h"
+#include "item_list/character_beauty_item_list.h"
+#include "src/system/input/input_device.h"
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
@@ -20,8 +23,8 @@ HRESULT CharacterBeautyUi::NativeConstruct(void* arg)
 	if (FAILED(AddComponents()))
 		return E_FAIL;
 
-	_info.size = _float3(461-100, 800, 0);
-	_info.pos = _float3(g_WinCX - _info.size.x / 2, g_WinCY - _info.size.y * 0.5f, 0);
+	_info.size = _float3(360, 900, 0);
+	_info.pos = _float3(g_WinCX - _info.size.x / 2, 0, 0);
 
 	D3DXMatrixOrthoLH(&_proj_matrix, g_WinCX, g_WinCY, 0.f, 1.f);
 	return GameObject::NativeConstruct(arg);
@@ -29,6 +32,7 @@ HRESULT CharacterBeautyUi::NativeConstruct(void* arg)
 
 int32_t CharacterBeautyUi::Tick(const double timeDelta)
 {
+	SexBtnTick(timeDelta);
 	return GameObject::Tick(timeDelta);
 }
 
@@ -46,7 +50,7 @@ HRESULT CharacterBeautyUi::Render()
 	transformMatrix._11 = _info.size.x;
 	transformMatrix._22 = _info.size.y;
 	transformMatrix._41 = _info.pos.x - (g_WinCX >> 1);
-	transformMatrix._42 = -_info.pos.y + (g_WinCY >> 1);
+	transformMatrix._42 = -_info.pos.y;
 
 	auto result = _shader_com->SetUpConstantTable("g_WorldMatrix", &transformMatrix, sizeof(_matrix));
 	result = _shader_com->SetUpConstantTable("g_ViewMatrix", &viewMatrix, sizeof(_matrix));
@@ -57,6 +61,16 @@ HRESULT CharacterBeautyUi::Render()
 	result = _shader_com->BeginShader(0);
 
 	_vi_buffer_com->RenderViBuffer();
+
+	for (auto i = 0; i < 2; ++i)
+	{
+		_sex_btn[i]->Render(_shader_com);
+	}
+	for (auto& list : _item_list)
+	{
+		list->Render(_shader_com);
+	}
+	
 
 	result = _shader_com->EndShader();
 	return GameObject::Render();
@@ -86,6 +100,21 @@ auto CharacterBeautyUi::Create(const ComPtr<IDirect3DDevice9>& device) -> std::s
 	return pInstance;
 }
 
+auto CharacterBeautyUi::GetBeautyStage() const -> kBeautyStage
+{
+	return _beauty_stage;
+}
+
+auto CharacterBeautyUi::ChangeBeautyStage(kBeautyStage stage) -> void
+{
+	_beauty_stage = stage;
+}
+
+auto CharacterBeautyUi::GetSexState() const -> bool
+{
+	return _sex_select;
+}
+
 auto CharacterBeautyUi::AddComponents() -> HRESULT
 {
 	/* Com_VIBuffer */
@@ -102,5 +131,68 @@ auto CharacterBeautyUi::AddComponents() -> HRESULT
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;
 
+	CreateSexButton();
+	CreateItemList();
+	return S_OK;
+}
+
+auto CharacterBeautyUi::CreateSexButton() -> HRESULT
+{
+	for (auto i = 0; i < 2; ++i)
+	{
+		CharacterBeautySelectSex::CreateSexBtnInfo info;
+		info.size = _float3(112.f, 62.f, 0.f);
+		info.pos = _float3(1045 + (112.f * i), 65, 0.f);
+		info.sex = i;
+		_sex_btn[i] = CharacterBeautySelectSex::Create(&info);
+	}
+	return S_OK;
+}
+
+auto CharacterBeautyUi::CreateItemList() -> HRESULT
+{
+	for (int i = 0; i < 6; ++i)
+	{
+		CharacterBeautyItemList::CreateItemListTextureInfo info;
+		info.size = _float3(340.f, 20.f, 0.f);
+		info.pos = _float3(g_WinCX - 350.f / 2, 135.f + (80 * i), 0.f);
+		_item_list.push_back(CharacterBeautyItemList::Create(&info));
+	}
+	return S_OK;
+}
+
+auto CharacterBeautyUi::SexBtnTick(const double timeDelta) -> HRESULT
+{
+	int32_t select_index = -1;
+	for (auto i = 0; i < 2; ++i)
+	{
+		_sex_btn[i]->Tick(timeDelta);
+		if (_sex_btn[i]->IsCollision() && InputDevice::GetInstance().GetDirectMouseKeyState(InputDevice::kDirectInMouseButton::kLeftButton))
+		{
+			select_index = i;
+		}
+	}
+	if (select_index >= 0)
+	{
+		for (auto i = 0; i < 2; ++i)
+		{
+			if (i == select_index)
+			{
+				_sex_btn[i]->ChangeButtonState(CharacterBeautySelectSex::kCreateSexBtnState::kSelect);
+				if (i == 0)
+				{
+					ChangeBeautyStage(kBeautyStage::kSexChangeMan);
+				}
+				else
+				{
+					ChangeBeautyStage(kBeautyStage::kSexChangeGirl);
+				}
+			}
+			else
+			{
+				_sex_btn[i]->ChangeButtonState(CharacterBeautySelectSex::kCreateSexBtnState::kNormal);
+			}
+		}
+	}
 	return S_OK;
 }

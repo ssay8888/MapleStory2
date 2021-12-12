@@ -2,7 +2,10 @@
 #include "character_select.h"
 
 #include "src/game_object/back_ground/back_ground.h"
+#include "src/game_object/fittingdoll/fittingdoll.h"
 #include "src/game_object/ui/character_select/character_select_ui.h"
+#include "src/game_object/ui/character_select/character_beauty/character_beauty_select_sex.h"
+#include "src/game_object/ui/character_select/character_beauty/character_beauty_ui.h"
 #include "src/utility/components/transform/transform.h"
 #include "src/utility/game_objects/camera/camera.h"
 #include "src/utility/game_objects/manager/object_manager.h"
@@ -70,6 +73,34 @@ int32_t CharacterSelect::Tick(double timeDelta)
 	case CharacterSelectUi::kCharacterSelectState::kBeauty:
 		break;
 	default: ;
+	}
+
+	auto beautyObj = instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Beauty"), 0);
+	if (beautyObj)
+	{
+		auto beautyUi = std::static_pointer_cast<CharacterBeautyUi>(beautyObj);
+
+		if (beautyUi)
+		{
+			switch (beautyUi->GetBeautyStage())
+			{
+			case CharacterBeautyUi::kBeautyStage::kSexChangeMan:
+				instance.LayerClear(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"));
+				ReadyLayerFittingdollMan(TEXT("Layer_Fittingdoll"));
+				beautyUi->ChangeBeautyStage(CharacterBeautyUi::kBeautyStage::kSexMan);
+				break;
+			case CharacterBeautyUi::kBeautyStage::kSexMan: 
+				break;
+			case CharacterBeautyUi::kBeautyStage::kSexChangeGirl:
+				instance.LayerClear(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"));
+				ReadyLayerFittingdollGirl(TEXT("Layer_Fittingdoll"));
+				beautyUi->ChangeBeautyStage(CharacterBeautyUi::kBeautyStage::kSexGirl);
+				break;
+			case CharacterBeautyUi::kBeautyStage::kSexGirl: 
+				break;
+			default: ;
+			}
+		}
 	}
 	return Scene::Tick(timeDelta);
 }
@@ -161,6 +192,48 @@ auto CharacterSelect::ReadyLayerBeautyUi(const std::wstring& pLayerTag) -> HRESU
 {
 	auto& objectManager = ObjectManager::GetInstance();
 	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Character_Beauty_Ui"), pLayerTag)))
+	{
+		return E_FAIL;
+	}
+	return S_OK;
+}
+
+auto CharacterSelect::ReadyLayerFittingdollMan(const std::wstring& pLayerTag) -> HRESULT
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	Fittingdoll::FittingdollInfo info;
+	info.pos = { 0, 0, 0 };
+	info.sex = true;
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Fittingdool"), pLayerTag, &info)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Weapon"), pLayerTag, _float3(0.0f, 0, 0))))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Hair"), pLayerTag, _float3(0.0f, 0, 0))))
+	{
+		return E_FAIL;
+	}
+	return S_OK;
+}
+
+auto CharacterSelect::ReadyLayerFittingdollGirl(const std::wstring& pLayerTag) -> HRESULT
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	Fittingdoll::FittingdollInfo info;
+	info.pos = {0, 0, 0};
+	info.sex = false;
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Fittingdool"), pLayerTag, &info)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Weapon"), pLayerTag, _float3(0.0f, 0, 0))))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Hair"), pLayerTag, _float3(0.0f, 0, 0))))
 	{
 		return E_FAIL;
 	}

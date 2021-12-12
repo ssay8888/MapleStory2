@@ -25,6 +25,11 @@ private:
 	auto SetUpConstantTable() const->HRESULT;
 
 public:
+	struct FittingdollInfo
+	{
+		_float3 pos;
+		bool	sex;
+	};
 	static auto Create(const ComPtr<IDirect3DDevice9>& device)->std::shared_ptr<Fittingdoll>;
 	virtual auto Clone(void* arg = nullptr)->std::shared_ptr<GameObject> override;
 
@@ -33,9 +38,10 @@ private:
 	std::shared_ptr<Shader>						_shader_com = nullptr;
 	std::vector<std::shared_ptr<MeshDynamic>>	_meshs;
 
-	bool _is_idle = true;
-	int32_t _current_mesh_num = 0;
-	int32_t _new_mesh_num = 0;
+	bool				_is_idle = true;
+	int32_t				_current_mesh_num = 0;
+	int32_t				_new_mesh_num = 0;
 	_float3				_target_pos;
+	FittingdollInfo		_info;
 };
 

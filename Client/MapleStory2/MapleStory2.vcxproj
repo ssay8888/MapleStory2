@@ -178,6 +178,7 @@
     <ClInclude Include="src\game_object\camera\camera_free.h" />
     <ClInclude Include="src\game_object\effect\effect.h" />
     <ClInclude Include="src\game_object\fittingdoll\fittingdoll.h" />
+    <ClInclude Include="src\game_object\hair\hair.h" />
     <ClInclude Include="src\game_object\item\item.h" />
     <ClInclude Include="src\game_object\map\cube\map_object.h" />
     <ClInclude Include="src\game_object\map\map_instance.h" />
@@ -185,7 +186,10 @@
     <ClInclude Include="src\game_object\player\player.h" />
     <ClInclude Include="src\game_object\sky\sky.h" />
     <ClInclude Include="src\game_object\terrain\terrain.h" />
+    <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_beauty_select_sex.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_beauty_ui.h" />
+    <ClInclude Include="src\game_object\ui\character_select\character_beauty\item_list\character_beauty_item_list.h" />
+    <ClInclude Include="src\game_object\ui\character_select\character_beauty\item_list\character_item.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_create\character_create_job_btn.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_create\character_job_btn.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_create_btn.h" />
@@ -228,6 +232,7 @@
     <ClCompile Include="src\game_object\camera\camera_free.cpp" />
     <ClCompile Include="src\game_object\effect\effect.cpp" />
     <ClCompile Include="src\game_object\fittingdoll\fittingdoll.cpp" />
+    <ClCompile Include="src\game_object\hair\hair.cpp" />
     <ClCompile Include="src\game_object\item\item.cpp" />
     <ClCompile Include="src\game_object\map\cube\map_object.cpp" />
     <ClCompile Include="src\game_object\map\map_instance.cpp" />
@@ -235,7 +240,10 @@
     <ClCompile Include="src\game_object\player\player.cpp" />
     <ClCompile Include="src\game_object\sky\sky.cpp" />
     <ClCompile Include="src\game_object\terrain\terrain.cpp" />
+    <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_beauty_select_sex.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_beauty_ui.cpp" />
+    <ClCompile Include="src\game_object\ui\character_select\character_beauty\item_list\character_beauty_item_list.cpp" />
+    <ClCompile Include="src\game_object\ui\character_select\character_beauty\item_list\character_item.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_create\character_create_job_btn.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_create\character_job_btn.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_create_btn.cpp" />
