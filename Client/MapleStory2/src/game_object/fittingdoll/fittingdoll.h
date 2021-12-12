@@ -18,7 +18,7 @@ public:
 	auto Render()->HRESULT override;
 
 public:
-	auto GetCurrentDynamicMesh() const ->std::shared_ptr<MeshDynamic>;
+	auto GetCurrentDynamicMesh() ->std::pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>;
 
 private:
 	auto AddComponents()->HRESULT;

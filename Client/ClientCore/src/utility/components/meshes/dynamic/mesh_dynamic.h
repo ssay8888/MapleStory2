@@ -1,4 +1,5 @@
 #pragma once
+#include "data_reader/data_reader_manager.h"
 #include "src/utility/components/meshes/mesh.h"
 
 class Shader;
@@ -18,6 +19,8 @@ public:
 	auto GetAnimation() const->std::shared_ptr<Animation>;
 
 	auto GetBoneMatrixPointer(const char* pBoneName) const ->const _matrix* ;
+
+	auto GetAnimationInfo() const ->std::shared_ptr<DataReaderManager::AnimationInfo>;
 public:
 	virtual auto NativeConstructPrototype(const std::wstring& filePath, const std::wstring& fileName)->HRESULT;
 	virtual auto NativeConstruct(void* arg)->HRESULT override;
@@ -37,6 +40,8 @@ private:
 	LPD3DXFRAME									_root_frame = nullptr;
 	std::shared_ptr<Animation>					_animation = nullptr;
 	std::vector<D3DXMeshContainerDerived*>		_mesh_containers;
+	std::shared_ptr<DataReaderManager::AnimationInfo> _animation_info;
+
 public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& device, const std::wstring& filePath, const std::wstring& fileName)->std::shared_ptr<MeshDynamic>;
 	virtual auto Clone(void* arg)->std::shared_ptr<Component> override;

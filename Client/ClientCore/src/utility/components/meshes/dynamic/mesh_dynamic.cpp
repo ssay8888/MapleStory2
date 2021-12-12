@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "animation/animation.h"
+#include "data_reader/data_reader_manager.h"
 #include "loader/hierarchy_loader.h"
 #include "src/utility/components/shader/shader.h"
 
@@ -48,6 +49,11 @@ auto MeshDynamic::GetBoneMatrixPointer(const char* pBoneName) const ->const  _ma
 	return &frame->CombinedTransformationMatrix;
 }
 
+auto MeshDynamic::GetAnimationInfo() const -> std::shared_ptr<DataReaderManager::AnimationInfo>
+{
+	return _animation_info;
+}
+
 auto MeshDynamic::NativeConstructPrototype(const std::wstring& filePath, const std::wstring& fileName) -> HRESULT
 {
 	wchar_t		szFullPath[MAX_PATH] = TEXT("");
@@ -78,6 +84,10 @@ auto MeshDynamic::NativeConstructPrototype(const std::wstring& filePath, const s
 
 HRESULT MeshDynamic::NativeConstruct(void* arg)
 {
+	if (arg)
+	{
+		_animation_info = *static_cast<std::shared_ptr<DataReaderManager::AnimationInfo>*>(arg);
+	}
 	return S_OK;
 }
 

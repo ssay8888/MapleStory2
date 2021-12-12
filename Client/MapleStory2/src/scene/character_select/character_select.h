@@ -17,5 +17,6 @@ private:
 	auto ReadyLayerCamera(const std::wstring& pLayerTag)->HRESULT;
 	auto ReadyLayerPlayer(const std::wstring& pLayerTag)->HRESULT;
 	auto ReadyLayerSelectUi(const std::wstring& pLayerTag)->HRESULT;
+	auto ReadyLayerBeautyUi(const std::wstring& pLayerTag)->HRESULT;
 };
 

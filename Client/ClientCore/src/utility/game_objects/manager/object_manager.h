@@ -18,7 +18,7 @@ public:
 
 public:
 	auto GetComponentPtr(uint32_t levelIndex, const std::wstring& layerTag, const std::wstring& componentTag, uint32_t index = 0) const ->std::shared_ptr<Component>;
-	auto GetGameObjectPtr(uint32_t levelIndex, const std::wstring& layerTag, const std::wstring& componentTag, uint32_t iIndex)->std::shared_ptr<GameObject>;
+	auto GetGameObjectPtr(uint32_t levelIndex, const std::wstring& layerTag, uint32_t iIndex)->std::shared_ptr<GameObject>;
 
 public:
 	auto ReserveContainer(uint32_t numLevel)->HRESULT;
@@ -28,6 +28,7 @@ public:
 
 	auto Tick(double timeDelta) const ->int32_t;
 	auto LateTick(double timeDelta) const ->int32_t;
+	auto LayerClear(uint32_t levelIndex, const std::wstring& layerTag)->void;
 	auto Clear(uint32_t levelIndex) const ->void;
 
 

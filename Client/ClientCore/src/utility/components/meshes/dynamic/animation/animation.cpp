@@ -44,8 +44,8 @@ auto Animation::NativeConstruct() -> HRESULT
 
 auto Animation::SetAnimationIndex(const uint32_t animIndex) -> HRESULT
 {
-	if (_current_animation_index == animIndex)
-		return S_OK;
+	//if (_current_animation_index == animIndex)
+	//	return S_OK;
 
 	//_animation_controller->GetAnimationSetByName()
 	LPD3DXANIMATIONSET		pAS = nullptr;

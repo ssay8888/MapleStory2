@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ms2>
+    <model animation_name="idle_a" targetnode="Weapon_Back_R_Point" />
+    <model animation_name="run_a" targetnode="Weapon_Back_R_Point" />
+    <model animation_name="objectweapon_typea_attack_idle_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="berserker_breakingskull_01_a" targetnode="Weapon_Hand_R_Point" />
+</ms2>

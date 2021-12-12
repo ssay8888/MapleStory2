@@ -132,7 +132,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAPLESTORY2));
 	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = NULL;
+	wcex.lpszMenuName = 0;
 	wcex.lpszClassName = szWindowClass;
 	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -155,7 +155,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	RECT		rcWindow = { 0, 0, g_WinCX, g_WinCY };
 
-	AdjustWindowRect(&rcWindow, WS_OVERLAPPEDWINDOW, true);
+	AdjustWindowRect(&rcWindow, WS_OVERLAPPEDWINDOW, false);
 
 
 	HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,

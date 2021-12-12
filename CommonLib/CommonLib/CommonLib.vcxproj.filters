@@ -13,6 +13,9 @@
     <Filter Include="data_reader\items">
       <UniqueIdentifier>{0631d728-70cf-462c-ba28-428783a2f855}</UniqueIdentifier>
     </Filter>
+    <Filter Include="string_utils">
+      <UniqueIdentifier>{e4f71ea6-1471-4732-bec7-78ad2930ee3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common_pch.h">
@@ -30,6 +33,9 @@
     <ClInclude Include="files_manager\items\item_data.h">
       <Filter>data_reader\items</Filter>
     </ClInclude>
+    <ClInclude Include="string_utils\string_utils.h">
+      <Filter>string_utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="common_pch.cpp">
@@ -46,6 +52,9 @@
     </ClCompile>
     <ClCompile Include="files_manager\items\item_data.cpp">
       <Filter>data_reader\items</Filter>
+    </ClCompile>
+    <ClCompile Include="string_utils\string_utils.cpp">
+      <Filter>string_utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

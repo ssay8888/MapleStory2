@@ -36,7 +36,7 @@ MainApp::MainApp()
 
 auto MainApp::NativeConstruct() -> HRESULT
 {
-	DataReaderManager::GetInstance().LoadItemModel("../../Binary/Resources/Xml/itemmodel/150.xml");
+	DataReaderManager::GetInstance().Init();
 	GameLogicManager::InitDevice(g_hInst, g_Wnd, static_cast<int32_t>(kSceneEnd));
 
 	g_service = NetworkThreadInit();

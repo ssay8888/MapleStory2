@@ -54,3 +54,8 @@ int32_t Layer::LateTick(const double timeDelta)
 		gameObject->LateTick(timeDelta);
 	return S_OK;
 }
+
+auto Layer::Clear() -> void
+{
+	_objects.clear();
+}

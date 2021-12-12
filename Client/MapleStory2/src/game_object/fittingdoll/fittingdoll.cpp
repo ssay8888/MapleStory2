@@ -1,6 +1,7 @@
 #include "c_pch.h"
 #include "fittingdoll.h"
 
+#include "data_reader/data_reader_manager.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
 #include "src/utility/components/meshes/dynamic/animation/animation.h"
@@ -10,6 +11,8 @@
 #include "src/utility/components/transform/transform.h"
 #include "src/utility/light/light_manager.h"
 #include "src/utility/pipe_line/pipe_line.h"
+#include "src/utils/file_utils.h"
+#include "string_utils/string_utils.h"
 
 Fittingdoll::Fittingdoll(const ComPtr<IDirect3DDevice9>& device) :
 	GameObject(device)
@@ -35,8 +38,8 @@ HRESULT Fittingdoll::NativeConstruct(void* arg)
 	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f-40.f, -16.07339f) / 150 * 0.58f);
 	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
 
-	_meshs[0]->SetAnimationIndex(1);
-	_current_mesh_num = 1;
+	_meshs[0]->SetAnimationIndex(0);
+	_current_mesh_num = 0;
 	//_transform_com->SetUpRotation(_float3(1,  1, 0), D3DXToRadian(90));
 	return S_OK;
 }
@@ -59,13 +62,12 @@ int32_t Fittingdoll::Tick(double timeDelta)
 	//_mesh2_com->SetAnimationIndex(0, _mesh_com->GetAnimation()->GetAnimationController());
 
 
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_X))
+	if (InputDevice::GetInstance().GetKeyDown(DIK_X))
 	{
 		_is_idle = false;
-		_new_mesh_num = 1;
+		_new_mesh_num = (_current_mesh_num + 1) % 4;
 		_meshs[0]->SetAnimationIndex(_new_mesh_num);
-		_meshs[_current_mesh_num]->ResetAnimation();
-		_current_mesh_num = 1;
+		_current_mesh_num = _new_mesh_num;
 	}
 
 	if (InputDevice::GetInstance().GetKeyPressing(DIK_C))
@@ -133,9 +135,9 @@ HRESULT Fittingdoll::Render()
 	return S_OK;
 }
 
-auto Fittingdoll::GetCurrentDynamicMesh() const -> std::shared_ptr<MeshDynamic>
+auto Fittingdoll::GetCurrentDynamicMesh() -> std::pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>
 {
-	return _meshs[_current_mesh_num];
+	return std::make_pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>(static_cast<std::shared_ptr<MeshDynamic>>(_meshs[0]), static_cast<std::shared_ptr<MeshDynamic>>(_meshs[_current_mesh_num]));
 }
 
 auto Fittingdoll::AddComponents() -> HRESULT
@@ -149,22 +151,22 @@ auto Fittingdoll::AddComponents() -> HRESULT
 		return E_FAIL;
 
 	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f, -16.07339f));
+
+
+	const auto animationNames = DataReaderManager::GetInstance().AllAnimationName();
+
 	std::shared_ptr<MeshDynamic> mesh;
-	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_AniMan"), TEXT("Com_Mesh_0"), reinterpret_cast<std::shared_ptr<Component>*>(&mesh))))
-		return E_FAIL;
-	_meshs.push_back(mesh);
+	for (auto animation : animationNames)
+	{
+		std::wstring prototypeName(TEXT("Prototype_Mesh_Ani_"));
+		auto aniName = animation->animation_name;
+		prototypeName.append(StringUtils::ConvertCtoW(aniName.c_str()));
+		aniName.append(".x");
+		if (FAILED(AddComponent(kScene::kSceneStatic, prototypeName, StringUtils::ConvertCtoW(aniName.c_str()), reinterpret_cast<std::shared_ptr<Component>*>(&mesh), &animation)))
+			return E_FAIL;
 
-	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_AniMan2"), TEXT("Com_Mesh_1"), reinterpret_cast<std::shared_ptr<Component>*>(&mesh))))
-		return E_FAIL;
-	_meshs.push_back(mesh);
-
-	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Player_Anim_Run"), TEXT("Com_Mesh_2"), reinterpret_cast<std::shared_ptr<Component>*>(&mesh))))
-		return E_FAIL;
-	_meshs.push_back(mesh);
-
-	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Player_Anim_Idle"), TEXT("Com_Mesh_3"), reinterpret_cast<std::shared_ptr<Component>*>(&mesh))))
-		return E_FAIL;
-	_meshs.push_back(mesh);
+		_meshs.push_back(mesh);
+	}
 
 	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;

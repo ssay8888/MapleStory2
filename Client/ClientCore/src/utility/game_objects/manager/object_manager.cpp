@@ -25,8 +25,7 @@ auto ObjectManager::GetComponentPtr(const uint32_t levelIndex, const std::wstrin
 	return layer->GetComponentPtr(componentTag, index);
 }
 
-auto ObjectManager::GetGameObjectPtr(uint32_t levelIndex, const std::wstring& layerTag,
-	const std::wstring& componentTag, uint32_t iIndex) -> std::shared_ptr<GameObject>
+auto ObjectManager::GetGameObjectPtr(uint32_t levelIndex, const std::wstring& layerTag, uint32_t iIndex) -> std::shared_ptr<GameObject>
 {
 		const std::shared_ptr<Layer> layer = FindLayer(levelIndex, layerTag);
 		if (nullptr == layer)
@@ -142,6 +141,15 @@ auto ObjectManager::LateTick(const double timeDelta) const -> int32_t
 		}
 	}
 	return S_OK;
+}
+
+auto ObjectManager::LayerClear(uint32_t levelIndex, const std::wstring& layerTag)->void
+{
+	auto iter = _layers[levelIndex].find(layerTag);
+	if (iter != _layers[levelIndex].end())
+	{
+		iter->second->Clear();
+	}
 }
 
 auto ObjectManager::Clear(const uint32_t levelIndex) const -> void

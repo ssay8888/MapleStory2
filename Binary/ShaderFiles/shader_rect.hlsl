@@ -13,6 +13,7 @@ sampler DiffuseSampler = sampler_state
 
 	AddressU = clamp;
 	AddressV = clamp;
+	
 
 };
 

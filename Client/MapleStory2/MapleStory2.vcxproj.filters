@@ -103,6 +103,21 @@
     <ClInclude Include="src\game_object\item\item.h">
       <Filter>game_object\item</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\ui\character_select\character_select_item.h">
+      <Filter>game_object\ui\character_select</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\character_select\character_create_btn.h">
+      <Filter>game_object\ui\character_select</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\character_select\character_create\character_job_btn.h">
+      <Filter>game_object\ui\character_select\character_create</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\character_select\character_create\character_create_job_btn.h">
+      <Filter>game_object\ui\character_select\character_create</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_beauty_ui.h">
+      <Filter>game_object\ui\character_select\character_beauty</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -201,6 +216,21 @@
     <ClCompile Include="src\game_object\item\item.cpp">
       <Filter>game_object\item</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\ui\character_select\character_select_item.cpp">
+      <Filter>game_object\ui\character_select</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\character_select\character_create_btn.cpp">
+      <Filter>game_object\ui\character_select</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\character_select\character_create\character_job_btn.cpp">
+      <Filter>game_object\ui\character_select\character_create</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\character_select\character_create\character_create_job_btn.cpp">
+      <Filter>game_object\ui\character_select\character_create</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_beauty_ui.cpp">
+      <Filter>game_object\ui\character_select\character_beauty</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -297,6 +327,12 @@
     </Filter>
     <Filter Include="game_object\item">
       <UniqueIdentifier>{15752a2b-92cd-441a-a277-8054aca0a25f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\character_select\character_create">
+      <UniqueIdentifier>{ae21b8a1-975a-4fbf-b06f-c1a86deb5af4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\character_select\character_beauty">
+      <UniqueIdentifier>{b909ecc2-a3c3-40ec-8b48-fd3afb31181d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

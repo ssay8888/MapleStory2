@@ -18,6 +18,7 @@ private:
 	auto __stdcall ThreadMain()->HRESULT;
 	auto ReadyCharacterSelect()->HRESULT;
 	auto LoadCharacterSelectUi()->HRESULT;
+	auto LoadCharacterBeautyUi()->HRESULT;
 
 
 	auto ReadyGamePlay0()->HRESULT;

@@ -53,11 +53,9 @@ int32_t SceneLogo::Tick(const double timeDelta)
 		Protocol::ClientLogin pkt;
 		auto id = std::static_pointer_cast<TextBoxUi>(objectManager.GetGameObjectPtr(kScene::kSceneLogo,
 			TEXT("Layer_LoginBox"),
-			TEXT("Prototype_BackGround"),
 			0));
 		auto pw = std::static_pointer_cast<TextBoxUi>(objectManager.GetGameObjectPtr(kScene::kSceneLogo,
 			TEXT("Layer_LoginBox"),
-			TEXT("Prototype_BackGround"),
 			1));
 		if (id && pw)
 		{

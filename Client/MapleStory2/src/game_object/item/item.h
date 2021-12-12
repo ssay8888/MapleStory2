@@ -31,7 +31,7 @@ private:
 	std::shared_ptr<Transform>		_transform_com = nullptr;
 	std::shared_ptr<MeshStatic>		_mesh_com = nullptr;
 	std::shared_ptr<Shader>			_shader_com = nullptr;
-	std::shared_ptr<MeshDynamic>	_player_current_mesh = nullptr;
+	std::pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>	_player_current_mesh;
 
 	_matrix				_origin_matrix;
 	const _matrix*		_parent_bone_matrix;

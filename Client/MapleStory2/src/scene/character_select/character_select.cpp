@@ -2,6 +2,7 @@
 #include "character_select.h"
 
 #include "src/game_object/back_ground/back_ground.h"
+#include "src/game_object/ui/character_select/character_select_ui.h"
 #include "src/utility/components/transform/transform.h"
 #include "src/utility/game_objects/camera/camera.h"
 #include "src/utility/game_objects/manager/object_manager.h"
@@ -30,14 +31,14 @@ HRESULT CharacterSelect::NativeConstruct()
 	if (FAILED(ReadyLayerCamera(TEXT("Layer_Camera"))))
 		return E_FAIL;
 
-	if (FAILED(ReadyLayerPlayer(TEXT("Layer_Player"))))
-		return E_FAIL;
+	//if (FAILED(ReadyLayerPlayer(TEXT("Layer_Player"))))
+	//	return E_FAIL;
 
 	if (FAILED(ReadyLayerSelectUi(TEXT("Layer_SelectUi"))))
 		return E_FAIL; 
 
 
-	const auto camera = ObjectManager::GetInstance().GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Camera"), TEXT("Prototype_Camera_Free"), 0);
+	const auto camera = ObjectManager::GetInstance().GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Camera"), 0);
 
 	if (const auto transform = std::static_pointer_cast<Transform>(camera->GetComponentPtr(TEXT("Com_Transform"))))
 	{
@@ -51,6 +52,25 @@ HRESULT CharacterSelect::NativeConstruct()
 
 int32_t CharacterSelect::Tick(double timeDelta)
 {
+	auto& instance = ObjectManager::GetInstance();
+
+	auto selectUi = std::static_pointer_cast<CharacterSelectUi>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_SelectUi"), 0));
+	switch(selectUi->GetState())
+	{
+	case CharacterSelectUi::kCharacterSelectState::kSelect: 
+		break;
+	case CharacterSelectUi::kCharacterSelectState::kCreateJob: 
+		break;
+	case CharacterSelectUi::kCharacterSelectState::kBeautyInit:
+		if (FAILED(ReadyLayerPlayer(TEXT("Layer_Fittingdoll"))))
+			return E_FAIL;
+		selectUi->ChangeState(CharacterSelectUi::kCharacterSelectState::kBeauty);
+		ReadyLayerBeautyUi(TEXT("Layer_Beauty"));
+		break;
+	case CharacterSelectUi::kCharacterSelectState::kBeauty:
+		break;
+	default: ;
+	}
 	return Scene::Tick(timeDelta);
 }
 
@@ -134,5 +154,15 @@ auto CharacterSelect::ReadyLayerSelectUi(const std::wstring& pLayerTag) -> HRESU
 	}
 
 
+	return S_OK;
+}
+
+auto CharacterSelect::ReadyLayerBeautyUi(const std::wstring& pLayerTag) -> HRESULT
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Character_Beauty_Ui"), pLayerTag)))
+	{
+		return E_FAIL;
+	}
 	return S_OK;
 }

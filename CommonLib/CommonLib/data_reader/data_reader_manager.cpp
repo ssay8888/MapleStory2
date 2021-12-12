@@ -5,8 +5,16 @@
 #include <pugixml.hpp>
 
 #include "files_manager/items/item_model.h"
+#include "string_utils/string_utils.h"
 
 using namespace pugi;
+
+auto DataReaderManager::Init() -> void
+{
+	LoadItemModel("../../Binary/Resources/Xml/itemmodel/150.xml");
+	LoadAnimationInfo();
+}
+
 auto DataReaderManager::LoadItemModel(const std::string& path) -> void
 {
 	xml_document doc;
@@ -68,3 +76,52 @@ auto DataReaderManager::FindItemModel(const int32_t itemId) -> std::shared_ptr<I
 	return nullptr;
 
 }
+
+#pragma region AnimationInfo
+
+auto DataReaderManager::LoadAnimationInfo()->void
+{
+	xml_document doc;
+	const auto err = doc.load_file("../../Binary/Resources/Xml/animationinfo/animationInfo.xml");
+
+	if (err.status == status_ok)
+	{
+		const auto models = doc.select_nodes("ms2/model");
+
+		for (auto& model : models)
+		{
+			auto info = std::make_shared<AnimationInfo>();
+
+			info->animation_name = model.node().attribute("animation_name").value();
+			info->target_node = model.node().attribute("targetnode").value();
+
+			_animations_info.emplace(info->animation_name, info);
+		}
+	}
+	int a = 0 ;
+}
+
+auto DataReaderManager::FindAnimationInfo(const std::string& name) -> std::shared_ptr<AnimationInfo>
+{
+	auto iterator = _animations_info.find(name);
+
+	if (iterator != _animations_info.end())
+	{
+		return iterator->second;
+	}
+
+	return nullptr;
+}
+
+auto DataReaderManager::AllAnimationName() -> std::vector<std::shared_ptr<AnimationInfo>>
+{
+	std::vector<std::shared_ptr<AnimationInfo>>	infos;
+	for (auto& ani : _animations_info)
+	{
+		infos.push_back(ani.second);
+	}
+
+	return infos;
+}
+
+#pragma endregion

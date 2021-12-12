@@ -36,7 +36,7 @@ HRESULT Item::NativeConstruct(void* arg)
 	//D3DXMatrixIdentity(&_origin_matrix);
 	D3DXMatrixRotationX(&_origin_matrix, D3DXToRadian(90.f));
 	const auto& instance = ObjectManager::GetInstance();
-	auto playerTransform = std::static_pointer_cast<Transform>(instance.GetComponentPtr(kSceneCharacterSelect, TEXT("Layer_Player"), TEXT("Com_Transform"), 0));
+	auto playerTransform = std::static_pointer_cast<Transform>(instance.GetComponentPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), TEXT("Com_Transform"), 0));
 	_parent_world_matrix = &playerTransform->GetWorldMatrix();
 
 	//const auto playerMesh = std::static_pointer_cast<MeshDynamic>(instance.GetComponentPtr(kSceneCharacterSelect, TEXT("Layer_Player"), TEXT("Com_Mesh_4"), 0));
@@ -54,10 +54,10 @@ int32_t Item::LateTick(const double timeDelta)
 	GameObject::LateTick(timeDelta);
 
 	auto& objectManager = ObjectManager::GetInstance();
-	auto playerObject = std::static_pointer_cast<Fittingdoll>(objectManager.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Player"), TEXT("Prototype_Mesh_Fittingdool"), 0));
+	auto playerObject = std::static_pointer_cast<Fittingdoll>(objectManager.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));
 	_player_current_mesh = playerObject->GetCurrentDynamicMesh();
 
-	_parent_bone_matrix = _player_current_mesh->GetBoneMatrixPointer("Weapon_Back_R_Point");
+	_parent_bone_matrix = _player_current_mesh.first->GetBoneMatrixPointer(_player_current_mesh.second->GetAnimationInfo()->target_node.c_str());
 
 	_matrix		WorldMatrix = _origin_matrix * (*_parent_bone_matrix * *_parent_world_matrix);
 	_transform_com->SetState(Transform::kState::kStateRight, *reinterpret_cast<_float3*>(&WorldMatrix.m[0][0]));

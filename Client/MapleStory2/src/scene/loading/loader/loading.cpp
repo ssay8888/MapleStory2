@@ -2,6 +2,7 @@
 #include "loading.h"
 #include <thread>
 
+#include "data_reader/data_reader_manager.h"
 #include "src/common/xml/map_parser.h"
 #include "src/game_object/fittingdoll/fittingdoll.h"
 #include "src/game_object/item/item.h"
@@ -11,6 +12,7 @@
 #include "src/game_object/sky/sky.h"
 #include "src/game_object/terrain/terrain.h"
 #include "src/game_object/ui/character_select/character_select_ui.h"
+#include "src/game_object/ui/character_select/character_beauty/character_beauty_ui.h"
 #include "src/utility/components/manager/component_manager.h"
 #include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
 #include "src/utility/components/meshes/static/mesh_static.h"
@@ -102,18 +104,18 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_Weapon_2"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Weapon/"), TEXT("15000004_vikingsword.x")))))
 		return E_FAIL;
 
-	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_AniMan"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/MaplePlayer/"), TEXT("objectweapon_typea_attack_idle_a.X")))))
-		return E_FAIL;						 
+	auto animationNames = DataReaderManager::GetInstance().AllAnimationName();
 
-	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_AniMan2"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/MaplePlayer/"), TEXT("berserker_breakingskull_01_a.X")))))
-		return E_FAIL;
+	for (const auto& animation : animationNames)
+	{
+		std::wstring prototypeName(TEXT("Prototype_Mesh_Ani_"));
+		auto aniName = FileUtils::ConvertCtoW(animation->animation_name.c_str());
+		prototypeName.append(aniName);
+		aniName.append(TEXT(".x"));
 
-	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_Player_Anim_Run"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/MaplePlayer/"), TEXT("run_a.X")))))
-		return E_FAIL;
-
-	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_Player_Anim_Idle"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/MaplePlayer/"), TEXT("idle_a.X")))))
-		return E_FAIL;
-
+		if (FAILED(componentManager.AddPrototype(kSceneStatic, prototypeName, MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/MaplePlayer/"), aniName))))
+			return E_FAIL;
+	}
 											 
 	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Texture_Filter"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Terrain/Filter.bmp")))))
 		return E_FAIL;						 
@@ -135,6 +137,7 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 
 	MapManager::GetInstance().LoadCharacterInstance(kSceneCharacterSelect);
 	LoadCharacterSelectUi();
+	LoadCharacterBeautyUi();
 	_is_finish = true;
 	return S_OK;
 }
@@ -146,7 +149,69 @@ auto Loading::LoadCharacterSelectUi() -> HRESULT
 
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Character_Select_Ui"), CharacterSelectUi::Create(_graphic_device))))
 		return E_FAIL;
+	//메인 프레임
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SelectFrame"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/MainFrame.png")))))
+		return E_FAIL;
+
+	//캐릭터리스트 아이템
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SelectItem_Normal"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/CharacterListNormal.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SelectItem_Over"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/CharacterLisOver.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SelectItem_Select"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/CharacterListSelect.png")))))
+		return E_FAIL;
+
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Start_Normal_Btn"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/StartBtNormal.png")))))
+		return E_FAIL;
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Start_Over_Btn"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/StartBtOver.png")))))
+		return E_FAIL;
+
+	std::wstring jobs[] {L"Night", L"Wizard", L"Ranger", L"Thief" , L"RuneBlader" , L"SoulBinder" ,
+		L"Berserker" , L"Priest" , L"HeavyGunner" , L"Assassin" , L"Striker"};
+
+	for (auto& job : jobs)
+	{
+		//일러스트 불러오기
+		std::wstring prototypeName(L"Prototype_Texture_");
+		prototypeName.append(job).append(L"_il");
+		std::wstring pathName(L"../../Binary/Resources/Textures/Ui/CharacterSelectUi/CreateUi/");
+		pathName.append(job).append(L".png");
+		if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, prototypeName, Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, pathName))))
+			return E_FAIL;
+
+		//캐릭터선택이미지 불러오기
+		std::wstring prototypeSelName(L"Prototype_Texture_");
+		prototypeSelName.append(L"Sel_").append(job).append(L"_il");
+		std::wstring pathSelName(L"../../Binary/Resources/Textures/Ui/CharacterSelectUi/CreateUi/");
+		pathSelName.append(L"Sel_").append(job).append(L".png");
+		if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, prototypeSelName, Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, pathSelName))))
+			return E_FAIL;
+	}
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Create_BackGround"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/CreateUi/BackGround.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Create_SelectEffect"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/CreateUi/SelectEffect.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Create_Sel_FrontGround"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/CreateUi/Sel_FrontGround.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Create_Sel_ShowInfo"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/CreateUi/ShowInfo.png")))))
+		return E_FAIL;
+	
+	return S_OK;
+}
+
+auto Loading::LoadCharacterBeautyUi() -> HRESULT
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	auto& componentManager = ComponentManager::GetInstance();
+
+
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Character_Beauty_Ui"), CharacterBeautyUi::Create(_graphic_device))))
+		return E_FAIL;
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_BeautyFrame"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/BeautyFrame.png")))))
 		return E_FAIL;
 
 	return S_OK;
