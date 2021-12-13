@@ -18,18 +18,18 @@ public:
 	auto Render()->HRESULT override;
 
 public:
-	auto GetCurrentDynamicMesh() ->std::pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>;
-
-private:
-	auto AddComponents()->HRESULT;
-	auto SetUpConstantTable() const->HRESULT;
-
-public:
 	struct FittingdollInfo
 	{
 		_float3 pos;
 		bool	sex;
 	};
+	auto GetCurrentDynamicMesh() ->std::pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>;
+	auto GetInfo() const ->FittingdollInfo;
+private:
+	auto AddComponents()->HRESULT;
+	auto SetUpConstantTable() const->HRESULT;
+
+public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& device)->std::shared_ptr<Fittingdoll>;
 	virtual auto Clone(void* arg = nullptr)->std::shared_ptr<GameObject> override;
 

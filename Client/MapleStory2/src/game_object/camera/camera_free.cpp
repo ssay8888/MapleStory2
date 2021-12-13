@@ -49,6 +49,24 @@ int32_t CameraFree::Tick(const double timeDelta)
 		_transform->WalkRight(timeDelta);
 	}
 
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_LEFT))
+	{
+		_transform->RotationAxis(_float3(0.f, 1.f, 0.f), timeDelta * -1 * 0.02f);
+	}
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_RIGHT))
+	{
+		_transform->RotationAxis(_float3(0.f, 1.f, 0.f), timeDelta * 1 * 0.02f);
+	}
+
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_UP))
+	{
+		_transform->RotationAxis(_transform->GetState(Transform::kState::kStateRight) , timeDelta * 1 * 0.02f);
+	}
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_DOWN))
+	{
+		_transform->RotationAxis(_transform->GetState(Transform::kState::kStateRight) , timeDelta * -1 * 0.02f);
+	}
+
 
 	if (InputDevice::GetInstance().GetKeyDown(DIK_Z))
 	{

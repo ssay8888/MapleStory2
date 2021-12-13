@@ -54,6 +54,16 @@ auto MeshDynamic::GetAnimationInfo() const -> std::shared_ptr<DataReaderManager:
 	return _animation_info;
 }
 
+auto MeshDynamic::GetRootFrame() -> LPD3DXFRAME
+{
+	return _root_frame;
+}
+
+auto MeshDynamic::GetMeshContainer() const -> std::vector<D3DXMeshContainerDerived*>
+{
+	return _mesh_containers;
+}
+
 auto MeshDynamic::NativeConstructPrototype(const std::wstring& filePath, const std::wstring& fileName) -> HRESULT
 {
 	wchar_t		szFullPath[MAX_PATH] = TEXT("");
@@ -78,7 +88,7 @@ auto MeshDynamic::NativeConstructPrototype(const std::wstring& filePath, const s
 	UpdateCombinedTransformationMatrices(_root_frame, _pivot_matrix);
 
 	SetUpCombinedTransformationMatricesPointer(_root_frame);
-
+	_origin_mesh_containers = _mesh_containers;
 	return S_OK;
 }
 
@@ -95,7 +105,7 @@ auto MeshDynamic::UpdateCombinedTransformationMatrices(const LPD3DXFRAME frame,
                                                        const _matrix parentCombinedTransformationMatrix) -> void
 {
 	const auto frameDerived = static_cast<D3DxFrameDerived*>(frame);
-		
+
 	frameDerived->CombinedTransformationMatrix = frameDerived->TransformationMatrix * parentCombinedTransformationMatrix;
 
 	if (nullptr != frameDerived->pFrameFirstChild)
@@ -103,6 +113,34 @@ auto MeshDynamic::UpdateCombinedTransformationMatrices(const LPD3DXFRAME frame,
 
 	if (nullptr != frameDerived->pFrameSibling)
 		UpdateCombinedTransformationMatrices(frameDerived->pFrameSibling, parentCombinedTransformationMatrix);
+
+}
+
+auto MeshDynamic::TargerCombinedTransformationMatrices(LPD3DXFRAME frame, LPD3DXFRAME targetFrame) -> void
+{
+	auto targetMeshContainer = static_cast<D3DXMeshContainerDerived*>(targetFrame->pMeshContainer);
+	auto meshContainer = static_cast<D3DXMeshContainerDerived*>(frame->pMeshContainer);
+
+
+	if (meshContainer)
+	{
+		for (uint32_t j = 0; j < meshContainer->iNumBones; ++j)
+		{
+			const std::string BoneName = meshContainer->pSkinInfo->GetBoneName(j);
+			{
+				const auto findFrame = static_cast<D3DxFrameDerived*>(D3DXFrameFind(targetFrame, BoneName.c_str()));
+				if (findFrame)
+				{
+					meshContainer->ppCombindTransformationMatrices[j] = &findFrame->CombinedTransformationMatrix;
+				}
+			}
+		}
+	}
+	if (nullptr != frame->pFrameFirstChild)
+		TargerCombinedTransformationMatrices(frame->pFrameFirstChild, targetFrame);
+
+	if (nullptr != frame->pFrameSibling)
+		TargerCombinedTransformationMatrices(frame->pFrameSibling, targetFrame);	
 }
 
 auto MeshDynamic::SetUpCombinedTransformationMatricesPointer(const LPD3DXFRAME frame) -> void
@@ -115,7 +153,6 @@ auto MeshDynamic::SetUpCombinedTransformationMatricesPointer(const LPD3DXFRAME f
 
 		for (uint32_t i = 0; i < pMeshContainer_Derived->iNumBones; ++i)
 		{
-			/* 현재 메시에 영향을 미치는 뼈들 중, i번째 뼈의 이름을 리턴해주낟. */
 			const char* pBoneName = pMeshContainer_Derived->pSkinInfo->GetBoneName(i);
 
 			const auto findFrame = static_cast<D3DxFrameDerived*>(D3DXFrameFind(_root_frame, pBoneName));
@@ -161,6 +198,7 @@ auto MeshDynamic::UpdateSkinnedMesh(const uint32_t iMeshContainerIndex) -> HRESU
 {
 	for (size_t i = 0; i < _mesh_containers[iMeshContainerIndex]->iNumBones; ++i)
 	{
+		//std::cout << _mesh_containers[iMeshContainerIndex]->Name << "/" << _mesh_containers[iMeshContainerIndex]->iNumBones << std::endl;
 		_mesh_containers[iMeshContainerIndex]->pRenderingMatrices[i] = _mesh_containers[iMeshContainerIndex]->pOffsetMatrices[i] * *_mesh_containers[iMeshContainerIndex]->ppCombindTransformationMatrices[i];
 	}
 
@@ -176,10 +214,86 @@ auto MeshDynamic::UpdateSkinnedMesh(const uint32_t iMeshContainerIndex) -> HRESU
 	return S_OK;
 }
 
+auto MeshDynamic::ChangeSkinnedMesh(std::shared_ptr<MeshDynamic> target, std::string remove) -> HRESULT
+{
+	auto container = target->GetMeshContainer();
+	for (auto iter = container.begin(); iter != container.end(); ++iter)
+	{
+		//타겟컨테이너에 Skin이 포함된 메시가 들어있다면, 모든 관련된 메시를 삭제한다.
+		std::string Name((*iter)->Name);
+		std::string RemoveCpy(remove);
+		auto pos = Name.find(RemoveCpy.append("Skin"));
+		if (pos != std::string::npos || Name == remove)
+		{
+			for (auto iter = _mesh_containers.begin(); iter != _mesh_containers.end();)
+			{
+				std::string name((*iter)->Name);
+				auto pos = name.find(remove);
+
+				if (pos != std::string::npos)
+				{
+					iter = _mesh_containers.erase(iter);
+					continue;
+				}
+				++iter;
+			}
+		}
+	}
+	for (auto iter = _mesh_containers.begin(); iter != _mesh_containers.end();)
+	{
+		//내 컨테이너에 Skin을 제외한 관련된 삭제할타겟이 포함된 텍스트가있으면 메시를 삭제함.
+		std::string Name((*iter)->Name);
+		auto pos = Name.find(remove, 0);
+		auto skin = Name.find("Skin");
+		if (skin == std::string::npos && pos != std::string::npos && pos <= 3)
+		{
+			if (strcmp(remove.c_str(), "CL_"))
+			{
+				iter = _mesh_containers.erase(iter);
+				continue;
+			}
+		}
+		++iter;
+	}
+
+	auto meshs = target->GetMeshContainer();
+	_mesh_containers.insert(_mesh_containers.end(), meshs.begin(), meshs.end());
+	return S_OK;
+}
+
+auto MeshDynamic::SetSkinnedMesh(const D3DXMeshContainerDerived* container)->void
+{
+	for (const auto& mesh : _mesh_containers)
+	{
+		void* pSour = nullptr, * pDest = nullptr;
+		mesh->pOriginalMesh->LockVertexBuffer(0, &pSour);
+		mesh->MeshData.pMesh->LockVertexBuffer(0, &pDest);
+
+		mesh->pSkinInfo->UpdateSkinnedMesh(container->pRenderingMatrices, nullptr, pSour, pDest);
+
+		mesh->pOriginalMesh->UnlockVertexBuffer();
+		mesh->MeshData.pMesh->UnlockVertexBuffer();
+	}
+}
+
+auto MeshDynamic::FindSkinnedMesh(const std::string& name) -> D3DXMeshContainerDerived*
+{
+	int32_t index;
+	for (index = 0; index < _mesh_containers.size(); ++index)
+	{
+		std::cout << _mesh_containers[index]->Name << "/" << _mesh_containers[index]->iNumBones << std::endl;
+		if (_mesh_containers[index]->Name == name)
+		{
+			return _mesh_containers[index];
+		}
+	}
+	return nullptr;
+}
+
 auto MeshDynamic::Render(const uint32_t meshContainerIndex, const uint32_t materialIndex) -> HRESULT
 {
 	size_t		iNumMeshContainer = _mesh_containers.size();
-
+	
 	_mesh_containers[meshContainerIndex]->MeshData.pMesh->DrawSubset(materialIndex);
 
 	return S_OK;

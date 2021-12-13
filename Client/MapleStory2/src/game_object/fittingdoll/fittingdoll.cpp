@@ -2,6 +2,8 @@
 #include "fittingdoll.h"
 
 #include "data_reader/data_reader_manager.h"
+#include "src/game_object/coat/coat.h"
+#include "src/game_object/pants/pants.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
 #include "src/utility/components/meshes/dynamic/animation/animation.h"
@@ -9,6 +11,7 @@
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/transform/transform.h"
+#include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/light/light_manager.h"
 #include "src/utility/pipe_line/pipe_line.h"
 #include "src/utils/file_utils.h"
@@ -70,22 +73,23 @@ int32_t Fittingdoll::Tick(double timeDelta)
 		_current_mesh_num = _new_mesh_num;
 	}
 
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_C))
+	if (InputDevice::GetInstance().GetKeyDown(DIK_C))
 	{
-		_is_idle = true;
-		_new_mesh_num = 3;
-		_meshs[0]->SetAnimationIndex(_new_mesh_num);
-		_meshs[_current_mesh_num]->ResetAnimation();
-		_current_mesh_num = 3;
-	}
-
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_V))
-	{
-		_is_idle = false;
-		_new_mesh_num = 2;
-		_meshs[0]->SetAnimationIndex(_new_mesh_num);
-		_meshs[_current_mesh_num]->ResetAnimation();
-		_current_mesh_num = 2;
+		const auto& instance = ObjectManager::GetInstance();
+		const auto pants = std::static_pointer_cast<Pants>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 3));
+		if (pants)
+		{
+			auto panty = pants->GetMesh();
+			panty->GetNumMeshContainer();
+			_meshs[0]->ChangeSkinnedMesh(panty, "PA_");
+		}
+		const auto coatObject = std::static_pointer_cast<Coat>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 2));
+		if (coatObject)
+		{
+			auto coat = coatObject->GetMesh();
+			coat->GetNumMeshContainer();
+			_meshs[0]->ChangeSkinnedMesh(coat, "CL_");
+		}
 	}
 
 	return GameObject::Tick(timeDelta);
@@ -138,6 +142,11 @@ HRESULT Fittingdoll::Render()
 auto Fittingdoll::GetCurrentDynamicMesh() -> std::pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>
 {
 	return std::make_pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>(static_cast<std::shared_ptr<MeshDynamic>>(_meshs[0]), static_cast<std::shared_ptr<MeshDynamic>>(_meshs[_current_mesh_num]));
+}
+
+auto Fittingdoll::GetInfo() const -> FittingdollInfo
+{
+	return _info;
 }
 
 auto Fittingdoll::AddComponents() -> HRESULT

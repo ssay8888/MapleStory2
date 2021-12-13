@@ -5,10 +5,11 @@
 #include "data_reader/data_reader_manager.h"
 #include "src/common/xml/map_parser.h"
 #include "src/game_object/fittingdoll/fittingdoll.h"
-#include "src/game_object/hair/hair.h"
+#include "src/game_object/coat/coat.h"
 #include "src/game_object/item/item.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
+#include "src/game_object/pants/pants.h"
 #include "src/game_object/player/player.h"
 #include "src/game_object/sky/sky.h"
 #include "src/game_object/terrain/terrain.h"
@@ -96,7 +97,10 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Weapon"), Item::Create(_graphic_device))))
 		return E_FAIL;
 
-	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Hair"), Hair::Create(_graphic_device))))
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Coat"), Coat::Create(_graphic_device))))
+		return E_FAIL;
+
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Pants"), Pants::Create(_graphic_device))))
 		return E_FAIL;
 
 	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_Man"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Player/"), TEXT("man.x")))))
@@ -256,7 +260,13 @@ auto Loading::LoadCharacterBeautyUi() -> HRESULT
 		return E_FAIL;
 
 
-	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Hair"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Hair/"), TEXT("11400001_f_vikingout.x")))))
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Hair/"), TEXT("11400001_f_vikingout.x")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Hair"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Hair/"), TEXT("00200002_m_soltmohican_a.X")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Pants"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/Pants/"), TEXT("11500003_m_bronzewarrior.X")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Pants_Base"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/Pants/"), TEXT("11500001_m_basicsportwearpants.X")))))
 		return E_FAIL;
 	
 	return S_OK;

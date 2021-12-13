@@ -21,15 +21,23 @@ public:
 	auto GetBoneMatrixPointer(const char* pBoneName) const ->const _matrix* ;
 
 	auto GetAnimationInfo() const ->std::shared_ptr<DataReaderManager::AnimationInfo>;
+
+	auto GetRootFrame()->LPD3DXFRAME;
+
+	auto GetMeshContainer() const ->std::vector<D3DXMeshContainerDerived*>;
 public:
 	virtual auto NativeConstructPrototype(const std::wstring& filePath, const std::wstring& fileName)->HRESULT;
 	virtual auto NativeConstruct(void* arg)->HRESULT override;
 
 public:
 	auto UpdateCombinedTransformationMatrices(LPD3DXFRAME frame, _matrix parentCombinedTransformationMatrix)->void;
+	auto TargerCombinedTransformationMatrices(LPD3DXFRAME frame, LPD3DXFRAME targetFrame)->void;
 	auto SetUpCombinedTransformationMatricesPointer(LPD3DXFRAME frame)->void;
 	auto SetUpTextureOnShader(const std::shared_ptr<Shader>& shader, D3DXHANDLE parameter, MeshMaterialTexture::kType type, uint32_t meshContainerIndex, uint32_t materialIndex)->HRESULT;
 	auto UpdateSkinnedMesh(uint32_t iMeshContainerIndex)->HRESULT;
+	auto ChangeSkinnedMesh(std::shared_ptr<MeshDynamic> target, std::string remove)->HRESULT;
+	auto SetSkinnedMesh(const D3DXMeshContainerDerived* matrix)->void;
+	auto FindSkinnedMesh(const std::string& name)->D3DXMeshContainerDerived*;
 	auto Render(uint32_t meshContainerIndex, uint32_t materialIndex)->HRESULT;
 	auto SetAnimationIndex(uint32_t animIndex) const ->HRESULT;
 	auto ResetAnimation() const ->HRESULT;
@@ -40,6 +48,7 @@ private:
 	LPD3DXFRAME									_root_frame = nullptr;
 	std::shared_ptr<Animation>					_animation = nullptr;
 	std::vector<D3DXMeshContainerDerived*>		_mesh_containers;
+	std::vector<D3DXMeshContainerDerived*>		_origin_mesh_containers;
 	std::shared_ptr<DataReaderManager::AnimationInfo> _animation_info;
 
 public:

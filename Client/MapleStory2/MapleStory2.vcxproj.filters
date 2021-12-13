@@ -127,8 +127,11 @@
     <ClInclude Include="src\game_object\ui\character_select\character_beauty\item_list\character_item.h">
       <Filter>game_object\ui\character_select\character_beauty\item_list</Filter>
     </ClInclude>
-    <ClInclude Include="src\game_object\hair\hair.h">
-      <Filter>game_object\hair</Filter>
+    <ClInclude Include="src\game_object\coat\coat.h">
+      <Filter>game_object\coat</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\pants\pants.h">
+      <Filter>game_object\pants</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -252,8 +255,11 @@
     <ClCompile Include="src\game_object\ui\character_select\character_beauty\item_list\character_item.cpp">
       <Filter>game_object\ui\character_select\character_beauty\item_list</Filter>
     </ClCompile>
-    <ClCompile Include="src\game_object\hair\hair.cpp">
-      <Filter>game_object\hair</Filter>
+    <ClCompile Include="src\game_object\coat\coat.cpp">
+      <Filter>game_object\coat</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\pants\pants.cpp">
+      <Filter>game_object\pants</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -361,8 +367,11 @@
     <Filter Include="game_object\ui\character_select\character_beauty\item_list">
       <UniqueIdentifier>{ade88338-c9da-4645-b84f-08bce510e908}</UniqueIdentifier>
     </Filter>
-    <Filter Include="game_object\hair">
+    <Filter Include="game_object\coat">
       <UniqueIdentifier>{96816cf8-b3a5-4837-995d-253afe85430d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\pants">
+      <UniqueIdentifier>{cab5973f-784f-4ffb-94c9-1dec407a7b7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
