@@ -44,6 +44,7 @@ typedef struct MeshMaterialTexture
 	Microsoft::WRL::ComPtr<IDirect3DTexture9>		diffuse_map;
 	Microsoft::WRL::ComPtr<IDirect3DTexture9>		normal_map;
 	Microsoft::WRL::ComPtr<IDirect3DTexture9>		specular_map;
+	Microsoft::WRL::ComPtr<IDirect3DTexture9>		color_map;
 }MeshMaterialTexture;
 
 typedef struct D3DXMeshContainerDerived : public D3DXMESHCONTAINER

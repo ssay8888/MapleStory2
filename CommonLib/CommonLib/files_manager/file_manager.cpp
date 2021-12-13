@@ -1,10 +1,13 @@
 #include "common_pch.h"
 #include "file_manager.h"
 
+#include <stdio.h>
+#include <io.h>
 #include <fstream>
 #include <Windows.h>
 #include <iostream>
 #include <string>
+#include <boost/filesystem.hpp>
 
 auto FileManager::ReadFile(std::wstring path) const -> std::string
 {
@@ -64,27 +67,39 @@ auto FileManager::GetDirFileName(std::wstring folderPath) -> std::list<std::wstr
 
 auto FileManager::GetFileName(std::wstring path) -> std::wstring
 {
-	auto strs = wcsrchr(path.c_str(), '\\');
-	if (strs == NULL)
-	{
-		return path;
-	}
-	else
-	{
-		return strs + 1;
-	}
+	boost::filesystem::path filePath(path.c_str());
+
+	return filePath.filename().wstring();
 }
 
 
 auto FileManager::GetFileName(std::string path) -> std::string
 {
-	auto strs = strrchr(path.c_str(), '\\');
-	if (strs == NULL)
-	{
-		return path;
-	}
-	else
-	{
-		return strs + 1;
-	}
+	boost::filesystem::path filePath(path.c_str());
+
+	return filePath.filename().string();
 }
+
+auto FileManager::GetPath(std::wstring path) -> std::wstring
+{
+	boost::filesystem::path filePath(path.c_str());
+	return filePath.parent_path().wstring();
+}
+
+auto FileManager::GetPath(std::string path) -> std::string
+{
+	boost::filesystem::path filePath(path.c_str());
+
+	return filePath.parent_path().string();
+}
+
+auto FileManager::IsFileAccess(std::string path) -> bool
+{
+	if (!_access(path.c_str(), 0))
+	{
+		return true;
+	}
+	return false;
+
+}
+

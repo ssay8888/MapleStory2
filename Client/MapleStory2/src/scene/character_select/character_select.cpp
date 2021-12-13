@@ -212,19 +212,15 @@ auto CharacterSelect::ReadyLayerFittingdollMan(const std::wstring& pLayerTag) ->
 	{
 		return E_FAIL;
 	}
-	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), pLayerTag, _float3(0.0f, 0, 0))))
-	{
-		return E_FAIL;
-	}
-	//if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Pants"), pLayerTag, _float3(0.0f, 0, 0))))
-	{
+	//if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), pLayerTag, _float3(0.0f, 0, 0))))
+	//{
 	//	return E_FAIL;
-	}
-	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Pants"), pLayerTag, _float3(1.0f, 0, 0))))
-	{
-		return E_FAIL;
-	}
-	//if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Hair"), pLayerTag, _float3(0.0f, 0, 0))))
+	//}
+	////if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Pants"), pLayerTag, _float3(0.0f, 0, 0))))
+	//{
+	////	return E_FAIL;
+	//}
+	//if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Pants"), pLayerTag, _float3(1.0f, 0, 0))))
 	//{
 	//	return E_FAIL;
 	//}
@@ -245,7 +241,7 @@ auto CharacterSelect::ReadyLayerFittingdollGirl(const std::wstring& pLayerTag) -
 	{
 		return E_FAIL;
 	}
-	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), pLayerTag, _float3(0.0f, 0, 0))))
+	/*if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), pLayerTag, _float3(0.0f, 0, 0))))
 	{
 		return E_FAIL;
 	}
@@ -256,7 +252,7 @@ auto CharacterSelect::ReadyLayerFittingdollGirl(const std::wstring& pLayerTag) -
 	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Pants"), pLayerTag, _float3(1.f, 0, 0))))
 	{
 		return E_FAIL;
-	}
+	}*/
 	//if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Hair"), pLayerTag, _float3(0.0f, 0, 0))))
 	//{
 	//	return E_FAIL;

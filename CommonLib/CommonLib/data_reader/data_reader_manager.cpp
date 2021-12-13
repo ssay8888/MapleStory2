@@ -11,10 +11,13 @@ using namespace pugi;
 
 auto DataReaderManager::Init() -> void
 {
+	LoadItemModel("../../Binary/Resources/Xml/itemmodel/114.xml");
+	LoadItemModel("../../Binary/Resources/Xml/itemmodel/115.xml");
 	LoadItemModel("../../Binary/Resources/Xml/itemmodel/150.xml");
 	LoadAnimationInfo();
 }
 
+#pragma region ItemInfoMethod
 auto DataReaderManager::LoadItemModel(const std::string& path) -> void
 {
 	xml_document doc;
@@ -60,11 +63,24 @@ auto DataReaderManager::LoadItemModel(const std::string& path) -> void
 						itemModel->PushSlotItem(slotItem);
 					}
 				}
+				else if (!strcmp(items.name(), "cutting"))
+				{
+					for (auto& cutting : items)
+					{
+						const auto cuttingItem = std::make_shared<ItemModel::Cutting>();
+
+						if (cutting.attribute("gender"))
+						{
+							cuttingItem->gender = std::stoi(cutting.attribute("gender").value());
+						}
+						cuttingItem->name = cutting.attribute("name").value();
+						itemModel->PushCuttingItem(cuttingItem);
+					}
+				}
 			}
 			_item_model.emplace(itemModel->GetId(), itemModel);
 		}
 	}
-	std::cout << "";
 }
 
 auto DataReaderManager::FindItemModel(const int32_t itemId) -> std::shared_ptr<ItemModel>
@@ -77,7 +93,14 @@ auto DataReaderManager::FindItemModel(const int32_t itemId) -> std::shared_ptr<I
 
 }
 
-#pragma region AnimationInfo
+auto DataReaderManager::AllItemModel() const -> const std::map<int32_t, std::shared_ptr<ItemModel>>&
+{
+	return _item_model;
+}
+
+#pragma endregion
+
+#pragma region AnimationLoader
 
 auto DataReaderManager::LoadAnimationInfo()->void
 {

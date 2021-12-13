@@ -90,6 +90,13 @@ int32_t Fittingdoll::Tick(double timeDelta)
 			coat->GetNumMeshContainer();
 			_meshs[0]->ChangeSkinnedMesh(coat, "CL_");
 		}
+		const auto hairObject = std::static_pointer_cast<Coat>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 4));
+		if (hairObject)
+		{
+			auto coat = hairObject->GetMesh();
+			coat->GetNumMeshContainer();
+			_meshs[0]->ChangeSkinnedMesh(coat, "HR_");
+		}
 	}
 
 	return GameObject::Tick(timeDelta);

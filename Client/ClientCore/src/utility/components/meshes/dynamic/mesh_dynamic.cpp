@@ -8,7 +8,7 @@
 #include "loader/hierarchy_loader.h"
 #include "src/utility/components/shader/shader.h"
 
-MeshDynamic::MeshDynamic(const ComPtr<IDirect3DDevice9>& device):
+MeshDynamic::MeshDynamic(const ComPtr<IDirect3DDevice9>& device) :
 	Mesh(device)
 {
 }
@@ -102,7 +102,7 @@ HRESULT MeshDynamic::NativeConstruct(void* arg)
 }
 
 auto MeshDynamic::UpdateCombinedTransformationMatrices(const LPD3DXFRAME frame,
-                                                       const _matrix parentCombinedTransformationMatrix) -> void
+	const _matrix parentCombinedTransformationMatrix) -> void
 {
 	const auto frameDerived = static_cast<D3DxFrameDerived*>(frame);
 
@@ -140,7 +140,7 @@ auto MeshDynamic::TargerCombinedTransformationMatrices(LPD3DXFRAME frame, LPD3DX
 		TargerCombinedTransformationMatrices(frame->pFrameFirstChild, targetFrame);
 
 	if (nullptr != frame->pFrameSibling)
-		TargerCombinedTransformationMatrices(frame->pFrameSibling, targetFrame);	
+		TargerCombinedTransformationMatrices(frame->pFrameSibling, targetFrame);
 }
 
 auto MeshDynamic::SetUpCombinedTransformationMatricesPointer(const LPD3DXFRAME frame) -> void
@@ -169,7 +169,7 @@ auto MeshDynamic::SetUpCombinedTransformationMatricesPointer(const LPD3DXFRAME f
 }
 
 auto MeshDynamic::SetUpTextureOnShader(const std::shared_ptr<Shader>& shader, const D3DXHANDLE parameter, const MeshMaterialTexture::kType type,
-                                        const uint32_t meshContainerIndex, const uint32_t materialIndex) -> HRESULT
+	const uint32_t meshContainerIndex, const uint32_t materialIndex) -> HRESULT
 {
 	Microsoft::WRL::ComPtr<IDirect3DTexture9>			pTexture = nullptr;
 
@@ -184,7 +184,7 @@ auto MeshDynamic::SetUpTextureOnShader(const std::shared_ptr<Shader>& shader, co
 	case MeshMaterialTexture::kType::kTypeSpecular:
 		pTexture = _mesh_containers[meshContainerIndex]->ppMaterialTextures[materialIndex]->specular_map;
 		break;
-	default: 
+	default:
 		break;
 	}
 
@@ -255,7 +255,6 @@ auto MeshDynamic::ChangeSkinnedMesh(std::shared_ptr<MeshDynamic> target, std::st
 		}
 		++iter;
 	}
-
 	auto meshs = target->GetMeshContainer();
 	_mesh_containers.insert(_mesh_containers.end(), meshs.begin(), meshs.end());
 	return S_OK;
@@ -293,7 +292,7 @@ auto MeshDynamic::FindSkinnedMesh(const std::string& name) -> D3DXMeshContainerD
 auto MeshDynamic::Render(const uint32_t meshContainerIndex, const uint32_t materialIndex) -> HRESULT
 {
 	size_t		iNumMeshContainer = _mesh_containers.size();
-	
+
 	_mesh_containers[meshContainerIndex]->MeshData.pMesh->DrawSubset(materialIndex);
 
 	return S_OK;
@@ -329,9 +328,10 @@ auto MeshDynamic::PlayAnimation(const double timeDelta) -> HRESULT
 }
 
 auto MeshDynamic::Create(const ComPtr<IDirect3DDevice9>& device, const std::wstring& filePath,
-                         const std::wstring& fileName) -> std::shared_ptr<MeshDynamic>
+	const std::wstring& fileName) -> std::shared_ptr<MeshDynamic>
 {
 	auto pInstance = std::make_shared<MeshDynamic>(device);
+
 
 	if (FAILED(pInstance->NativeConstructPrototype(filePath, fileName)))
 	{

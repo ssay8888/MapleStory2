@@ -19,5 +19,8 @@ public:
 
     auto GetFileName(std::wstring path)->std::wstring;
     auto GetFileName(std::string path)->std::string;
+    auto GetPath(std::wstring path)->std::wstring;
+    auto GetPath(std::string path)->std::string;
 
+    auto IsFileAccess(std::string path)->bool;
 };

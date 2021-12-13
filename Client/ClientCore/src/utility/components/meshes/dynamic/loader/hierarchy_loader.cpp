@@ -100,10 +100,13 @@ auto HierarchyLoader::CreateMeshContainer(LPCSTR Name, const D3DXMESHDATA* pMesh
 		szFullPath[iIndex] = L'N';
 		D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->normal_map);
 
-
 		/* For.Specular map */
 		szFullPath[iIndex] = L'S';
 		D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->specular_map);
+
+		/* For.Specular map */
+		szFullPath[iIndex] = L'C';
+		D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->color_map);
 	}
 	const uint64_t numFaces = pMeshContainer->MeshData.pMesh->GetNumFaces();
 	uint64_t size = static_cast<uint64_t>(numFaces * 3);
@@ -113,7 +116,6 @@ auto HierarchyLoader::CreateMeshContainer(LPCSTR Name, const D3DXMESHDATA* pMesh
 	/* 원래 메시. 위치 노말 유브이 탄젠트 바이노말 블렌드인데스, 블렌두에이트 */
 
 	pMeshContainer->pSkinInfo = pSkinInfo;
-
 
 	pMeshContainer->pSkinInfo->AddRef();
 
