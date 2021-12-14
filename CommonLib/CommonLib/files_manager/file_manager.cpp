@@ -1,7 +1,6 @@
 #include "common_pch.h"
 #include "file_manager.h"
 
-#include <stdio.h>
 #include <io.h>
 #include <fstream>
 #include <Windows.h>
@@ -9,7 +8,7 @@
 #include <string>
 #include <boost/filesystem.hpp>
 
-auto FileManager::ReadFile(std::wstring path) const -> std::string
+auto FileManager::ReadFile(std::wstring path)-> std::string
 {
 	std::ifstream fin(path);
 	std::string temp, str;

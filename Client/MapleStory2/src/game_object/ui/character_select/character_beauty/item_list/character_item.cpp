@@ -105,6 +105,21 @@ auto CharacterItem::GetButtonState() const -> kCreateItemState
 	return _state;
 }
 
+auto CharacterItem::ChangeState(kCreateItemState state) -> void
+{
+	_state = state;
+}
+
+auto CharacterItem::GetManItemId()const ->int32_t
+{
+	return _info.man_item_id;
+}
+
+auto CharacterItem::GetGirlItemId()const ->int32_t
+{
+	return _info.girl_item_id;
+}
+
 auto CharacterItem::AddComponents() -> HRESULT
 {
 	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))

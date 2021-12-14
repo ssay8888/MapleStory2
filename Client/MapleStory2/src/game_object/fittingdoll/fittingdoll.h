@@ -25,6 +25,7 @@ public:
 	};
 	auto GetCurrentDynamicMesh() ->std::pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>;
 	auto GetInfo() const ->FittingdollInfo;
+	auto ChangeEqp(kEqpType type, int32_t itemId)->void;
 private:
 	auto AddComponents()->HRESULT;
 	auto SetUpConstantTable() const->HRESULT;
@@ -37,6 +38,8 @@ private:
 	std::shared_ptr<Transform>					_transform_com = nullptr;
 	std::shared_ptr<Shader>						_shader_com = nullptr;
 	std::vector<std::shared_ptr<MeshDynamic>>	_meshs;
+	std::map<int32_t, std::shared_ptr<MeshDynamic>>	_eqp;
+	
 
 	bool				_is_idle = true;
 	int32_t				_current_mesh_num = 0;

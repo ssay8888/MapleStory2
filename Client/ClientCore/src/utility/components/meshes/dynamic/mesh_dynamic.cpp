@@ -64,8 +64,14 @@ auto MeshDynamic::GetMeshContainer() const -> std::vector<D3DXMeshContainerDeriv
 	return _mesh_containers;
 }
 
-auto MeshDynamic::NativeConstructPrototype(const std::wstring& filePath, const std::wstring& fileName) -> HRESULT
+auto MeshDynamic::GetItemId() const -> int32_t
 {
+	return _item_id;
+}
+
+auto MeshDynamic::NativeConstructPrototype(const std::wstring& filePath, const std::wstring& fileName, int32_t itemId)->HRESULT
+{
+	_item_id = itemId;
 	wchar_t		szFullPath[MAX_PATH] = TEXT("");
 
 	lstrcpy(szFullPath, filePath.c_str());
@@ -214,50 +220,111 @@ auto MeshDynamic::UpdateSkinnedMesh(const uint32_t iMeshContainerIndex) -> HRESU
 	return S_OK;
 }
 
-auto MeshDynamic::ChangeSkinnedMesh(std::shared_ptr<MeshDynamic> target, std::string remove) -> HRESULT
+auto MeshDynamic::ChangeSkinnedMesh(const std::shared_ptr<MeshDynamic> target, const std::string remove) -> HRESULT
 {
 	auto container = target->GetMeshContainer();
 	for (auto iter = container.begin(); iter != container.end(); ++iter)
 	{
-		//타겟컨테이너에 Skin이 포함된 메시가 들어있다면, 모든 관련된 메시를 삭제한다.
-		std::string Name((*iter)->Name);
-		std::string RemoveCpy(remove);
-		auto pos = Name.find(RemoveCpy.append("Skin"));
-		if (pos != std::string::npos || Name == remove)
+		//remove가 포함된 모든 매쉬를 지운다.
+		for (auto iter = _mesh_containers.begin(); iter != _mesh_containers.end();)
 		{
-			for (auto iter = _mesh_containers.begin(); iter != _mesh_containers.end();)
-			{
-				std::string name((*iter)->Name);
-				auto pos = name.find(remove);
+			std::string name((*iter)->Name);
+			auto pos = name.find(remove);
 
-				if (pos != std::string::npos)
-				{
-					iter = _mesh_containers.erase(iter);
-					continue;
-				}
-				++iter;
-			}
-		}
-	}
-	for (auto iter = _mesh_containers.begin(); iter != _mesh_containers.end();)
-	{
-		//내 컨테이너에 Skin을 제외한 관련된 삭제할타겟이 포함된 텍스트가있으면 메시를 삭제함.
-		std::string Name((*iter)->Name);
-		auto pos = Name.find(remove, 0);
-		auto skin = Name.find("Skin");
-		if (skin == std::string::npos && pos != std::string::npos && pos <= 3)
-		{
-			if (strcmp(remove.c_str(), "CL_"))
+			if (pos != std::string::npos)
 			{
 				iter = _mesh_containers.erase(iter);
 				continue;
 			}
+			++iter;
 		}
-		++iter;
 	}
 	auto meshs = target->GetMeshContainer();
 	_mesh_containers.insert(_mesh_containers.end(), meshs.begin(), meshs.end());
+
+	//bool isSkin = false;
+	//for (auto iter = _mesh_containers.begin(); iter != _mesh_containers.end(); ++iter)
+	//{
+	//	//컨테이너에 skin이없다면 추가한다.
+	//	std::string Name((*iter)->Name);
+	//	auto skin = Name.find("Skin");
+	//	if (skin != std::string::npos)
+	//	{
+	//		isSkin = true;
+	//	}
+	//}
+	//if (!isSkin)
+	//{
+	//	for (auto iter = _origin_mesh_containers.begin(); iter != _origin_mesh_containers.end(); ++iter)
+	//	{
+	//		//컨테이너에 skin이없다면 추가한다.
+	//		std::string Name((*iter)->Name);
+	//		auto skin = Name.find("Skin");
+	//		if (skin != std::string::npos)
+	//		{
+	//			isSkin = true;
+	//			_mesh_containers.push_back(*iter);
+	//		}
+	//	}
+	//}
+	//auto container = target->GetMeshContainer();
+	//for (auto iter = container.begin(); iter != container.end(); ++iter)
+	//{
+	//	//타겟컨테이너에 Skin이 포함된 메시가 들어있다면, 모든 관련된 메시를 삭제한다.
+	//	std::string Name((*iter)->Name);
+	//	std::string RemoveCpy(remove);
+	//	auto pos = Name.find(RemoveCpy.append("Skin"));
+	//	if (pos != std::string::npos || Name == remove)
+	//	{
+	//		for (auto iter = _mesh_containers.begin(); iter != _mesh_containers.end();)
+	//		{
+	//			std::string name((*iter)->Name);
+	//			auto pos = name.find(remove);
+
+	//			if (pos != std::string::npos)
+	//			{
+	//				iter = _mesh_containers.erase(iter);
+	//				continue;
+	//			}
+	//			++iter;
+	//		}
+	//	}
+	//}
+	//for (auto iter = _mesh_containers.begin(); iter != _mesh_containers.end();)
+	//{
+	//	//내 컨테이너에 Skin을 제외한 관련된 삭제할타겟이 포함된 텍스트가있으면 메시를 삭제함.
+	//	std::string Name((*iter)->Name);
+	//	auto pos = Name.find(remove, 0);
+	//	auto skin = Name.find("Skin");
+	//	if (skin == std::string::npos && pos != std::string::npos && pos <= 3)
+	//	{
+	//		if (strcmp(remove.c_str(), "CL_"))
+	//		{
+	//			iter = _mesh_containers.erase(iter);
+	//			continue;
+	//		}
+	//	}
+	//	++iter;
+	//}
+	//auto meshs = target->GetMeshContainer();
+	//_mesh_containers.insert(_mesh_containers.end(), meshs.begin(), meshs.end());
 	return S_OK;
+}
+
+auto MeshDynamic::ChangeFaceTexture(ComPtr<IDirect3DTexture9> texture)->void
+{
+	//remove가 포함된 모든 매쉬를 지운다.
+	for (auto iter = _mesh_containers.begin(); iter != _mesh_containers.end(); ++iter)
+	{
+		std::string name((*iter)->Name);
+
+		if (name == "FA_")
+		{
+			(*iter)->ppMaterialTextures[0]->diffuse_map = texture;
+			break;;
+		}
+	}
+
 }
 
 auto MeshDynamic::SetSkinnedMesh(const D3DXMeshContainerDerived* container)->void
@@ -328,12 +395,12 @@ auto MeshDynamic::PlayAnimation(const double timeDelta) -> HRESULT
 }
 
 auto MeshDynamic::Create(const ComPtr<IDirect3DDevice9>& device, const std::wstring& filePath,
-	const std::wstring& fileName) -> std::shared_ptr<MeshDynamic>
+	const std::wstring& fileName, int32_t itemId) -> std::shared_ptr<MeshDynamic>
 {
 	auto pInstance = std::make_shared<MeshDynamic>(device);
 
 
-	if (FAILED(pInstance->NativeConstructPrototype(filePath, fileName)))
+	if (FAILED(pInstance->NativeConstructPrototype(filePath, fileName, itemId)))
 	{
 		MSGBOX("Failed to Creating CMesh_Dynamic");
 		return nullptr;

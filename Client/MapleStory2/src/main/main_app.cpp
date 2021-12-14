@@ -36,10 +36,8 @@ MainApp::MainApp()
 
 auto MainApp::NativeConstruct() -> HRESULT
 {
-	DataReaderManager::GetInstance().Init();
 	GameLogicManager::InitDevice(g_hInst, g_Wnd, static_cast<int32_t>(kSceneEnd));
 
-	g_service = NetworkThreadInit();
 
 	if (FAILED(GraphicDevice::GetInstance().ReadyGraphicDevice(g_Wnd, GraphicDevice::kWindowMode::kModeWin, g_WinCX, g_WinCY, &_graphic_device)))
 		return E_FAIL;
@@ -50,6 +48,8 @@ auto MainApp::NativeConstruct() -> HRESULT
 	if (FAILED(AddPrototypeGameObject()))
 		return E_FAIL;
 
+	g_service = NetworkThreadInit();
+	DataReaderManager::GetInstance().Init(GraphicDevice::GetInstance().GetDevice());
 	SceneManager::GetInstance().SetUpScene(SceneLogo::Create(_graphic_device));
 	return S_OK;
 }

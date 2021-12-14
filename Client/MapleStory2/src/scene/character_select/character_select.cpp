@@ -168,10 +168,7 @@ auto CharacterSelect::ReadyLayerPlayer(const std::wstring& pLayerTag) -> HRESULT
 	{
 		return E_FAIL;
 	}
-	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Weapon"), pLayerTag, _float3(0.0f, 0, 0))))
-	{
-		return E_FAIL;
-	}
+
 
 	return S_OK;
 }
@@ -203,19 +200,19 @@ auto CharacterSelect::ReadyLayerFittingdollMan(const std::wstring& pLayerTag) ->
 	auto& objectManager = ObjectManager::GetInstance();
 	Fittingdoll::FittingdollInfo info;
 	info.pos = { 0, 0, 0 };
-	info.sex = true;
+	info.sex = false;
 	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Fittingdool"), pLayerTag, &info)))
 	{
 		return E_FAIL;
 	}
-	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Weapon"), pLayerTag, _float3(0.0f, 0, 0))))
-	{
-		return E_FAIL;
-	}
-	//if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), pLayerTag, _float3(0.0f, 0, 0))))
+	//if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Weapon"), pLayerTag, _float3(0.0f, 0, 0))))
 	//{
 	//	return E_FAIL;
 	//}
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), pLayerTag, _float3(0.0f, 0, 0))))
+	{
+		return E_FAIL;
+	}
 	////if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Pants"), pLayerTag, _float3(0.0f, 0, 0))))
 	//{
 	////	return E_FAIL;
@@ -232,15 +229,15 @@ auto CharacterSelect::ReadyLayerFittingdollGirl(const std::wstring& pLayerTag) -
 	auto& objectManager = ObjectManager::GetInstance();
 	Fittingdoll::FittingdollInfo info;
 	info.pos = {0, 0, 0};
-	info.sex = false;
+	info.sex = true;
 	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Fittingdool"), pLayerTag, &info)))
 	{
 		return E_FAIL;
 	}
-	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Weapon"), pLayerTag, _float3(0.0f, 0, 0))))
-	{
-		return E_FAIL;
-	}
+	//if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Weapon"), pLayerTag, _float3(0.0f, 0, 0))))
+	//{
+	//	return E_FAIL;
+	//}
 	/*if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), pLayerTag, _float3(0.0f, 0, 0))))
 	{
 		return E_FAIL;

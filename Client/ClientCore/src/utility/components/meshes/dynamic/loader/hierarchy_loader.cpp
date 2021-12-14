@@ -71,6 +71,10 @@ auto HierarchyLoader::CreateMeshContainer(LPCSTR Name, const D3DXMESHDATA* pMesh
 		lstrcpy(szFullPath, _mesh_file_path.c_str());
 
 		wchar_t		szTextureFileName[MAX_PATH] = TEXT("");
+		if (!pMaterials[i].pTextureFilename)
+		{
+			continue;
+		}
 
 		MultiByteToWideChar(CP_ACP, 0, pMaterials[i].pTextureFilename, static_cast<int32_t>(strlen(pMaterials[i].pTextureFilename))
 			, szTextureFileName, MAX_PATH);

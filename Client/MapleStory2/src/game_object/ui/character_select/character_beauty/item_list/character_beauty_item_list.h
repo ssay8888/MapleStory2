@@ -15,9 +15,12 @@ public:
 public:
 	struct CreateItemListTextureInfo
 	{
-		_float3 pos;
-		_float3 size;
-		bool	sex;
+		_float3					pos;
+		_float3					size;
+		std::vector<int32_t>    man_items;
+		std::vector<int32_t>	girl_items;
+		bool					sex;
+		kEqpType				type;
 	};
 	auto NativeConstructPrototype()->HRESULT override;
 	auto NativeConstruct(void* arg)->HRESULT override;
@@ -37,5 +40,6 @@ private:
 	std::shared_ptr<ViBufferRect>				_vi_buffer_com = nullptr;
 	std::vector<std::shared_ptr<CharacterItem>>	_items;
 
+	int32_t										_select_index;
 	_matrix				_proj_matrix;
 };

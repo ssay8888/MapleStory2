@@ -8,19 +8,14 @@ private:
     ~FileManager() = default;
 
 public:
-    static auto GetInstance()->FileManager& {
-        static FileManager instance;
-        return instance;
-    }
+    static auto ReadFile(std::wstring path)->std::string;
+    static auto GetDirFileCount(std::wstring folderPath)->int;
+    static auto GetDirFileName(std::wstring folderPath)->std::list<std::wstring>;
 
-    auto ReadFile(std::wstring path) const->std::string;
-    auto GetDirFileCount(std::wstring folderPath)->int;
-    auto GetDirFileName(std::wstring folderPath)->std::list<std::wstring>;
+    static auto GetFileName(std::wstring path)->std::wstring;
+    static auto GetFileName(std::string path)->std::string;
+    static auto GetPath(std::wstring path)->std::wstring;
+    static auto GetPath(std::string path)->std::string;
 
-    auto GetFileName(std::wstring path)->std::wstring;
-    auto GetFileName(std::string path)->std::string;
-    auto GetPath(std::wstring path)->std::wstring;
-    auto GetPath(std::string path)->std::string;
-
-    auto IsFileAccess(std::string path)->bool;
+    static auto IsFileAccess(std::string path)->bool;
 };

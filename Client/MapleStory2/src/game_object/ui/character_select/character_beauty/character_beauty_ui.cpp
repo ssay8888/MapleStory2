@@ -2,6 +2,7 @@
 #include "character_beauty_ui.h"
 
 #include "character_beauty_select_sex.h"
+#include "data_reader/data_reader_manager.h"
 #include "item_list/character_beauty_item_list.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/renderer/renderer.h"
@@ -33,6 +34,10 @@ HRESULT CharacterBeautyUi::NativeConstruct(void* arg)
 int32_t CharacterBeautyUi::Tick(const double timeDelta)
 {
 	SexBtnTick(timeDelta);
+	for (auto& list : _item_list)
+	{
+		list->Tick(timeDelta);
+	}
 	return GameObject::Tick(timeDelta);
 }
 
@@ -151,12 +156,44 @@ auto CharacterBeautyUi::CreateSexButton() -> HRESULT
 
 auto CharacterBeautyUi::CreateItemList() -> HRESULT
 {
-	for (int i = 0; i < 6; ++i)
+	_item_list.clear();
+	const auto dataList = DataReaderManager::GetInstance().GetCreateItemInfo();
+	int i = 0;
+	for (auto& data : dataList)
 	{
 		CharacterBeautyItemList::CreateItemListTextureInfo info;
 		info.size = _float3(340.f, 20.f, 0.f);
 		info.pos = _float3(g_WinCX - 350.f / 2, 135.f + (80 * i), 0.f);
+		for (auto& list : data->items)
+		{
+			if (list->gender)
+			{
+				info.girl_items.push_back(list->item_id);
+			}
+			else
+			{
+				info.man_items.push_back(list->item_id);
+			}
+			switch (list->type)
+			{
+			case 0:
+				info.type = kEqpType::kCl;
+				break;
+			case 1:
+				info.type = kEqpType::kPa;
+				break;
+			case 2:
+				info.type = kEqpType::kFace;
+				break;
+			case 3:
+				info.type = kEqpType::kSh;
+				break;
+			}
+		}
+		info.sex = _sex_select;
 		_item_list.push_back(CharacterBeautyItemList::Create(&info));
+
+		++i;
 	}
 	return S_OK;
 }
@@ -182,10 +219,14 @@ auto CharacterBeautyUi::SexBtnTick(const double timeDelta) -> HRESULT
 				if (i == 0)
 				{
 					ChangeBeautyStage(kBeautyStage::kSexChangeMan);
+					_sex_select = false;
+					CreateItemList();
 				}
 				else
 				{
 					ChangeBeautyStage(kBeautyStage::kSexChangeGirl);
+					_sex_select = true;
+					CreateItemList();
 				}
 			}
 			else

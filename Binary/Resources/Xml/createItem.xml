@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ms2>
+	<itemList type="0">
+		<item itemid="11400130" type="0" gender="0" />
+		<item itemid="11400034" type="0" gender="0" />
+		<item itemid="11400094" type="0" gender="0" />
+		<item itemid="11400395" type="0" gender="0" />
+		<item itemid="11400393" type="0" gender="0" />
+		<item itemid="11400030" type="0" gender="0" />
+
+		<item itemid="11400131" type="0" gender="1" />
+		<item itemid="11400035" type="0" gender="1" />
+		<item itemid="11400095" type="0" gender="1" />
+		<item itemid="11400396" type="0" gender="1" />
+		<item itemid="11400394" type="0" gender="1" />
+		<item itemid="11400031" type="0" gender="1" />
+	</itemList>
+	<itemList type="1">
+		<item itemid="11500145" type="1" gender="0" />
+		<item itemid="11500034" type="1" gender="0" />
+		<item itemid="11500089" type="1" gender="0" />
+		<item itemid="11500236" type="1" gender="0" />
+		<item itemid="11500216" type="1" gender="0" />
+		<item itemid="11500032" type="1" gender="0" />
+
+		<item itemid="11500146" type="1" gender="1" />
+		<item itemid="11500035" type="1" gender="1" />
+		<item itemid="11500090" type="1" gender="1" />
+		<item itemid="11500237" type="1" gender="1" />
+		<item itemid="11500217" type="1" gender="1" />
+		<item itemid="11500033" type="1" gender="1" />
+	</itemList>
+	<itemList type="2">
+		<item itemid="00300001" type="2" gender="0" />
+		<item itemid="00300002" type="2" gender="0" />
+		<item itemid="00300005" type="2" gender="0" />
+		<item itemid="00300007" type="2" gender="0" />
+		<item itemid="00300013" type="2" gender="0" />
+		<item itemid="00300014" type="2" gender="0" />
+
+		<item itemid="00300003" type="2" gender="1" />
+		<item itemid="00300004" type="2" gender="1" />
+		<item itemid="00300006" type="2" gender="1" />
+		<item itemid="00300007" type="2" gender="1" />
+		<item itemid="00300008" type="2" gender="1" />
+		<item itemid="00300009" type="2" gender="1" />
+	</itemList>
+	<itemList type="3">
+		<item itemid="11700271" type="3" gender="0" />
+		<item itemid="11700042" type="3" gender="0" />
+		<item itemid="11700136" type="3" gender="0" />
+		<item itemid="11700229" type="3" gender="0" />
+		<item itemid="11700225" type="3" gender="0" />
+		<item itemid="11700071" type="3" gender="0" />
+
+		<item itemid="11700240" type="3" gender="1" />
+		<item itemid="11700043" type="3" gender="1" />
+		<item itemid="11700043" type="3" gender="1" />
+		<item itemid="11700230" type="3" gender="1" />
+		<item itemid="11700226" type="3" gender="1" />
+		<item itemid="11700072" type="3" gender="1" />
+	</itemList>
+	<itemList type="4"></itemList>
+	<itemList type="5"></itemList>
+</ms2>

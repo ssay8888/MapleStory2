@@ -25,8 +25,10 @@ public:
 	auto GetRootFrame()->LPD3DXFRAME;
 
 	auto GetMeshContainer() const ->std::vector<D3DXMeshContainerDerived*>;
+
+	auto GetItemId() const->int32_t;
 public:
-	virtual auto NativeConstructPrototype(const std::wstring& filePath, const std::wstring& fileName)->HRESULT;
+	virtual auto NativeConstructPrototype(const std::wstring& filePath, const std::wstring& fileName, int32_t itemId)->HRESULT;
 	virtual auto NativeConstruct(void* arg)->HRESULT override;
 
 public:
@@ -36,6 +38,7 @@ public:
 	auto SetUpTextureOnShader(const std::shared_ptr<Shader>& shader, D3DXHANDLE parameter, MeshMaterialTexture::kType type, uint32_t meshContainerIndex, uint32_t materialIndex)->HRESULT;
 	auto UpdateSkinnedMesh(uint32_t iMeshContainerIndex)->HRESULT;
 	auto ChangeSkinnedMesh(std::shared_ptr<MeshDynamic> target, std::string remove)->HRESULT;
+	auto ChangeFaceTexture(ComPtr<IDirect3DTexture9> texture)->void;
 	auto SetSkinnedMesh(const D3DXMeshContainerDerived* matrix)->void;
 	auto FindSkinnedMesh(const std::string& name)->D3DXMeshContainerDerived*;
 	auto Render(uint32_t meshContainerIndex, uint32_t materialIndex)->HRESULT;
@@ -44,15 +47,17 @@ public:
 	auto PlayAnimation(double timeDelta)->HRESULT;
 
 private:
-	_matrix										_pivot_matrix;
-	LPD3DXFRAME									_root_frame = nullptr;
-	std::shared_ptr<Animation>					_animation = nullptr;
-	std::vector<D3DXMeshContainerDerived*>		_mesh_containers;
-	std::vector<D3DXMeshContainerDerived*>		_origin_mesh_containers;
-	std::shared_ptr<DataReaderManager::AnimationInfo> _animation_info;
+	_matrix												_pivot_matrix;
+	LPD3DXFRAME											_root_frame = nullptr;
+	std::shared_ptr<Animation>							_animation = nullptr;
+	std::vector<D3DXMeshContainerDerived*>				_mesh_containers;
+	std::vector<D3DXMeshContainerDerived*>				_origin_mesh_containers;
+	std::shared_ptr<DataReaderManager::AnimationInfo>	_animation_info;
+
+	int32_t												_item_id = 0;
 
 public:
-	static auto Create(const ComPtr<IDirect3DDevice9>& device, const std::wstring& filePath, const std::wstring& fileName)->std::shared_ptr<MeshDynamic>;
+	static auto Create(const ComPtr<IDirect3DDevice9>& device, const std::wstring& filePath, const std::wstring& fileName, int32_t itemId = 0)->std::shared_ptr<MeshDynamic>;
 	virtual auto Clone(void* arg)->std::shared_ptr<Component> override;
 };
 

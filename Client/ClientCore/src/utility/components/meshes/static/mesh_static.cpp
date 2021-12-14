@@ -10,8 +10,9 @@ MeshStatic::MeshStatic(const ComPtr<IDirect3DDevice9>& device):
 {
 }
 
-auto MeshStatic::NativeConstructPrototype(const std::wstring& filePath, const std::wstring& fileName) -> HRESULT
+auto MeshStatic::NativeConstructPrototype(const std::wstring& filePath, const std::wstring& fileName, int32_t itemId) -> HRESULT
 {
+	_item_id = itemId;
 	wchar_t		szFullPath[MAX_PATH] = TEXT("");
 
 	lstrcpy(szFullPath, filePath.c_str());
@@ -151,12 +152,17 @@ auto MeshStatic::GetNumMaterials() const -> uint32_t
 	return _num_materials;
 }
 
+auto MeshStatic::GetItemId() const -> int32_t
+{
+	return _item_id;
+}
+
 auto MeshStatic::Create(const ComPtr<IDirect3DDevice9>& device, const std::wstring& filePath,
-                        const std::wstring& fileName) -> std::shared_ptr<MeshStatic>
+                        const std::wstring& fileName, int32_t itemId) -> std::shared_ptr<MeshStatic>
 {
 	auto pInstance = std::make_shared<MeshStatic>(device);
 
-	if (FAILED(pInstance->NativeConstructPrototype(filePath, fileName)))
+	if (FAILED(pInstance->NativeConstructPrototype(filePath, fileName, itemId)))
 	{
 		//MSGBOX("Failed to Creating MeshStatic");
 		std::wcout << "Not Found File : " << fileName << std::endl;

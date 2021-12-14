@@ -11,6 +11,7 @@ protected:
 public:
 	auto AddComponent(int32_t levelIndex, const std::wstring& prototypeTag, const std::wstring& componentTag, std::shared_ptr<Component>* ppOut, void* arg = nullptr)->HRESULT;
 	auto GetComponentPtr(const std::wstring& componentTag)->std::shared_ptr<Component>;
+	auto CloneComponent(int32_t levelIndex, const std::wstring& prototypeTag, const std::wstring& componentTag, void* arg = nullptr)->std::shared_ptr<Component>;
  
 public:
 	virtual auto NativeConstructPrototype()->HRESULT;

@@ -2,9 +2,12 @@
 #include "character_beauty_item_list.h"
 
 #include "character_item.h"
+#include "src/game_object/fittingdoll/fittingdoll.h"
 #include "src/system/graphic/graphic_device.h"
+#include "src/system/input/input_device.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
+#include "src/utility/game_objects/manager/object_manager.h"
 
 CharacterBeautyItemList::CharacterBeautyItemList() :
 	GameObject(GraphicDevice::GetInstance().GetDevice())
@@ -29,7 +32,47 @@ HRESULT CharacterBeautyItemList::NativeConstruct(void* arg)
 
 int32_t CharacterBeautyItemList::Tick(const double timeDelta)
 {
-	for (auto& item : _items)
+	auto& inputDevice = InputDevice::GetInstance();
+
+	bool select = false;
+	const size_t size = _items.size();
+	for (size_t i = 0; i < size; ++i)
+	{
+		const auto item = _items[i];
+		if (item->IsCollision() && inputDevice.GetDirectMouseKeyState(InputDevice::kDirectInMouseButton::kLeftButton))
+		{
+			select = true;
+			_select_index = static_cast<int32_t>(i);
+			break;
+		}
+	}
+
+	if (select)
+	{
+		for (size_t i = 0; i < size; ++i)
+		{
+			const auto item = _items[i];
+			if (i == _select_index)
+			{
+				item->ChangeState(CharacterItem::kSelect);
+				auto playerObject = std::static_pointer_cast<Fittingdoll>(
+					ObjectManager::GetInstance().GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));
+				if (_info.sex)
+				{
+					playerObject->ChangeEqp(_info.type, item->GetGirlItemId());
+				}
+				else
+				{
+					playerObject->ChangeEqp(_info.type, item->GetManItemId());
+				}
+			}
+			else
+			{
+				item->ChangeState(CharacterItem::kNormal);
+			}
+		}
+	}
+	for (const auto& item : _items)
 	{
 		item->Tick(timeDelta);
 	}
@@ -97,14 +140,29 @@ auto CharacterBeautyItemList::AddComponents() -> HRESULT
 		return E_FAIL;
 
 
-	for (int i = 0; i < 6; ++i) 
+	for (size_t i = 0; i < 6; ++i) 
 	{
 		CharacterItem::CreateItemInfo info;
 		info.size = _float3(55.f, 55.f, 0.f);
 		info.pos = _float3(_info.pos.x + (info.size.x / 2) - (_info.size.x / 2) + (57 * i),
 			_info.pos.y + 40, 0);
 
-		_items.push_back(CharacterItem::Create(&info));
+		bool isItem = false;
+		if (!_info.man_items.empty() && _info.man_items.size() > i)
+		{
+			info.man_item_id = _info.man_items[i];
+			isItem = true;
+		}
+
+		if (!_info.girl_items.empty() && _info.girl_items.size() > i)
+		{
+			info.girl_item_id = _info.girl_items[i];
+			isItem = true;
+		}
+		if (isItem)
+		{
+			_items.push_back(CharacterItem::Create(&info));
+		}
 	}
 	return S_OK;
 }

@@ -54,11 +54,11 @@ int32_t Coat::Tick(double timeDelta)
 	_player_current_mesh = playerObject->GetCurrentDynamicMesh();
 	if (playerObject->GetInfo().sex)
 	{
-		_parent_bone_matrix = _player_current_mesh.first->GetBoneMatrixPointer("CL");
+		_parent_bone_matrix = _player_current_mesh.first->GetBoneMatrixPointer("CL_Bra");
 	}
 	else
 	{
-		_parent_bone_matrix = _player_current_mesh.first->GetBoneMatrixPointer("CL_Bra");
+		_parent_bone_matrix = _player_current_mesh.first->GetBoneMatrixPointer("CL");
 	}
 
 	_matrix		WorldMatrix = *_parent_bone_matrix * *_parent_world_matrix;

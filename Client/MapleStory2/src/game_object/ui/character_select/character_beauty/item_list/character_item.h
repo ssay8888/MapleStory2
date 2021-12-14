@@ -15,6 +15,8 @@ public:
 	{
 		_float3 pos;
 		_float3 size;
+		int32_t man_item_id;
+		int32_t girl_item_id;
 	};
 	auto NativeConstructPrototype()->HRESULT override;
 	auto NativeConstruct(void* arg)->HRESULT override;
@@ -29,12 +31,16 @@ public:
 	enum kCreateItemState
 	{
 		kNormal,
-		kOver,
 		kSelect,
+		kOver,
 		kEnd
 	};
 	auto IsCollision() const ->bool;
 	auto GetButtonState() const->kCreateItemState;
+	auto ChangeState(kCreateItemState state)->void;
+
+	auto GetManItemId()const->int32_t;
+	auto GetGirlItemId()const->int32_t;
 
 private:
 	auto AddComponents()->HRESULT;

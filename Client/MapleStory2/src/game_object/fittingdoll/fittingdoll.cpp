@@ -38,7 +38,7 @@ HRESULT Fittingdoll::NativeConstruct(void* arg)
 		return E_FAIL;
 	_transform_com->SetState(Transform::kState::kStatePosition, _info.pos);
 	_transform_com->SetUpRotation(_float3(0, -1, 0), D3DXToRadian(255.924316f));
-	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f-40.f, -16.07339f) / 150 * 0.58f);
+	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f - 40.f, -16.07339f) / 150 * 0.58f);
 	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
 
 	_meshs[0]->SetAnimationIndex(1);
@@ -73,31 +73,35 @@ int32_t Fittingdoll::Tick(double timeDelta)
 		_current_mesh_num = _new_mesh_num;
 	}
 
-	if (InputDevice::GetInstance().GetKeyDown(DIK_C))
-	{
-		const auto& instance = ObjectManager::GetInstance();
-		const auto pants = std::static_pointer_cast<Pants>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 3));
-		if (pants)
-		{
-			auto panty = pants->GetMesh();
-			panty->GetNumMeshContainer();
-			_meshs[0]->ChangeSkinnedMesh(panty, "PA_");
-		}
-		const auto coatObject = std::static_pointer_cast<Coat>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 2));
-		if (coatObject)
-		{
-			auto coat = coatObject->GetMesh();
-			coat->GetNumMeshContainer();
-			_meshs[0]->ChangeSkinnedMesh(coat, "CL_");
-		}
-		const auto hairObject = std::static_pointer_cast<Coat>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 4));
-		if (hairObject)
-		{
-			auto coat = hairObject->GetMesh();
-			coat->GetNumMeshContainer();
-			_meshs[0]->ChangeSkinnedMesh(coat, "HR_");
-		}
-	}
+	//if (InputDevice::GetInstance().GetKeyDown(DIK_C))
+	//{
+	//	const auto& instance = ObjectManager::GetInstance();
+
+	//	std::wstring prototypeName(L"Prototype_ItemModel_");
+	//	prototypeName.append(std::to_wstring(11509999)).append(L"_").append(std::to_wstring(_info.sex));
+	//	std::wstring componentTag(L"Com");
+	//	componentTag.append(std::to_wstring(11509999)).append(L"_").append(std::to_wstring(_info.sex));
+	//	auto a = std::static_pointer_cast<MeshDynamic>(CloneComponent(kSceneStatic, prototypeName, componentTag, nullptr));
+	//	_meshs[0]->ChangeSkinnedMesh(a, "PA_");
+	//	_eqp.push_back(a);
+
+
+	//	const auto player = std::static_pointer_cast<Fittingdoll>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));
+
+	//	auto playerMesh = player->GetCurrentDynamicMesh();
+
+	//	auto rootFrame = playerMesh.first->GetRootFrame();
+	//	a->TargerCombinedTransformationMatrices(a->GetRootFrame(), rootFrame);
+
+	//	const auto coatObject = std::static_pointer_cast<Coat>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 1));
+	//	if (coatObject)
+	//	{
+	//		auto coat = coatObject->GetMesh();
+	//		coat->GetNumMeshContainer();
+	//		_meshs[0]->ChangeSkinnedMesh(coat, "CL_");
+	//	}
+
+	//}
 
 	return GameObject::Tick(timeDelta);
 }
@@ -156,6 +160,81 @@ auto Fittingdoll::GetInfo() const -> FittingdollInfo
 	return _info;
 }
 
+auto Fittingdoll::ChangeEqp(const kEqpType type, int32_t itemId)->void
+{
+	auto iter = _eqp.find(itemId);
+	if (iter != _eqp.end())
+	{
+		switch (type)
+		{
+		case kEqpType::kPa:
+			_meshs[0]->ChangeSkinnedMesh(iter->second, "PA_");
+			break;
+		case kEqpType::kCl:
+			_meshs[0]->ChangeSkinnedMesh(iter->second, "CL_");
+			break;
+		case kEqpType::kSh:
+			_meshs[0]->ChangeSkinnedMesh(iter->second, "SH_");
+			break;
+		default:
+			return;
+		}
+	}
+	else
+	{
+		const auto& instance = ObjectManager::GetInstance();
+
+		std::wstring prototypeName(L"Prototype_ItemModel_");
+		prototypeName.append(std::to_wstring(itemId)).append(L"_").append(std::to_wstring(_info.sex));
+		std::wstring componentTag(L"Com");
+		componentTag.append(std::to_wstring(itemId)).append(L"_").append(std::to_wstring(_info.sex));
+		if (auto component = std::static_pointer_cast<MeshDynamic>(CloneComponent(kSceneStatic, prototypeName, componentTag, nullptr)))
+		{
+			switch (type)
+			{
+			case kEqpType::kPa:
+				_meshs[0]->ChangeSkinnedMesh(component, "PA_");
+				break;
+			case kEqpType::kCl:
+				_meshs[0]->ChangeSkinnedMesh(component, "CL_");
+				break;
+			case kEqpType::kSh:
+				_meshs[0]->ChangeSkinnedMesh(component, "SH_");
+				break;
+			case kEqpType::kFace:
+			{
+				auto texture = DataReaderManager::GetInstance().FindFace(itemId);
+				_meshs[0]->ChangeFaceTexture(texture->diffuse_map[0]);
+				break;
+			}
+			default:
+				return;
+			}
+			_eqp.emplace(itemId, component);
+
+			const auto player = std::static_pointer_cast<Fittingdoll>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));
+			const auto playerMesh = player->GetCurrentDynamicMesh();
+			const auto rootFrame = playerMesh.first->GetRootFrame();
+			component->TargerCombinedTransformationMatrices(component->GetRootFrame(), rootFrame);
+		}
+
+		switch (type)
+		{
+		case kEqpType::kFace:
+		{
+			auto texture = DataReaderManager::GetInstance().FindFace(itemId);
+			_meshs[0]->ChangeFaceTexture(texture->diffuse_map[0]);
+			break;
+		}
+		default:
+			return;
+		}
+
+	}
+
+
+}
+
 auto Fittingdoll::AddComponents() -> HRESULT
 {
 	/* Com_Transform */
@@ -175,7 +254,7 @@ auto Fittingdoll::AddComponents() -> HRESULT
 	for (auto animation : animationNames)
 	{
 		std::wstring prototypeName(TEXT("Prototype_Mesh_Ani_"));
-		if (!_info.sex)
+		if (_info.sex)
 		{
 			prototypeName.append(L"F_");
 		}
@@ -205,6 +284,18 @@ auto Fittingdoll::AddComponents() -> HRESULT
 			pAS->Release();
 		}
 	}
+
+	if (_info.sex)
+	{
+		auto face = DataReaderManager::GetInstance().FindFace(300003);
+		_meshs[0]->ChangeFaceTexture(face->diffuse_map[0]);
+	}
+	else
+	{
+		auto face = DataReaderManager::GetInstance().FindFace(300001);
+		_meshs[0]->ChangeFaceTexture(face->diffuse_map[0]);
+	}
+
 	return S_OK;
 }
 

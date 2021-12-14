@@ -14,11 +14,15 @@ auto GameObject::AddComponent(const int32_t levelIndex, const std::wstring& prot
                               std::shared_ptr<Component>* ppOut, void* arg) -> HRESULT
 {
 	if (nullptr != FindComponent(componentTag))
+	{
 		return E_FAIL;
+	}
 
 	auto component = ComponentManager::GetInstance().CloneComponent(levelIndex, prototypeTag, arg);
 	if (component == nullptr)
+	{
 		return E_FAIL;
+	}
 	_components.emplace(componentTag, component);
 
 	*ppOut = component;
@@ -29,6 +33,13 @@ auto GameObject::AddComponent(const int32_t levelIndex, const std::wstring& prot
 auto GameObject::GetComponentPtr(const std::wstring& componentTag) -> std::shared_ptr<Component>
 {
 	return FindComponent(componentTag);
+}
+
+auto GameObject::CloneComponent(int32_t levelIndex, const std::wstring& prototypeTag, const std::wstring& componentTag,
+	void* arg) -> std::shared_ptr<Component>
+{
+	auto component = ComponentManager::GetInstance().CloneComponent(levelIndex, prototypeTag, arg);
+	return component;
 }
 
 auto GameObject::NativeConstructPrototype() -> HRESULT

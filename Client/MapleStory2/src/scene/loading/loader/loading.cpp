@@ -99,9 +99,8 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Weapon"), Item::Create(_graphic_device))))
 		return E_FAIL;
-
-	//if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Coat"), Coat::Create(_graphic_device))))
-	//	return E_FAIL;
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Coat"), Coat::Create(_graphic_device))))
+		return E_FAIL;
 
 	//if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Pants"), Pants::Create(_graphic_device))))
 	//	return E_FAIL;
@@ -168,30 +167,34 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 		{
 			for (auto asset : slot.second->asset)
 			{
-				if (FileManager::GetInstance().IsFileAccess(asset->name.c_str()))
+				if (FileManager::IsFileAccess(asset->name))
 				{
 					std::wstring prototypeName(L"Prototype_ItemModel_");
 
 					prototypeName.append(std::to_wstring(model.first)).append(L"_").append(std::to_wstring(asset->gender));
-					std::wstring path = FileManager::GetInstance().GetPath(StringUtils::ConvertCtoW(asset->name.c_str())).append(L"/");
-					auto fileName = StringUtils::ConvertCtoW(FileManager::GetInstance().GetFileName(asset->name).c_str());
-
+					std::wstring path = FileManager::GetPath(StringUtils::ConvertCtoW(asset->name.c_str())).append(L"/");
+					auto fileName = StringUtils::ConvertCtoW(FileManager::GetFileName(asset->name).c_str());
+					 
 					if (model.first >= 15000000 && model.first <= 15009999)
 					{
 						if (SUCCEEDED(componentManager.AddPrototype(kSceneStatic,
 							prototypeName, 
-							MeshStatic::Create(_graphic_device, path, fileName))))
+							MeshStatic::Create(_graphic_device, path, fileName, model.first))))
 						{
 							std::cout << "Load File Succeeded : " << asset->name << std::endl;
+							std::cout << " ㄴ 아이템아이디 : " << model.first << std::endl;
+							std::wcout << " ㄴ 프로토타입 : " << prototypeName << std::endl;
 						}
 					}
 					else
 					{
 						if (SUCCEEDED(componentManager.AddPrototype(kScene::kSceneStatic,
 							prototypeName,
-							MeshDynamic::Create(_graphic_device, path, fileName))))
+							MeshDynamic::Create(_graphic_device, path, fileName, model.first))))
 						{
 							std::cout << "Load File Succeeded : " << asset->name << std::endl;
+							std::cout << " ㄴ 아이템아이디 : " << model.first << std::endl;
+							std::wcout << " ㄴ 프로토타입 : " << prototypeName << std::endl;
 						}
 					}
 				}
@@ -302,8 +305,8 @@ auto Loading::LoadCharacterBeautyUi() -> HRESULT
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_BeautyList"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/ItemList.png")))))
 		return E_FAIL;
 
-	//if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Hair/"), TEXT("11400001_f_vikingout.x")))))
-	//	return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Model/Item/1/14/"), TEXT("11400001_f_viking.x")))))
+		return E_FAIL;
 	//if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Pants"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/Pants/"), TEXT("11500003_m_bronzewarrior.X")))))
 	//	return E_FAIL;
 	//if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Pants_Base"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/Pants/"), TEXT("11500001_m_basicsportwearpants.X")))))

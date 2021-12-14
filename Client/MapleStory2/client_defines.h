@@ -11,6 +11,15 @@ enum kScene
 	kSceneGamePlay1,
 	kSceneEnd
 };
+
+enum class kEqpType
+{
+	kPa,
+	kCl,
+	kFace,
+	kSh
+};
+
 constexpr int16_t		g_WinCX = 1280;
 constexpr int16_t		g_WinCY = 720;
 extern HWND				g_Wnd;

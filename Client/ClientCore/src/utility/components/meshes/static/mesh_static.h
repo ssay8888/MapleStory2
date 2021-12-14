@@ -10,7 +10,7 @@ public:
 	virtual ~MeshStatic() = default;
 
 public:
-	auto NativeConstructPrototype(const std::wstring& filePath, const std::wstring& fileName)->HRESULT;
+	auto NativeConstructPrototype(const std::wstring& filePath, const std::wstring& fileName, int32_t itemId)->HRESULT;
 	auto NativeConstruct(void* arg)->HRESULT override;
 	auto Clone(void* arg = nullptr)->std::shared_ptr<Component> override;
 
@@ -19,8 +19,10 @@ public:
 	auto Render(int32_t index) const ->HRESULT;
 
 	auto GetNumMaterials() const->uint32_t ;
+
+	auto GetItemId()const->int32_t;
 public:
-	static auto Create(const ComPtr<IDirect3DDevice9>& device, const std::wstring& filePath, const std::wstring& fileName)->std::shared_ptr<MeshStatic>;
+	static auto Create(const ComPtr<IDirect3DDevice9>& device, const std::wstring& filePath, const std::wstring& fileName, int32_t itemId = 0)->std::shared_ptr<MeshStatic>;
 
 private:
 	LPD3DXBUFFER						_adjacency = nullptr;
@@ -28,6 +30,8 @@ private:
 	DWORD								_num_materials = 0;
 	ComPtr<ID3DXMesh>					_mesh = nullptr;
 	std::vector<MeshMaterialTexture*>	_materials;
+
+	int32_t								_item_id = 0;
 
 };
 
