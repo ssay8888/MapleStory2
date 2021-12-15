@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ms2>
-	<itemList type="0">
+	<itemList type="0" name="상의">
 		<item itemid="11400130" type="0" gender="0" />
 		<item itemid="11400034" type="0" gender="0" />
 		<item itemid="11400094" type="0" gender="0" />
@@ -15,7 +15,7 @@
 		<item itemid="11400394" type="0" gender="1" />
 		<item itemid="11400031" type="0" gender="1" />
 	</itemList>
-	<itemList type="1">
+	<itemList type="1" name="하의">
 		<item itemid="11500145" type="1" gender="0" />
 		<item itemid="11500034" type="1" gender="0" />
 		<item itemid="11500089" type="1" gender="0" />
@@ -30,7 +30,7 @@
 		<item itemid="11500217" type="1" gender="1" />
 		<item itemid="11500033" type="1" gender="1" />
 	</itemList>
-	<itemList type="2">
+	<itemList type="2" name="얼굴">
 		<item itemid="00300001" type="2" gender="0" />
 		<item itemid="00300002" type="2" gender="0" />
 		<item itemid="00300005" type="2" gender="0" />
@@ -45,7 +45,7 @@
 		<item itemid="00300008" type="2" gender="1" />
 		<item itemid="00300009" type="2" gender="1" />
 	</itemList>
-	<itemList type="3">
+	<itemList type="3" name="신발">
 		<item itemid="11700271" type="3" gender="0" />
 		<item itemid="11700042" type="3" gender="0" />
 		<item itemid="11700136" type="3" gender="0" />
@@ -60,6 +60,4 @@
 		<item itemid="11700226" type="3" gender="1" />
 		<item itemid="11700072" type="3" gender="1" />
 	</itemList>
-	<itemList type="4"></itemList>
-	<itemList type="5"></itemList>
 </ms2>

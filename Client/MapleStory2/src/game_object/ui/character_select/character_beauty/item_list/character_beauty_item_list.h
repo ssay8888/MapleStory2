@@ -21,6 +21,7 @@ public:
 		std::vector<int32_t>	girl_items;
 		bool					sex;
 		kEqpType				type;
+		std::wstring			title_name;
 	};
 	auto NativeConstructPrototype()->HRESULT override;
 	auto NativeConstruct(void* arg)->HRESULT override;

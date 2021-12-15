@@ -1,6 +1,7 @@
 #include "c_pch.h"
 #include "character_item.h"
 
+#include "data_reader/data_reader_manager.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
@@ -57,9 +58,30 @@ auto CharacterItem::Render(std::shared_ptr<Shader> shader) const -> HRESULT
 	result = shader->SetUpConstantTable("g_ProjMatrix", &_proj_matrix, sizeof(_matrix));
 	result = shader->SetUpTextureConstantTable("g_DiffuseTexture", _texture, _state);
 	shader->Commit();
-
 	_vi_buffer_com->RenderViBuffer();
-	
+	switch (_info.type)
+	{
+	case kEqpType::kPa:
+	case kEqpType::kCl:
+	case kEqpType::kSh:
+		if (_texture_icon)
+		{
+			result = shader->SetUpTextureConstantTable("g_DiffuseTexture", _texture_icon, 0);
+			shader->Commit();
+			_vi_buffer_com->RenderViBuffer();
+
+		}
+		break;
+	case kEqpType::kFace:
+		if (_texture_face_icon)
+		{
+			result = shader->SetUpTextureConstantTable("g_DiffuseTexture", _texture_face_icon);
+			shader->Commit();
+			_vi_buffer_com->RenderViBuffer();
+		}
+		break;
+	default: ;
+	}
 	return S_OK;
 }
 
@@ -127,6 +149,43 @@ auto CharacterItem::AddComponents() -> HRESULT
 
 	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_BeautyItem"), TEXT("Com_Item"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture))))
 		return E_FAIL;
+
+	switch (_info.type)
+	{
+	case kEqpType::kPa:
+	case kEqpType::kCl:
+	case kEqpType::kSh:
+	{
+
+		std::wstring prototypeName(L"Prototype_Texture_");
+		if (_info.sex)
+		{
+			prototypeName.append(std::to_wstring(_info.girl_item_id));
+		}
+		else
+		{
+			prototypeName.append(std::to_wstring(_info.man_item_id));
+		}
+		GameObject::AddComponent(kScene::kSceneCharacterSelect, prototypeName, TEXT("Com_Item_Icon"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_icon));
+		break;
+	}
+	case kEqpType::kFace:
+	{
+		int itemid = 0;
+		if (_info.sex)
+		{
+			itemid = _info.girl_item_id;
+		}
+		else
+		{
+			itemid = _info.man_item_id;
+		}
+		const auto face = DataReaderManager::GetInstance().FindFace(itemid);
+		_texture_face_icon = face->icon_diffuse_map;
+		break;
+	}
+	default:;
+	}
 
 	return S_OK;
 }

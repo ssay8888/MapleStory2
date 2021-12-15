@@ -184,6 +184,16 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 							std::cout << "Load File Succeeded : " << asset->name << std::endl;
 							std::cout << " ㄴ 아이템아이디 : " << model.first << std::endl;
 							std::wcout << " ㄴ 프로토타입 : " << prototypeName << std::endl;
+
+							std::wstring iconPrototypeName(TEXT("Prototype_Texture_"));
+							iconPrototypeName.append(std::to_wstring(model.first));
+							std::wstring iconPath(TEXT("../../Binary/Resources/Image/item/icon/"));
+							iconPath.append(std::to_wstring(model.first)).append(L".png");
+
+							if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, iconPrototypeName, Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, iconPath))))
+							{
+								std::cout << "icon 이미지를 불러오기에 실패했습니다. item code : " << model.first << std::endl;
+							}
 						}
 					}
 					else
@@ -195,6 +205,16 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 							std::cout << "Load File Succeeded : " << asset->name << std::endl;
 							std::cout << " ㄴ 아이템아이디 : " << model.first << std::endl;
 							std::wcout << " ㄴ 프로토타입 : " << prototypeName << std::endl;
+
+							std::wstring iconPrototypeName(TEXT("Prototype_Texture_"));
+							iconPrototypeName.append(std::to_wstring(model.first));
+							std::wstring iconPath(TEXT("../../Binary/Resources/Image/item/icon/"));
+							iconPath.append(std::to_wstring(model.first)).append(L".png");
+
+							if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, iconPrototypeName, Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, iconPath))))
+							{
+								std::cout << "icon 이미지를 불러오기에 실패했습니다. item code : " << model.first << std::endl;
+							}
 						}
 					}
 				}

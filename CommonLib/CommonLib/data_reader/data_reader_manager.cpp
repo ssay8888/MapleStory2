@@ -177,7 +177,19 @@ auto DataReaderManager::FaceLoader(const Microsoft::WRL::ComPtr<IDirect3DDevice9
 					continue;
 				}
 				info->diffuse_map.push_back(diffuse);
+
+
+				std::wstring iconPath(TEXT("../../Binary/Resources/Image/item/icon/customize/%08d.png"));
+				wchar_t name[MAX_PATH];
+				swprintf_s(name, MAX_PATH, iconPath.c_str(), info->item_id);
+				if (FAILED(D3DXCreateTextureFromFile(device.Get(), name, &diffuse)))
+				{
+					std::cout << "Face Icon 로드 실패. 얼굴 코드 : " << face_id << std::endl;
+					continue;
+				}
+				info->icon_diffuse_map = diffuse;
 			}
+
 			info->files.push_back(file);
 		}
 		_face_info.emplace(info->item_id, info);
@@ -207,13 +219,13 @@ auto DataReaderManager::LoadCreateCharacterItemInfo() -> void
 		for (auto& items : itemList)
 		{
 			auto info = std::make_shared<CreateCharacterItemInfo>();
-
-			for (auto& item_node : items.node())
+			info->title_name = StringUtils::ConvertCtoW(items.node().attribute("name").value());
+  			for (auto& itemNode : items.node())
 			{
 				auto item = std::make_shared<Item>();
-				item->item_id = std::stoi(item_node.attribute("itemid").value());
-				item->gender = std::stoi(item_node.attribute("gender").value());
-				item->type = std::stoi(item_node.attribute("type").value());
+				item->item_id = std::stoi(itemNode.attribute("itemid").value());
+				item->gender = std::stoi(itemNode.attribute("gender").value());
+				item->type = std::stoi(itemNode.attribute("type").value());
 				info->items.push_back(item);
 			}
 			_create_item_info.push_back(info);

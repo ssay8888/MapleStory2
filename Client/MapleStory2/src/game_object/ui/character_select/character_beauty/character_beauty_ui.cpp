@@ -162,6 +162,7 @@ auto CharacterBeautyUi::CreateItemList() -> HRESULT
 	for (auto& data : dataList)
 	{
 		CharacterBeautyItemList::CreateItemListTextureInfo info;
+		info.title_name = data->title_name;
 		info.size = _float3(340.f, 20.f, 0.f);
 		info.pos = _float3(g_WinCX - 350.f / 2, 135.f + (80 * i), 0.f);
 		for (auto& list : data->items)

@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include <d3d9.h>
 #include <map>
 #include <memory>
@@ -47,8 +47,9 @@ public:
 #pragma region FaceLoader
 	struct FaceInfo
 	{
-		int32_t											item_id;
-		std::vector<std::wstring>						files;
+		int32_t														item_id;
+		std::vector<std::wstring>									files;
+		Microsoft::WRL::ComPtr<IDirect3DTexture9>					icon_diffuse_map;
 		std::vector<Microsoft::WRL::ComPtr<IDirect3DTexture9>>		diffuse_map;
 	};
 	auto FaceLoader(Microsoft::WRL::ComPtr<IDirect3DDevice9> device)->void;
@@ -66,7 +67,8 @@ public:
 	};
 	struct CreateCharacterItemInfo
 	{
-		std::vector<std::shared_ptr<Item>> items;
+		std::wstring						title_name;
+		std::vector<std::shared_ptr<Item>>	items;
 	};
 
 	auto LoadCreateCharacterItemInfo()->void;

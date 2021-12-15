@@ -107,6 +107,16 @@ auto CharacterBeautyItemList::Render(std::shared_ptr<Shader> shader) const -> HR
 
 	_vi_buffer_com->RenderViBuffer();
 
+	RECT rc
+	{
+		static_cast<LONG>(_info.pos.x - _info.size.x / 2) + 4,
+		static_cast<LONG>(_info.pos.y- _info.size.y / 2) + 4,
+		static_cast<LONG>(_info.pos.x + _info.size.x / 2),
+		static_cast<LONG>(_info.pos.y + _info.size.y / 2)
+	};
+
+	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, _info.title_name.c_str(), -1, &rc, DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
+
 	for (auto& item : _items)
 	{
 		item->Render(shader);
@@ -159,6 +169,8 @@ auto CharacterBeautyItemList::AddComponents() -> HRESULT
 			info.girl_item_id = _info.girl_items[i];
 			isItem = true;
 		}
+		info.sex = _info.sex;
+		info.type = _info.type;
 		if (isItem)
 		{
 			_items.push_back(CharacterItem::Create(&info));

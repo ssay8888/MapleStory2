@@ -13,10 +13,12 @@ public:
 public:
 	struct CreateItemInfo
 	{
-		_float3 pos;
-		_float3 size;
-		int32_t man_item_id;
-		int32_t girl_item_id;
+		_float3		pos;
+		_float3		size;
+		int32_t		man_item_id;
+		int32_t		girl_item_id;
+		kEqpType	type;
+		bool		sex;
 	};
 	auto NativeConstructPrototype()->HRESULT override;
 	auto NativeConstruct(void* arg)->HRESULT override;
@@ -49,6 +51,8 @@ private:
 	CreateItemInfo					_info;
 	kCreateItemState				_state;
 	std::shared_ptr<Texture>		_texture;
+	std::shared_ptr<Texture>		_texture_icon;
+	ComPtr<IDirect3DTexture9>		_texture_face_icon;
 	std::shared_ptr<ViBufferRect>	_vi_buffer_com = nullptr;
 
 	_matrix				_proj_matrix;
