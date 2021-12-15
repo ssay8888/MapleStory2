@@ -139,7 +139,7 @@ auto CharacterSelectUi::SelectUpdateTick(const double timeDelta) -> HRESULT
 	for (size_t i = 0; i < size; ++i)
 	{
 		const auto item = _character_list[i];
-		if (item->IsCollision() && instance.GetDirectMouseKeyState(InputDevice::kDirectInMouseButton::kLeftButton))
+		if (item->IsCollision() && instance.GetDirectMouseKeyPressing(InputDevice::kDirectInMouseButton::kLeftButton))
 		{
 			select = true;
 			_select_item_index = static_cast<int32_t>(i);
@@ -167,11 +167,10 @@ auto CharacterSelectUi::SelectUpdateTick(const double timeDelta) -> HRESULT
 		const auto item = _character_list[i];
 		item->Tick(timeDelta);
 	}
-
 	_create_btn->Tick(timeDelta);
-	if (_create_btn->IsCollision() && instance.GetDirectMouseKeyState(InputDevice::kDirectInMouseButton::kLeftButton))
+	if (_create_btn->IsCollision() && instance.GetDirectMouseKeyPressing(InputDevice::kDirectInMouseButton::kLeftButton))
 	{
-		_state = kCharacterSelectState::kCreateJob;
+		ChangeState(kCharacterSelectState::kCreateJob);
 		_create_btn->Tick(timeDelta);
 	}
 	return S_OK;
@@ -188,7 +187,7 @@ auto CharacterSelectUi::CreateJobUpdateTick(double timeDelta) -> HRESULT
 	for (size_t i = 0; i < size; ++i)
 	{
 		const auto item = _character_job_list[i];
-		if (item->IsCollision() && instance.GetDirectMouseKeyState(InputDevice::kDirectInMouseButton::kLeftButton))
+		if (item->IsCollision() && instance.GetDirectMouseKeyPressing(InputDevice::kDirectInMouseButton::kLeftButton))
 		{
 			select = true;
 			_select_job_index = static_cast<int32_t>(i);
@@ -215,7 +214,8 @@ auto CharacterSelectUi::CreateJobUpdateTick(double timeDelta) -> HRESULT
 		item->Tick(timeDelta);
 		if (item->GetCreateBtnState() == CharacterCreateJobBtn::kCreateJobBtnState::kSelect)
 		{
-			_state = kCharacterSelectState::kBeautyInit;
+			ChangeState(kCharacterSelectState::kBeautyInit);
+			item->ChangeState(CharacterJobBtn::kNormal);
 		}
 	}
 

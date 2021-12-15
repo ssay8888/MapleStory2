@@ -46,7 +46,7 @@ HRESULT TextBoxUi::NativeConstruct(void* arg)
 
 int32_t TextBoxUi::Tick(const double timeDelta)
 {
-	if (InputDevice::GetInstance().GetDirectMouseKeyState(InputDevice::kDirectInMouseButton::kLeftButton))
+	if (InputDevice::GetInstance().GetDirectMouseKeyPressing(InputDevice::kDirectInMouseButton::kLeftButton))
 	{
 		POINT		ptMouse;
 		GetCursorPos(&ptMouse);

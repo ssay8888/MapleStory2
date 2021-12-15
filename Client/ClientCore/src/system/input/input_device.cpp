@@ -66,9 +66,41 @@ auto InputDevice::GetKeyPressing(const uint8_t key) -> uint8_t
 	return _key_state[key];
 }
 
-auto InputDevice::GetDirectMouseKeyState(const kDirectInMouseButton mouseKey) -> uint8_t
+auto InputDevice::GetDirectMouseKeyPressing(const kDirectInMouseButton mouseKey) -> uint8_t
 {
 	return _mouse_state.rgbButtons[static_cast<int8_t>(mouseKey)];
+}
+
+auto InputDevice::GetDirectMouseKeyDown(const kDirectInMouseButton mouseKey) -> uint8_t
+{
+	auto key = static_cast<int8_t>(mouseKey);
+	if (_mouse_state.rgbButtons[key] && !_mouse_state_down.rgbButtons[key])
+	{
+		_mouse_state_down.rgbButtons[key] |= 1;
+		return true;
+	}
+	else if (!_mouse_state.rgbButtons[key] && _mouse_state_down.rgbButtons[key])
+	{
+		_mouse_state_down.rgbButtons[key] ^= 1;
+		return false;
+	}
+	return false;
+}
+
+auto InputDevice::GetDirectMouseKeyUp(const kDirectInMouseButton mouseKey) -> uint8_t
+{
+	auto key = static_cast<int8_t>(mouseKey);
+	if (_mouse_state.rgbButtons[key])
+	{
+		_mouse_state_up.rgbButtons[key] |= 1;
+		return false;
+	}
+	else if (_mouse_state_up.rgbButtons[key])
+	{
+		_mouse_state_up.rgbButtons[key] ^= 1;
+		return true;
+	}
+	return false;
 }
 
 auto InputDevice::GetDirectMouseMoveState(const kDirectInMouseState mouseMove) -> int32_t

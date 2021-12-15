@@ -28,7 +28,7 @@ HRESULT CameraFree::NativeConstruct(void* arg)
 }
 
 int32_t CameraFree::Tick(const double timeDelta)
-{
+{/*
 	if (InputDevice::GetInstance().GetKeyPressing(DIK_W))
 	{
 		_transform->GoStraight(timeDelta);
@@ -72,7 +72,7 @@ int32_t CameraFree::Tick(const double timeDelta)
 	{
 		_float3 axis{ 0, 1,  0 };
 		_transform->RotationAxis(axis, 1, D3DXToRadian(90.f));
-	}
+	}*/
 
 	//int64_t			mouseMove = 0;
 

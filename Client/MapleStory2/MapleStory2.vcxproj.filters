@@ -133,6 +133,9 @@
     <ClInclude Include="src\game_object\pants\pants.h">
       <Filter>game_object\pants</Filter>
     </ClInclude>
+    <ClInclude Include="character_create_return_btn.h">
+      <Filter>game_object\ui\character_select\character_beauty\item_list</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -260,6 +263,9 @@
     </ClCompile>
     <ClCompile Include="src\game_object\pants\pants.cpp">
       <Filter>game_object\pants</Filter>
+    </ClCompile>
+    <ClCompile Include="character_create_return_btn.cpp">
+      <Filter>game_object\ui\character_select\character_beauty\item_list</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

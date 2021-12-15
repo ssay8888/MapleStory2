@@ -1,6 +1,7 @@
 #pragma once
 #include "src/utility/game_objects/game_object.h"
 
+class CharacterCreateReturnBtn;
 class CharacterBeautyItemList;
 class CharacterBeautySelectSex;
 class CharacterJobBtn;
@@ -32,6 +33,8 @@ public:
 		kSexChangeGirl,
 		kSexMan,
 		kSexGirl,
+		kSelectInit,
+		kEnd
 	};
 	auto GetSexState()const->bool;
 
@@ -49,7 +52,7 @@ private:
 	auto CreateItemList()->HRESULT;
 
 	auto SexBtnTick(double timeDelta)->HRESULT;
-
+	auto GetCreateNameButton() const ->std::shared_ptr<CharacterCreateReturnBtn>;
 private:
 	std::shared_ptr<Texture>										_texture_com = nullptr;
 	std::shared_ptr<ViBufferRect>									_vi_buffer_com = nullptr;
@@ -60,6 +63,8 @@ private:
 	std::shared_ptr<CharacterBeautySelectSex>						_sex_btn[2];
 
 	std::vector<std::shared_ptr<CharacterBeautyItemList>>			_item_list;
+
+	std::shared_ptr<CharacterCreateReturnBtn>						_return_btn;
 
 	kBeautyStage										_beauty_stage = kBeautyStage::kSexChangeMan;
 

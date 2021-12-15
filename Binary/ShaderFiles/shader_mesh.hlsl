@@ -95,7 +95,7 @@ technique DefaultTechnique
 		AlphaTestEnable = true;
 		AlphablendEnable = false;
 		AlphaFunc = Greater;
-		AlphaRef = 30;
+		AlphaRef = 90;
 		VertexShader = compile vs_3_0 VS_MAIN();
 		PixelShader = compile ps_3_0 PS_MAIN();
 	}

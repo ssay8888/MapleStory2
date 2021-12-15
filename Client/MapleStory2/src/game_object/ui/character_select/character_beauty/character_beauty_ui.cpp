@@ -2,6 +2,7 @@
 #include "character_beauty_ui.h"
 
 #include "character_beauty_select_sex.h"
+#include "character_create_return_btn.h"
 #include "data_reader/data_reader_manager.h"
 #include "item_list/character_beauty_item_list.h"
 #include "src/system/input/input_device.h"
@@ -33,51 +34,67 @@ HRESULT CharacterBeautyUi::NativeConstruct(void* arg)
 
 int32_t CharacterBeautyUi::Tick(const double timeDelta)
 {
-	SexBtnTick(timeDelta);
-	for (auto& list : _item_list)
+	if (_beauty_stage != kBeautyStage::kEnd)
 	{
-		list->Tick(timeDelta);
+		SexBtnTick(timeDelta);
+		for (auto& list : _item_list)
+		{
+			list->Tick(timeDelta);
+		}
+		_return_btn->Tick(timeDelta);
 	}
 	return GameObject::Tick(timeDelta);
 }
 
 int32_t CharacterBeautyUi::LateTick(const double timeDelta)
 {
-	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderUi, shared_from_this());
+
+	if (_beauty_stage != kBeautyStage::kEnd)
+	{
+		Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderUi, shared_from_this());
+		if (_return_btn->GetButtonState() == CharacterCreateReturnBtn::kSelect)
+		{
+			ChangeBeautyStage(kBeautyStage::kSelectInit);
+		}
+	}
 	return GameObject::LateTick(timeDelta);
 }
 
 HRESULT CharacterBeautyUi::Render()
 {
-	_matrix			transformMatrix, viewMatrix;
-	D3DXMatrixIdentity(&transformMatrix);
-	D3DXMatrixIdentity(&viewMatrix);
-	transformMatrix._11 = _info.size.x;
-	transformMatrix._22 = _info.size.y;
-	transformMatrix._41 = _info.pos.x - (g_WinCX >> 1);
-	transformMatrix._42 = -_info.pos.y;
 
-	auto result = _shader_com->SetUpConstantTable("g_WorldMatrix", &transformMatrix, sizeof(_matrix));
-	result = _shader_com->SetUpConstantTable("g_ViewMatrix", &viewMatrix, sizeof(_matrix));
-	result = _shader_com->SetUpConstantTable("g_ProjMatrix", &_proj_matrix, sizeof(_matrix));
-	result = _shader_com->SetUpTextureConstantTable("g_DiffuseTexture", _texture_com, 0);
-
-
-	result = _shader_com->BeginShader(0);
-
-	_vi_buffer_com->RenderViBuffer();
-
-	for (auto i = 0; i < 2; ++i)
+	if (_beauty_stage != kBeautyStage::kEnd)
 	{
-		_sex_btn[i]->Render(_shader_com);
-	}
-	for (auto& list : _item_list)
-	{
-		list->Render(_shader_com);
-	}
-	
+		_matrix			transformMatrix, viewMatrix;
+		D3DXMatrixIdentity(&transformMatrix);
+		D3DXMatrixIdentity(&viewMatrix);
+		transformMatrix._11 = _info.size.x;
+		transformMatrix._22 = _info.size.y;
+		transformMatrix._41 = _info.pos.x - (g_WinCX >> 1);
+		transformMatrix._42 = -_info.pos.y;
 
-	result = _shader_com->EndShader();
+		auto result = _shader_com->SetUpConstantTable("g_WorldMatrix", &transformMatrix, sizeof(_matrix));
+		result = _shader_com->SetUpConstantTable("g_ViewMatrix", &viewMatrix, sizeof(_matrix));
+		result = _shader_com->SetUpConstantTable("g_ProjMatrix", &_proj_matrix, sizeof(_matrix));
+		result = _shader_com->SetUpTextureConstantTable("g_DiffuseTexture", _texture_com, 0);
+
+
+		result = _shader_com->BeginShader(0);
+
+		_vi_buffer_com->RenderViBuffer();
+
+		for (auto i = 0; i < 2; ++i)
+		{
+			_sex_btn[i]->Render(_shader_com);
+		}
+		for (auto& list : _item_list)
+		{
+			list->Render(_shader_com);
+		}
+
+		_return_btn->Render(_shader_com);
+		result = _shader_com->EndShader();
+	}
 	return GameObject::Render();
 }
 
@@ -110,7 +127,7 @@ auto CharacterBeautyUi::GetBeautyStage() const -> kBeautyStage
 	return _beauty_stage;
 }
 
-auto CharacterBeautyUi::ChangeBeautyStage(kBeautyStage stage) -> void
+auto CharacterBeautyUi::ChangeBeautyStage(const kBeautyStage stage) -> void
 {
 	_beauty_stage = stage;
 }
@@ -136,8 +153,20 @@ auto CharacterBeautyUi::AddComponents() -> HRESULT
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;
 
-	CreateSexButton();
-	CreateItemList();
+	if (FAILED(CreateSexButton()))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(CreateItemList()))
+	{
+		return E_FAIL;
+	}
+
+	CharacterCreateReturnBtn::CreateNameBtnInfo info;
+	info.size = _float3(31, 31, 0);
+	info.pos = _float3(562, -250, 0);
+	_return_btn = CharacterCreateReturnBtn::Create(&info);
+
 	return S_OK;
 }
 
@@ -205,7 +234,7 @@ auto CharacterBeautyUi::SexBtnTick(const double timeDelta) -> HRESULT
 	for (auto i = 0; i < 2; ++i)
 	{
 		_sex_btn[i]->Tick(timeDelta);
-		if (_sex_btn[i]->IsCollision() && InputDevice::GetInstance().GetDirectMouseKeyState(InputDevice::kDirectInMouseButton::kLeftButton))
+		if (_sex_btn[i]->IsCollision() && InputDevice::GetInstance().GetDirectMouseKeyPressing(InputDevice::kDirectInMouseButton::kLeftButton))
 		{
 			select_index = i;
 		}
@@ -237,4 +266,9 @@ auto CharacterBeautyUi::SexBtnTick(const double timeDelta) -> HRESULT
 		}
 	}
 	return S_OK;
+}
+
+auto CharacterBeautyUi::GetCreateNameButton() const ->std::shared_ptr<CharacterCreateReturnBtn>
+{
+	return _return_btn;
 }

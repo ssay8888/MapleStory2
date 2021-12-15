@@ -32,7 +32,9 @@ public:
 	auto GetKeyDown(const uint8_t key)->uint8_t;
 	auto GetKeyUp(const uint8_t key)->uint8_t;
 	auto GetKeyPressing(const uint8_t key)->uint8_t;
-	auto GetDirectMouseKeyState(const kDirectInMouseButton mouseKey)->uint8_t;
+	auto GetDirectMouseKeyPressing(const kDirectInMouseButton mouseKey)->uint8_t;
+	auto GetDirectMouseKeyDown(const kDirectInMouseButton mouseKey)->uint8_t;
+	auto GetDirectMouseKeyUp(const kDirectInMouseButton mouseKey)->uint8_t;
 
 	auto GetDirectMouseMoveState(const kDirectInMouseState mouseMove)->int32_t;
 
@@ -43,6 +45,8 @@ private:
 
 private:
 	DIMOUSESTATE			_mouse_state = {};
+	DIMOUSESTATE			_mouse_state_down = {};
+	DIMOUSESTATE			_mouse_state_up = {};
 	int8_t					_key_state[256] = { 0, };
 	int8_t					_key_state_down[256] = { 0, };
 	int8_t					_key_state_up[256] = { 0, };

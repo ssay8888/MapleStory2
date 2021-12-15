@@ -39,7 +39,7 @@ int32_t CharacterBeautyItemList::Tick(const double timeDelta)
 	for (size_t i = 0; i < size; ++i)
 	{
 		const auto item = _items[i];
-		if (item->IsCollision() && inputDevice.GetDirectMouseKeyState(InputDevice::kDirectInMouseButton::kLeftButton))
+		if (item->IsCollision() && inputDevice.GetDirectMouseKeyPressing(InputDevice::kDirectInMouseButton::kLeftButton))
 		{
 			select = true;
 			_select_index = static_cast<int32_t>(i);

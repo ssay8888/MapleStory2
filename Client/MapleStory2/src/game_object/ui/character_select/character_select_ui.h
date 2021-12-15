@@ -26,6 +26,7 @@ public:
 public:
 	enum class kCharacterSelectState
 	{
+		kSelectInit,
 		kSelect,
 		kCreateJob,
 		kBeautyInit,

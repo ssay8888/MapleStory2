@@ -34,7 +34,7 @@ int32_t CharacterCreateJobBtn::Tick(double timeDelta)
 {
 	if (IsCollision())
 	{
-		if (InputDevice::GetInstance().GetDirectMouseKeyState(InputDevice::kDirectInMouseButton::kLeftButton))
+		if (InputDevice::GetInstance().GetDirectMouseKeyPressing(InputDevice::kDirectInMouseButton::kLeftButton))
 		{
 			_state = kSelect;
 		}

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "texture.h"
 
+#include <iostream>
+
 Texture::Texture(const ComPtr<IDirect3DDevice9>& graphicDevice):
 	Component(graphicDevice)
 {
@@ -69,7 +71,7 @@ auto Texture::Create(const ComPtr<IDirect3DDevice9>& graphicDevice, const kType 
 
 	if (FAILED(pInstance->NativeConstructPrototype(type, textureFilePath, numTextures)))
 	{
-		MSGBOX("Failed to Creating Texture");
+		std::wcout << L"Failed to Create Texture " << textureFilePath << std::endl;
 		return nullptr;
 	}
 	return pInstance;

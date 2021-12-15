@@ -58,13 +58,27 @@ int32_t CharacterSelect::Tick(double timeDelta)
 	auto& instance = ObjectManager::GetInstance();
 
 	auto selectUi = std::static_pointer_cast<CharacterSelectUi>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_SelectUi"), 0));
+	auto beautyObj = instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Beauty"), 0);
 	switch(selectUi->GetState())
 	{
+	case CharacterSelectUi::kCharacterSelectState::kSelectInit:
+		selectUi->ChangeState(CharacterSelectUi::kCharacterSelectState::kSelect);
+		instance.LayerClear(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"));
+		//if (FAILED(ReadyLayerSelectUi(TEXT("Layer_SelectUi"))))
+		//	return E_FAIL;
+
+		if (beautyObj)
+		{
+			auto beautyUi = std::static_pointer_cast<CharacterBeautyUi>(beautyObj);
+			beautyUi->ChangeBeautyStage(CharacterBeautyUi::kBeautyStage::kEnd);
+		}
+		break;
 	case CharacterSelectUi::kCharacterSelectState::kSelect: 
 		break;
 	case CharacterSelectUi::kCharacterSelectState::kCreateJob: 
 		break;
 	case CharacterSelectUi::kCharacterSelectState::kBeautyInit:
+		instance.LayerClear(kSceneCharacterSelect, TEXT("Layer_Beauty"));
 		if (FAILED(ReadyLayerPlayer(TEXT("Layer_Fittingdoll"))))
 			return E_FAIL;
 		selectUi->ChangeState(CharacterSelectUi::kCharacterSelectState::kBeauty);
@@ -75,7 +89,7 @@ int32_t CharacterSelect::Tick(double timeDelta)
 	default: ;
 	}
 
-	auto beautyObj = instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Beauty"), 0);
+	
 	if (beautyObj)
 	{
 		auto beautyUi = std::static_pointer_cast<CharacterBeautyUi>(beautyObj);
@@ -97,6 +111,10 @@ int32_t CharacterSelect::Tick(double timeDelta)
 				beautyUi->ChangeBeautyStage(CharacterBeautyUi::kBeautyStage::kSexGirl);
 				break;
 			case CharacterBeautyUi::kBeautyStage::kSexGirl: 
+				break;
+			case CharacterBeautyUi::kBeautyStage::kSelectInit:
+				selectUi->ChangeState(CharacterSelectUi::kCharacterSelectState::kSelectInit);
+				beautyUi->ChangeBeautyStage(CharacterBeautyUi::kBeautyStage::kEnd);
 				break;
 			default: ;
 			}
