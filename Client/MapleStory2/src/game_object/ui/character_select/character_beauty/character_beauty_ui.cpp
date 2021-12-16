@@ -2,6 +2,7 @@
 #include "character_beauty_ui.h"
 
 #include "character_beauty_select_sex.h"
+#include "character_create_name_btn.h"
 #include "character_create_return_btn.h"
 #include "data_reader/data_reader_manager.h"
 #include "item_list/character_beauty_item_list.h"
@@ -42,6 +43,7 @@ int32_t CharacterBeautyUi::Tick(const double timeDelta)
 			list->Tick(timeDelta);
 		}
 		_return_btn->Tick(timeDelta);
+		_create_name_btn->Tick(timeDelta);
 	}
 	return GameObject::Tick(timeDelta);
 }
@@ -85,14 +87,15 @@ HRESULT CharacterBeautyUi::Render()
 
 		for (auto i = 0; i < 2; ++i)
 		{
-			_sex_btn[i]->Render(_shader_com);
+			result = _sex_btn[i]->Render(_shader_com);
 		}
-		for (auto& list : _item_list)
+		for (const auto& list : _item_list)
 		{
-			list->Render(_shader_com);
+			result = list->Render(_shader_com);
 		}
 
-		_return_btn->Render(_shader_com);
+		result = _return_btn->Render(_shader_com);
+		result = _create_name_btn->Render(_shader_com);
 		result = _shader_com->EndShader();
 	}
 	return GameObject::Render();
@@ -167,6 +170,11 @@ auto CharacterBeautyUi::AddComponents() -> HRESULT
 	info.pos = _float3(562, -250, 0);
 	_return_btn = CharacterCreateReturnBtn::Create(&info);
 
+
+	CharacterCreateNameBtn::CreateNameBtnInfo name_info;
+	name_info.size = _float3(155, 50, 0);
+	name_info.pos = _float3(460, -245, 0);
+	_create_name_btn = CharacterCreateNameBtn::Create(&name_info);
 	return S_OK;
 }
 

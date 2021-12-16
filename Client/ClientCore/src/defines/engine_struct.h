@@ -62,6 +62,7 @@ typedef struct D3DXMeshContainerDerived : public D3DXMESHCONTAINER
 
 typedef struct D3DxFrameDerived : public D3DXFRAME
 {
+	bool			is_cloned = false;
 	D3DXMATRIX		CombinedTransformationMatrix;
 }D3DxFrameDerived;
 

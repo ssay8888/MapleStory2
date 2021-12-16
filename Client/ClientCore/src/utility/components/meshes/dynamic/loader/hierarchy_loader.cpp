@@ -148,11 +148,85 @@ auto HierarchyLoader::CreateMeshContainer(LPCSTR Name, const D3DXMESHDATA* pMesh
 
 auto HierarchyLoader::DestroyFrame(LPD3DXFRAME pFrameToFree)->HRESULT
 {
+	if (false == static_cast<D3DxFrameDerived*>(pFrameToFree)->is_cloned)
+	{
+		if (pFrameToFree->Name)
+		{
+			delete[] pFrameToFree->Name;
+			pFrameToFree->Name = nullptr;
+		}
+
+		if (nullptr != pFrameToFree->pMeshContainer)
+			DestroyMeshContainer(pFrameToFree->pMeshContainer);
+	}
+
+	if (nullptr != pFrameToFree->pFrameFirstChild)
+		DestroyFrame(pFrameToFree->pFrameFirstChild);
+
+	if (nullptr != pFrameToFree->pFrameSibling)
+		DestroyFrame(pFrameToFree->pFrameSibling);
+
+	if (nullptr != pFrameToFree)
+	{
+		delete[] pFrameToFree;
+		pFrameToFree = nullptr;
+	}
+
 	return S_OK;
 }
-
+ 
 auto HierarchyLoader::DestroyMeshContainer(LPD3DXMESHCONTAINER pMeshContainerToFree)->HRESULT
 {
+	D3DXMeshContainerDerived* pMeshContainer = (D3DXMeshContainerDerived*)pMeshContainerToFree;
+
+	for (size_t i = 0; i < pMeshContainer->NumMaterials; ++i)
+	{
+		if (pMeshContainer->ppMaterialTextures[i])
+		{
+			delete[] pMeshContainer->ppMaterialTextures[i];
+			pMeshContainer->ppMaterialTextures[i] = nullptr;
+		}
+	}
+	if (pMeshContainer->ppMaterialTextures)
+	{
+		delete[] pMeshContainer->ppMaterialTextures;
+		pMeshContainer->ppMaterialTextures = nullptr;
+	}
+	if (pMeshContainer->pOffsetMatrices)
+	{
+		delete[] pMeshContainer->pOffsetMatrices;
+		pMeshContainer->pOffsetMatrices = nullptr;
+	}
+	if (pMeshContainer->pRenderingMatrices)
+	{
+		delete[] pMeshContainer->pRenderingMatrices;
+		pMeshContainer->pRenderingMatrices = nullptr;
+	}
+	if (pMeshContainer->ppCombindTransformationMatrices)
+	{
+		delete[] pMeshContainer->ppCombindTransformationMatrices;
+		pMeshContainer->ppCombindTransformationMatrices = nullptr;
+	}
+	if (pMeshContainer->Name)
+	{
+		delete[] pMeshContainer->Name;
+		pMeshContainer->Name = nullptr;
+	}
+	size_t		dwRefCnt = 0;
+	if (dwRefCnt = pMeshContainer->MeshData.pMesh->Release())
+		int a = 10;
+	if (pMeshContainer->pAdjacency)
+	{
+		delete[] pMeshContainer->pAdjacency;
+		pMeshContainer->pAdjacency = nullptr;
+	}
+	pMeshContainer->pSkinInfo->Release();
+
+	if (pMeshContainer)
+	{
+		delete pMeshContainer;
+		pMeshContainer = nullptr;
+	}
 	return S_OK;
 }
 

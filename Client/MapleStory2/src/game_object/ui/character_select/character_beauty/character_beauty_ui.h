@@ -1,6 +1,7 @@
 #pragma once
 #include "src/utility/game_objects/game_object.h"
 
+class CharacterCreateNameBtn;
 class CharacterCreateReturnBtn;
 class CharacterBeautyItemList;
 class CharacterBeautySelectSex;
@@ -65,6 +66,7 @@ private:
 	std::vector<std::shared_ptr<CharacterBeautyItemList>>			_item_list;
 
 	std::shared_ptr<CharacterCreateReturnBtn>						_return_btn;
+	std::shared_ptr<CharacterCreateNameBtn>							_create_name_btn;
 
 	kBeautyStage										_beauty_stage = kBeautyStage::kSexChangeMan;
 

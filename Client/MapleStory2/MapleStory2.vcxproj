@@ -190,6 +190,8 @@
     <ClInclude Include="src\game_object\terrain\terrain.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_beauty_select_sex.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_beauty_ui.h" />
+    <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_create_name_btn.h" />
+    <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_create_name_popup.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_beauty\item_list\character_beauty_item_list.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_beauty\item_list\character_item.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_create\character_create_job_btn.h" />
@@ -246,6 +248,8 @@
     <ClCompile Include="src\game_object\terrain\terrain.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_beauty_select_sex.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_beauty_ui.cpp" />
+    <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_create_name_btn.cpp" />
+    <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_create_name_popup.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_beauty\item_list\character_beauty_item_list.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_beauty\item_list\character_item.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_create\character_create_job_btn.cpp" />

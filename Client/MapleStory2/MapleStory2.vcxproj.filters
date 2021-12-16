@@ -136,6 +136,12 @@
     <ClInclude Include="character_create_return_btn.h">
       <Filter>game_object\ui\character_select\character_beauty\item_list</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_create_name_btn.h">
+      <Filter>game_object\ui\character_select\character_beauty</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_create_name_popup.h">
+      <Filter>game_object\ui\character_select\character_beauty</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -266,6 +272,12 @@
     </ClCompile>
     <ClCompile Include="character_create_return_btn.cpp">
       <Filter>game_object\ui\character_select\character_beauty\item_list</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_create_name_btn.cpp">
+      <Filter>game_object\ui\character_select\character_beauty</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_create_name_popup.cpp">
+      <Filter>game_object\ui\character_select\character_beauty</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

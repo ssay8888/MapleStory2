@@ -12,13 +12,14 @@ MeshDynamic::MeshDynamic(const ComPtr<IDirect3DDevice9>& device) :
 	Mesh(device)
 {
 }
-
+ 
 MeshDynamic::MeshDynamic(const MeshDynamic& rhs)
 	: Mesh(rhs)
 	, _pivot_matrix(rhs._pivot_matrix)
 	, _root_frame(rhs._root_frame)
 	, _animation(rhs._animation->Clone())
 	, _mesh_containers(rhs._mesh_containers)
+	, _loader(rhs._loader)
 {
 	const size_t iNumMeshContainer = _mesh_containers.size();
 
@@ -26,6 +27,35 @@ MeshDynamic::MeshDynamic(const MeshDynamic& rhs)
 	{
 		_mesh_containers[i]->MeshData.pMesh->AddRef();
 	}
+}
+
+MeshDynamic::~MeshDynamic()
+{
+	Mesh::~Mesh();
+
+
+	const size_t numMeshContainer = _mesh_containers.size();
+
+	for (size_t i = 0; i < numMeshContainer; ++i)
+	{
+		_mesh_containers[i]->MeshData.pMesh->Release();
+	}
+
+	_mesh_containers.clear();
+
+	_loader->DestroyFrame(_root_frame);
+
+	for (auto& ppCombinedMatrixPointers : _origin_combined_transfromation_matrix_pointers)
+	{
+		if (ppCombinedMatrixPointers)
+		{
+			delete[] ppCombinedMatrixPointers;
+			ppCombinedMatrixPointers = nullptr;
+		}
+	}
+
+	_origin_combined_transfromation_matrix_pointers.clear();
+
 }
 
 auto MeshDynamic::GetNumMeshContainer() const -> size_t
@@ -77,11 +107,11 @@ auto MeshDynamic::NativeConstructPrototype(const std::wstring& filePath, const s
 	lstrcpy(szFullPath, filePath.c_str());
 	lstrcat(szFullPath, fileName.c_str());
 
-	const std::shared_ptr<HierarchyLoader> hierarchyLoader = HierarchyLoader::Create(_graphic_device, filePath);
+	_loader = HierarchyLoader::Create(_graphic_device, filePath);
 
 	LPD3DXANIMATIONCONTROLLER	animationController = nullptr;
 
-	if (FAILED(D3DXLoadMeshHierarchyFromX(szFullPath, D3DXMESH_MANAGED, _graphic_device.Get(), hierarchyLoader.get(), nullptr, &_root_frame, &animationController)))
+	if (FAILED(D3DXLoadMeshHierarchyFromX(szFullPath, D3DXMESH_MANAGED, _graphic_device.Get(), _loader.get(), nullptr, &_root_frame, &animationController)))
 		return E_FAIL;
 
 	_animation = Animation::Create(animationController);
@@ -104,6 +134,25 @@ HRESULT MeshDynamic::NativeConstruct(void* arg)
 	{
 		_animation_info = *static_cast<std::shared_ptr<DataReaderManager::AnimationInfo>*>(arg);
 	}
+	_combined_transfromation_matrix_pointers.resize(_mesh_containers.size());
+	_origin_combined_transfromation_matrix_pointers.resize(_mesh_containers.size());
+
+	/* 뼈를 복제하낟. */
+	auto originalFrame = static_cast<D3DxFrameDerived*>(_root_frame);
+
+	/* m_pRootFrame에 원본뼏르을을 복샇ㅇ령 담는다.  */
+	if (FAILED(CloneFrame(originalFrame)))
+		return E_FAIL;
+
+	for (size_t i = 0; i < _mesh_containers.size(); ++i)
+	{
+		_combined_transfromation_matrix_pointers[i] = new _matrix*[_mesh_containers[i]->iNumBones];
+		_origin_combined_transfromation_matrix_pointers[i] = _combined_transfromation_matrix_pointers[i];
+	}
+
+	uint32_t index = 0;
+	SetUpCloneCombinedTransformationMatricesPointer(_root_frame, index);
+	_animation->BindFrames(static_cast<D3DxFrameDerived*>(_root_frame));
 	return S_OK;
 }
 
@@ -122,7 +171,35 @@ auto MeshDynamic::UpdateCombinedTransformationMatrices(const LPD3DXFRAME frame,
 
 }
 
-auto MeshDynamic::TargerCombinedTransformationMatrices(LPD3DXFRAME frame, LPD3DXFRAME targetFrame) -> void
+auto MeshDynamic::TargetCombinedTransformationMatrices(std::shared_ptr<MeshDynamic> frame,
+	std::shared_ptr<MeshDynamic> targetFrame) -> void
+{
+	auto targetMeshContainer = static_cast<D3DXMeshContainerDerived*>(targetFrame->GetRootFrame()->pMeshContainer);
+	auto meshContainer = static_cast<D3DXMeshContainerDerived*>(frame->GetRootFrame()->pMeshContainer);
+
+
+	if (meshContainer)
+	{
+		for (uint32_t j = 0; j < meshContainer->iNumBones; ++j)
+		{
+			const std::string BoneName = meshContainer->pSkinInfo->GetBoneName(j);
+			{
+				const auto findFrame = static_cast<D3DxFrameDerived*>(D3DXFrameFind(targetFrame->GetRootFrame(), BoneName.c_str()));
+				if (findFrame)
+				{
+					meshContainer->ppCombindTransformationMatrices[j] = &findFrame->CombinedTransformationMatrix;
+				}
+			}
+		}
+	}
+	if (nullptr != frame->GetRootFrame()->pFrameFirstChild)
+		TargetCombinedTransformationMatrices(frame->GetRootFrame()->pFrameFirstChild, targetFrame->GetRootFrame());
+
+	if (nullptr != frame->GetRootFrame()->pFrameSibling)
+		TargetCombinedTransformationMatrices(frame->GetRootFrame()->pFrameSibling, targetFrame->GetRootFrame());
+}
+
+auto MeshDynamic::TargetCombinedTransformationMatrices(LPD3DXFRAME frame, LPD3DXFRAME targetFrame) -> void
 {
 	auto targetMeshContainer = static_cast<D3DXMeshContainerDerived*>(targetFrame->pMeshContainer);
 	auto meshContainer = static_cast<D3DXMeshContainerDerived*>(frame->pMeshContainer);
@@ -143,10 +220,10 @@ auto MeshDynamic::TargerCombinedTransformationMatrices(LPD3DXFRAME frame, LPD3DX
 		}
 	}
 	if (nullptr != frame->pFrameFirstChild)
-		TargerCombinedTransformationMatrices(frame->pFrameFirstChild, targetFrame);
+		TargetCombinedTransformationMatrices(frame->pFrameFirstChild, targetFrame);
 
 	if (nullptr != frame->pFrameSibling)
-		TargerCombinedTransformationMatrices(frame->pFrameSibling, targetFrame);
+		TargetCombinedTransformationMatrices(frame->pFrameSibling, targetFrame);
 }
 
 auto MeshDynamic::SetUpCombinedTransformationMatricesPointer(const LPD3DXFRAME frame) -> void
@@ -174,8 +251,38 @@ auto MeshDynamic::SetUpCombinedTransformationMatricesPointer(const LPD3DXFRAME f
 		SetUpCombinedTransformationMatricesPointer(frame->pFrameSibling);
 }
 
+void MeshDynamic::SetUpCloneCombinedTransformationMatricesPointer(LPD3DXFRAME pFrame, uint32_t& index)
+{
+	if (nullptr != pFrame->pMeshContainer)
+	{
+		auto pMeshContainer_Derived = static_cast<D3DXMeshContainerDerived*>(pFrame->pMeshContainer);
+
+		for (uint32_t i = 0; i < pMeshContainer_Derived->iNumBones; ++i)
+		{
+			/* 현재 메시에 영향을 미치는 뼈들 중, i번째 뼈의 이름을 리턴해주낟. */
+			const char* pBoneName = pMeshContainer_Derived->pSkinInfo->GetBoneName(i);
+
+			auto pFindFrame = static_cast<D3DxFrameDerived*>(D3DXFrameFind(_root_frame, pBoneName));
+
+			_combined_transfromation_matrix_pointers[index][i] = &pFindFrame->CombinedTransformationMatrix;
+			_origin_combined_transfromation_matrix_pointers[index][i] = _combined_transfromation_matrix_pointers[index][i];
+			// pMeshContainer_Derived->ppCombindTransformationMatrices[i] = &pFindFrame->CombinedTransformationMatrix;
+		}
+
+		++index;
+	}
+
+
+
+	if (nullptr != pFrame->pFrameFirstChild)
+		SetUpCloneCombinedTransformationMatricesPointer(pFrame->pFrameFirstChild, index);
+
+	if (nullptr != pFrame->pFrameSibling)
+		SetUpCloneCombinedTransformationMatricesPointer(pFrame->pFrameSibling, index);
+}
+
 auto MeshDynamic::SetUpTextureOnShader(const std::shared_ptr<Shader>& shader, const D3DXHANDLE parameter, const MeshMaterialTexture::kType type,
-	const uint32_t meshContainerIndex, const uint32_t materialIndex) -> HRESULT
+                                       const uint32_t meshContainerIndex, const uint32_t materialIndex) -> HRESULT
 {
 	Microsoft::WRL::ComPtr<IDirect3DTexture9>			pTexture = nullptr;
 
@@ -205,11 +312,12 @@ auto MeshDynamic::UpdateSkinnedMesh(const uint32_t iMeshContainerIndex) -> HRESU
 	for (size_t i = 0; i < _mesh_containers[iMeshContainerIndex]->iNumBones; ++i)
 	{
 		//std::cout << _mesh_containers[iMeshContainerIndex]->Name << "/" << _mesh_containers[iMeshContainerIndex]->iNumBones << std::endl;
-		_mesh_containers[iMeshContainerIndex]->pRenderingMatrices[i] = _mesh_containers[iMeshContainerIndex]->pOffsetMatrices[i] * *_mesh_containers[iMeshContainerIndex]->ppCombindTransformationMatrices[i];
+		//auto a = _combined_transfromation_matrix_pointers[iMeshContainerIndex][i];
+		_mesh_containers[iMeshContainerIndex]->pRenderingMatrices[i] = _mesh_containers[iMeshContainerIndex]->pOffsetMatrices[i] * 
+			*_combined_transfromation_matrix_pointers[iMeshContainerIndex][i];
 	}
 
 	void* pSour = nullptr, * pDest = nullptr;
-
 	_mesh_containers[iMeshContainerIndex]->pOriginalMesh->LockVertexBuffer(0, &pSour);
 	_mesh_containers[iMeshContainerIndex]->MeshData.pMesh->LockVertexBuffer(0, &pDest);
 
@@ -223,6 +331,8 @@ auto MeshDynamic::UpdateSkinnedMesh(const uint32_t iMeshContainerIndex) -> HRESU
 auto MeshDynamic::ChangeSkinnedMesh(const std::shared_ptr<MeshDynamic> target, const std::string remove) -> HRESULT
 {
 	auto container = target->GetMeshContainer();
+	std::vector<int32_t> indexList;
+	int32_t index = 0;
 	for (auto iter = container.begin(); iter != container.end(); ++iter)
 	{
 		//remove가 포함된 모든 매쉬를 지운다.
@@ -234,14 +344,39 @@ auto MeshDynamic::ChangeSkinnedMesh(const std::shared_ptr<MeshDynamic> target, c
 			if (pos != std::string::npos)
 			{
 				iter = _mesh_containers.erase(iter);
+				indexList.push_back(index);
+				++index;
 				continue;
 			}
 			++iter;
+			++index;
 		}
 	}
 	auto meshs = target->GetMeshContainer();
 	_mesh_containers.insert(_mesh_containers.end(), meshs.begin(), meshs.end());
-
+	index = 0;
+	for (auto iter = _combined_transfromation_matrix_pointers.begin(); iter != _combined_transfromation_matrix_pointers.end();)
+	{
+		bool isErase = false;
+		for (auto num : indexList)
+		{
+			if (num == index)
+			{
+				iter = _combined_transfromation_matrix_pointers.erase(iter);
+				index++;
+				isErase = true;
+				break;
+			}
+		}
+		if (!isErase)
+		{
+			++iter;
+			index++;
+		}
+	}
+	_combined_transfromation_matrix_pointers.insert(_combined_transfromation_matrix_pointers.end(), 
+		target->_origin_combined_transfromation_matrix_pointers.begin(), 
+		target->_origin_combined_transfromation_matrix_pointers.end());
 	//bool isSkin = false;
 	//for (auto iter = _mesh_containers.begin(); iter != _mesh_containers.end(); ++iter)
 	//{
@@ -394,8 +529,50 @@ auto MeshDynamic::PlayAnimation(const double timeDelta) -> HRESULT
 	return S_OK;
 }
 
+HRESULT MeshDynamic::CloneFrame(D3DxFrameDerived* pOriginalFrame)
+{
+
+	_root_frame = new D3DxFrameDerived;
+	memcpy(_root_frame, pOriginalFrame, sizeof(D3DxFrameDerived));
+
+	static_cast<D3DxFrameDerived*>(_root_frame)->is_cloned = true;
+
+	if (nullptr != pOriginalFrame->pFrameFirstChild)
+	{
+		_root_frame->pFrameFirstChild = new D3DxFrameDerived;
+		CloneFrame(static_cast<D3DxFrameDerived*>(pOriginalFrame->pFrameFirstChild), static_cast<D3DxFrameDerived*>(_root_frame->pFrameFirstChild));
+	}
+
+	if (nullptr != pOriginalFrame->pFrameSibling)
+	{
+		_root_frame->pFrameSibling = new D3DxFrameDerived;
+		CloneFrame(static_cast<D3DxFrameDerived*>(pOriginalFrame->pFrameSibling), static_cast<D3DxFrameDerived*>(_root_frame->pFrameSibling));
+	}
+
+	return S_OK;
+}
+
+void MeshDynamic::CloneFrame(const D3DxFrameDerived* pOriginalFrame, D3DxFrameDerived* pOut)
+{
+	memcpy(pOut, pOriginalFrame, sizeof(D3DxFrameDerived));
+
+	pOut->is_cloned = true;
+
+	if (nullptr != pOriginalFrame->pFrameFirstChild)
+	{
+		pOut->pFrameFirstChild = new D3DxFrameDerived;
+		CloneFrame(static_cast<D3DxFrameDerived*>(pOriginalFrame->pFrameFirstChild), static_cast<D3DxFrameDerived*>(pOut->pFrameFirstChild));
+	}
+
+	if (nullptr != pOriginalFrame->pFrameSibling)
+	{
+		pOut->pFrameSibling = new D3DxFrameDerived;
+		CloneFrame(static_cast<D3DxFrameDerived*>(pOriginalFrame->pFrameSibling), static_cast<D3DxFrameDerived*>(pOut->pFrameSibling));
+	}
+}
+
 auto MeshDynamic::Create(const ComPtr<IDirect3DDevice9>& device, const std::wstring& filePath,
-	const std::wstring& fileName, int32_t itemId) -> std::shared_ptr<MeshDynamic>
+                         const std::wstring& fileName, int32_t itemId) -> std::shared_ptr<MeshDynamic>
 {
 	auto pInstance = std::make_shared<MeshDynamic>(device);
 

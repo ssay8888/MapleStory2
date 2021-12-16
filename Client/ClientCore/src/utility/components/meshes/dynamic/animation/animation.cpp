@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "animation.h"
 
 #include <iostream>
@@ -53,12 +53,12 @@ auto Animation::SetAnimationIndex(const uint32_t animIndex) -> HRESULT
 		return E_FAIL;
 	_new_track = _current_track == 0 ? 1 : 0;
 
-	/* Æ®·¢À§¿¡ ¾Ö´Ï¸ÞÀÌ¼Ç ¼ÂÀ» ¿Ã·Á³õ´Â´Ù. */
+	/* Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ï¿½Â´ï¿½. */
 	_animation_controller->SetTrackAnimationSet(_new_track, pAS);
 	//_animation_controller->SetTrackAnimationSet(0, pAS2);
 	//_animation_controller->SetTrackSpeed(animIndex, 0.1f);
 
-	/* ¾Ö´Ï¸ÞÀÌ¼Ç ÇÏ³ª¸¦ Àç»ýÇÏ´Â Áö¼Ó½Ã°£. */
+	/* ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ó½Ã°ï¿½. */
 	//auto a =  pAS->GetPeriod();
 	//D3DXTRACK_DESC			trackDesc;
 	//_animation_controller->GetTrackDesc(_current_track, &trackDesc);
@@ -113,6 +113,14 @@ auto Animation::PlayAnimation(double timeDelta) -> HRESULT
 
 	_time_acc += timeDelta;
 	_animation_controller->AdvanceTime(timeDelta, nullptr);
+	return S_OK;
+}
+
+auto Animation::BindFrames(D3DxFrameDerived* pRootFrame) const -> HRESULT
+{
+	if (FAILED(D3DXFrameRegisterNamedMatrices(pRootFrame, _animation_controller.Get())))
+		return E_FAIL;
+
 	return S_OK;
 }
 

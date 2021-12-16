@@ -327,6 +327,10 @@ auto Loading::LoadCharacterBeautyUi() -> HRESULT
 
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Model/Item/1/14/"), TEXT("11400001_f_viking.x")))))
 		return E_FAIL;
+
+	//네임생성버튼
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_CreateName"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/NameCreate.png")))))
+		return E_FAIL;
 	//if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Pants"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/Pants/"), TEXT("11500003_m_bronzewarrior.X")))))
 	//	return E_FAIL;
 	//if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Pants_Base"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/Pants/"), TEXT("11500001_m_basicsportwearpants.X")))))
