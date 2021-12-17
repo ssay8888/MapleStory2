@@ -1,6 +1,8 @@
 #include "c_pch.h"
 #include "character_beauty_select_sex.h"
 
+#include "src/network/send_manager.h"
+#include "src/network/server_packet_handler.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
@@ -131,6 +133,19 @@ auto CharacterBeautySelectSex::GetButtonState() const -> kCreateSexBtnState
 auto CharacterBeautySelectSex::ChangeButtonState(const kCreateSexBtnState state) -> void
 {
 	_state = state;
+}
+
+auto CharacterBeautySelectSex::SendCreateCharacter(std::string name, int32_t gender, int32_t coatIndex,
+	int32_t pantsIndex, int32_t faceIndex, int32_t shoesIndex)
+{
+	Protocol::ClientCreateCharacter data;
+	data.set_name(name);
+	data.set_gender(gender);
+	data.set_coatindex(coatIndex);
+	data.set_pantsindex(pantsIndex);
+	data.set_faceindex(faceIndex);
+	data.set_shoesindex(shoesIndex);
+	SendManager::GetInstance().Push(ServerPacketHandler::MakeSendBuffer(data));
 }
 
 auto CharacterBeautySelectSex::AddComponents() -> HRESULT

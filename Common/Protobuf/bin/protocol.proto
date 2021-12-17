@@ -15,3 +15,18 @@ message ServerLogin
 {
 	kLoginMessage result = 1;
 }
+
+message ClientCreateCharacter
+{
+	string name = 1;
+	bool gender = 2;
+	int32 coatIndex = 3;
+	int32 pantsIndex = 4;
+	int32 faceIndex = 5;
+	int32 shoesIndex = 6;
+}
+
+message ServerCreateCharacter
+{
+	kLoginMessage result = 1;
+}

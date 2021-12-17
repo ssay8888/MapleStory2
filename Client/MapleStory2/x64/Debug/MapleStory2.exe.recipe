@@ -15,6 +15,9 @@
     <ContentFile>
       <FullPath>C:\MapleStory2Project\Binary\shader_terrain.cso</FullPath>
     </ContentFile>
+    <ContentFile>
+      <FullPath>C:\MapleStory2Project\Binary\shader_ui.cso</FullPath>
+    </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
   <NonRecipeFileRefs />

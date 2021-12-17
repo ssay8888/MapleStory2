@@ -174,6 +174,9 @@ HRESULT MainApp::AddPrototypeComponent()
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Shader_Rect"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/shader_rect.hlsl")))))
 		return E_FAIL;
 
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Shader_Ui"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/shader_ui.hlsl")))))
+		return E_FAIL;
+
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_Login_Logo"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/bg_christmas_login_i3.png")))))
 		return E_FAIL;
 

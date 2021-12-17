@@ -39,6 +39,8 @@ public:
 	auto GetButtonState() const->kCreateSexBtnState;
 	auto ChangeButtonState(kCreateSexBtnState state)->void;
 
+	auto SendCreateCharacter(std::string name, int32_t gender, int32_t coatIndex, int32_t pantsIndex, int32_t faceIndex, int32_t shoesIndex);
+
 private:
 	auto AddComponents()->HRESULT;
 

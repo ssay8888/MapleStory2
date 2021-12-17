@@ -15,3 +15,8 @@ bool HandleClientLogin(PacketSessionRef& session, Protocol::ClientLogin& pkt)
 	LoginHandlerManager::GetInstance().LoginRequest(session, pkt);
 	return true;
 }
+
+bool HandleClientCreateCharacter(PacketSessionRef& session, Protocol::ClientCreateCharacter& pkt)
+{
+	return false;
+}

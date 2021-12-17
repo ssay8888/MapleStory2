@@ -34,7 +34,9 @@ typedef struct TagTextBoxInformation
 	D3DXVECTOR2 		pos{1.f, 1.f};
 	D3DXVECTOR2			size{1.f, 1.f};
 	int32_t				max_content_length{13};
+	int32_t				text_color = D3DCOLOR_ARGB(255, 0, 0, 0);
 	bool				is_password = false;
+
 } TextBoxInformation;
 
 typedef struct MeshMaterialTexture

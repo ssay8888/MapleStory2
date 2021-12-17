@@ -5,7 +5,7 @@ class Shader;
 class ViBufferRect;
 class Texture;
 
-class TextBoxUi final : public GameObject
+class TextBoxUi : public GameObject
 {
 public:
 	explicit TextBoxUi(const ComPtr<IDirect3DDevice9>& device);
@@ -28,12 +28,12 @@ public:
 	auto SetFocus(bool focus)->void;
 	auto IsFocus() const ->bool;
 
-private:
+protected:
 	auto UiDrawText()->void;
 	auto AddComponents()->HRESULT;
 
 
-private:
+protected:
 	RECT							_rc;
 	bool							_is_focus;
 	bool							_is_password;
@@ -45,8 +45,8 @@ private:
 	ComPtr<ID3DXFont>				_font = nullptr;
 	std::shared_ptr<Texture>		_texture_com = nullptr;
 	std::shared_ptr<Shader>			_shader_com = nullptr;
-	std::shared_ptr<Transform>		_transform_com = nullptr;
 	std::shared_ptr<ViBufferRect>	_vi_buffer_com = nullptr;
 
+	TextBoxInformation				_text_info;
 };
 

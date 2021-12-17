@@ -8,3 +8,9 @@ enum kLoginMessage
 	kPwInvlid = 2;
 	kAlreadyConnected = 3;
 }
+
+enum kCreateMessage
+{
+	kCreateSuccess = 0;
+	kDuplication = 1;
+}

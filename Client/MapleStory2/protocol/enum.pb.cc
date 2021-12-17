@@ -18,7 +18,7 @@
 PROTOBUF_PRAGMA_INIT_SEG
 namespace Protocol {
 }  // namespace Protocol
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_enum_2eproto[1];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_enum_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_enum_2eproto = nullptr;
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_enum_2eproto::offsets[1] = {};
 static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = nullptr;
@@ -27,11 +27,13 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances
 const char descriptor_table_protodef_enum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\nenum.proto\022\010Protocol*N\n\rkLoginMessage\022"
   "\007\n\003kOk\020\000\022\016\n\nkIdInvalid\020\001\022\r\n\tkPwInvlid\020\002\022"
-  "\025\n\021kAlreadyConnected\020\003b\006proto3"
+  "\025\n\021kAlreadyConnected\020\003*6\n\016kCreateMessage"
+  "\022\022\n\016kCreateSuccess\020\000\022\020\n\014kDuplication\020\001b\006"
+  "proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_enum_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_enum_2eproto = {
-  false, false, 110, descriptor_table_protodef_enum_2eproto, "enum.proto", 
+  false, false, 166, descriptor_table_protodef_enum_2eproto, "enum.proto", 
   &descriptor_table_enum_2eproto_once, nullptr, 0, 0,
   schemas, file_default_instances, TableStruct_enum_2eproto::offsets,
   nullptr, file_level_enum_descriptors_enum_2eproto, file_level_service_descriptors_enum_2eproto,
@@ -53,6 +55,20 @@ bool kLoginMessage_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kCreateMessage_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_enum_2eproto);
+  return file_level_enum_descriptors_enum_2eproto[1];
+}
+bool kCreateMessage_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
       return true;
     default:
       return false;

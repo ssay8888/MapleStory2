@@ -407,5 +407,8 @@
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_mesh.hlsl">
       <Filter>shader_files</Filter>
     </FxCompile>
+    <FxCompile Include="..\..\Binary\ShaderFiles\shader_ui.hlsl">
+      <Filter>shader_files</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

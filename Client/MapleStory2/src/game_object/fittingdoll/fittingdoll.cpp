@@ -162,6 +162,7 @@ auto Fittingdoll::GetInfo() const -> FittingdollInfo
 
 auto Fittingdoll::ChangeEqp(const kEqpType type, int32_t itemId)->void
 {
+	const auto& instance = ObjectManager::GetInstance();
 	auto iter = _eqp.find(itemId);
 	if (iter != _eqp.end())
 	{
@@ -182,7 +183,6 @@ auto Fittingdoll::ChangeEqp(const kEqpType type, int32_t itemId)->void
 	}
 	else
 	{
-		const auto& instance = ObjectManager::GetInstance();
 
 		std::wstring prototypeName(L"Prototype_ItemModel_");
 		prototypeName.append(std::to_wstring(itemId)).append(L"_").append(std::to_wstring(_info.sex));
@@ -215,7 +215,8 @@ auto Fittingdoll::ChangeEqp(const kEqpType type, int32_t itemId)->void
 			const auto player = std::static_pointer_cast<Fittingdoll>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));
 			const auto playerMesh = player->GetCurrentDynamicMesh();
 			const auto rootFrame = playerMesh.first->GetRootFrame();
-			component->TargerCombinedTransformationMatrices(component->GetRootFrame(), rootFrame);
+			int32_t index = 0;
+			component->TargetCombinedTransformationMatrices(component, playerMesh.first, component->GetRootFrame(), rootFrame, index);
 		}
 
 		switch (type)

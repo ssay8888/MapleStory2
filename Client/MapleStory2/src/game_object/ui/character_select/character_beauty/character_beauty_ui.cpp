@@ -3,6 +3,7 @@
 
 #include "character_beauty_select_sex.h"
 #include "character_create_name_btn.h"
+#include "character_create_name_popup.h"
 #include "character_create_return_btn.h"
 #include "data_reader/data_reader_manager.h"
 #include "item_list/character_beauty_item_list.h"
@@ -43,7 +44,12 @@ int32_t CharacterBeautyUi::Tick(const double timeDelta)
 			list->Tick(timeDelta);
 		}
 		_return_btn->Tick(timeDelta);
+		if (_create_name_btn->GetButtonState() == CharacterCreateNameBtn::kSelect)
+		{
+			_create_name_popup->ChangeShow(true);
+		}
 		_create_name_btn->Tick(timeDelta);
+		_create_name_popup->Tick(timeDelta);
 	}
 	return GameObject::Tick(timeDelta);
 }
@@ -96,6 +102,7 @@ HRESULT CharacterBeautyUi::Render()
 
 		result = _return_btn->Render(_shader_com);
 		result = _create_name_btn->Render(_shader_com);
+		result = _create_name_popup->Render(_shader_com);
 		result = _shader_com->EndShader();
 	}
 	return GameObject::Render();
@@ -151,7 +158,7 @@ auto CharacterBeautyUi::AddComponents() -> HRESULT
 		return E_FAIL;
 
 	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
-		L"Prototype_Shader_Rect",
+		L"Prototype_Shader_Ui",
 		L"Com_Shader",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;
@@ -160,6 +167,7 @@ auto CharacterBeautyUi::AddComponents() -> HRESULT
 	{
 		return E_FAIL;
 	}
+
 	if (FAILED(CreateItemList()))
 	{
 		return E_FAIL;
@@ -175,6 +183,17 @@ auto CharacterBeautyUi::AddComponents() -> HRESULT
 	name_info.size = _float3(155, 50, 0);
 	name_info.pos = _float3(460, -245, 0);
 	_create_name_btn = CharacterCreateNameBtn::Create(&name_info);
+
+	CharacterCreateNamePopup::CharacterCreateNamePopupInfo popup_info;
+	popup_info.popup_size = _float3(245.f, 134.f, 0.f);
+	popup_info.popup_pos = _float3(g_WinCX * 0.5f, g_WinCY * 0.5f, 0.f);
+	popup_info.textbox_info.pos = { 54, 46 };
+	popup_info.textbox_info.size = { 138, 16 };
+	popup_info.textbox_info.text_color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	popup_info.textbox_info.font_info.Height = 11;
+	popup_info.textbox_info.font_info.Width = 9;
+	popup_info.textbox_info.font_info.Weight = FW_NORMAL;
+	_create_name_popup = CharacterCreateNamePopup::Create(&popup_info);
 	return S_OK;
 }
 

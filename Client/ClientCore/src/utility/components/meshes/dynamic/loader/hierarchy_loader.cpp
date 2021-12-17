@@ -179,14 +179,14 @@ auto HierarchyLoader::DestroyMeshContainer(LPD3DXMESHCONTAINER pMeshContainerToF
 {
 	D3DXMeshContainerDerived* pMeshContainer = (D3DXMeshContainerDerived*)pMeshContainerToFree;
 
-	for (size_t i = 0; i < pMeshContainer->NumMaterials; ++i)
-	{
-		if (pMeshContainer->ppMaterialTextures[i])
-		{
-			delete[] pMeshContainer->ppMaterialTextures[i];
-			pMeshContainer->ppMaterialTextures[i] = nullptr;
-		}
-	}
+	//for (size_t i = 0; i < pMeshContainer->NumMaterials; ++i)
+	//{
+	//	if (pMeshContainer->ppMaterialTextures[i])
+	//	{
+	//		delete[] pMeshContainer->ppMaterialTextures[i];
+	//		pMeshContainer->ppMaterialTextures[i] = nullptr;
+	//	}
+	//}
 	if (pMeshContainer->ppMaterialTextures)
 	{
 		delete[] pMeshContainer->ppMaterialTextures;

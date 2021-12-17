@@ -87,7 +87,7 @@ HRESULT Pants::Render()
 	auto playerMesh = player->GetCurrentDynamicMesh();
 
 	auto rootFrame = playerMesh.first->GetRootFrame();
-	mesh->TargerCombinedTransformationMatrices(mesh->GetRootFrame(), rootFrame);
+	mesh->TargetCombinedTransformationMatrices(mesh->GetRootFrame(), rootFrame);
 	for (uint32_t i = 0; i < iNumMeshContainers; ++i)
 	{
 		const uint32_t iNumMaterials = mesh->GetNumMaterials(i);

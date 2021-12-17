@@ -83,6 +83,31 @@ inline bool kLoginMessage_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kLoginMessage>(
     kLoginMessage_descriptor(), name, value);
 }
+enum kCreateMessage : int {
+  kCreateSuccess = 0,
+  kDuplication = 1,
+  kCreateMessage_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  kCreateMessage_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool kCreateMessage_IsValid(int value);
+constexpr kCreateMessage kCreateMessage_MIN = kCreateSuccess;
+constexpr kCreateMessage kCreateMessage_MAX = kDuplication;
+constexpr int kCreateMessage_ARRAYSIZE = kCreateMessage_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kCreateMessage_descriptor();
+template<typename T>
+inline const std::string& kCreateMessage_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, kCreateMessage>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function kCreateMessage_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    kCreateMessage_descriptor(), enum_t_value);
+}
+inline bool kCreateMessage_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, kCreateMessage* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kCreateMessage>(
+    kCreateMessage_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -109,6 +134,11 @@ template <> struct is_proto_enum< ::Protocol::kLoginMessage> : ::std::true_type 
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kLoginMessage>() {
   return ::Protocol::kLoginMessage_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::kCreateMessage> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kCreateMessage>() {
+  return ::Protocol::kCreateMessage_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

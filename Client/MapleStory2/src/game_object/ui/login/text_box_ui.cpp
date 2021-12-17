@@ -28,18 +28,18 @@ HRESULT TextBoxUi::NativeConstruct(void* arg)
 		return E_FAIL;
 	}
 
-	const auto information = static_cast<TextBoxInformation*>(arg);
+	_text_info = *static_cast<TextBoxInformation*>(arg);
 
-	if (FAILED(D3DXCreateFontIndirectW(_graphic_device.Get(), &information->font_info, &_font)))
+	if (FAILED(D3DXCreateFontIndirectW(_graphic_device.Get(), &_text_info.font_info, &_font)))
 	{
 		MSGBOX("Creating Failed TextBoxUi");
 		return E_FAIL;
 	}
-	_size = information->size;
-	_pos = information->pos;
-	_is_password = information->is_password;
+	_size = _text_info.size;
+	_pos = _text_info.pos;
+	_is_password = _text_info.is_password;
 	D3DXMatrixOrthoLH(&_proj_matrix, g_WinCX, g_WinCY, 0.f, 1.f);
-	_max_content_length = std::max(information->max_content_length, 13);
+	_max_content_length = std::max(_text_info.max_content_length, 13);
 	_rc = { static_cast<LONG>(_pos.x - (_size.x / 2)), static_cast<LONG>(_pos.y - (_size.y / 2)), static_cast<LONG>(_pos.x + (_size.x / 2)), static_cast<LONG>(_pos.y + (_size.y / 2)) };
 	return GameObject::NativeConstruct(arg);
 }
@@ -185,22 +185,16 @@ auto TextBoxUi::UiDrawText() -> void
 		{
 			contents.append(L"*");
 		}
-		_font->DrawTextW(NULL, contents.c_str(), -1, &_rc, DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
+		_font->DrawTextW(NULL, contents.c_str(), -1, &_rc, DT_TOP | DT_LEFT, _text_info.text_color);
 	}
 	else
 	{
-		_font->DrawTextW(NULL, _contents.c_str(), -1, &_rc, DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
+		_font->DrawTextW(NULL, _contents.c_str(), -1, &_rc, DT_TOP | DT_LEFT, _text_info.text_color);
 	}
 }
 
 auto TextBoxUi::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, 
-		TEXT("Prototype_Transform"), 
-		TEXT("Com_Transform"), 
-		reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com))))
-		return E_FAIL;
-
 	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, 
 		TEXT("Prototype_Texture_Default2"), 
 		TEXT("Com_Texture"), 

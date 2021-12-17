@@ -228,6 +228,7 @@
     </ClCompile>
     <ClCompile Include="protocol\protocol.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
     </ClCompile>
     <ClCompile Include="protocol\struct.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -282,6 +283,7 @@
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_mesh.hlsl" />
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_rect.hlsl" />
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_terrain.hlsl" />
+    <FxCompile Include="..\..\Binary\ShaderFiles\shader_ui.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

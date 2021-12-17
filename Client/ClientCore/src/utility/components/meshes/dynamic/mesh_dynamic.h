@@ -35,6 +35,7 @@ public:
 public:
 	auto UpdateCombinedTransformationMatrices(LPD3DXFRAME frame, _matrix parentCombinedTransformationMatrix)->void;
 	auto TargetCombinedTransformationMatrices(LPD3DXFRAME frame, LPD3DXFRAME targetFrame)->void;
+	auto TargetCombinedTransformationMatrices(std::shared_ptr<MeshDynamic> mesh, std::shared_ptr<MeshDynamic> targetMesh, LPD3DXFRAME frame, LPD3DXFRAME targetFrame, int32_t& index)->void;
 	auto SetUpCombinedTransformationMatricesPointer(LPD3DXFRAME frame)->void;
 	void SetUpCloneCombinedTransformationMatricesPointer(LPD3DXFRAME pFrame, uint32_t& index);
 	auto SetUpTextureOnShader(const std::shared_ptr<Shader>& shader, D3DXHANDLE parameter, MeshMaterialTexture::kType type, uint32_t meshContainerIndex, uint32_t materialIndex)->HRESULT;

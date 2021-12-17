@@ -55,7 +55,7 @@ auto GraphicDevice::ReadyGraphicDevice(HWND hWnd, kWindowMode mode, uint32_t win
 	{
 		MSGBOX("Creating Failed Graphic_Device ");
 	}
-
+	
 	D3DXFONT_DESCW tFontDesc;
 	ZeroMemory(&tFontDesc, sizeof(D3DXFONT_DESCW));
 	tFontDesc.Height = 11;

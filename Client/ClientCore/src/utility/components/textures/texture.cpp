@@ -31,7 +31,14 @@ auto Texture::NativeConstructPrototype(kType eType, const std::wstring& textureF
 		IDirect3DBaseTexture9* tex = nullptr;
 		if (eType == kType::kTypeGeneral)
 		{
-			if (FAILED(D3DXCreateTextureFromFile(_graphic_device.Get(), szTexturePath, reinterpret_cast<LPDIRECT3DTEXTURE9*>(&tex))))
+			/*if (FAILED(D3DXCreateTextureFromFile(_graphic_device.Get(), szTexturePath, reinterpret_cast<LPDIRECT3DTEXTURE9*>(&tex))))
+			{
+				return E_FAIL;
+			}*/
+			if (FAILED(D3DXCreateTextureFromFileExW(_graphic_device.Get(), szTexturePath, D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT_NONPOW2, 1, 0,
+				D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_DEFAULT,
+				D3DX_DEFAULT,
+				0, NULL, NULL, reinterpret_cast<LPDIRECT3DTEXTURE9*>(&tex))))
 			{
 				return E_FAIL;
 			}

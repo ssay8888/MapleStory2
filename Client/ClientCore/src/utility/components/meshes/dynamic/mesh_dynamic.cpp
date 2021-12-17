@@ -33,15 +33,14 @@ MeshDynamic::~MeshDynamic()
 {
 	Mesh::~Mesh();
 
-
-	const size_t numMeshContainer = _mesh_containers.size();
+	const size_t numMeshContainer = _origin_mesh_containers.size();
 
 	for (size_t i = 0; i < numMeshContainer; ++i)
 	{
-		_mesh_containers[i]->MeshData.pMesh->Release();
+		_origin_mesh_containers[i]->MeshData.pMesh->Release();
 	}
 
-	_mesh_containers.clear();
+	_origin_mesh_containers.clear();
 
 	_loader->DestroyFrame(_root_frame);
 
@@ -171,37 +170,8 @@ auto MeshDynamic::UpdateCombinedTransformationMatrices(const LPD3DXFRAME frame,
 
 }
 
-auto MeshDynamic::TargetCombinedTransformationMatrices(std::shared_ptr<MeshDynamic> frame,
-	std::shared_ptr<MeshDynamic> targetFrame) -> void
-{
-	auto targetMeshContainer = static_cast<D3DXMeshContainerDerived*>(targetFrame->GetRootFrame()->pMeshContainer);
-	auto meshContainer = static_cast<D3DXMeshContainerDerived*>(frame->GetRootFrame()->pMeshContainer);
-
-
-	if (meshContainer)
-	{
-		for (uint32_t j = 0; j < meshContainer->iNumBones; ++j)
-		{
-			const std::string BoneName = meshContainer->pSkinInfo->GetBoneName(j);
-			{
-				const auto findFrame = static_cast<D3DxFrameDerived*>(D3DXFrameFind(targetFrame->GetRootFrame(), BoneName.c_str()));
-				if (findFrame)
-				{
-					meshContainer->ppCombindTransformationMatrices[j] = &findFrame->CombinedTransformationMatrix;
-				}
-			}
-		}
-	}
-	if (nullptr != frame->GetRootFrame()->pFrameFirstChild)
-		TargetCombinedTransformationMatrices(frame->GetRootFrame()->pFrameFirstChild, targetFrame->GetRootFrame());
-
-	if (nullptr != frame->GetRootFrame()->pFrameSibling)
-		TargetCombinedTransformationMatrices(frame->GetRootFrame()->pFrameSibling, targetFrame->GetRootFrame());
-}
-
 auto MeshDynamic::TargetCombinedTransformationMatrices(LPD3DXFRAME frame, LPD3DXFRAME targetFrame) -> void
 {
-	auto targetMeshContainer = static_cast<D3DXMeshContainerDerived*>(targetFrame->pMeshContainer);
 	auto meshContainer = static_cast<D3DXMeshContainerDerived*>(frame->pMeshContainer);
 
 
@@ -224,6 +194,35 @@ auto MeshDynamic::TargetCombinedTransformationMatrices(LPD3DXFRAME frame, LPD3DX
 
 	if (nullptr != frame->pFrameSibling)
 		TargetCombinedTransformationMatrices(frame->pFrameSibling, targetFrame);
+}
+
+auto MeshDynamic::TargetCombinedTransformationMatrices(std::shared_ptr<MeshDynamic> mesh, std::shared_ptr<MeshDynamic> targetMesh, 
+	LPD3DXFRAME frame, LPD3DXFRAME targetFrame, int32_t& index) -> void
+{
+	auto meshContainer = static_cast<D3DXMeshContainerDerived*>(frame->pMeshContainer);
+
+
+	if (meshContainer)
+	{
+		for (uint32_t j = 0; j < meshContainer->iNumBones; ++j)
+		{
+			const std::string BoneName = meshContainer->pSkinInfo->GetBoneName(j);
+			{
+				const auto findFrame = static_cast<D3DxFrameDerived*>(D3DXFrameFind(targetFrame, BoneName.c_str()));
+				if (findFrame)
+				{
+					_combined_transfromation_matrix_pointers[index][j] = &findFrame->CombinedTransformationMatrix;
+					//meshContainer->ppCombindTransformationMatrices[j] = &findFrame->CombinedTransformationMatrix;
+				}
+			}
+		}
+		++index;
+	}
+	if (nullptr != frame->pFrameFirstChild)
+		TargetCombinedTransformationMatrices(mesh, targetMesh, frame->pFrameFirstChild, targetFrame, index);
+
+	if (nullptr != frame->pFrameSibling)
+		TargetCombinedTransformationMatrices(mesh, targetMesh, frame->pFrameSibling, targetFrame, index);
 }
 
 auto MeshDynamic::SetUpCombinedTransformationMatricesPointer(const LPD3DXFRAME frame) -> void
