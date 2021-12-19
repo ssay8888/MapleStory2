@@ -47,6 +47,7 @@ private:
 	auto CreateSelectList()->HRESULT;
 	auto CreateStartBtnList()->HRESULT;
 	auto CreateJobBtnList()->HRESULT;
+	auto CreateFittingDoll(int32_t index)->HRESULT;
 
 private:
 	std::shared_ptr<Texture>							_texture_com = nullptr;

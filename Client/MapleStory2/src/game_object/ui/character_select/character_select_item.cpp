@@ -1,11 +1,14 @@
 #include "c_pch.h"
 #include "character_select_item.h"
 
+#include "src/managers/characters_manager/character.h"
+#include "src/managers/characters_manager/characters_manager.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
 #include "src/utility/game_objects/game_object.h"
+#include "string_utils/string_utils.h"
 
 CharacterSelectItem::CharacterSelectItem():
 	GameObject(GraphicDevice::GetInstance().GetDevice())
@@ -59,6 +62,27 @@ auto CharacterSelectItem::Render() -> HRESULT
 	return S_OK;
 }
 
+auto CharacterSelectItem::DrawCharacterInfo() -> void
+{
+	auto& instance = CharactersManager::GetInstance();
+	RECT rc
+	{
+		static_cast<LONG>(_info.pos.x - _info.size.x / 2) + 4,
+		static_cast<LONG>(_info.pos.y - _info.size.y / 2) + 4,
+		static_cast<LONG>(_info.pos.x + _info.size.x / 2),
+		static_cast<LONG>(_info.pos.y + _info.size.y / 2)
+	};
+	auto character = instance.GetCharacter(_info.index);
+
+	if (character)
+	{
+		std::wstring contents;
+		contents.append(L"´Ð³×ÀÓ : ").append(StringUtils::ConvertCtoW(character->GetInfo().name().c_str()));
+		GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, contents.c_str(), -1, &rc, DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
+	}
+
+}
+
 auto CharacterSelectItem::Render(std::shared_ptr<Shader> shader) -> HRESULT
 {
 	_matrix			transformMatrix, viewMatrix;
@@ -76,6 +100,9 @@ auto CharacterSelectItem::Render(std::shared_ptr<Shader> shader) -> HRESULT
 	shader->Commit();
 
 	_vi_buffer_com->RenderViBuffer();
+
+	DrawCharacterInfo();
+
 	return S_OK;
 }
 

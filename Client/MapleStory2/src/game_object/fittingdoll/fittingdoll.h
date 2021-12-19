@@ -1,6 +1,8 @@
 #pragma once
 #include "src/utility/game_objects/game_object.h"
 
+class Character;
+class Equipped;
 class MeshDynamic;
 class Shader;
 
@@ -22,10 +24,13 @@ public:
 	{
 		_float3 pos;
 		bool	sex;
+		std::shared_ptr<Character> character;
 	};
 	auto GetCurrentDynamicMesh() ->std::pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>;
 	auto GetInfo() const ->FittingdollInfo;
-	auto ChangeEqp(kEqpType type, int32_t itemId)->void;
+	auto ChangeEqp(GameContents::kEquipeType type, int32_t itemId)->void;
+	auto GetEqpList() const ->std::shared_ptr<Equipped>;
+
 private:
 	auto AddComponents()->HRESULT;
 	auto SetUpConstantTable() const->HRESULT;
@@ -35,10 +40,11 @@ public:
 	virtual auto Clone(void* arg = nullptr)->std::shared_ptr<GameObject> override;
 
 private:
-	std::shared_ptr<Transform>					_transform_com = nullptr;
-	std::shared_ptr<Shader>						_shader_com = nullptr;
-	std::vector<std::shared_ptr<MeshDynamic>>	_meshs;
-	std::map<int32_t, std::shared_ptr<MeshDynamic>>	_eqp;
+	std::shared_ptr<Transform>						_transform_com = nullptr;
+	std::shared_ptr<Shader>							_shader_com = nullptr;
+	std::vector<std::shared_ptr<MeshDynamic>>		_character_mesh_list;
+	std::shared_ptr<Equipped>						_eqp_list;
+	std::map<int32_t, std::shared_ptr<MeshDynamic>>	_eqp_mesh;
 	
 
 	bool				_is_idle = true;

@@ -4,11 +4,16 @@
 #include "character_create_btn.h"
 #include "character_select_item.h"
 #include "character_create/character_job_btn.h"
+#include "src/managers/characters_manager/characters_manager.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/textures/texture.h"
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
+#include "src/utility/game_objects/manager/object_manager.h"
+#include <src/game_object/fittingdoll/fittingdoll.h>
+
+#include "src/managers/characters_manager/character.h"
 
 CharacterSelectUi::CharacterSelectUi(const ComPtr<IDirect3DDevice9>& device) :
 	GameObject(device),
@@ -154,6 +159,7 @@ auto CharacterSelectUi::SelectUpdateTick(const double timeDelta) -> HRESULT
 			if (i == _select_item_index)
 			{
 				item->ChangeState(CharacterSelectItem::kSelect);
+				CreateFittingDoll(static_cast<int32_t>(i));
 			}
 			else
 			{
@@ -330,6 +336,7 @@ auto CharacterSelectUi::CreateSelectList() -> HRESULT
 		CharacterSelectItem::SelectItemInfo info;
 		info.size = _float3(330, 64, 0);
 		info.pos = _float3(1100, (160.f + (68.f * i)), 0);
+		info.index = i;
 		auto instance = CharacterSelectItem::Create(&info);
 		_character_list.push_back(instance);
 	}
@@ -371,6 +378,25 @@ auto CharacterSelectUi::CreateJobBtnList() -> HRESULT
 
 		const auto instance = CharacterJobBtn::Create(&info);
 		_character_job_list.push_back(instance);
+	}
+	return S_OK;
+}
+
+auto CharacterSelectUi::CreateFittingDoll(int32_t index) -> HRESULT
+{
+	auto& instance = ObjectManager::GetInstance();
+	instance.LayerClear(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"));
+	auto& characterManager = CharactersManager::GetInstance();
+	auto character = characterManager.GetCharacter(index);
+	if (character)
+	{
+		Fittingdoll::FittingdollInfo info;
+		info.sex = character->GetInfo().gender();
+		info.character = character;
+		if (FAILED(instance.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Fittingdool"), TEXT("Layer_Fittingdoll"), &info)))
+		{
+			return E_FAIL;
+		}
 	}
 	return S_OK;
 }

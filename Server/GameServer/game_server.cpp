@@ -1,8 +1,4 @@
-﻿// GameServer.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
-
-#include "pch.h"
-#include <iostream>
+﻿#include "pch.h"
 
 #include "types.h"
 #include "game_session/client_packet_handler.h"
@@ -55,7 +51,7 @@ int main()
 {
 	SocketUtils::Init();
 	ClientPacketHandler::Init();
-	ASSERT_CRASH(DBConnectionPool::GetInstance().Connect(1, L"Driver={SQL Server Native Client 11.0};Server=(localdb)\\MSSQLLocalDB;Database=maplestory2;Trusted_Connection=Yes;"));
+	ASSERT_CRASH(DBConnectionPool::GetInstance().Connect(10, L"Driver={SQL Server Native Client 11.0};Server=(localdb)\\MSSQLLocalDB;Database=maplestory2;Trusted_Connection=Yes;"));
 	
 	ServerServiceRef service = MakeShared<ServerService>(
 		NetAddress(L"127.0.0.1", 7777),

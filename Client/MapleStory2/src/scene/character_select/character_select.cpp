@@ -182,7 +182,7 @@ auto CharacterSelect::ReadyLayerCamera(const std::wstring& pLayerTag) -> HRESULT
 auto CharacterSelect::ReadyLayerPlayer(const std::wstring& pLayerTag) -> HRESULT
 {
 	auto& objectManager = ObjectManager::GetInstance();
-	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Fittingdool"), pLayerTag, _float3(0.0f, 0, 0))))
+	if (FAILED(objectManager.AddGameObject(kSceneCharacterSelect, TEXT("Prototype_Mesh_Fittingdool"), pLayerTag)))
 	{
 		return E_FAIL;
 	}

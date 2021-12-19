@@ -30,7 +30,7 @@ auto GameSession::OnDisconnected() -> void
 auto GameSession::OnRecvPacket(BYTE* buffer, const int32_t len) -> void
 {
 	PacketSessionRef session = GetPacketSessionRef();
-	PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
+	auto header = reinterpret_cast<PacketHeader*>(buffer);
 	ClientPacketHandler::HandlePacket(session, buffer, len);
 }
 
@@ -41,4 +41,24 @@ auto GameSession::OnSend(int32_t len) -> void
 auto GameSession::GetSessionId() const -> int64_t
 {
 	return _session_id;
+}
+
+auto GameSession::GetAccountId() const -> int64_t
+{
+	return _account_id;
+}
+
+auto GameSession::SetAccountId(const int64_t id) -> void
+{
+	_account_id = id;
+}
+
+auto GameSession::PushPlayer(const std::shared_ptr<Player> player)->void
+{
+	_players.push_back(player);
+}
+
+auto GameSession::GetPlayerList() const -> std::vector<std::shared_ptr<Player>>
+{
+	return _players;
 }

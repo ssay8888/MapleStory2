@@ -59,11 +59,11 @@ int32_t CharacterBeautyItemList::Tick(const double timeDelta)
 					ObjectManager::GetInstance().GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));
 				if (_info.sex)
 				{
-					playerObject->ChangeEqp(_info.type, item->GetGirlItemId());
+					playerObject->ChangeEqp(GameContents::EquipeType(item->GetGirlItemId()), item->GetGirlItemId());
 				}
 				else
 				{
-					playerObject->ChangeEqp(_info.type, item->GetManItemId());
+					playerObject->ChangeEqp(GameContents::EquipeType(item->GetManItemId()), item->GetManItemId());
 				}
 			}
 			else
@@ -140,6 +140,25 @@ auto CharacterBeautyItemList::Create(CreateItemListTextureInfo* arg) -> std::sha
 
 	return instance;
 }
+auto CharacterBeautyItemList::InitEqp() -> void
+{
+	auto playerObject = std::static_pointer_cast<Fittingdoll>(
+		ObjectManager::GetInstance().GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));
+	const auto item = _items[0];
+	if (item)
+	{
+		if (_info.sex)
+		{
+			playerObject->ChangeEqp(GameContents::EquipeType(item->GetGirlItemId()), item->GetGirlItemId());
+		}
+		else
+		{
+			playerObject->ChangeEqp(GameContents::EquipeType(item->GetManItemId()), item->GetManItemId());
+		}
+		item->ChangeState(CharacterItem::kSelect);
+	}
+}
+
 
 auto CharacterBeautyItemList::AddComponents() -> HRESULT
 {

@@ -16,6 +16,7 @@ public:
 		_float3 popup_pos;
 		_float3 popup_size;
 		TextBoxInformation textbox_info{};
+		bool sex;
 	};
 	auto NativeConstructPrototype()->HRESULT override;
 	auto NativeConstruct(void* arg)->HRESULT override;
@@ -45,6 +46,8 @@ private:
 
 	auto IsOkCollision() const ->bool;
 	auto IsCancelCollision()->bool;
+	auto CreateCharacter()->void;
+	auto SendCreateCharacter(std::string name, int32_t gender, int32_t coatIndex, int32_t pantsIndex, int32_t faceIndex, int32_t shoesIndex) const->void;
 
 private:
 	CharacterCreateNamePopupInfo	_info;

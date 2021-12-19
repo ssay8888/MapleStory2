@@ -10,6 +10,7 @@
 #ifdef _DEBUG
 #pragma comment(lib, "ServerCore\\Debug\\ServerCore.lib")
 #pragma comment(lib, "Protobuf\\Debug\\libprotobufd.lib")
+#pragma comment(lib, "CommonLib\\Debug\\CommonLib.lib")
 #else
 #pragma comment(lib, "ServerCore\\Release\\ServerCore.lib")
 #pragma comment(lib, "Protobuf\\Release\\libprotobuf.lib")
@@ -17,4 +18,5 @@
 // 여기에 미리 컴파일하려는 헤더 추가
 #include "core_pch.h"
 #include "protocol/protocol.pb.h"
+#include "game_contents/game_contents.h"
 #endif //PCH_H

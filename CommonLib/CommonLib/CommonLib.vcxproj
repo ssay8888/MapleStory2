@@ -163,6 +163,7 @@
     <ClInclude Include="files_manager\file_manager.h" />
     <ClInclude Include="files_manager\items\item_data.h" />
     <ClInclude Include="files_manager\items\item_model.h" />
+    <ClInclude Include="game_contents\game_contents.h" />
     <ClInclude Include="string_utils\string_utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +177,7 @@
     <ClCompile Include="files_manager\file_manager.cpp" />
     <ClCompile Include="files_manager\items\item_data.cpp" />
     <ClCompile Include="files_manager\items\item_model.cpp" />
+    <ClCompile Include="game_contents\game_contents.cpp" />
     <ClCompile Include="string_utils\string_utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

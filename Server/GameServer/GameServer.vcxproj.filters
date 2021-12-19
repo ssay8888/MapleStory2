@@ -34,6 +34,12 @@
     <ClCompile Include="packet_handler\login_handler\login_handler.cpp">
       <Filter>packet_handling\login_handler</Filter>
     </ClCompile>
+    <ClCompile Include="game\player.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\equipped\equipped.cpp">
+      <Filter>game\equipped</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="game_session">
@@ -50,6 +56,12 @@
     </Filter>
     <Filter Include="packet_handling\login_handler">
       <UniqueIdentifier>{f6f203d8-442d-4591-bbb8-791dae23bfe2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{74dc05ee-82d1-4aa3-9b37-d91aba839738}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\equipped">
+      <UniqueIdentifier>{a5eb6db2-5da4-4f93-bc51-fb8db276f3ad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +94,12 @@
     </ClInclude>
     <ClInclude Include="packet_handler\login_handler\login_handler.h">
       <Filter>packet_handling\login_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="game\player.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\equipped\equipped.h">
+      <Filter>game\equipped</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

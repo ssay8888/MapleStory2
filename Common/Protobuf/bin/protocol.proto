@@ -16,9 +16,19 @@ message ServerLogin
 	kLoginMessage result = 1;
 }
 
+message ClientCharacterList
+{
+
+}
+
+message ServerCharacterList
+{
+	repeated ViewCharacter characters = 1;
+}
+
 message ClientCreateCharacter
 {
-	string name = 1;
+	bytes name = 1;
 	bool gender = 2;
 	int32 coatIndex = 3;
 	int32 pantsIndex = 4;
@@ -28,5 +38,6 @@ message ClientCreateCharacter
 
 message ServerCreateCharacter
 {
-	kLoginMessage result = 1;
+	kCreateMessage result = 1;
+	ViewCharacter character = 2;
 }

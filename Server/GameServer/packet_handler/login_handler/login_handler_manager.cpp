@@ -16,3 +16,15 @@ void LoginHandlerManager::LoginRequest(const PacketSessionRef& session, const Pr
 {
 	_handle->DoAsync(&LoginHandler::LoginRequest, session, pkt);
 }
+
+void LoginHandlerManager::CharacterListRequest(const PacketSessionRef& session,
+	const Protocol::ClientCharacterList& pkt) const
+{
+	_handle->DoAsync(&LoginHandler::CharacterListRequest, session, pkt);
+}
+
+void LoginHandlerManager::CreateCharacterRequest(const PacketSessionRef& session,
+                                                 const Protocol::ClientCreateCharacter& pkt) const
+{
+	_handle->DoAsync(&LoginHandler::CreateCharacter, session, pkt);
+}

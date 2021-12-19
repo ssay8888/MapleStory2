@@ -14,6 +14,8 @@ public:
 	}
 
 	void LoginResponse(PacketSessionRef& session, Protocol::ServerLogin& pkt);
+	void CharacterListResponse(PacketSessionRef& session, Protocol::ServerCharacterList& pkt);
+	void CreateCharacterResponse(PacketSessionRef& session, Protocol::ServerCreateCharacter& pkt);
 
 private:
 	std::shared_ptr<LoginJobQueue> _login_queue;

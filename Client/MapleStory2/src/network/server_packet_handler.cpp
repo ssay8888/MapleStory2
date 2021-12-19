@@ -16,7 +16,14 @@ bool HandleServerLogin(PacketSessionRef& session, Protocol::ServerLogin& pkt)
 	return true;
 }
 
+bool HandleServerCharacterList(PacketSessionRef& session, Protocol::ServerCharacterList& pkt)
+{
+	LoginManager::GetInstance().CharacterListResponse(session, pkt);
+	return true;
+}
+
 bool HandleServerCreateCharacter(PacketSessionRef& session, Protocol::ServerCreateCharacter& pkt)
 {
-	return false;
+	LoginManager::GetInstance().CreateCharacterResponse(session, pkt);
+	return true;
 }

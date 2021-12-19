@@ -78,9 +78,10 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)Server\GameServer\;$(SolutionDir)Server\ServerCore\;$(SolutionDir)Libraries\Include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Server\GameServer\;$(SolutionDir)Server\ServerCore\;$(SolutionDir)Libraries\Include\;$(SolutionDir)CommonLib\CommonLib\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libraries\Libs\;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\lib\onecore\x64</LibraryPath>
     <OutDir>$(SolutionDir)Binary\</OutDir>
+    <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -157,6 +158,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="game\equipped\equipped.cpp" />
+    <ClCompile Include="game\player.cpp" />
     <ClCompile Include="game_server.cpp" />
     <ClCompile Include="game_session\client_packet_handler.cpp" />
     <ClCompile Include="game_session\game_session.cpp" />
@@ -184,6 +187,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game\equipped\equipped.h" />
+    <ClInclude Include="game\player.h" />
     <ClInclude Include="game_session\client_packet_handler.h" />
     <ClInclude Include="game_session\game_session.h" />
     <ClInclude Include="game_session\game_session_manaeger.h" />

@@ -22,3 +22,4 @@ using namespace std::chrono_literals;
 #include "core_macro.h"
 #include "client_defines.h"
 #include "protocol/protocol.pb.h"
+#include "game_contents/game_contents.h"

@@ -30,6 +30,8 @@ public:
 	auto BindParam(int32_t paramIndex, TIMESTAMP_STRUCT* value, SQLLEN* index) -> bool;
 	auto BindParam(int32_t paramIndex, const WCHAR* str, SQLLEN* index) -> bool;
 	auto BindParam(int32_t paramIndex, const BYTE* bin, int32_t size, SQLLEN* index) -> bool;
+	auto BindParamOutput(int32_t paramIndex, int32_t* value, SQLLEN* index) -> bool;
+	auto BindParamOutput(int32_t paramIndex, int64_t* value, SQLLEN* index) -> bool;
 		 
 	auto BindCol(int32_t columnIndex, bool* value, SQLLEN* index) -> bool;
 	auto BindCol(int32_t columnIndex, float* value, SQLLEN* index) -> bool;
@@ -41,9 +43,10 @@ public:
 	auto BindCol(int32_t columnIndex, TIMESTAMP_STRUCT* value, SQLLEN* index) -> bool;
 	auto BindCol(int32_t columnIndex, WCHAR* str, int32_t size, SQLLEN* index) -> bool;
 	auto BindCol(int32_t columnIndex, BYTE* bin, int32_t size, SQLLEN* index) -> bool;
-
+	
 private:
 	auto BindParam(SQLUSMALLINT paramIndex, SQLSMALLINT cType, SQLSMALLINT sqlType, SQLULEN len, SQLPOINTER ptr, SQLLEN* index) -> bool;
+	auto BindParamOut(SQLUSMALLINT paramIndex, SQLSMALLINT cType, SQLSMALLINT sqlType, SQLULEN len, SQLPOINTER ptr, SQLLEN* index) -> bool;
 	auto BindCol(SQLUSMALLINT columnIndex, SQLSMALLINT cType, SQLULEN len, SQLPOINTER value, SQLLEN* index) -> bool;
 	auto HandleError(SQLRETURN ret) -> void;
 
@@ -51,4 +54,5 @@ private:
 	SQLHDBC			_connection = SQL_NULL_HANDLE;
 	SQLHSTMT		_statement = SQL_NULL_HANDLE;
 };
+
 

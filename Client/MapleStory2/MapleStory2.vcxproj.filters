@@ -142,6 +142,15 @@
     <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_create_name_popup.h">
       <Filter>game_object\ui\character_select\character_beauty</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\equipped\equipped.h">
+      <Filter>game_object\equipped</Filter>
+    </ClInclude>
+    <ClInclude Include="src\managers\characters_manager\characters_manager.h">
+      <Filter>managers\characters_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\managers\characters_manager\character.h">
+      <Filter>managers\characters_manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -279,6 +288,15 @@
     <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_create_name_popup.cpp">
       <Filter>game_object\ui\character_select\character_beauty</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\equipped\equipped.cpp">
+      <Filter>game_object\equipped</Filter>
+    </ClCompile>
+    <ClCompile Include="src\managers\characters_manager\characters_manager.cpp">
+      <Filter>managers\characters_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\managers\characters_manager\character.cpp">
+      <Filter>managers\characters_manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -390,6 +408,15 @@
     </Filter>
     <Filter Include="game_object\pants">
       <UniqueIdentifier>{cab5973f-784f-4ffb-94c9-1dec407a7b7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\equipped">
+      <UniqueIdentifier>{b4ab16d3-3e1f-4818-85d5-71d0d2210ee3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="managers">
+      <UniqueIdentifier>{855cbbc4-d999-48f6-8f60-db3a454495d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="managers\characters_manager">
+      <UniqueIdentifier>{f271d54f-800f-4f8d-ba7d-a043fb40f37e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

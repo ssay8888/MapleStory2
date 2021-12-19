@@ -7,13 +7,16 @@ enum : uint16_t
 {
 	kPktClientLogin = 1000,
 	kPktServerLogin = 1001,
-	kPktClientCreateCharacter = 1002,
-	kPktServerCreateCharacter = 1003,
+	kPktClientCharacterList = 1002,
+	kPktServerCharacterList = 1003,
+	kPktClientCreateCharacter = 1004,
+	kPktServerCreateCharacter = 1005,
 };
 
 // Custom Handlers
 bool HandleInvalid(PacketSessionRef& session, BYTE* buffer, int32_t len);
 bool HandleServerLogin(PacketSessionRef& session, Protocol::ServerLogin& pkt);
+bool HandleServerCharacterList(PacketSessionRef& session, Protocol::ServerCharacterList& pkt);
 bool HandleServerCreateCharacter(PacketSessionRef& session, Protocol::ServerCreateCharacter& pkt);
 
 class ServerPacketHandler
@@ -26,6 +29,7 @@ public:
 			handler = HandleInvalid;
 		}
 		_packet_handler[kPktServerLogin] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::ServerLogin>(HandleServerLogin, session, buffer, len); };
+		_packet_handler[kPktServerCharacterList] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::ServerCharacterList>(HandleServerCharacterList, session, buffer, len); };
 		_packet_handler[kPktServerCreateCharacter] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::ServerCreateCharacter>(HandleServerCreateCharacter, session, buffer, len); };
 	}
 
@@ -35,6 +39,7 @@ public:
 		return _packet_handler[header->id](session, buffer, len);
 	}
 	static SendBufferRef MakeSendBuffer(Protocol::ClientLogin& pkt) { return MakeSendBuffer(pkt, kPktClientLogin); }
+	static SendBufferRef MakeSendBuffer(Protocol::ClientCharacterList& pkt) { return MakeSendBuffer(pkt, kPktClientCharacterList); }
 	static SendBufferRef MakeSendBuffer(Protocol::ClientCreateCharacter& pkt) { return MakeSendBuffer(pkt, kPktClientCreateCharacter); }
 
 private:

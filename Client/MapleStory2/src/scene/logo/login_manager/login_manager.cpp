@@ -13,3 +13,13 @@ void LoginManager::LoginResponse(PacketSessionRef& session, Protocol::ServerLogi
 {
 	_login_queue->DoAsync(&LoginJobQueue::LoginAttempt, session, pkt);
 }
+
+void LoginManager::CharacterListResponse(PacketSessionRef& session, Protocol::ServerCharacterList& pkt)
+{
+	_login_queue->DoAsync(&LoginJobQueue::LoadCharacterList, session, pkt);
+}
+
+void LoginManager::CreateCharacterResponse(PacketSessionRef& session, Protocol::ServerCreateCharacter& pkt)
+{
+	_login_queue->DoAsync(&LoginJobQueue::CreateCharacter, session, pkt);
+}

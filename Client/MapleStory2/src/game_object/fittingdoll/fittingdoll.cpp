@@ -3,7 +3,9 @@
 
 #include "data_reader/data_reader_manager.h"
 #include "src/game_object/coat/coat.h"
+#include "src/game_object/equipped/equipped.h"
 #include "src/game_object/pants/pants.h"
+#include "src/managers/characters_manager/character.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
 #include "src/utility/components/meshes/dynamic/animation/animation.h"
@@ -41,7 +43,7 @@ HRESULT Fittingdoll::NativeConstruct(void* arg)
 	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f - 40.f, -16.07339f) / 150 * 0.58f);
 	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
 
-	_meshs[0]->SetAnimationIndex(1);
+	_character_mesh_list[0]->SetAnimationIndex(1);
 	_current_mesh_num = 1;
 	//_transform_com->SetUpRotation(_float3(1,  1, 0), D3DXToRadian(90));
 	return S_OK;
@@ -69,7 +71,7 @@ int32_t Fittingdoll::Tick(double timeDelta)
 	{
 		_is_idle = false;
 		_new_mesh_num = (_current_mesh_num + 1) % 4;
-		_meshs[0]->SetAnimationIndex(_new_mesh_num);
+		_character_mesh_list[0]->SetAnimationIndex(_new_mesh_num);
 		_current_mesh_num = _new_mesh_num;
 	}
 
@@ -82,8 +84,8 @@ int32_t Fittingdoll::Tick(double timeDelta)
 	//	std::wstring componentTag(L"Com");
 	//	componentTag.append(std::to_wstring(11509999)).append(L"_").append(std::to_wstring(_info.sex));
 	//	auto a = std::static_pointer_cast<MeshDynamic>(CloneComponent(kSceneStatic, prototypeName, componentTag, nullptr));
-	//	_meshs[0]->ChangeSkinnedMesh(a, "PA_");
-	//	_eqp.push_back(a);
+	//	_character_mesh_list[0]->ChangeSkinnedMesh(a, "PA_");
+	//	_eqp_mesh.push_back(a);
 
 
 	//	const auto player = std::static_pointer_cast<Fittingdoll>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));
@@ -98,7 +100,7 @@ int32_t Fittingdoll::Tick(double timeDelta)
 	//	{
 	//		auto coat = coatObject->GetMesh();
 	//		coat->GetNumMeshContainer();
-	//		_meshs[0]->ChangeSkinnedMesh(coat, "CL_");
+	//		_character_mesh_list[0]->ChangeSkinnedMesh(coat, "CL_");
 	//	}
 
 	//}
@@ -109,9 +111,9 @@ int32_t Fittingdoll::Tick(double timeDelta)
 int32_t Fittingdoll::LateTick(const double timeDelta)
 {
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());
-	auto mesh = _meshs[0];
+	auto mesh = _character_mesh_list[0];
 	mesh->PlayAnimation(timeDelta);
-	mesh = _meshs[_current_mesh_num];
+	mesh = _character_mesh_list[_current_mesh_num];
 	mesh->PlayAnimation(timeDelta);
 	return GameObject::LateTick(timeDelta);
 }
@@ -124,7 +126,7 @@ HRESULT Fittingdoll::Render()
 
 	auto result = _shader_com->BeginShader(0);
 
-	auto mesh = _meshs[0];
+	auto mesh = _character_mesh_list[0];
 
 	size_t iNumMeshContainers = mesh->GetNumMeshContainer();
 
@@ -152,7 +154,7 @@ HRESULT Fittingdoll::Render()
 
 auto Fittingdoll::GetCurrentDynamicMesh() -> std::pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>
 {
-	return std::make_pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>(static_cast<std::shared_ptr<MeshDynamic>>(_meshs[0]), static_cast<std::shared_ptr<MeshDynamic>>(_meshs[_current_mesh_num]));
+	return std::make_pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>(static_cast<std::shared_ptr<MeshDynamic>>(_character_mesh_list[0]), static_cast<std::shared_ptr<MeshDynamic>>(_character_mesh_list[_current_mesh_num]));
 }
 
 auto Fittingdoll::GetInfo() const -> FittingdollInfo
@@ -160,22 +162,25 @@ auto Fittingdoll::GetInfo() const -> FittingdollInfo
 	return _info;
 }
 
-auto Fittingdoll::ChangeEqp(const kEqpType type, int32_t itemId)->void
+auto Fittingdoll::ChangeEqp(const GameContents::kEquipeType type, int32_t itemId)->void
 {
 	const auto& instance = ObjectManager::GetInstance();
-	auto iter = _eqp.find(itemId);
-	if (iter != _eqp.end())
+	auto iter = _eqp_mesh.find(itemId);
+	if (iter != _eqp_mesh.end())
 	{
 		switch (type)
 		{
-		case kEqpType::kPa:
-			_meshs[0]->ChangeSkinnedMesh(iter->second, "PA_");
+		case GameContents::kEquipeType::kPants:
+			_character_mesh_list[0]->ChangeSkinnedMesh(iter->second, "PA_");
+			_eqp_list->AddItem(type, itemId);
 			break;
-		case kEqpType::kCl:
-			_meshs[0]->ChangeSkinnedMesh(iter->second, "CL_");
+		case GameContents::kEquipeType::kCoat:
+			_character_mesh_list[0]->ChangeSkinnedMesh(iter->second, "CL_");
+			_eqp_list->AddItem(type, itemId);
 			break;
-		case kEqpType::kSh:
-			_meshs[0]->ChangeSkinnedMesh(iter->second, "SH_");
+		case GameContents::kEquipeType::kShoes:
+			_character_mesh_list[0]->ChangeSkinnedMesh(iter->second, "SH_");
+			_eqp_list->AddItem(type, itemId);
 			break;
 		default:
 			return;
@@ -192,28 +197,30 @@ auto Fittingdoll::ChangeEqp(const kEqpType type, int32_t itemId)->void
 		{
 			switch (type)
 			{
-			case kEqpType::kPa:
-				_meshs[0]->ChangeSkinnedMesh(component, "PA_");
+			case GameContents::kEquipeType::kPants:
+				_character_mesh_list[0]->ChangeSkinnedMesh(component, "PA_");
+				_eqp_list->AddItem(type, itemId);
 				break;
-			case kEqpType::kCl:
-				_meshs[0]->ChangeSkinnedMesh(component, "CL_");
+			case GameContents::kEquipeType::kCoat:
+				_character_mesh_list[0]->ChangeSkinnedMesh(component, "CL_");
+				_eqp_list->AddItem(type, itemId);
 				break;
-			case kEqpType::kSh:
-				_meshs[0]->ChangeSkinnedMesh(component, "SH_");
+			case GameContents::kEquipeType::kShoes:
+				_character_mesh_list[0]->ChangeSkinnedMesh(component, "SH_");
+				_eqp_list->AddItem(type, itemId);
 				break;
-			case kEqpType::kFace:
+			case GameContents::kEquipeType::kFace:
 			{
 				auto texture = DataReaderManager::GetInstance().FindFace(itemId);
-				_meshs[0]->ChangeFaceTexture(texture->diffuse_map[0]);
+				_character_mesh_list[0]->ChangeFaceTexture(texture->diffuse_map[0]);
 				break;
 			}
 			default:
 				return;
 			}
-			_eqp.emplace(itemId, component);
+			_eqp_mesh.emplace(itemId, component);
 
-			const auto player = std::static_pointer_cast<Fittingdoll>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));
-			const auto playerMesh = player->GetCurrentDynamicMesh();
+			const auto playerMesh = this->GetCurrentDynamicMesh();
 			const auto rootFrame = playerMesh.first->GetRootFrame();
 			int32_t index = 0;
 			component->TargetCombinedTransformationMatrices(component, playerMesh.first, component->GetRootFrame(), rootFrame, index);
@@ -221,19 +228,22 @@ auto Fittingdoll::ChangeEqp(const kEqpType type, int32_t itemId)->void
 
 		switch (type)
 		{
-		case kEqpType::kFace:
+		case GameContents::kEquipeType::kFace:
 		{
 			auto texture = DataReaderManager::GetInstance().FindFace(itemId);
-			_meshs[0]->ChangeFaceTexture(texture->diffuse_map[0]);
+			_character_mesh_list[0]->ChangeFaceTexture(texture->diffuse_map[0]);
+			_eqp_list->AddItem(type, itemId);
 			break;
 		}
 		default:
 			return;
 		}
-
 	}
+}
 
-
+auto Fittingdoll::GetEqpList() const -> std::shared_ptr<Equipped>
+{
+	return _eqp_list;
 }
 
 auto Fittingdoll::AddComponents() -> HRESULT
@@ -265,20 +275,20 @@ auto Fittingdoll::AddComponents() -> HRESULT
 		if (FAILED(AddComponent(kScene::kSceneStatic, prototypeName, StringUtils::ConvertCtoW(aniName.c_str()), reinterpret_cast<std::shared_ptr<Component>*>(&mesh), &animation)))
 			return E_FAIL;
 
-		_meshs.push_back(mesh);
+		_character_mesh_list.push_back(mesh);
 	}
 
 	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;
 
 
-	for (auto& mesh : _meshs)
+	for (auto& mesh : _character_mesh_list)
 	{
-		if (_meshs[0] != mesh)
+		if (_character_mesh_list[0] != mesh)
 		{
 			LPD3DXANIMATIONSET		pAS = nullptr;
 			mesh->GetAnimation()->GetAnimationController()->GetAnimationSet(0, &pAS);
-			if (FAILED(_meshs[0]->GetAnimation()->GetAnimationController()->RegisterAnimationSet(pAS)))
+			if (FAILED(_character_mesh_list[0]->GetAnimation()->GetAnimationController()->RegisterAnimationSet(pAS)))
 			{
 				std::cout << "애니메이션 추가도중 실패함" << std::endl;
 			}
@@ -289,12 +299,22 @@ auto Fittingdoll::AddComponents() -> HRESULT
 	if (_info.sex)
 	{
 		auto face = DataReaderManager::GetInstance().FindFace(300003);
-		_meshs[0]->ChangeFaceTexture(face->diffuse_map[0]);
+		_character_mesh_list[0]->ChangeFaceTexture(face->diffuse_map[0]);
 	}
 	else
 	{
 		auto face = DataReaderManager::GetInstance().FindFace(300001);
-		_meshs[0]->ChangeFaceTexture(face->diffuse_map[0]);
+		_character_mesh_list[0]->ChangeFaceTexture(face->diffuse_map[0]);
+	}
+	_eqp_list = Equipped::Create();
+
+	if (_info.character)
+	{
+		auto eqp_list = _info.character->GetEqpList()->GetAllItem();
+		for (auto item : eqp_list)
+		{
+			ChangeEqp(GameContents::EquipeType(item), item);
+		}
 	}
 
 	return S_OK;

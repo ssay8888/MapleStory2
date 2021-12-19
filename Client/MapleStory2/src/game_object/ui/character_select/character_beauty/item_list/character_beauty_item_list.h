@@ -31,6 +31,9 @@ public:
 	auto Render(std::shared_ptr<Shader> shader) const->HRESULT;
 	auto Clone(void* arg)->std::shared_ptr<GameObject> override;
 	static auto Create(CreateItemListTextureInfo* arg)->std::shared_ptr<CharacterBeautyItemList>;
+
+public:
+	auto InitEqp()->void;
 	
 private:
 	auto AddComponents()->HRESULT;

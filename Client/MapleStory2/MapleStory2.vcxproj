@@ -179,6 +179,7 @@
     <ClInclude Include="src\game_object\camera\camera_free.h" />
     <ClInclude Include="src\game_object\coat\coat.h" />
     <ClInclude Include="src\game_object\effect\effect.h" />
+    <ClInclude Include="src\game_object\equipped\equipped.h" />
     <ClInclude Include="src\game_object\fittingdoll\fittingdoll.h" />
     <ClInclude Include="src\game_object\item\item.h" />
     <ClInclude Include="src\game_object\map\cube\map_object.h" />
@@ -202,6 +203,8 @@
     <ClInclude Include="src\game_object\ui\login\text_box_ui.h" />
     <ClInclude Include="src\game_object\ui\ui.h" />
     <ClInclude Include="src\main\main_app.h" />
+    <ClInclude Include="src\managers\characters_manager\character.h" />
+    <ClInclude Include="src\managers\characters_manager\characters_manager.h" />
     <ClInclude Include="src\network\send_manager.h" />
     <ClInclude Include="src\network\server_packet_handler.h" />
     <ClInclude Include="src\network\server_session.h" />
@@ -232,12 +235,14 @@
     </ClCompile>
     <ClCompile Include="protocol\struct.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
     </ClCompile>
     <ClCompile Include="src\common\xml\map_parser.cpp" />
     <ClCompile Include="src\game_object\back_ground\back_ground.cpp" />
     <ClCompile Include="src\game_object\camera\camera_free.cpp" />
     <ClCompile Include="src\game_object\coat\coat.cpp" />
     <ClCompile Include="src\game_object\effect\effect.cpp" />
+    <ClCompile Include="src\game_object\equipped\equipped.cpp" />
     <ClCompile Include="src\game_object\fittingdoll\fittingdoll.cpp" />
     <ClCompile Include="src\game_object\item\item.cpp" />
     <ClCompile Include="src\game_object\map\cube\map_object.cpp" />
@@ -261,6 +266,8 @@
     <ClCompile Include="src\game_object\ui\login\text_box_ui.cpp" />
     <ClCompile Include="src\game_object\ui\ui.cpp" />
     <ClCompile Include="src\main\main_app.cpp" />
+    <ClCompile Include="src\managers\characters_manager\character.cpp" />
+    <ClCompile Include="src\managers\characters_manager\characters_manager.cpp" />
     <ClCompile Include="src\network\send_manager.cpp" />
     <ClCompile Include="src\network\server_packet_handler.cpp" />
     <ClCompile Include="src\network\server_session.cpp" />

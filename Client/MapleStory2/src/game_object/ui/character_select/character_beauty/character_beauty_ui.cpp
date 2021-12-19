@@ -193,6 +193,7 @@ auto CharacterBeautyUi::AddComponents() -> HRESULT
 	popup_info.textbox_info.font_info.Height = 11;
 	popup_info.textbox_info.font_info.Width = 9;
 	popup_info.textbox_info.font_info.Weight = FW_NORMAL;
+	popup_info.sex = _sex_select;
 	_create_name_popup = CharacterCreateNamePopup::Create(&popup_info);
 	return S_OK;
 }

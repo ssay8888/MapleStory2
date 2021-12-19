@@ -135,19 +135,6 @@ auto CharacterBeautySelectSex::ChangeButtonState(const kCreateSexBtnState state)
 	_state = state;
 }
 
-auto CharacterBeautySelectSex::SendCreateCharacter(std::string name, int32_t gender, int32_t coatIndex,
-	int32_t pantsIndex, int32_t faceIndex, int32_t shoesIndex)
-{
-	Protocol::ClientCreateCharacter data;
-	data.set_name(name);
-	data.set_gender(gender);
-	data.set_coatindex(coatIndex);
-	data.set_pantsindex(pantsIndex);
-	data.set_faceindex(faceIndex);
-	data.set_shoesindex(shoesIndex);
-	SendManager::GetInstance().Push(ServerPacketHandler::MakeSendBuffer(data));
-}
-
 auto CharacterBeautySelectSex::AddComponents() -> HRESULT
 {
 	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))

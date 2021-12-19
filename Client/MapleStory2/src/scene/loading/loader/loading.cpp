@@ -99,10 +99,11 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Weapon"), Item::Create(_graphic_device))))
 		return E_FAIL;
+
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Coat"), Coat::Create(_graphic_device))))
 		return E_FAIL;
 
-	//if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Pants"), Pants::Create(_graphic_device))))
+	//if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Pants"), Pants::Crdjeleate(_graphic_device))))
 	//	return E_FAIL;
 
 	//if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_Man"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Player/"), TEXT("man.x")))))
@@ -156,8 +157,14 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 	}
 
 	MapManager::GetInstance().LoadCharacterInstance(kSceneCharacterSelect);
-	LoadCharacterSelectUi();
-	LoadCharacterBeautyUi();
+	if (FAILED(LoadCharacterSelectUi()))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(LoadCharacterBeautyUi()))
+	{
+		return E_FAIL;
+	}
 
 	auto models = DataReaderManager::GetInstance().AllItemModel();
 

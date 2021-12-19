@@ -16,12 +16,14 @@ public:
 	{
 		_float3 pos;
 		_float3 size;
+		int32_t index;
 	};
 	auto NativeConstructPrototype()->HRESULT override;
 	auto NativeConstruct(void* arg)->HRESULT override;
 	auto Tick(double timeDelta)->int32_t override;
 	auto LateTick(double timeDelta)->int32_t override;
 	auto Render()->HRESULT override;
+	auto DrawCharacterInfo()->void;
 	auto Render(std::shared_ptr<Shader> shader)->HRESULT;
 	auto Clone(void* arg)->std::shared_ptr<GameObject> override;
 	static auto Create(SelectItemInfo* arg)->std::shared_ptr<CharacterSelectItem>;

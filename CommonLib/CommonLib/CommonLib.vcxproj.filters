@@ -16,6 +16,9 @@
     <Filter Include="string_utils">
       <UniqueIdentifier>{e4f71ea6-1471-4732-bec7-78ad2930ee3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game_contents">
+      <UniqueIdentifier>{b73c6a2b-ec90-4e53-b1d4-732327afc39a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common_pch.h">
@@ -36,6 +39,9 @@
     <ClInclude Include="string_utils\string_utils.h">
       <Filter>string_utils</Filter>
     </ClInclude>
+    <ClInclude Include="game_contents\game_contents.h">
+      <Filter>game_contents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="common_pch.cpp">
@@ -55,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="string_utils\string_utils.cpp">
       <Filter>string_utils</Filter>
+    </ClCompile>
+    <ClCompile Include="game_contents\game_contents.cpp">
+      <Filter>game_contents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

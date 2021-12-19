@@ -1,10 +1,16 @@
 #include "c_pch.h"
 #include "character_create_name_popup.h"
 
+#include "src/game_object/equipped/equipped.h"
+#include "src/game_object/fittingdoll/fittingdoll.h"
+#include "src/network/send_manager.h"
+#include "src/network/server_packet_handler.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
+#include "src/utility/game_objects/manager/object_manager.h"
+#include "string_utils/string_utils.h"
 
 CharacterCreateNamePopup::CharacterCreateNamePopup():
 	TextBoxUi(GraphicDevice::GetInstance().GetDevice()),
@@ -55,8 +61,12 @@ int32_t CharacterCreateNamePopup::Tick(double timeDelta)
 			{
 				SetFocus(false);
 			}
+			if (IsOkCollision())
+			{
+				CreateCharacter();
 
-			if (IsCancelCollision())
+			}
+			else if (IsCancelCollision())
 			{
 				ChangeShow(false);
 			}
@@ -195,4 +205,33 @@ auto CharacterCreateNamePopup::IsCancelCollision() -> bool
 		return true;
 	}
 	return false;
+}
+
+auto CharacterCreateNamePopup::CreateCharacter()->void
+{
+	const auto playerObject = std::static_pointer_cast<Fittingdoll>(
+		ObjectManager::GetInstance().GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));
+
+	auto eqpList = playerObject->GetEqpList();
+
+	
+	SendCreateCharacter(StringUtils::ConvertWtoC(_contents.c_str()), playerObject->GetInfo().sex,
+		eqpList->FindItem(GameContents::kEquipeType::kCoat),
+		eqpList->FindItem(GameContents::kEquipeType::kPants),
+		eqpList->FindItem(GameContents::kEquipeType::kFace),
+		eqpList->FindItem(GameContents::kEquipeType::kShoes));
+
+}
+
+auto CharacterCreateNamePopup::SendCreateCharacter(std::string name, int32_t gender, int32_t coatIndex,
+                                                   int32_t pantsIndex, int32_t faceIndex, int32_t shoesIndex) const->void
+{
+	Protocol::ClientCreateCharacter data;
+	data.set_name(name.c_str());
+	data.set_gender(gender);
+	data.set_coatindex(coatIndex);
+	data.set_pantsindex(pantsIndex);
+	data.set_faceindex(faceIndex);
+	data.set_shoesindex(shoesIndex);
+	SendManager::GetInstance().Push(ServerPacketHandler::MakeSendBuffer(data));
 }

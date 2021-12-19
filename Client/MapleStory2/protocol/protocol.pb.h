@@ -48,7 +48,7 @@ struct TableStruct_protocol_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[4]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[6]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -56,12 +56,18 @@ struct TableStruct_protocol_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_protocol_2eproto;
 namespace Protocol {
+class ClientCharacterList;
+struct ClientCharacterListDefaultTypeInternal;
+extern ClientCharacterListDefaultTypeInternal _ClientCharacterList_default_instance_;
 class ClientCreateCharacter;
 struct ClientCreateCharacterDefaultTypeInternal;
 extern ClientCreateCharacterDefaultTypeInternal _ClientCreateCharacter_default_instance_;
 class ClientLogin;
 struct ClientLoginDefaultTypeInternal;
 extern ClientLoginDefaultTypeInternal _ClientLogin_default_instance_;
+class ServerCharacterList;
+struct ServerCharacterListDefaultTypeInternal;
+extern ServerCharacterListDefaultTypeInternal _ServerCharacterList_default_instance_;
 class ServerCreateCharacter;
 struct ServerCreateCharacterDefaultTypeInternal;
 extern ServerCreateCharacterDefaultTypeInternal _ServerCreateCharacter_default_instance_;
@@ -70,8 +76,10 @@ struct ServerLoginDefaultTypeInternal;
 extern ServerLoginDefaultTypeInternal _ServerLogin_default_instance_;
 }  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
+template<> ::Protocol::ClientCharacterList* Arena::CreateMaybeMessage<::Protocol::ClientCharacterList>(Arena*);
 template<> ::Protocol::ClientCreateCharacter* Arena::CreateMaybeMessage<::Protocol::ClientCreateCharacter>(Arena*);
 template<> ::Protocol::ClientLogin* Arena::CreateMaybeMessage<::Protocol::ClientLogin>(Arena*);
+template<> ::Protocol::ServerCharacterList* Arena::CreateMaybeMessage<::Protocol::ServerCharacterList>(Arena*);
 template<> ::Protocol::ServerCreateCharacter* Arena::CreateMaybeMessage<::Protocol::ServerCreateCharacter>(Arena*);
 template<> ::Protocol::ServerLogin* Arena::CreateMaybeMessage<::Protocol::ServerLogin>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -380,6 +388,266 @@ class ServerLogin final :
 };
 // -------------------------------------------------------------------
 
+class ClientCharacterList final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.ClientCharacterList) */ {
+ public:
+  inline ClientCharacterList() : ClientCharacterList(nullptr) {}
+  ~ClientCharacterList() override;
+  explicit constexpr ClientCharacterList(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  ClientCharacterList(const ClientCharacterList& from);
+  ClientCharacterList(ClientCharacterList&& from) noexcept
+    : ClientCharacterList() {
+    *this = ::std::move(from);
+  }
+
+  inline ClientCharacterList& operator=(const ClientCharacterList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ClientCharacterList& operator=(ClientCharacterList&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ClientCharacterList& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ClientCharacterList* internal_default_instance() {
+    return reinterpret_cast<const ClientCharacterList*>(
+               &_ClientCharacterList_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(ClientCharacterList& a, ClientCharacterList& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ClientCharacterList* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ClientCharacterList* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ClientCharacterList* New() const final {
+    return new ClientCharacterList();
+  }
+
+  ClientCharacterList* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<ClientCharacterList>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const ClientCharacterList& from);
+  void MergeFrom(const ClientCharacterList& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ClientCharacterList* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.ClientCharacterList";
+  }
+  protected:
+  explicit ClientCharacterList(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Protocol.ClientCharacterList)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ServerCharacterList final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.ServerCharacterList) */ {
+ public:
+  inline ServerCharacterList() : ServerCharacterList(nullptr) {}
+  ~ServerCharacterList() override;
+  explicit constexpr ServerCharacterList(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  ServerCharacterList(const ServerCharacterList& from);
+  ServerCharacterList(ServerCharacterList&& from) noexcept
+    : ServerCharacterList() {
+    *this = ::std::move(from);
+  }
+
+  inline ServerCharacterList& operator=(const ServerCharacterList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ServerCharacterList& operator=(ServerCharacterList&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ServerCharacterList& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ServerCharacterList* internal_default_instance() {
+    return reinterpret_cast<const ServerCharacterList*>(
+               &_ServerCharacterList_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(ServerCharacterList& a, ServerCharacterList& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ServerCharacterList* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ServerCharacterList* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ServerCharacterList* New() const final {
+    return new ServerCharacterList();
+  }
+
+  ServerCharacterList* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<ServerCharacterList>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const ServerCharacterList& from);
+  void MergeFrom(const ServerCharacterList& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ServerCharacterList* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.ServerCharacterList";
+  }
+  protected:
+  explicit ServerCharacterList(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCharactersFieldNumber = 1,
+  };
+  // repeated .Protocol.ViewCharacter characters = 1;
+  int characters_size() const;
+  private:
+  int _internal_characters_size() const;
+  public:
+  void clear_characters();
+  ::Protocol::ViewCharacter* mutable_characters(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::ViewCharacter >*
+      mutable_characters();
+  private:
+  const ::Protocol::ViewCharacter& _internal_characters(int index) const;
+  ::Protocol::ViewCharacter* _internal_add_characters();
+  public:
+  const ::Protocol::ViewCharacter& characters(int index) const;
+  ::Protocol::ViewCharacter* add_characters();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::ViewCharacter >&
+      characters() const;
+
+  // @@protoc_insertion_point(class_scope:Protocol.ServerCharacterList)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::ViewCharacter > characters_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ClientCreateCharacter final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.ClientCreateCharacter) */ {
  public:
@@ -424,7 +692,7 @@ class ClientCreateCharacter final :
                &_ClientCreateCharacter_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    4;
 
   friend void swap(ClientCreateCharacter& a, ClientCreateCharacter& b) {
     a.Swap(&b);
@@ -495,7 +763,7 @@ class ClientCreateCharacter final :
     kFaceIndexFieldNumber = 5,
     kShoesIndexFieldNumber = 6,
   };
-  // string name = 1;
+  // bytes name = 1;
   void clear_name();
   const std::string& name() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -616,7 +884,7 @@ class ServerCreateCharacter final :
                &_ServerCreateCharacter_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    5;
 
   friend void swap(ServerCreateCharacter& a, ServerCreateCharacter& b) {
     a.Swap(&b);
@@ -680,15 +948,34 @@ class ServerCreateCharacter final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kCharacterFieldNumber = 2,
     kResultFieldNumber = 1,
   };
-  // .Protocol.kLoginMessage result = 1;
-  void clear_result();
-  ::Protocol::kLoginMessage result() const;
-  void set_result(::Protocol::kLoginMessage value);
+  // .Protocol.ViewCharacter character = 2;
+  bool has_character() const;
   private:
-  ::Protocol::kLoginMessage _internal_result() const;
-  void _internal_set_result(::Protocol::kLoginMessage value);
+  bool _internal_has_character() const;
+  public:
+  void clear_character();
+  const ::Protocol::ViewCharacter& character() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::Protocol::ViewCharacter* release_character();
+  ::Protocol::ViewCharacter* mutable_character();
+  void set_allocated_character(::Protocol::ViewCharacter* character);
+  private:
+  const ::Protocol::ViewCharacter& _internal_character() const;
+  ::Protocol::ViewCharacter* _internal_mutable_character();
+  public:
+  void unsafe_arena_set_allocated_character(
+      ::Protocol::ViewCharacter* character);
+  ::Protocol::ViewCharacter* unsafe_arena_release_character();
+
+  // .Protocol.kCreateMessage result = 1;
+  void clear_result();
+  ::Protocol::kCreateMessage result() const;
+  void set_result(::Protocol::kCreateMessage value);
+  private:
+  ::Protocol::kCreateMessage _internal_result() const;
+  void _internal_set_result(::Protocol::kCreateMessage value);
   public:
 
   // @@protoc_insertion_point(class_scope:Protocol.ServerCreateCharacter)
@@ -698,6 +985,7 @@ class ServerCreateCharacter final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::Protocol::ViewCharacter* character_;
   int result_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_protocol_2eproto;
@@ -874,9 +1162,53 @@ inline void ServerLogin::set_result(::Protocol::kLoginMessage value) {
 
 // -------------------------------------------------------------------
 
+// ClientCharacterList
+
+// -------------------------------------------------------------------
+
+// ServerCharacterList
+
+// repeated .Protocol.ViewCharacter characters = 1;
+inline int ServerCharacterList::_internal_characters_size() const {
+  return characters_.size();
+}
+inline int ServerCharacterList::characters_size() const {
+  return _internal_characters_size();
+}
+inline ::Protocol::ViewCharacter* ServerCharacterList::mutable_characters(int index) {
+  // @@protoc_insertion_point(field_mutable:Protocol.ServerCharacterList.characters)
+  return characters_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::ViewCharacter >*
+ServerCharacterList::mutable_characters() {
+  // @@protoc_insertion_point(field_mutable_list:Protocol.ServerCharacterList.characters)
+  return &characters_;
+}
+inline const ::Protocol::ViewCharacter& ServerCharacterList::_internal_characters(int index) const {
+  return characters_.Get(index);
+}
+inline const ::Protocol::ViewCharacter& ServerCharacterList::characters(int index) const {
+  // @@protoc_insertion_point(field_get:Protocol.ServerCharacterList.characters)
+  return _internal_characters(index);
+}
+inline ::Protocol::ViewCharacter* ServerCharacterList::_internal_add_characters() {
+  return characters_.Add();
+}
+inline ::Protocol::ViewCharacter* ServerCharacterList::add_characters() {
+  // @@protoc_insertion_point(field_add:Protocol.ServerCharacterList.characters)
+  return _internal_add_characters();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::ViewCharacter >&
+ServerCharacterList::characters() const {
+  // @@protoc_insertion_point(field_list:Protocol.ServerCharacterList.characters)
+  return characters_;
+}
+
+// -------------------------------------------------------------------
+
 // ClientCreateCharacter
 
-// string name = 1;
+// bytes name = 1;
 inline void ClientCreateCharacter::clear_name() {
   name_.ClearToEmpty();
 }
@@ -888,7 +1220,7 @@ template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void ClientCreateCharacter::set_name(ArgT0&& arg0, ArgT... args) {
  
- name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+ name_.SetBytes(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
   // @@protoc_insertion_point(field_set:Protocol.ClientCreateCharacter.name)
 }
 inline std::string* ClientCreateCharacter::mutable_name() {
@@ -1025,29 +1357,112 @@ inline void ClientCreateCharacter::set_shoesindex(::PROTOBUF_NAMESPACE_ID::int32
 
 // ServerCreateCharacter
 
-// .Protocol.kLoginMessage result = 1;
+// .Protocol.kCreateMessage result = 1;
 inline void ServerCreateCharacter::clear_result() {
   result_ = 0;
 }
-inline ::Protocol::kLoginMessage ServerCreateCharacter::_internal_result() const {
-  return static_cast< ::Protocol::kLoginMessage >(result_);
+inline ::Protocol::kCreateMessage ServerCreateCharacter::_internal_result() const {
+  return static_cast< ::Protocol::kCreateMessage >(result_);
 }
-inline ::Protocol::kLoginMessage ServerCreateCharacter::result() const {
+inline ::Protocol::kCreateMessage ServerCreateCharacter::result() const {
   // @@protoc_insertion_point(field_get:Protocol.ServerCreateCharacter.result)
   return _internal_result();
 }
-inline void ServerCreateCharacter::_internal_set_result(::Protocol::kLoginMessage value) {
+inline void ServerCreateCharacter::_internal_set_result(::Protocol::kCreateMessage value) {
   
   result_ = value;
 }
-inline void ServerCreateCharacter::set_result(::Protocol::kLoginMessage value) {
+inline void ServerCreateCharacter::set_result(::Protocol::kCreateMessage value) {
   _internal_set_result(value);
   // @@protoc_insertion_point(field_set:Protocol.ServerCreateCharacter.result)
+}
+
+// .Protocol.ViewCharacter character = 2;
+inline bool ServerCreateCharacter::_internal_has_character() const {
+  return this != internal_default_instance() && character_ != nullptr;
+}
+inline bool ServerCreateCharacter::has_character() const {
+  return _internal_has_character();
+}
+inline const ::Protocol::ViewCharacter& ServerCreateCharacter::_internal_character() const {
+  const ::Protocol::ViewCharacter* p = character_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::ViewCharacter&>(
+      ::Protocol::_ViewCharacter_default_instance_);
+}
+inline const ::Protocol::ViewCharacter& ServerCreateCharacter::character() const {
+  // @@protoc_insertion_point(field_get:Protocol.ServerCreateCharacter.character)
+  return _internal_character();
+}
+inline void ServerCreateCharacter::unsafe_arena_set_allocated_character(
+    ::Protocol::ViewCharacter* character) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(character_);
+  }
+  character_ = character;
+  if (character) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.ServerCreateCharacter.character)
+}
+inline ::Protocol::ViewCharacter* ServerCreateCharacter::release_character() {
+  
+  ::Protocol::ViewCharacter* temp = character_;
+  character_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protocol::ViewCharacter* ServerCreateCharacter::unsafe_arena_release_character() {
+  // @@protoc_insertion_point(field_release:Protocol.ServerCreateCharacter.character)
+  
+  ::Protocol::ViewCharacter* temp = character_;
+  character_ = nullptr;
+  return temp;
+}
+inline ::Protocol::ViewCharacter* ServerCreateCharacter::_internal_mutable_character() {
+  
+  if (character_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::ViewCharacter>(GetArenaForAllocation());
+    character_ = p;
+  }
+  return character_;
+}
+inline ::Protocol::ViewCharacter* ServerCreateCharacter::mutable_character() {
+  // @@protoc_insertion_point(field_mutable:Protocol.ServerCreateCharacter.character)
+  return _internal_mutable_character();
+}
+inline void ServerCreateCharacter::set_allocated_character(::Protocol::ViewCharacter* character) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(character_);
+  }
+  if (character) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<
+            ::PROTOBUF_NAMESPACE_ID::MessageLite>::GetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(character));
+    if (message_arena != submessage_arena) {
+      character = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, character, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  character_ = character;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.ServerCreateCharacter.character)
 }
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
