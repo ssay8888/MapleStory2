@@ -18,7 +18,7 @@
 PROTOBUF_PRAGMA_INIT_SEG
 namespace Protocol {
 }  // namespace Protocol
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_login_5fenum_2eproto[2];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_login_5fenum_2eproto[3];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_login_5fenum_2eproto = nullptr;
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_login_5fenum_2eproto::offsets[1] = {};
 static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = nullptr;
@@ -29,11 +29,12 @@ const char descriptor_table_protodef_login_5fenum_2eproto[] PROTOBUF_SECTION_VAR
   "ssage\022\007\n\003kOk\020\000\022\016\n\nkIdInvalid\020\001\022\r\n\tkPwInv"
   "lid\020\002\022\025\n\021kAlreadyConnected\020\003*6\n\016kCreateM"
   "essage\022\022\n\016kCreateSuccess\020\000\022\020\n\014kDuplicati"
-  "on\020\001b\006proto3"
+  "on\020\001*@\n\027kCharacterSelectMessage\022\022\n\016kSele"
+  "ctSuccess\020\000\022\021\n\rkSelectFailed\020\001b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_login_5fenum_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_login_5fenum_2eproto = {
-  false, false, 172, descriptor_table_protodef_login_5fenum_2eproto, "login_enum.proto", 
+  false, false, 238, descriptor_table_protodef_login_5fenum_2eproto, "login_enum.proto", 
   &descriptor_table_login_5fenum_2eproto_once, nullptr, 0, 0,
   schemas, file_default_instances, TableStruct_login_5fenum_2eproto::offsets,
   nullptr, file_level_enum_descriptors_login_5fenum_2eproto, file_level_service_descriptors_login_5fenum_2eproto,
@@ -66,6 +67,20 @@ const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kCreateMessage_descriptor() {
   return file_level_enum_descriptors_login_5fenum_2eproto[1];
 }
 bool kCreateMessage_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kCharacterSelectMessage_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_login_5fenum_2eproto);
+  return file_level_enum_descriptors_login_5fenum_2eproto[2];
+}
+bool kCharacterSelectMessage_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:

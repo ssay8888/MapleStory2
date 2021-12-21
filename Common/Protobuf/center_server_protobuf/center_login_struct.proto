@@ -1,0 +1,4 @@
+syntax = "proto3";
+package Protocol;
+
+import "center_login_enum.proto";

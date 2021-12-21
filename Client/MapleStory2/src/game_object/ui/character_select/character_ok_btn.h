@@ -25,7 +25,9 @@ public:
 	auto Clone(void* arg)->std::shared_ptr<GameObject> override;
 	static auto Create(OkBtnInfo* arg)->std::shared_ptr<CharacterOkBtn>;
 
+public:
 	auto IsCollision() const ->bool;
+	auto SelectCharacter(int32_t index)const->bool;
 
 private:
 	enum kOkBtnState

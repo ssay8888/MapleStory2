@@ -30,3 +30,9 @@ auto LoginServerPacketHandler::HandleLoginServerCreateCharacter(PacketSessionRef
 	LoginManager::GetInstance().CreateCharacterResponse(session, pkt);
 	return true;
 }
+
+auto LoginServerPacketHandler::HandleLoginServerCharacterSelect(PacketSessionRef& session,
+	Protocol::LoginServerCharacterSelect& pkt) -> bool
+{
+	return true;
+}

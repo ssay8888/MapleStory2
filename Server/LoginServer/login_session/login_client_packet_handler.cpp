@@ -26,5 +26,12 @@ bool LoginClientPacketHandler::HandleLoginClientCharacterList(PacketSessionRef& 
 bool LoginClientPacketHandler::HandleLoginClientCreateCharacter(PacketSessionRef& session, Protocol::LoginClientCreateCharacter& pkt)
 {
 	LoginHandlerManager::GetInstance().CreateCharacterRequest(session, pkt);
-	return false;
+	return true;
+}
+
+auto LoginClientPacketHandler::HandleLoginClientCharacterSelect(PacketSessionRef& session,
+	Protocol::LoginClientCharacterSelect& pkt) -> bool
+{
+	LoginHandlerManager::GetInstance().CharacterSelectRequest(session, pkt);
+	return true;
 }

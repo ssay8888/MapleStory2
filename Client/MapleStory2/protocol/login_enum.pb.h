@@ -108,6 +108,31 @@ inline bool kCreateMessage_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kCreateMessage>(
     kCreateMessage_descriptor(), name, value);
 }
+enum kCharacterSelectMessage : int {
+  kSelectSuccess = 0,
+  kSelectFailed = 1,
+  kCharacterSelectMessage_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  kCharacterSelectMessage_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool kCharacterSelectMessage_IsValid(int value);
+constexpr kCharacterSelectMessage kCharacterSelectMessage_MIN = kSelectSuccess;
+constexpr kCharacterSelectMessage kCharacterSelectMessage_MAX = kSelectFailed;
+constexpr int kCharacterSelectMessage_ARRAYSIZE = kCharacterSelectMessage_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kCharacterSelectMessage_descriptor();
+template<typename T>
+inline const std::string& kCharacterSelectMessage_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, kCharacterSelectMessage>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function kCharacterSelectMessage_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    kCharacterSelectMessage_descriptor(), enum_t_value);
+}
+inline bool kCharacterSelectMessage_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, kCharacterSelectMessage* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kCharacterSelectMessage>(
+    kCharacterSelectMessage_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -139,6 +164,11 @@ template <> struct is_proto_enum< ::Protocol::kCreateMessage> : ::std::true_type
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kCreateMessage>() {
   return ::Protocol::kCreateMessage_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::kCharacterSelectMessage> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kCharacterSelectMessage>() {
+  return ::Protocol::kCharacterSelectMessage_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

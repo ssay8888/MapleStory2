@@ -23,5 +23,9 @@ public:
 #pragma region CreateCharacter
 	void CreateCharacter(PacketSessionRef session, Protocol::LoginClientCreateCharacter pkt);
 #pragma endregion
+
+#pragma region SelectCharacter
+	void SelectCharacter(PacketSessionRef session, Protocol::LoginClientCharacterSelect pkt);
+#pragma endregion
 }; 
 

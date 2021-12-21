@@ -18,6 +18,10 @@ public:
 public:
 	auto AddTimers(const wchar_t* timerTag)->HRESULT;
 	auto ComputeTimeDelta(const wchar_t* timerTag)->float_t;
+	auto GetTimeDelta(const wchar_t* timerTag)->float_t;
+
+	auto IsTimeCheck(const wchar_t* timerTag, float msTime)->bool;
+	auto ResetTime(const wchar_t* timerTag)->void;
 
 
 private:

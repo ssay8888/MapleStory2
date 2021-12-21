@@ -153,7 +153,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="center_client_session\center_login_server_packet_handler.cpp" />
+    <ClCompile Include="center_client_session\center_client_session.cpp" />
     <ClCompile Include="game_server.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="game_server_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -163,24 +166,57 @@
     <ClCompile Include="game_session\game_client_packet_hadneler.cpp" />
     <ClCompile Include="game_session\game_session.cpp" />
     <ClCompile Include="game_session\game_session_manager.cpp" />
+    <ClCompile Include="managers\auth_manager\game_auth_manager.cpp" />
+    <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler.cpp" />
+    <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.cpp" />
+    <ClCompile Include="protocol\center_login_enum.pb.cc">
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="protocol\center_login_protocol.pb.cc">
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="protocol\center_login_struct.pb.cc">
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="protocol\game_enum.pb.cc">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="protocol\game_protocol.pb.cc">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="protocol\game_struct.pb.cc">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="center_client_session\center_login_server_packet_handler.h" />
+    <ClInclude Include="center_client_session\center_client_session.h" />
+    <ClInclude Include="game_server.h" />
     <ClInclude Include="game_server_pch.h" />
     <ClInclude Include="game_session\game_client_packet_handler.h" />
     <ClInclude Include="game_session\game_session.h" />
     <ClInclude Include="game_session\game_session_manager.h" />
+    <ClInclude Include="managers\auth_manager\game_auth_manager.h" />
+    <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler.h" />
+    <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.h" />
+    <ClInclude Include="protocol\center_login_enum.pb.h" />
+    <ClInclude Include="protocol\center_login_protocol.pb.h" />
+    <ClInclude Include="protocol\center_login_struct.pb.h" />
     <ClInclude Include="protocol\game_enum.pb.h" />
     <ClInclude Include="protocol\game_protocol.pb.h" />
     <ClInclude Include="protocol\game_struct.pb.h" />

@@ -21,8 +21,12 @@ class Service : public std::enable_shared_from_this<Service>
 public:
 	enum class kServerType
 	{
-		kLogin,
-		kGame
+		kClientLogin,
+		kServerLogin,
+		kCenterServerLogin,
+		kServerGame,
+		kCenterClientGame
+
 	};
 
 	Service(ServiceType type, NetAddress address, IocpCoreRef core, SessionFactory factory, kServerType serverType, int32_t maxSessionCount = 1);

@@ -28,6 +28,21 @@ auto Timer::UpdateTimeManager() -> void
 
 
 	_delta_time = static_cast<float>(_end.QuadPart - _begin.QuadPart) / _cpu_tick.QuadPart;
-
+	_total_delta_time += _delta_time;
 	_begin = _end;
+}
+
+auto Timer::IsTimeCheck(float msTime) -> bool
+{
+	UpdateTimeManager();
+	if (_total_delta_time >= msTime)
+	{
+		return true;
+	}
+	return false;
+}
+
+auto Timer::ResetTotalTime() -> void
+{
+	_total_delta_time = 0;
 }

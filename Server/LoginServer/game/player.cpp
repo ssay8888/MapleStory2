@@ -4,7 +4,7 @@
 #include "equipped/equipped.h"
 
 
-Player::Player(const int32_t characterId) :
+Player::Player(const int64_t characterId) :
 	_gender(0),
     _character_id(characterId),
     _face_id(0),
@@ -12,7 +12,7 @@ Player::Player(const int32_t characterId) :
 {
 }
 
-auto Player::GetCharacterId() const -> int32_t
+auto Player::GetCharacterId() const -> int64_t
 {
 	return _character_id;
 }

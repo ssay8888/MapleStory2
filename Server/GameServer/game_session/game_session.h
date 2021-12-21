@@ -17,7 +17,7 @@ public:
 	auto OnDisconnected() -> void override;
 	auto OnRecvPacket(BYTE* buffer, int32_t len) -> void override;
 	auto OnSend(int32_t len) -> void override;
-
+	
 public:
 	auto GetSessionId() const->int64_t;
 

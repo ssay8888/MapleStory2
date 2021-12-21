@@ -44,13 +44,13 @@ message LoginServerCreateCharacter
 
 message LoginClientCharacterSelect
 {
-	int32 index = 1;
+	int32 characterId = 1;
 }
 
 message LoginServerCharacterSelect
 {
 	kCharacterSelectMessage result = 1;
 	string ip = 2;
-	string port = 3;
-	string auth = 4;
+	int32 port = 3;
+	int64 auth = 4;
 }

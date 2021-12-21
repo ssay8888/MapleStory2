@@ -1,0 +1,37 @@
+syntax = "proto3";
+package Protocol;
+
+import "center_login_enum.proto";
+import "center_login_struct.proto";
+
+message CenterLoginClientInit
+{
+	int64 AuthenticationKey  = 1;
+}
+
+message CenterLoginServerInit
+{
+}
+
+message CenterLoginClientCreateAuth
+{
+	
+}
+
+message CenterLoginServerCreateAuth
+{
+	int64 auth = 1;
+	int64 accountId = 2;
+	int64 characterId = 3;
+}
+
+message CenterLoginClientCheckAuth
+{
+	int64 auth = 1;
+	int64 accountId = 2;
+	int64 characterId = 3;
+}
+message CenterLoginServerCheckAuth
+{
+
+}

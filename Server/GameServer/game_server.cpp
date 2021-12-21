@@ -1,46 +1,32 @@
-ï»¿#include "game_server_pch.h"
+#include "game_server_pch.h"
+#include "game_server.h"
 
-#include "game_session/game_session.h"
-#include "src/network/socket_utils.h"
-#include "src/thread/thread_manager.h"
+#include "center_client_session/center_client_session.h"
+#include "center_client_session/center_login_server_packet_handler.h"
+#include "game_session/game_client_packet_handler.h"
 #include "src/database/db_connection_pool.h"
 #include "src/network/service.h"
+#include "src/network/socket_utils.h"
+#include "src/thread/thread_manager.h"
 
-enum
-{
-	kWorkerTick = 64
-};
-
-static std::atomic<bool> exit_loop = false;
-
-void DoWorkerJob(const ServerServiceRef& service)
-{
-	while (!exit_loop)
-	{
-		LEndTickCount = GetTickCount64() + kWorkerTick;
-
-		// ë„¤íŠ¸ì›Œí¬ ì…ì¶œë ¥ ì²˜ë¦¬
-		service->GetIocpCore()->Dispatch(10);
-		
-		// ì˜ˆì•½ëœ ì¼ê° ì²˜ë¦¬
-		ThreadManager::DistributeReservedJobs();
-
-		// ê¸€ë¡œë²Œ í
-		ThreadManager::DoGlobalQueueWork();
-
-	}
-}
-
-int main()
+void GameServer::GameServerInit()
 {
 	SocketUtils::Init();
+	CenterLoginServerPacketHandler::Init();
+	GameClientPacketHandler::Init();
 	ASSERT_CRASH(DBConnectionPool::GetInstance().Connect(10, L"Driver={SQL Server Native Client 11.0};Server=(localdb)\\MSSQLLocalDB;Database=maplestory2;Trusted_Connection=Yes;"));
+	CreateServerService();
+	CreateClientService();
+}
 
+void GameServer::CreateServerService()
+{
+	//ÇÃ·¹ÀÌ¾î¸¦ ¹Ş´Â °ÔÀÓ¼­¹ö ÇüÅÂ
 	ServerServiceRef service = MakeShared<ServerService>(
 		NetAddress(L"127.0.0.1", 7778),
 		MakeShared<IocpCore>(),
-		MakeShared<GameSession>, // TODO : SessionManager ë“±
-		Service::kServerType::kGame,
+		MakeShared<GameSession>, // TODO : SessionManager µî
+		Service::kServerType::kServerGame,
 		500);
 
 	ASSERT_CRASH(service->Start());
@@ -48,13 +34,53 @@ int main()
 	auto& threadManager = ThreadManager::GetInstance();
 	for (int32_t i = 0; i < 6; i++)
 	{
-		threadManager.Launch([&service]()
+		threadManager.Launch([service, this]()
 			{
-				DoWorkerJob(service);
+				while (!_exit_loop)
+				{
+					LEndTickCount = GetTickCount64() + kWorkerTick;
+
+					// ³×Æ®¿öÅ© ÀÔÃâ·Â Ã³¸®
+					service->GetIocpCore()->Dispatch(10);
+
+					// ¿¹¾àµÈ ÀÏ°¨ Ã³¸®
+					ThreadManager::DistributeReservedJobs();
+
+					// ±Û·Î¹ú Å¥
+					ThreadManager::DoGlobalQueueWork();
+
+				}
 			});
 	}
-	DoWorkerJob(service);
-	exit_loop = true;
-	threadManager.Join();
-	SocketUtils::Clear();
+
+}
+
+void GameServer::CreateClientService()
+{
+	//·Î±×ÀÎ¼­¹ö·Î ¿¬°áµÇ´Â ¼­ºñ½ºÇüÅÂ
+
+	_center_service = MakeShared<ClientService>(
+		NetAddress(L"127.0.0.1", 7779),
+		MakeShared<IocpCore>(),
+		MakeShared<CenterClientSession>, // TODO : SessionManager µî
+		Service::kServerType::kCenterClientGame,
+		1);
+
+	ASSERT_CRASH(_center_service->Start());
+
+	auto& threadManager = ThreadManager::GetInstance();
+	for (int32_t i = 0; i < 2; i++)
+	{
+		threadManager.Launch([this]()
+		{
+			while (!_exit_loop)
+			{
+				LEndTickCount = GetTickCount64() + kWorkerTick;
+
+				_center_service->GetIocpCore()->Dispatch(10);
+				
+			}
+		});
+	}
+
 }

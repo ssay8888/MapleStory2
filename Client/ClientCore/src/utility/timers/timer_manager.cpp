@@ -37,6 +37,39 @@ auto TimerManager::ComputeTimeDelta(const wchar_t* timerTag) -> float_t
 	return timer->GetDeltaTime();
 }
 
+auto TimerManager::GetTimeDelta(const wchar_t* timerTag)->float_t
+{
+	const auto timer = FindTimers(timerTag);
+	if (nullptr == timer)
+	{
+		return 0.0f;
+	}
+
+	return timer->GetDeltaTime();
+}
+
+auto TimerManager::IsTimeCheck(const wchar_t* timerTag, const float msTime) -> bool
+{
+	const auto timer = FindTimers(timerTag);
+	if (nullptr == timer)
+	{
+		return false;
+	}
+
+	return timer->IsTimeCheck(msTime);
+}
+
+auto TimerManager::ResetTime(const wchar_t* timerTag) -> void
+{
+	const auto timer = FindTimers(timerTag);
+	if (nullptr == timer)
+	{
+		return;
+
+	}
+	timer->ResetTotalTime();
+}
+
 auto TimerManager::FindTimers(const wchar_t* timerTag) -> std::shared_ptr<Timer>
 {
 	const auto	iterator = find_if(_timers.begin(), _timers.end(), TagFinder(timerTag));

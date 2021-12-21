@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="game_server.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>main</Filter>
     </ClCompile>
     <ClCompile Include="game_server_pch.cpp">
@@ -25,6 +25,33 @@
     <ClCompile Include="protocol\game_struct.pb.cc">
       <Filter>protocol</Filter>
     </ClCompile>
+    <ClCompile Include="game_server.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\center_login_enum.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\center_login_protocol.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\center_login_struct.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="center_client_session\center_login_server_packet_handler.cpp">
+      <Filter>center_client_session</Filter>
+    </ClCompile>
+    <ClCompile Include="center_client_session\center_client_session.cpp">
+      <Filter>center_client_session</Filter>
+    </ClCompile>
+    <ClCompile Include="managers\auth_manager\game_auth_manager.cpp">
+      <Filter>managers\auth_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler.cpp">
+      <Filter>packet_handling\game_center_client_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.cpp">
+      <Filter>packet_handling\game_center_client_handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -35,6 +62,21 @@
     </Filter>
     <Filter Include="protocol">
       <UniqueIdentifier>{6c75954c-96a9-4ef0-91e7-84eb712cfde1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="center_client_session">
+      <UniqueIdentifier>{bc997915-a626-486b-8b57-c6732b1417af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="managers">
+      <UniqueIdentifier>{8ab1c5e3-0f30-44c6-bd14-91b661ca27c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="managers\auth_manager">
+      <UniqueIdentifier>{3e9791af-144a-4d1e-ab9f-107f36c9982a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="packet_handling">
+      <UniqueIdentifier>{345b1ad6-c76c-4119-bab7-2c43f0d3c66a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="packet_handling\game_center_client_handler">
+      <UniqueIdentifier>{5c45f538-5f25-4151-8943-1e1d9f48ba43}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +100,33 @@
     </ClInclude>
     <ClInclude Include="protocol\game_struct.pb.h">
       <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="game_server.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\center_login_struct.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\center_login_enum.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\center_login_protocol.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="center_client_session\center_login_server_packet_handler.h">
+      <Filter>center_client_session</Filter>
+    </ClInclude>
+    <ClInclude Include="center_client_session\center_client_session.h">
+      <Filter>center_client_session</Filter>
+    </ClInclude>
+    <ClInclude Include="managers\auth_manager\game_auth_manager.h">
+      <Filter>managers\auth_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler.h">
+      <Filter>packet_handling\game_center_client_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.h">
+      <Filter>packet_handling\game_center_client_handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

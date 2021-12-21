@@ -24,3 +24,9 @@ void LoginHandlerManager::CreateCharacterRequest(const PacketSessionRef& session
 {
 	_handle->DoAsync(&LoginHandler::CreateCharacter, session, pkt);
 }
+
+void LoginHandlerManager::CharacterSelectRequest(const PacketSessionRef& session,
+	const Protocol::LoginClientCharacterSelect& pkt) const
+{
+	_handle->DoAsync(&LoginHandler::SelectCharacter, session, pkt);
+}

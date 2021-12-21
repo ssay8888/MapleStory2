@@ -6,6 +6,10 @@
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
 #include <src/system/input/input_device.h>
 
+#include "src/network/login_server_packet_handler.h"
+#include "src/network/send_manager.h"
+#include "src/utility/timers/timer_manager.h"
+
 CharacterOkBtn::CharacterOkBtn() :
 	GameObject(GraphicDevice::GetInstance().GetDevice()),
 	_state()
@@ -121,6 +125,21 @@ auto CharacterOkBtn::IsCollision() const -> bool
 	return false;
 }
 
+auto CharacterOkBtn::SelectCharacter(int32_t index) const -> bool
+{
+	auto& timerManager = TimerManager::GetInstance();
+	constexpr float limitTime = 1.f;
+	if (timerManager.IsTimeCheck(TEXT("OkBtnDelay"), limitTime))
+	{
+		Protocol::LoginClientCharacterSelect sendPkt;
+		sendPkt.set_characterid(index);
+		SendManager::GetInstance().Push(LoginServerPacketHandler::MakeSendBuffer(sendPkt));
+		timerManager.ResetTime(TEXT("OkBtnDelay"));
+		return true;
+	}
+	return false;
+}
+
 auto CharacterOkBtn::AddComponents() -> HRESULT
 {
 	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
@@ -135,6 +154,8 @@ auto CharacterOkBtn::AddComponents() -> HRESULT
 	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SelectItem_Select"), TEXT("Com_Select_Select"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture[kSelect]))))
 		return E_FAIL;
 
+	auto& timerManager = TimerManager::GetInstance();
+	timerManager.AddTimers(TEXT("OkBtnDelay"));
 
 	return S_OK;
 }

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="login_server.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>main</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
@@ -43,6 +43,36 @@
     <ClCompile Include="game\loggedin\login.cpp">
       <Filter>game\loggedin</Filter>
     </ClCompile>
+    <ClCompile Include="login_server.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\center_login_enum.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\center_login_protocol.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\center_login_struct.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="center_server_session\center_login_session_manager.cpp">
+      <Filter>center_server_session</Filter>
+    </ClCompile>
+    <ClCompile Include="center_server_session\center_login_client_packet_handler.cpp">
+      <Filter>center_server_session</Filter>
+    </ClCompile>
+    <ClCompile Include="center_server_session\center_login_session.cpp">
+      <Filter>center_server_session</Filter>
+    </ClCompile>
+    <ClCompile Include="auth_storage\auth_storage.cpp">
+      <Filter>auth_storage</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_handler\center_handler\center_handler.cpp">
+      <Filter>packet_handling\center_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_handler\center_handler\center_handler_manager.cpp">
+      <Filter>packet_handling\center_handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="protocol">
@@ -68,6 +98,15 @@
     </Filter>
     <Filter Include="game\loggedin">
       <UniqueIdentifier>{e564d9fc-5cba-41cc-be66-42e6d512f756}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="center_server_session">
+      <UniqueIdentifier>{a185919c-8f2a-4553-9baf-eb50ad97fc50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="auth_storage">
+      <UniqueIdentifier>{0ae65f61-e3f5-4081-8331-b459f8ea009e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="packet_handling\center_handler">
+      <UniqueIdentifier>{6afc0409-59dc-4653-9bdf-9bbb1bbc689e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -110,18 +149,63 @@
     <ClInclude Include="game\loggedin\login.h">
       <Filter>game\loggedin</Filter>
     </ClInclude>
+    <ClInclude Include="login_server.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\center_login_struct.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\center_login_enum.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\center_login_protocol.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="center_server_session\center_login_client_packet_handler.h">
+      <Filter>center_server_session</Filter>
+    </ClInclude>
+    <ClInclude Include="center_server_session\center_login_session.h">
+      <Filter>center_server_session</Filter>
+    </ClInclude>
+    <ClInclude Include="center_server_session\center_login_session_manaeger.h">
+      <Filter>center_server_session</Filter>
+    </ClInclude>
+    <ClInclude Include="externs.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="auth_storage\auth_storage.h">
+      <Filter>auth_storage</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_handler\center_handler\center_handler.h">
+      <Filter>packet_handling\center_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_handler\center_handler\center_handler_manager.h">
+      <Filter>packet_handling\center_handler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Common\Protobuf\bin\login_enum.proto">
       <Filter>protocol</Filter>
     </None>
-    <None Include="..\..\Common\Protobuf\bin\gen_packet.bat">
+    <None Include="..\..\Common\Protobuf\bin\login_gen_packet.bat">
       <Filter>protocol</Filter>
     </None>
     <None Include="..\..\Common\Protobuf\bin\login_protocol.proto">
       <Filter>protocol</Filter>
     </None>
     <None Include="..\..\Common\Protobuf\bin\login_struct.proto">
+      <Filter>protocol</Filter>
+    </None>
+    <None Include="..\..\Common\Protobuf\center_server_protobuf\center_login_struct.proto">
+      <Filter>protocol</Filter>
+    </None>
+    <None Include="..\..\Common\Protobuf\center_server_protobuf\center_gen_packet.bat">
+      <Filter>protocol</Filter>
+    </None>
+    <None Include="..\..\Common\Protobuf\center_server_protobuf\center_login_enum.proto">
+      <Filter>protocol</Filter>
+    </None>
+    <None Include="..\..\Common\Protobuf\center_server_protobuf\center_login_protocol.proto">
       <Filter>protocol</Filter>
     </None>
   </ItemGroup>

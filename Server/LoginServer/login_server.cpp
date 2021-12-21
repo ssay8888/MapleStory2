@@ -1,80 +1,96 @@
-ï»¿#include "pch.h"
+#include "pch.h"
+#include "login_server.h"
 
-#include "types.h"
+#include "center_server_session/center_login_client_packet_handler.h"
 #include "login_session/login_client_packet_handler.h"
 #include "login_session/login_session.h"
-#include "src/memory/memory.h"
-#include "src/network/net_address.h"
-#include "src/thread/thread_manager.h"
-#include "src/network/service.h"
 #include "src/network/socket_utils.h"
 #include "src/database/db_connection_pool.h"
-#include "src/database/db_bind.h"
-#include "src/database/db_bind_helper.h"
+#include "src/network/service.h"
+#include "src/thread/thread_manager.h"
 
-enum
-{
-	kWorkerTick = 64
-};
-
-static std::atomic<bool> _exit_loop = false;
-
-void DoWorkerJob(const ServerServiceRef& service)
-{
-	while (!_exit_loop)
-	{
-		LEndTickCount = GetTickCount64() + kWorkerTick;
-
-		// ë„¤íŠ¸ì›Œí¬ ìž…ì¶œë ¥ ì²˜ë¦¬
-		service->GetIocpCore()->Dispatch(10);
-
-		//ìžì‹ ì´ ë°›ì€ íŒ¨í‚· ì²˜ë¦¬
-	/*	while (LRecvBuffers.empty() == false)
-		{
-			auto buffer = LRecvBuffers.front();
-			LRecvBuffers.pop();
-
-			buffer.first->GetRecvBuffer().Clean(); 
-			auto header = *reinterpret_cast<PacketHeader*>(buffer.second);
-			ClientPacketHandler::HandlePacket(buffer.first, buffer.second, header.size);
-			buffer.first->GetRecvBuffer().OnRead(header.size);
-		}*/
-
-		// ì˜ˆì•½ëœ ì¼ê° ì²˜ë¦¬
-		ThreadManager::DistributeReservedJobs();
-
-		// ê¸€ë¡œë²Œ í
-		ThreadManager::DoGlobalQueueWork();
-
-	}
-}
-
-int main()
+auto LoginServer::LoginServerInit() -> void
 {
 	SocketUtils::Init();
 	LoginClientPacketHandler::Init();
+	CenterLoginClientPacketHandler::Init();
 	ASSERT_CRASH(DBConnectionPool::GetInstance().Connect(10, L"Driver={SQL Server Native Client 11.0};Server=(localdb)\\MSSQLLocalDB;Database=maplestory2;Trusted_Connection=Yes;"));
-	
-	ServerServiceRef service = MakeShared<ServerService>(
+	LoginServerServiceCreate();
+	LoginCenterServerServiceCreate();
+}
+
+auto LoginServer::LoginServerServiceCreate() -> void
+{
+	//·Î±×ÀÎÇÏ´Â À¯Àú¸¦ ¹Þ´Â¼­¹ö ÇüÅÂ
+	_login_service = MakeShared<ServerService>(
 		NetAddress(L"127.0.0.1", 7777),
 		MakeShared<IocpCore>(),
-		MakeShared<LoginSession>, // TODO : SessionManager ë“±
-		Service::kServerType::kLogin,
+		MakeShared<LoginSession>, // TODO : SessionManager µî
+		Service::kServerType::kServerLogin,
 		500);
 
-	ASSERT_CRASH(service->Start());
+	ASSERT_CRASH(_login_service->Start());
 
 	auto& threadManager = ThreadManager::GetInstance();
 	for (int32_t i = 0; i < 6; i++)
 	{
-		threadManager.Launch([&service]()
+		threadManager.Launch(
+			[this]()
 			{
-				DoWorkerJob(service);
+				while (!_exit_loop)
+				{
+					LEndTickCount = GetTickCount64() + kWorkerTick;
+
+					_login_service->GetIocpCore()->Dispatch(10);
+
+					ThreadManager::DistributeReservedJobs();
+
+					ThreadManager::DoGlobalQueueWork();
+				}
 			});
 	}
-	DoWorkerJob(service);
+}
 
-	threadManager.Join();
-	SocketUtils::Clear();
+auto LoginServer::LoginCenterServerServiceCreate() -> void
+{
 
+	//°ÔÀÓ¼­¹ö¿ÍÀÇ Åë½Å¼­¹ö
+	_center_service = MakeShared<ServerService>(
+		NetAddress(L"127.0.0.1", 7779),
+		MakeShared<IocpCore>(),
+		MakeShared<LoginSession>, // TODO : SessionManager µî
+		Service::kServerType::kCenterServerLogin);
+
+	ASSERT_CRASH(_center_service->Start());
+	auto& threadManager = ThreadManager::GetInstance();
+
+	for (int32_t i = 0; i < 2; i++)
+	{
+		threadManager.Launch(
+			[this]()
+			{
+				while (!_exit_loop)
+				{
+					LEndTickCount = GetTickCount64() + kWorkerTick;
+
+					_center_service->GetIocpCore()->Dispatch(10);
+
+					ThreadManager::DistributeReservedJobs();
+
+					ThreadManager::DoGlobalQueueWork();
+				}
+			});
+	}
+
+
+}
+
+auto LoginServer::GetCenterServerSevice() const -> ServerServiceRef
+{
+	return _center_service;
+}
+
+auto LoginServer::GetLoginServerSevice() const -> ServerServiceRef
+{
+	return _login_service;
 }

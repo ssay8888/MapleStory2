@@ -93,7 +93,7 @@ auto MainApp::NetworkThreadInit() -> ClientServiceRef
 		NetAddress(L"127.0.0.1", 7777),
 		MakeShared<IocpCore>(),
 		MakeShared<ServerSession>, // TODO : SessionManager µî
-		Service::kServerType::kLogin,
+		Service::kServerType::kClientLogin,
 		1);
 
 	ASSERT_CRASH(service->Start());

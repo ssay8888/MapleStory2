@@ -126,11 +126,9 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>c_pch.h</PrecompiledHeaderFile>
-      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
-      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
-      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

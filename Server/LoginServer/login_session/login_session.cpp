@@ -1,8 +1,10 @@
 ﻿#include "pch.h"
 #include "login_session.h"
+
 #include "login_session_manaeger.h"
 #include "login_client_packet_handler.h"
 #include "game/loggedin/login.h"
+#include "src/network/service.h"
 #include "src/utils/buffer_writer.h"
 
 static std::atomic<int> g_session_id = 1;
@@ -17,8 +19,8 @@ auto LoginSession::OnConnected() -> void
 	std::cout << "접속" << std::endl;
 	auto game_session = std::static_pointer_cast<LoginSession>(shared_from_this());
 	LoginSessionManager::GetInstance().Add(game_session);
-
 	_login = MakeShared<Login>(game_session);
+
 }
 
 auto LoginSession::OnDisconnected() -> void
@@ -33,8 +35,13 @@ auto LoginSession::OnDisconnected() -> void
 auto LoginSession::OnRecvPacket(BYTE* buffer, const int32_t len) -> void
 {
 	PacketSessionRef session = GetPacketSessionRef();
-	auto header = reinterpret_cast<PacketHeader*>(buffer);
-	LoginClientPacketHandler::HandlePacket(session, buffer, len);
+	switch (GetService()->GetServerType())
+	{
+	case Service::kServerType::kServerLogin:
+		LoginClientPacketHandler::HandlePacket(session, buffer, len);
+		break;
+	default: ;
+	}
 }
 
 auto LoginSession::OnSend(int32_t len) -> void

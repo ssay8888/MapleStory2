@@ -4,11 +4,11 @@ class Equipped;
 class Player : public std::enable_shared_from_this<Player>
 {
 public:
-	explicit Player(int32_t characterId);
+	explicit Player(int64_t characterId);
 
 
 public:
-	auto GetCharacterId()const->int32_t;
+	auto GetCharacterId()const->int64_t;
 
 	auto SetGender(int8_t gender)->void;
 	auto GetGender()const->int8_t;
@@ -23,7 +23,7 @@ public:
 
 private:
 	int8_t						_gender;
-	int32_t						_character_id;
+	int64_t						_character_id;
 	int32_t						_face_id;
 	std::wstring				_name;
 	std::shared_ptr<Equipped>	_equipped;

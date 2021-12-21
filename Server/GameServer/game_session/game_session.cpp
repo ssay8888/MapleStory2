@@ -3,6 +3,7 @@
 
 #include "game_client_packet_handler.h"
 #include "game_session_manager.h"
+#include "src/network/service.h"
 
 static std::atomic<int> g_session_id = 1;
 
@@ -14,15 +15,14 @@ GameSession::GameSession() :
 auto GameSession::OnConnected() -> void
 {
 	std::cout << "Á¢¼Ó" << std::endl;
-	auto game_session = std::static_pointer_cast<GameSession>(shared_from_this());
+	const auto game_session = std::static_pointer_cast<GameSession>(shared_from_this());
 	GameSessionManager::GetInstance().GameSessionAdd(game_session);
-
 }
 
 auto GameSession::OnDisconnected() -> void
 {
 	auto packetSession = std::static_pointer_cast<PacketSession>(shared_from_this());
-	auto gameSession = std::static_pointer_cast<GameSession>(shared_from_this());
+	const auto gameSession = std::static_pointer_cast<GameSession>(shared_from_this());
 	GameSessionManager::GetInstance().GameSessionRemove(gameSession);
 
 }
@@ -30,7 +30,6 @@ auto GameSession::OnDisconnected() -> void
 auto GameSession::OnRecvPacket(BYTE* buffer, const int32_t len) -> void
 {
 	PacketSessionRef session = GetPacketSessionRef();
-	auto header = reinterpret_cast<PacketHeader*>(buffer);
 	GameClientPacketHandler::HandlePacket(session, buffer, len);
 }
 

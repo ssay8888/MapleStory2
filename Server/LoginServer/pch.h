@@ -17,6 +17,7 @@
 #endif
 // 여기에 미리 컴파일하려는 헤더 추가
 #include "core_pch.h"
+#include "externs.h"
 #include "protocol/login_protocol.pb.h"
 #include "game_contents/game_contents.h"
 #endif //PCH_H

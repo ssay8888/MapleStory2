@@ -1,12 +1,16 @@
 #include "pch.h"
 #include "login_handler.h"
 
+#include "login_server.h"
+#include "auth_storage/auth_storage.h"
+#include "center_server_session/center_login_client_packet_handler.h"
 #include "game/player.h"
 #include "game/equipped/equipped.h"
 #include "login_session/login_client_packet_handler.h"
 #include "login_session/login_session.h"
 #include "src/database/db_bind.h"
 #include "src/database/db_connection_pool.h"
+#include "src/network/service.h"
 #include "src/utils/file_utils.h"
 #include "string_utils/string_utils.h"
 
@@ -287,6 +291,25 @@ void LoginHandler::CreateCharacter(const PacketSessionRef session, const Protoco
 		DBConnectionPool::GetInstance().Push(con);
 	}
 	session->Send(LoginClientPacketHandler::MakeSendBuffer(sendPkt));
+}
+
+void LoginHandler::SelectCharacter(PacketSessionRef session, Protocol::LoginClientCharacterSelect pkt)
+{
+	auto& authInstance = AuthStorage::GetInstance();
+	const auto game_session = std::static_pointer_cast<LoginSession>(session);
+
+	const auto authInfo = authInstance.CreateAuth(game_session);
+	Protocol::CenterLoginServerCreateAuth centerSendPkt;
+	centerSendPkt.set_auth(authInfo->auth);
+	centerSendPkt.set_accountid(game_session->GetAccountId());
+	centerSendPkt.set_characterid(pkt.characterid());
+	g_login_server->GetCenterServerSevice()->Broadcast(CenterLoginClientPacketHandler::MakeSendBuffer(centerSendPkt));
+	authInstance.AddAuth(authInfo);
+
+
+	//Protocol::LoginServerCharacterSelect sendPkt;
+	//session->Send(LoginClientPacketHandler::MakeSendBuffer(sendPkt));
+
 }
 
 #pragma endregion

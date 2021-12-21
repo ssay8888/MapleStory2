@@ -11,6 +11,8 @@ enum : uint16_t
 	kPktLoginServerCharacterList = 1003,
 	kPktLoginClientCreateCharacter = 1004,
 	kPktLoginServerCreateCharacter = 1005,
+	kPktLoginClientCharacterSelect = 1006,
+	kPktLoginServerCharacterSelect = 1007,
 };
 
 class LoginClientPacketHandler
@@ -21,6 +23,7 @@ public:
 	static auto HandleLoginClientLogin(PacketSessionRef& session, Protocol::LoginClientLogin& pkt)->bool;
 	static auto HandleLoginClientCharacterList(PacketSessionRef& session, Protocol::LoginClientCharacterList& pkt)->bool;
 	static auto HandleLoginClientCreateCharacter(PacketSessionRef& session, Protocol::LoginClientCreateCharacter& pkt)->bool;
+	static auto HandleLoginClientCharacterSelect(PacketSessionRef& session, Protocol::LoginClientCharacterSelect& pkt)->bool;
 
 	static void Init()
 	{
@@ -31,6 +34,7 @@ public:
 		_packet_handler[kPktLoginClientLogin] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::LoginClientLogin>(HandleLoginClientLogin, session, buffer, len); };
 		_packet_handler[kPktLoginClientCharacterList] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::LoginClientCharacterList>(HandleLoginClientCharacterList, session, buffer, len); };
 		_packet_handler[kPktLoginClientCreateCharacter] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::LoginClientCreateCharacter>(HandleLoginClientCreateCharacter, session, buffer, len); };
+		_packet_handler[kPktLoginClientCharacterSelect] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::LoginClientCharacterSelect>(HandleLoginClientCharacterSelect, session, buffer, len); };
 	}
 
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32_t len)
@@ -41,6 +45,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::LoginServerLogin& pkt) { return MakeSendBuffer(pkt, kPktLoginServerLogin); }
 	static SendBufferRef MakeSendBuffer(Protocol::LoginServerCharacterList& pkt) { return MakeSendBuffer(pkt, kPktLoginServerCharacterList); }
 	static SendBufferRef MakeSendBuffer(Protocol::LoginServerCreateCharacter& pkt) { return MakeSendBuffer(pkt, kPktLoginServerCreateCharacter); }
+	static SendBufferRef MakeSendBuffer(Protocol::LoginServerCharacterSelect& pkt) { return MakeSendBuffer(pkt, kPktLoginServerCharacterSelect); }
 
 private:
 	template<typename PacketType, typename ProcessFunc>

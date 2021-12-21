@@ -24,10 +24,10 @@ void ServerSession::OnRecvPacket(BYTE* buffer,  int32_t len)
 	auto session = GetPacketSessionRef();
 	switch (g_service->GetServerType())
 	{
-	case Service::kServerType::kLogin:
+	case Service::kServerType::kClientLogin:
 		LoginServerPacketHandler::HandlePacket(session, buffer, len);
 		break;
-	case Service::kServerType::kGame:
+	case Service::kServerType::kServerGame:
 		GameServerPacketHandler::HandlePacket(session, buffer, len);
 		break;
 	default: ;

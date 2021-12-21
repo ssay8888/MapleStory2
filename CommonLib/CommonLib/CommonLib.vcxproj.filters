@@ -19,6 +19,9 @@
     <Filter Include="game_contents">
       <UniqueIdentifier>{b73c6a2b-ec90-4e53-b1d4-732327afc39a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="randomizer">
+      <UniqueIdentifier>{7b26a526-617a-40a5-9b7a-9eb2a451748f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common_pch.h">
@@ -42,6 +45,9 @@
     <ClInclude Include="game_contents\game_contents.h">
       <Filter>game_contents</Filter>
     </ClInclude>
+    <ClInclude Include="randomizer\randomizer.h">
+      <Filter>randomizer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="common_pch.cpp">
@@ -64,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="game_contents\game_contents.cpp">
       <Filter>game_contents</Filter>
+    </ClCompile>
+    <ClCompile Include="randomizer\randomizer.cpp">
+      <Filter>randomizer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
