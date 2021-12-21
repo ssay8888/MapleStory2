@@ -9,17 +9,17 @@ LoginManager::LoginManager() :
 
 }
 
-void LoginManager::LoginResponse(PacketSessionRef& session, Protocol::ServerLogin& pkt)
+void LoginManager::LoginResponse(PacketSessionRef& session, Protocol::LoginServerLogin& pkt)
 {
 	_login_queue->DoAsync(&LoginJobQueue::LoginAttempt, session, pkt);
 }
 
-void LoginManager::CharacterListResponse(PacketSessionRef& session, Protocol::ServerCharacterList& pkt)
+void LoginManager::CharacterListResponse(PacketSessionRef& session, Protocol::LoginServerCharacterList& pkt)
 {
 	_login_queue->DoAsync(&LoginJobQueue::LoadCharacterList, session, pkt);
 }
 
-void LoginManager::CreateCharacterResponse(PacketSessionRef& session, Protocol::ServerCreateCharacter& pkt)
+void LoginManager::CreateCharacterResponse(PacketSessionRef& session, Protocol::LoginServerCreateCharacter& pkt)
 {
 	_login_queue->DoAsync(&LoginJobQueue::CreateCharacter, session, pkt);
 }

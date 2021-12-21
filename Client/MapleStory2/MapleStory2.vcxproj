@@ -170,9 +170,12 @@
     <ClInclude Include="client_pch.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="c_pch.h" />
-    <ClInclude Include="protocol\enum.pb.h" />
-    <ClInclude Include="protocol\protocol.pb.h" />
-    <ClInclude Include="protocol\struct.pb.h" />
+    <ClInclude Include="protocol\game_enum.pb.h" />
+    <ClInclude Include="protocol\game_protocol.pb.h" />
+    <ClInclude Include="protocol\game_struct.pb.h" />
+    <ClInclude Include="protocol\login_enum.pb.h" />
+    <ClInclude Include="protocol\login_protocol.pb.h" />
+    <ClInclude Include="protocol\login_struct.pb.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\common\xml\map_parser.h" />
     <ClInclude Include="src\game_object\back_ground\back_ground.h" />
@@ -198,6 +201,7 @@
     <ClInclude Include="src\game_object\ui\character_select\character_create\character_create_job_btn.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_create\character_job_btn.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_create_btn.h" />
+    <ClInclude Include="src\game_object\ui\character_select\character_ok_btn.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_select_item.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_select_ui.h" />
     <ClInclude Include="src\game_object\ui\login\text_box_ui.h" />
@@ -205,8 +209,9 @@
     <ClInclude Include="src\main\main_app.h" />
     <ClInclude Include="src\managers\characters_manager\character.h" />
     <ClInclude Include="src\managers\characters_manager\characters_manager.h" />
+    <ClInclude Include="src\network\game_server_packet_handler.h" />
+    <ClInclude Include="src\network\login_server_packet_handler.h" />
     <ClInclude Include="src\network\send_manager.h" />
-    <ClInclude Include="src\network\server_packet_handler.h" />
     <ClInclude Include="src\network\server_session.h" />
     <ClInclude Include="src\scene\character_select\character_select.h" />
     <ClInclude Include="src\scene\game_play\game_play.h" />
@@ -226,16 +231,35 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="protocol\enum.pb.cc">
+    <ClCompile Include="protocol\game_enum.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="protocol\protocol.pb.cc">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
     </ClCompile>
-    <ClCompile Include="protocol\struct.pb.cc">
+    <ClCompile Include="protocol\game_protocol.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+    </ClCompile>
+    <ClCompile Include="protocol\game_struct.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+    </ClCompile>
+    <ClCompile Include="protocol\login_enum.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="protocol\login_protocol.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="protocol\login_struct.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
     </ClCompile>
     <ClCompile Include="src\common\xml\map_parser.cpp" />
     <ClCompile Include="src\game_object\back_ground\back_ground.cpp" />
@@ -261,6 +285,7 @@
     <ClCompile Include="src\game_object\ui\character_select\character_create\character_create_job_btn.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_create\character_job_btn.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_create_btn.cpp" />
+    <ClCompile Include="src\game_object\ui\character_select\character_ok_btn.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_select_item.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_select_ui.cpp" />
     <ClCompile Include="src\game_object\ui\login\text_box_ui.cpp" />
@@ -268,8 +293,9 @@
     <ClCompile Include="src\main\main_app.cpp" />
     <ClCompile Include="src\managers\characters_manager\character.cpp" />
     <ClCompile Include="src\managers\characters_manager\characters_manager.cpp" />
+    <ClCompile Include="src\network\game_server_packet_handler.cpp" />
     <ClCompile Include="src\network\send_manager.cpp" />
-    <ClCompile Include="src\network\server_packet_handler.cpp" />
+    <ClCompile Include="src\network\login_server_packet_handler.cpp" />
     <ClCompile Include="src\network\server_session.cpp" />
     <ClCompile Include="src\scene\character_select\character_select.cpp" />
     <ClCompile Include="src\scene\game_play\game_play.cpp" />

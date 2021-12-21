@@ -7,13 +7,13 @@ public:
 	ServerSession();
 	virtual ~ServerSession() = default;
 
-	virtual void OnConnected() override;
+	void OnConnected() override;
 
-	virtual void OnRecvPacket(BYTE* buffer, int32_t len) override;
+	void OnRecvPacket(BYTE* buffer, int32_t len) override;
 
-	virtual void OnSend(int32_t len) override;
+	void OnSend(int32_t len) override;
 
-	virtual void OnDisconnected() override;
+	void OnDisconnected() override;
 
 private:
 	int32_t _id;

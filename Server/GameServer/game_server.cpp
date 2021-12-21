@@ -1,43 +1,27 @@
-﻿#include "pch.h"
+﻿#include "game_server_pch.h"
 
-#include "types.h"
-#include "game_session/client_packet_handler.h"
 #include "game_session/game_session.h"
-#include "src/memory/memory.h"
-#include "src/network/net_address.h"
-#include "src/thread/thread_manager.h"
-#include "src/network/service.h"
 #include "src/network/socket_utils.h"
+#include "src/thread/thread_manager.h"
 #include "src/database/db_connection_pool.h"
-#include "src/database/db_bind.h"
-#include "src/database/db_bind_helper.h"
+#include "src/network/service.h"
 
 enum
 {
-	WORKER_TICK = 64
+	kWorkerTick = 64
 };
 
-void DoWorkerJob(ServerServiceRef& service)
+static std::atomic<bool> exit_loop = false;
+
+void DoWorkerJob(const ServerServiceRef& service)
 {
-	while (true)
+	while (!exit_loop)
 	{
-		LEndTickCount = GetTickCount64() + WORKER_TICK;
+		LEndTickCount = GetTickCount64() + kWorkerTick;
 
 		// 네트워크 입출력 처리
 		service->GetIocpCore()->Dispatch(10);
-
-		//자신이 받은 패킷 처리
-	/*	while (LRecvBuffers.empty() == false)
-		{
-			auto buffer = LRecvBuffers.front();
-			LRecvBuffers.pop();
-
-			buffer.first->GetRecvBuffer().Clean(); 
-			auto header = *reinterpret_cast<PacketHeader*>(buffer.second);
-			ClientPacketHandler::HandlePacket(buffer.first, buffer.second, header.size);
-			buffer.first->GetRecvBuffer().OnRead(header.size);
-		}*/
-
+		
 		// 예약된 일감 처리
 		ThreadManager::DistributeReservedJobs();
 
@@ -50,13 +34,13 @@ void DoWorkerJob(ServerServiceRef& service)
 int main()
 {
 	SocketUtils::Init();
-	ClientPacketHandler::Init();
 	ASSERT_CRASH(DBConnectionPool::GetInstance().Connect(10, L"Driver={SQL Server Native Client 11.0};Server=(localdb)\\MSSQLLocalDB;Database=maplestory2;Trusted_Connection=Yes;"));
-	
+
 	ServerServiceRef service = MakeShared<ServerService>(
-		NetAddress(L"127.0.0.1", 7777),
+		NetAddress(L"127.0.0.1", 7778),
 		MakeShared<IocpCore>(),
 		MakeShared<GameSession>, // TODO : SessionManager 등
+		Service::kServerType::kGame,
 		500);
 
 	ASSERT_CRASH(service->Start());
@@ -70,8 +54,7 @@ int main()
 			});
 	}
 	DoWorkerJob(service);
-
+	exit_loop = true;
 	threadManager.Join();
 	SocketUtils::Clear();
-
 }

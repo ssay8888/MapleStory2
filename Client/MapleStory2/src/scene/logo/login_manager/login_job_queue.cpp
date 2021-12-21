@@ -6,14 +6,14 @@
 #include "src/managers/characters_manager/character.h"
 #include "src/managers/characters_manager/characters_manager.h"
 #include "src/network/send_manager.h"
-#include "src/network/server_packet_handler.h"
+#include "src/network/login_server_packet_handler.h"
 #include "src/scene/loading/scene_loading.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/game_logic_manager/game_logic_manager.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/scene_utility/scene_manager.h"
 
-auto LoginJobQueue::LoginAttempt(PacketSessionRef session, Protocol::ServerLogin pkt) -> Protocol::kLoginMessage
+auto LoginJobQueue::LoginAttempt(PacketSessionRef session, Protocol::LoginServerLogin pkt) -> Protocol::kLoginMessage
 {
 	std::cout << " 로그인 처리 " << std::endl;
 	if (pkt.result() == Protocol::kLoginMessage::kOk)
@@ -24,9 +24,9 @@ auto LoginJobQueue::LoginAttempt(PacketSessionRef session, Protocol::ServerLogin
 			GameLogicManager::Clear(static_cast<uint32_t>(kSceneLogo));
 		}
 		EnableWindow(g_hEdit, false);
-		Protocol::ClientCharacterList pkt;
+		Protocol::LoginClientCharacterList pkt;
 		
-		SendManager::GetInstance().Push(ServerPacketHandler::MakeSendBuffer(pkt));
+		SendManager::GetInstance().Push(LoginServerPacketHandler::MakeSendBuffer(pkt));
 		return Protocol::kLoginMessage::kOk;
 	}
 	EnableWindow(g_hEdit, true);
@@ -34,7 +34,7 @@ auto LoginJobQueue::LoginAttempt(PacketSessionRef session, Protocol::ServerLogin
 }
 
 auto LoginJobQueue::LoadCharacterList(PacketSessionRef session,
-	Protocol::ServerCharacterList pkt) -> void
+	Protocol::LoginServerCharacterList pkt) -> void
 {
 	auto& instance = CharactersManager::GetInstance();
 
@@ -52,7 +52,7 @@ auto LoginJobQueue::LoadCharacterList(PacketSessionRef session,
 }
 
 auto LoginJobQueue::CreateCharacter(PacketSessionRef session,
-                                    Protocol::ServerCreateCharacter pkt) -> Protocol::kCreateMessage
+                                    Protocol::LoginServerCreateCharacter pkt) -> Protocol::kCreateMessage
 {
 	std::cout << "캐릭터 생성" << std::endl;
 	auto& instance = ObjectManager::GetInstance();

@@ -8,7 +8,7 @@
 #include "src/game_object/back_ground/back_ground.h"
 #include "src/game_object/ui/login/text_box_ui.h"
 #include "src/network/send_manager.h"
-#include "src/network/server_packet_handler.h"
+#include "src/network/login_server_packet_handler.h"
 #include "src/scene/loading/scene_loading.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/game_logic_manager/game_logic_manager.h"
@@ -50,7 +50,7 @@ int32_t SceneLogo::Tick(const double timeDelta)
 		//}
 
 		auto& objectManager = ObjectManager::GetInstance();
-		Protocol::ClientLogin pkt;
+		Protocol::LoginClientLogin pkt;
 		auto id = std::static_pointer_cast<TextBoxUi>(objectManager.GetGameObjectPtr(kScene::kSceneLogo,
 			TEXT("Layer_LoginBox"),
 			0));
@@ -64,7 +64,7 @@ int32_t SceneLogo::Tick(const double timeDelta)
 			pkt.set_auth("");
 		}
 
-		const auto send_packet =	ServerPacketHandler::MakeSendBuffer(pkt);
+		const auto send_packet = LoginServerPacketHandler::MakeSendBuffer(pkt);
 		SendManager::GetInstance().Push(send_packet);
 
 		EnableWindow(g_hEdit, false);

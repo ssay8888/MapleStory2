@@ -13,6 +13,7 @@
 #include "src/utility/game_objects/manager/object_manager.h"
 #include <src/game_object/fittingdoll/fittingdoll.h>
 
+#include "character_ok_btn.h"
 #include "src/managers/characters_manager/character.h"
 
 CharacterSelectUi::CharacterSelectUi(const ComPtr<IDirect3DDevice9>& device) :
@@ -37,7 +38,7 @@ HRESULT CharacterSelectUi::NativeConstruct(void* arg)
 	if (FAILED(CreateSelectList()))
 		return E_FAIL;
 
-	if (FAILED(CreateStartBtnList()))
+	if (FAILED(CreateCharacterBtn()))
 		return E_FAIL;
 
 	if (FAILED(CreateJobBtnList()))
@@ -173,11 +174,22 @@ auto CharacterSelectUi::SelectUpdateTick(const double timeDelta) -> HRESULT
 		const auto item = _character_list[i];
 		item->Tick(timeDelta);
 	}
-	_create_btn->Tick(timeDelta);
-	if (_create_btn->IsCollision() && instance.GetDirectMouseKeyPressing(InputDevice::kDirectInMouseButton::kLeftButton))
+	if (_create_btn)
 	{
-		ChangeState(kCharacterSelectState::kCreateJob);
 		_create_btn->Tick(timeDelta);
+		if (_create_btn->IsCollision() && instance.GetDirectMouseKeyPressing(InputDevice::kDirectInMouseButton::kLeftButton))
+		{
+			ChangeState(kCharacterSelectState::kCreateJob);
+			_create_btn->Tick(timeDelta);
+		}
+	}
+	if (_ok_btn)
+	{
+		_ok_btn->Tick(timeDelta);
+		if (_ok_btn->IsCollision() && instance.GetDirectMouseKeyPressing(InputDevice::kDirectInMouseButton::kLeftButton))
+		{
+			_ok_btn->Tick(timeDelta);
+		}
 	}
 	return S_OK;
 }
@@ -250,8 +262,14 @@ auto CharacterSelectUi::SelectRender() -> HRESULT
 	{
 		item->Render(_shader_com);
 	}
-
-	_create_btn->Render(_shader_com);
+	if (_create_btn)
+	{
+		result = _create_btn->Render(_shader_com);
+	}
+	if (_ok_btn)
+	{
+		result = _ok_btn->Render(_shader_com);
+	}
 
 	result = _shader_com->EndShader();
 	return S_OK;
@@ -280,7 +298,15 @@ auto CharacterSelectUi::SelectJobRender() -> HRESULT
 		item->Render(_shader_com);
 	}
 
-	_create_btn->Render(_shader_com);
+	if (_create_btn)
+	{
+		result = _create_btn->Render(_shader_com);
+	}
+
+	if (_ok_btn)
+	{
+		result = _ok_btn->Render(_shader_com);
+	}
 
 
 	// 백그라운드(뒤에 까만거)
@@ -343,13 +369,25 @@ auto CharacterSelectUi::CreateSelectList() -> HRESULT
 	return S_OK;
 }
 
-auto CharacterSelectUi::CreateStartBtnList() -> HRESULT
+auto CharacterSelectUi::CreateCharacterBtn() -> HRESULT
 {
 	CharacterCreateBtn::CreateBtnInfo info;
 	info.size = _float3(155, 50, 0);
 	info.pos = _float3(460, -270, 0);
 	const auto instance = CharacterCreateBtn::Create(&info);
 	_create_btn = instance;
+	_ok_btn = nullptr;
+	return S_OK;
+}
+
+auto CharacterSelectUi::CreateOkBtn() -> HRESULT
+{
+	CharacterOkBtn::OkBtnInfo info;
+	info.size = _float3(155, 50, 0);
+	info.pos = _float3(460, -270, 0);
+	const auto instance = CharacterOkBtn::Create(&info);
+	_ok_btn = instance;
+	_create_btn = nullptr;
 	return S_OK;
 }
 
@@ -397,6 +435,12 @@ auto CharacterSelectUi::CreateFittingDoll(int32_t index) -> HRESULT
 		{
 			return E_FAIL;
 		}
+		CreateOkBtn();
+	}
+	else
+	{
+		CreateCharacterBtn();
+		
 	}
 	return S_OK;
 }

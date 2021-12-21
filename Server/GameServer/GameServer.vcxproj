@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{b03fb746-721d-42bb-8ac6-ca614773a7f1}</ProjectGuid>
+    <ProjectGuid>{fc25b6d2-bdda-4582-b434-175aedaa91f3}</ProjectGuid>
     <RootNamespace>GameServer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -79,9 +79,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)Server\GameServer\;$(SolutionDir)Server\ServerCore\;$(SolutionDir)Libraries\Include\;$(SolutionDir)CommonLib\CommonLib\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libraries\Libs\;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\lib\onecore\x64</LibraryPath>
+    <LibraryPath>$(SolutionDir)Libraries\Libs\;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\lib\onecore\x64;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Binary\</OutDir>
-    <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -124,20 +123,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>game_server_pch.h</PrecompiledHeaderFile>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\lib\onecore\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\ucrt\x64;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PreBuildEvent>
-      <Command>CALL $(SolutionDir)Common\Protobuf\bin\gen_packet.bat</Command>
-    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -158,58 +153,45 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game\equipped\equipped.cpp" />
-    <ClCompile Include="game\player.cpp" />
     <ClCompile Include="game_server.cpp" />
-    <ClCompile Include="game_session\client_packet_handler.cpp" />
-    <ClCompile Include="game_session\game_session.cpp" />
-    <ClCompile Include="game_session\game_session_manager.cpp" />
-    <ClCompile Include="game_session\packet_creator.cpp" />
-    <ClCompile Include="packet_handler\login_handler\login_handler.cpp" />
-    <ClCompile Include="packet_handler\login_handler\login_handler_manager.cpp" />
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="game_server_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="protocol\enum.pb.cc">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    <ClCompile Include="game_session\game_client_packet_hadneler.cpp" />
+    <ClCompile Include="game_session\game_session.cpp" />
+    <ClCompile Include="game_session\game_session_manager.cpp" />
+    <ClCompile Include="protocol\game_enum.pb.cc">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
     </ClCompile>
-    <ClCompile Include="protocol\protocol.pb.cc">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    <ClCompile Include="protocol\game_protocol.pb.cc">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
     </ClCompile>
-    <ClCompile Include="protocol\struct.pb.cc">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    <ClCompile Include="protocol\game_struct.pb.cc">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game\equipped\equipped.h" />
-    <ClInclude Include="game\player.h" />
-    <ClInclude Include="game_session\client_packet_handler.h" />
+    <ClInclude Include="game_server_pch.h" />
+    <ClInclude Include="game_session\game_client_packet_handler.h" />
     <ClInclude Include="game_session\game_session.h" />
-    <ClInclude Include="game_session\game_session_manaeger.h" />
-    <ClInclude Include="game_session\packet_creator.h" />
-    <ClInclude Include="packet_handler\login_handler\login_handler.h" />
-    <ClInclude Include="packet_handler\login_handler\login_handler_manager.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="protocol\enum.pb.h" />
-    <ClInclude Include="protocol\protocol.pb.h" />
-    <ClInclude Include="protocol\struct.pb.h" />
+    <ClInclude Include="game_session\game_session_manager.h" />
+    <ClInclude Include="protocol\game_enum.pb.h" />
+    <ClInclude Include="protocol\game_protocol.pb.h" />
+    <ClInclude Include="protocol\game_struct.pb.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Common\Protobuf\bin\enum.proto" />
-    <None Include="..\..\Common\Protobuf\bin\gen_packet.bat" />
-    <None Include="..\..\Common\Protobuf\bin\protocol.proto" />
-    <None Include="..\..\Common\Protobuf\bin\struct.proto" />
-  </ItemGroup>
-  <ItemGroup>
-    <UpToDateCheckInput Include="..\..\Common\Protobuf\bin\enum.proto" />
-    <UpToDateCheckInput Include="..\..\Common\Protobuf\bin\protocol.proto" />
-    <UpToDateCheckInput Include="..\..\Common\Protobuf\bin\struct.proto" />
+    <None Include="..\..\Common\Protobuf\game_server_potobuf\game_enum.proto" />
+    <None Include="..\..\Common\Protobuf\game_server_potobuf\GenPackets.exe" />
+    <None Include="..\..\Common\Protobuf\game_server_potobuf\gen_packet.bat" />
+    <None Include="..\..\Common\Protobuf\game_server_potobuf\protoc.exe" />
+    <None Include="..\..\Common\Protobuf\game_server_potobuf\game_protocol.proto" />
+    <None Include="..\..\Common\Protobuf\game_server_potobuf\game_struct.proto" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

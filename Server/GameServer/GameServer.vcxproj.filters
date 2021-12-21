@@ -4,7 +4,7 @@
     <ClCompile Include="game_server.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="game_server_pch.cpp">
       <Filter>main</Filter>
     </ClCompile>
     <ClCompile Include="game_session\game_session.cpp">
@@ -13,106 +13,70 @@
     <ClCompile Include="game_session\game_session_manager.cpp">
       <Filter>game_session</Filter>
     </ClCompile>
-    <ClCompile Include="game_session\client_packet_handler.cpp">
+    <ClCompile Include="game_session\game_client_packet_hadneler.cpp">
       <Filter>game_session</Filter>
     </ClCompile>
-    <ClCompile Include="protocol\enum.pb.cc">
+    <ClCompile Include="protocol\game_enum.pb.cc">
       <Filter>protocol</Filter>
     </ClCompile>
-    <ClCompile Include="protocol\protocol.pb.cc">
+    <ClCompile Include="protocol\game_protocol.pb.cc">
       <Filter>protocol</Filter>
     </ClCompile>
-    <ClCompile Include="protocol\struct.pb.cc">
+    <ClCompile Include="protocol\game_struct.pb.cc">
       <Filter>protocol</Filter>
-    </ClCompile>
-    <ClCompile Include="game_session\packet_creator.cpp">
-      <Filter>game_session</Filter>
-    </ClCompile>
-    <ClCompile Include="packet_handler\login_handler\login_handler_manager.cpp">
-      <Filter>packet_handling\login_handler</Filter>
-    </ClCompile>
-    <ClCompile Include="packet_handler\login_handler\login_handler.cpp">
-      <Filter>packet_handling\login_handler</Filter>
-    </ClCompile>
-    <ClCompile Include="game\player.cpp">
-      <Filter>game</Filter>
-    </ClCompile>
-    <ClCompile Include="game\equipped\equipped.cpp">
-      <Filter>game\equipped</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{b1a49d1e-f3a5-42d2-90a7-dd97a42542e8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="game_session">
-      <UniqueIdentifier>{e73081cf-bd1e-4b8c-bee8-5cae46f5bd00}</UniqueIdentifier>
+      <UniqueIdentifier>{2b189cef-e701-4278-80ff-b5de4914219d}</UniqueIdentifier>
     </Filter>
     <Filter Include="protocol">
-      <UniqueIdentifier>{a848330f-0f22-4d0b-b098-a196851131a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main">
-      <UniqueIdentifier>{713985d8-a984-4024-bb64-ae04de0f5fd0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="packet_handling">
-      <UniqueIdentifier>{553b40c1-8d09-4682-8805-2dbb1885fac0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="packet_handling\login_handler">
-      <UniqueIdentifier>{f6f203d8-442d-4591-bbb8-791dae23bfe2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game">
-      <UniqueIdentifier>{74dc05ee-82d1-4aa3-9b37-d91aba839738}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game\equipped">
-      <UniqueIdentifier>{a5eb6db2-5da4-4f93-bc51-fb8db276f3ad}</UniqueIdentifier>
+      <UniqueIdentifier>{6c75954c-96a9-4ef0-91e7-84eb712cfde1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="game_server_pch.h">
       <Filter>main</Filter>
-    </ClInclude>
-    <ClInclude Include="game_session\client_packet_handler.h">
-      <Filter>game_session</Filter>
     </ClInclude>
     <ClInclude Include="game_session\game_session.h">
       <Filter>game_session</Filter>
     </ClInclude>
-    <ClInclude Include="game_session\game_session_manaeger.h">
+    <ClInclude Include="game_session\game_session_manager.h">
       <Filter>game_session</Filter>
     </ClInclude>
-    <ClInclude Include="protocol\enum.pb.h">
-      <Filter>protocol</Filter>
-    </ClInclude>
-    <ClInclude Include="protocol\protocol.pb.h">
-      <Filter>protocol</Filter>
-    </ClInclude>
-    <ClInclude Include="protocol\struct.pb.h">
-      <Filter>protocol</Filter>
-    </ClInclude>
-    <ClInclude Include="game_session\packet_creator.h">
+    <ClInclude Include="game_session\game_client_packet_handler.h">
       <Filter>game_session</Filter>
     </ClInclude>
-    <ClInclude Include="packet_handler\login_handler\login_handler_manager.h">
-      <Filter>packet_handling\login_handler</Filter>
+    <ClInclude Include="protocol\game_enum.pb.h">
+      <Filter>protocol</Filter>
     </ClInclude>
-    <ClInclude Include="packet_handler\login_handler\login_handler.h">
-      <Filter>packet_handling\login_handler</Filter>
+    <ClInclude Include="protocol\game_protocol.pb.h">
+      <Filter>protocol</Filter>
     </ClInclude>
-    <ClInclude Include="game\player.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="game\equipped\equipped.h">
-      <Filter>game\equipped</Filter>
+    <ClInclude Include="protocol\game_struct.pb.h">
+      <Filter>protocol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Common\Protobuf\bin\enum.proto">
+    <None Include="..\..\Common\Protobuf\game_server_potobuf\game_enum.proto">
       <Filter>protocol</Filter>
     </None>
-    <None Include="..\..\Common\Protobuf\bin\gen_packet.bat">
+    <None Include="..\..\Common\Protobuf\game_server_potobuf\gen_packet.bat">
       <Filter>protocol</Filter>
     </None>
-    <None Include="..\..\Common\Protobuf\bin\protocol.proto">
+    <None Include="..\..\Common\Protobuf\game_server_potobuf\GenPackets.exe">
       <Filter>protocol</Filter>
     </None>
-    <None Include="..\..\Common\Protobuf\bin\struct.proto">
+    <None Include="..\..\Common\Protobuf\game_server_potobuf\protoc.exe">
+      <Filter>protocol</Filter>
+    </None>
+    <None Include="..\..\Common\Protobuf\game_server_potobuf\game_protocol.proto">
+      <Filter>protocol</Filter>
+    </None>
+    <None Include="..\..\Common\Protobuf\game_server_potobuf\game_struct.proto">
       <Filter>protocol</Filter>
     </None>
   </ItemGroup>

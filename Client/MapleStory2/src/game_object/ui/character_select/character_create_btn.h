@@ -36,6 +36,8 @@ private:
 		kEnd
 	};
 	auto AddComponents()->HRESULT;
+	auto DrawTextContents() const ->void;
+
 private:
 	CreateBtnInfo					_info;
 	kCreateBtnState					_state;

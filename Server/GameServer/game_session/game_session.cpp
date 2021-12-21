@@ -1,8 +1,8 @@
-ï»¿#include "pch.h"
+#include "game_server_pch.h"
 #include "game_session.h"
-#include "game_session_manaeger.h"
-#include "client_packet_handler.h"
-#include "src/utils/buffer_writer.h"
+
+#include "game_client_packet_handler.h"
+#include "game_session_manager.h"
 
 static std::atomic<int> g_session_id = 1;
 
@@ -13,17 +13,17 @@ GameSession::GameSession() :
 
 auto GameSession::OnConnected() -> void
 {
-	std::cout << "ì ‘ì†" << std::endl;
+	std::cout << "Á¢¼Ó" << std::endl;
 	auto game_session = std::static_pointer_cast<GameSession>(shared_from_this());
-	GameSessionManager::GetInstance().Add(game_session);
-	
+	GameSessionManager::GetInstance().GameSessionAdd(game_session);
+
 }
 
 auto GameSession::OnDisconnected() -> void
 {
 	auto packetSession = std::static_pointer_cast<PacketSession>(shared_from_this());
 	auto gameSession = std::static_pointer_cast<GameSession>(shared_from_this());
-	GameSessionManager::GetInstance().Remove(gameSession);
+	GameSessionManager::GetInstance().GameSessionRemove(gameSession);
 
 }
 
@@ -31,7 +31,7 @@ auto GameSession::OnRecvPacket(BYTE* buffer, const int32_t len) -> void
 {
 	PacketSessionRef session = GetPacketSessionRef();
 	auto header = reinterpret_cast<PacketHeader*>(buffer);
-	ClientPacketHandler::HandlePacket(session, buffer, len);
+	GameClientPacketHandler::HandlePacket(session, buffer, len);
 }
 
 auto GameSession::OnSend(int32_t len) -> void
@@ -53,12 +53,7 @@ auto GameSession::SetAccountId(const int64_t id) -> void
 	_account_id = id;
 }
 
-auto GameSession::PushPlayer(const std::shared_ptr<Player> player)->void
+auto GameSession::GetPlayer() const -> std::shared_ptr<Player>
 {
-	_players.push_back(player);
-}
-
-auto GameSession::GetPlayerList() const -> std::vector<std::shared_ptr<Player>>
-{
-	return _players;
+	return _player;
 }

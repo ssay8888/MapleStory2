@@ -76,6 +76,7 @@ auto CharacterCreateBtn::Render(const std::shared_ptr<Shader> shader) const -> H
 	shader->Commit();
 
 	_vi_buffer_com->RenderViBuffer();
+	DrawTextContents();
 	return S_OK;
 }
 
@@ -134,4 +135,20 @@ auto CharacterCreateBtn::AddComponents() -> HRESULT
 
 	
 	return S_OK;
+}
+
+auto CharacterCreateBtn::DrawTextContents() const ->void
+{
+	int32_t centerX = g_WinCX >> 1;
+	int32_t centerY = g_WinCY >> 1;
+	RECT rc
+	{
+	   static_cast<LONG>(centerX + (_info.pos.x - _info.size.x * 0.5f)),
+	   static_cast<LONG>(centerY + (-_info.pos.y - _info.size.y * 0.5f)),
+	   static_cast<LONG>(centerX + (_info.pos.x + _info.size.x * 0.5f)),
+	   static_cast<LONG>(centerY + (-_info.pos.y + _info.size.y * 0.5f))
+	};
+
+	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, L"캐릭터 만들기", -1, &rc, DT_VCENTER | DT_CENTER, D3DCOLOR_ARGB(255, 0, 0, 0));
+
 }

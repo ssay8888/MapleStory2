@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="login_server.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_handler\login_handler\login_handler_manager.cpp">
+      <Filter>packet_handling\login_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_handler\login_handler\login_handler.cpp">
+      <Filter>packet_handling\login_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="game\player.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\equipped\equipped.cpp">
+      <Filter>game\equipped</Filter>
+    </ClCompile>
+    <ClCompile Include="login_session\login_client_packet_handler.cpp">
+      <Filter>login_session</Filter>
+    </ClCompile>
+    <ClCompile Include="login_session\login_session.cpp">
+      <Filter>login_session</Filter>
+    </ClCompile>
+    <ClCompile Include="login_session\login_session_manager.cpp">
+      <Filter>login_session</Filter>
+    </ClCompile>
+    <ClCompile Include="login_session\packet_creator.cpp">
+      <Filter>login_session</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\login_struct.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\login_protocol.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\login_enum.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="game\loggedin\login.cpp">
+      <Filter>game\loggedin</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="protocol">
+      <UniqueIdentifier>{a848330f-0f22-4d0b-b098-a196851131a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{713985d8-a984-4024-bb64-ae04de0f5fd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="packet_handling">
+      <UniqueIdentifier>{553b40c1-8d09-4682-8805-2dbb1885fac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="packet_handling\login_handler">
+      <UniqueIdentifier>{f6f203d8-442d-4591-bbb8-791dae23bfe2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{74dc05ee-82d1-4aa3-9b37-d91aba839738}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\equipped">
+      <UniqueIdentifier>{a5eb6db2-5da4-4f93-bc51-fb8db276f3ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="login_session">
+      <UniqueIdentifier>{572741c7-c50d-44de-8890-65eb8d1ea2d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\loggedin">
+      <UniqueIdentifier>{e564d9fc-5cba-41cc-be66-42e6d512f756}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_handler\login_handler\login_handler_manager.h">
+      <Filter>packet_handling\login_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_handler\login_handler\login_handler.h">
+      <Filter>packet_handling\login_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="game\player.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\equipped\equipped.h">
+      <Filter>game\equipped</Filter>
+    </ClInclude>
+    <ClInclude Include="login_session\login_session.h">
+      <Filter>login_session</Filter>
+    </ClInclude>
+    <ClInclude Include="login_session\login_session_manaeger.h">
+      <Filter>login_session</Filter>
+    </ClInclude>
+    <ClInclude Include="login_session\packet_creator.h">
+      <Filter>login_session</Filter>
+    </ClInclude>
+    <ClInclude Include="login_session\login_client_packet_handler.h">
+      <Filter>login_session</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\login_protocol.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\login_struct.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\login_enum.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="game\loggedin\login.h">
+      <Filter>game\loggedin</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Common\Protobuf\bin\login_enum.proto">
+      <Filter>protocol</Filter>
+    </None>
+    <None Include="..\..\Common\Protobuf\bin\gen_packet.bat">
+      <Filter>protocol</Filter>
+    </None>
+    <None Include="..\..\Common\Protobuf\bin\login_protocol.proto">
+      <Filter>protocol</Filter>
+    </None>
+    <None Include="..\..\Common\Protobuf\bin\login_struct.proto">
+      <Filter>protocol</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -8,7 +8,7 @@
 #include "src/game_object/camera/camera_free.h"
 #include "src/game_object/ui/login/text_box_ui.h"
 #include "src/network/send_manager.h"
-#include "src/network/server_packet_handler.h"
+#include "src/network/login_server_packet_handler.h"
 #include "src/network/server_session.h"
 #include "src/network/service.h"
 #include "src/network/socket_utils.h"
@@ -36,7 +36,7 @@ MainApp::MainApp()
 
 auto MainApp::NativeConstruct() -> HRESULT
 {
-	GameLogicManager::InitDevice(g_hInst, g_Wnd, static_cast<int32_t>(kSceneEnd));
+	GameLogicManager::InitDevice(g_hInst, g_Wnd, kSceneEnd);
 
 
 	if (FAILED(GraphicDevice::GetInstance().ReadyGraphicDevice(g_Wnd, GraphicDevice::kWindowMode::kModeWin, g_WinCX, g_WinCY, &_graphic_device)))
@@ -88,11 +88,12 @@ auto MainApp::RenderMainApp() -> HRESULT
 auto MainApp::NetworkThreadInit() -> ClientServiceRef
 {
 	SocketUtils::Init();
-	ServerPacketHandler::Init();
+	LoginServerPacketHandler::Init();
 	ClientServiceRef service = MakeShared<ClientService>(
 		NetAddress(L"127.0.0.1", 7777),
 		MakeShared<IocpCore>(),
 		MakeShared<ServerSession>, // TODO : SessionManager µî
+		Service::kServerType::kLogin,
 		1);
 
 	ASSERT_CRASH(service->Start());

@@ -1,0 +1,56 @@
+syntax = "proto3";
+package Protocol;
+
+import "login_enum.proto";
+import "login_struct.proto";
+
+message LoginClientLogin
+{
+	string id = 1;
+	string pw = 2;
+	string auth = 3;
+}
+
+message LoginServerLogin
+{
+	kLoginMessage result = 1;
+}
+
+message LoginClientCharacterList
+{
+
+}
+
+message LoginServerCharacterList
+{
+	repeated ViewCharacter characters = 1;
+}
+
+message LoginClientCreateCharacter
+{
+	bytes name = 1;
+	bool gender = 2;
+	int32 coatIndex = 3;
+	int32 pantsIndex = 4;
+	int32 faceIndex = 5;
+	int32 shoesIndex = 6;
+}
+
+message LoginServerCreateCharacter
+{
+	kCreateMessage result = 1;
+	ViewCharacter character = 2;
+}
+
+message LoginClientCharacterSelect
+{
+	int32 index = 1;
+}
+
+message LoginServerCharacterSelect
+{
+	kCharacterSelectMessage result = 1;
+	string ip = 2;
+	string port = 3;
+	string auth = 4;
+}

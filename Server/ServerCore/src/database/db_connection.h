@@ -43,10 +43,12 @@ public:
 	auto BindCol(int32_t columnIndex, TIMESTAMP_STRUCT* value, SQLLEN* index) -> bool;
 	auto BindCol(int32_t columnIndex, WCHAR* str, int32_t size, SQLLEN* index) -> bool;
 	auto BindCol(int32_t columnIndex, BYTE* bin, int32_t size, SQLLEN* index) -> bool;
+	auto BindReturnValueCol(const int32_t columnIndex, int32_t* value, SQLLEN* index) -> bool;
 	
 private:
 	auto BindParam(SQLUSMALLINT paramIndex, SQLSMALLINT cType, SQLSMALLINT sqlType, SQLULEN len, SQLPOINTER ptr, SQLLEN* index) -> bool;
 	auto BindParamOut(SQLUSMALLINT paramIndex, SQLSMALLINT cType, SQLSMALLINT sqlType, SQLULEN len, SQLPOINTER ptr, SQLLEN* index) -> bool;
+	auto BindReturnValue(SQLUSMALLINT paramIndex, SQLSMALLINT cType, SQLSMALLINT sqlType, SQLULEN len, SQLPOINTER ptr, SQLLEN* index) -> bool;
 	auto BindCol(SQLUSMALLINT columnIndex, SQLSMALLINT cType, SQLULEN len, SQLPOINTER value, SQLLEN* index) -> bool;
 	auto HandleError(SQLRETURN ret) -> void;
 

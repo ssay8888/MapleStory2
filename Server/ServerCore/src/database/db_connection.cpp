@@ -220,6 +220,11 @@ auto DBConnection::BindCol(const int32_t columnIndex, BYTE* bin, int32_t size, S
 	return BindCol(columnIndex, SQL_BINARY, size, bin, index);
 }
 
+auto DBConnection::BindReturnValueCol(int32_t paramIndex, int32_t* value, SQLLEN* index) -> bool
+{
+	return BindReturnValue(paramIndex, SQL_C_LONG, SQL_DEFAULT, size32(int32_t), value, index);
+}
+
 auto DBConnection::BindParam(const SQLUSMALLINT paramIndex, const SQLSMALLINT cType, const SQLSMALLINT sqlType, const SQLULEN len, const SQLPOINTER ptr, SQLLEN* index) -> bool
 {
 	SQLRETURN ret = SQLBindParameter(_statement, paramIndex, SQL_PARAM_INPUT, cType, sqlType, len, 0, ptr, 0, index);
@@ -235,6 +240,19 @@ auto DBConnection::BindParam(const SQLUSMALLINT paramIndex, const SQLSMALLINT cT
 auto DBConnection::BindParamOut(const SQLUSMALLINT paramIndex, const SQLSMALLINT cType, const SQLSMALLINT sqlType, const SQLULEN len, const SQLPOINTER ptr, SQLLEN* index) -> bool
 {
 	SQLRETURN ret = SQLBindParameter(_statement, paramIndex, SQL_PARAM_OUTPUT, cType, sqlType, len, 0, ptr, 0, index);
+	if (ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO)
+	{
+		HandleError(ret);
+		return false;
+	}
+
+	return true;
+}
+
+auto DBConnection::BindReturnValue(SQLUSMALLINT paramIndex, SQLSMALLINT cType, SQLSMALLINT sqlType, SQLULEN len,
+	SQLPOINTER ptr, SQLLEN* index) -> bool
+{
+	SQLRETURN ret = SQLBindParameter(_statement, paramIndex, SQL_RETURN_VALUE, cType, sqlType, len, 0, ptr, 0, index);
 	if (ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO)
 	{
 		HandleError(ret);

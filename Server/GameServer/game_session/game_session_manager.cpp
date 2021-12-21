@@ -1,30 +1,26 @@
-#include "pch.h"
-#include "game_session_manaeger.h"
-#include "game_session.h"
+#include "game_server_pch.h"
+#include "game_session_manager.h"
 
-auto GameSessionManager::Add(const GameSessionRef session) -> void
+auto GameSessionManager::GameSessionAdd(const GameSessionRef& session) -> void
 {
-	WRITE_LOCK;
-	_sessions.insert(session);
+	//_sessions.emplace(session, session);
 }
 
-auto GameSessionManager::Remove(const GameSessionRef session) -> void
+auto GameSessionManager::GameSessionRemove(const GameSessionRef& session) -> void
 {
-	WRITE_LOCK;
-	_sessions.erase(session);
+	//_sessions.erase(session);
 }
 
 auto GameSessionManager::Broadcast(const SendBufferRef sendBuffer) -> void
 {
-	WRITE_LOCK;
-	for (const GameSessionRef session : _sessions)
+	for (const auto& session : _sessions)
 	{
-		session->Send(sendBuffer);
+		session.second->Send(sendBuffer);
 	}
 }
 
-auto GameSessionManager::GetSessionSize() -> int64_t
+auto GameSessionManager::GetGameSessionSize() const -> size_t
 {
-	READ_LOCK;
-	return _sessions.size();
+	//return _sessions.size();
+	return 0;
 }

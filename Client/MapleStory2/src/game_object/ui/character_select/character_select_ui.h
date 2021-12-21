@@ -1,6 +1,7 @@
 #pragma once
 #include "src/utility/game_objects/game_object.h"
 
+class CharacterOkBtn;
 class CharacterJobBtn;
 class CharacterCreateBtn;
 class CharacterSelectItem;
@@ -45,7 +46,8 @@ private:
 private:
 	auto AddComponents()->HRESULT;
 	auto CreateSelectList()->HRESULT;
-	auto CreateStartBtnList()->HRESULT;
+	auto CreateCharacterBtn()->HRESULT;
+	auto CreateOkBtn()->HRESULT;
 	auto CreateJobBtnList()->HRESULT;
 	auto CreateFittingDoll(int32_t index)->HRESULT;
 
@@ -54,6 +56,7 @@ private:
 	std::shared_ptr<ViBufferRect>						_vi_buffer_com = nullptr;
 	std::shared_ptr<Shader>								_shader_com = nullptr;
 	std::shared_ptr<CharacterCreateBtn>					_create_btn;
+	std::shared_ptr<CharacterOkBtn>						_ok_btn;
 	std::vector<std::shared_ptr<CharacterSelectItem>>	_character_list;
 	std::vector<std::shared_ptr<CharacterJobBtn>>		_character_job_list;
 	std::shared_ptr<Texture>							_texture_background = nullptr;

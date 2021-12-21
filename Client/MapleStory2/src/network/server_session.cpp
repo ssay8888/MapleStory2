@@ -1,10 +1,13 @@
 #include "c_pch.h"
 #include "server_session.h"
 
-#include "server_packet_handler.h"
+#include "game_server_packet_handler.h"
+#include "login_server_packet_handler.h"
 #include "src/main/main_app.h"
+#include "src/network/service.h"
 
-ServerSession::ServerSession()
+ServerSession::ServerSession():
+	_id(0)
 {
 }
 
@@ -18,9 +21,17 @@ void ServerSession::OnConnected()
 
 void ServerSession::OnRecvPacket(BYTE* buffer,  int32_t len)
 {
-	PacketSessionRef session = GetPacketSessionRef();
-	PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
-	ServerPacketHandler::HandlePacket(session, buffer, len);
+	auto session = GetPacketSessionRef();
+	switch (g_service->GetServerType())
+	{
+	case Service::kServerType::kLogin:
+		LoginServerPacketHandler::HandlePacket(session, buffer, len);
+		break;
+	case Service::kServerType::kGame:
+		GameServerPacketHandler::HandlePacket(session, buffer, len);
+		break;
+	default: ;
+	}
 }
 
 void ServerSession::OnSend(int32_t len)

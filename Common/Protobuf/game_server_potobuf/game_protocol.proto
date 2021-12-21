@@ -1,0 +1,19 @@
+syntax = "proto3";
+package Protocol;
+
+import "game_enum.proto";
+import "game_struct.proto";
+
+message GameClientLogin
+{
+	string id = 1;
+	string pw = 2;
+	string auth = 3;
+}
+
+message GameServerLogin
+{
+	string id = 1;
+	string pw = 2;
+	string auth = 3;
+}

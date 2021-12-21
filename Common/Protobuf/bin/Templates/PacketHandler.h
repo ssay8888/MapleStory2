@@ -1,5 +1,5 @@
 #pragma once
-#include "protocol/protocol.pb.h"
+#include "protocol/login_protocol.pb.h"
 
 using PacketHandlerFunc = std::function<bool(PacketSessionRef&, BYTE*, int32_t)>;
 
@@ -10,21 +10,21 @@ enum : uint16_t
 {%- endfor %}
 };
 
-// Custom Handlers
-bool HandleInvalid(PacketSessionRef& session, BYTE* buffer, int32_t len);
-
-{%- for pkt in parser.recv_pkt %}
-bool Handle{{pkt.name}}(PacketSessionRef& session, Protocol::{{pkt.name}}& pkt);
-{%- endfor %}
-
 class {{output}}
 {
 public:
+// Custom Handlers
+	static auto HandleLoginInvalid(PacketSessionRef& session, BYTE* buffer, int32_t len)->bool;
+
+	{%- for pkt in parser.recv_pkt %}
+	static auto Handle{{pkt.name}}(PacketSessionRef& session, Protocol::{{pkt.name}}& pkt)->bool;
+	{%- endfor %}
+
 	static void Init()
 	{
 		for (auto& handler : _packet_handler)
 		{
-			handler = HandleInvalid;
+			handler = HandleLoginInvalid;
 		}
 
 {%- for pkt in parser.recv_pkt %}

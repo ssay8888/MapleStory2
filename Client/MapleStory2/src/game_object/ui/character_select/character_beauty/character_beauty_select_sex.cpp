@@ -2,7 +2,6 @@
 #include "character_beauty_select_sex.h"
 
 #include "src/network/send_manager.h"
-#include "src/network/server_packet_handler.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"

@@ -61,18 +61,6 @@
     <ClInclude Include="src\network\send_manager.h">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="src\network\server_packet_handler.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="protocol\enum.pb.h">
-      <Filter>protocol</Filter>
-    </ClInclude>
-    <ClInclude Include="protocol\protocol.pb.h">
-      <Filter>protocol</Filter>
-    </ClInclude>
-    <ClInclude Include="protocol\struct.pb.h">
-      <Filter>protocol</Filter>
-    </ClInclude>
     <ClInclude Include="src\common\xml\map_parser.h">
       <Filter>common\xml</Filter>
     </ClInclude>
@@ -151,6 +139,33 @@
     <ClInclude Include="src\managers\characters_manager\character.h">
       <Filter>managers\characters_manager</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\ui\character_select\character_ok_btn.h">
+      <Filter>game_object\ui\character_select</Filter>
+    </ClInclude>
+    <ClInclude Include="src\network\game_server_packet_handler.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\game_struct.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\game_enum.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\game_protocol.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="src\network\login_server_packet_handler.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\login_enum.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\login_protocol.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol\login_struct.pb.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -201,7 +216,7 @@
     <ClCompile Include="src\game_object\ui\login\text_box_ui.cpp">
       <Filter>game_object\ui\login</Filter>
     </ClCompile>
-    <ClCompile Include="src\network\server_packet_handler.cpp">
+    <ClCompile Include="src\network\login_server_packet_handler.cpp">
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="src\network\send_manager.cpp">
@@ -209,15 +224,6 @@
     </ClCompile>
     <ClCompile Include="src\network\server_session.cpp">
       <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="protocol\enum.pb.cc">
-      <Filter>protocol</Filter>
-    </ClCompile>
-    <ClCompile Include="protocol\protocol.pb.cc">
-      <Filter>protocol</Filter>
-    </ClCompile>
-    <ClCompile Include="protocol\struct.pb.cc">
-      <Filter>protocol</Filter>
     </ClCompile>
     <ClCompile Include="src\common\xml\map_parser.cpp">
       <Filter>common\xml</Filter>
@@ -296,6 +302,30 @@
     </ClCompile>
     <ClCompile Include="src\managers\characters_manager\character.cpp">
       <Filter>managers\characters_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\character_select\character_ok_btn.cpp">
+      <Filter>game_object\ui\character_select</Filter>
+    </ClCompile>
+    <ClCompile Include="src\network\game_server_packet_handler.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\game_enum.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\game_protocol.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\game_struct.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\login_enum.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\login_protocol.pb.cc">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="protocol\login_struct.pb.cc">
+      <Filter>protocol</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

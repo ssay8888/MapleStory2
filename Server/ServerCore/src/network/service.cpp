@@ -7,14 +7,14 @@
 	Service
 --------------*/
 
-Service::Service(ServiceType type, NetAddress address, IocpCoreRef core, SessionFactory factory, int32_t maxSessionCount) :
+Service::Service(ServiceType type, NetAddress address, IocpCoreRef core, SessionFactory factory, kServerType serverType, int32_t maxSessionCount) :
 	_type(type),
 	_netAddress(address),
 	_iocp_core(core),
 	_session_factory(factory),
+	_server_type(serverType),
 	_max_session_count(maxSessionCount)
 {
-
 }
 
 auto Service::CanStart() const -> bool
@@ -90,12 +90,17 @@ auto Service::GetIocpCore() -> IocpCoreRef&
 	return _iocp_core;
 }
 
+auto Service::GetServerType() const -> const kServerType&
+{
+	return _server_type;
+}
+
 /*-----------------
 	ClientService
 ------------------*/
 
-ClientService::ClientService(NetAddress targetAddress, IocpCoreRef core, SessionFactory factory, int32_t maxSessionCount)
-	: Service(ServiceType::Client, targetAddress, core, factory, maxSessionCount)
+ClientService::ClientService(NetAddress targetAddress, IocpCoreRef core, SessionFactory factory, kServerType serverType, int32_t maxSessionCount)
+	: Service(ServiceType::Client, targetAddress, core, factory, serverType, maxSessionCount)
 {
 }
 
@@ -115,8 +120,8 @@ auto ClientService::Start() -> bool
 	return true;
 }
 
-ServerService::ServerService(NetAddress address, IocpCoreRef core, SessionFactory factory, int32_t maxSessionCount)
-	: Service(ServiceType::Server, address, core, factory, maxSessionCount)
+ServerService::ServerService(NetAddress address, IocpCoreRef core, SessionFactory factory, kServerType serverType, int32_t maxSessionCount)
+	: Service(ServiceType::Server, address, core, factory, serverType, maxSessionCount)
 {
 }
 
