@@ -7,6 +7,7 @@ enum : uint16_t
 {
 	kPktGameClientLogin = 2000,
 	kPktGameServerLogin = 2001,
+	kPktGameServerLoadCharacter = 2002,
 };
 
 
@@ -32,6 +33,7 @@ public:
 		return _packet_handler[header->id](session, buffer, len);
 	}
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerLogin& pkt) { return MakeSendBuffer(pkt, kPktGameServerLogin); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameServerLoadCharacter& pkt) { return MakeSendBuffer(pkt, kPktGameServerLoadCharacter); }
 
 private:
 	template<typename PacketType, typename ProcessFunc>

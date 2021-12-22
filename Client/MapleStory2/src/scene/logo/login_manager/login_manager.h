@@ -13,9 +13,10 @@ public:
 		return instance;
 	}
 
-	void LoginResponse(PacketSessionRef& session, Protocol::LoginServerLogin& pkt);
-	void CharacterListResponse(PacketSessionRef& session, Protocol::LoginServerCharacterList& pkt);
-	void CreateCharacterResponse(PacketSessionRef& session, Protocol::LoginServerCreateCharacter& pkt);
+	void LoginResponse(const PacketSessionRef& session, const Protocol::LoginServerLogin& pkt);
+	void CharacterListResponse(const PacketSessionRef& session, const Protocol::LoginServerCharacterList& pkt);
+	void CreateCharacterResponse(const PacketSessionRef& session, const Protocol::LoginServerCreateCharacter& pkt);
+	void CharacterSelectResponse(const PacketSessionRef& session, const Protocol::LoginServerCharacterSelect& pkt);
 
 private:
 	std::shared_ptr<LoginJobQueue> _login_queue;

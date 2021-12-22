@@ -27,5 +27,6 @@ auto CenterLoginClientPacketHandler::HandleCenterLoginClientCreateAuth(PacketSes
 auto CenterLoginClientPacketHandler::HandleCenterLoginClientCheckAuth(PacketSessionRef& session,
 	Protocol::CenterLoginClientCheckAuth& pkt) -> bool
 {
+	CenterHandlerManager::GetInstance().CenterLoginClientCheckAuth(session, pkt);
 	return true;
 }

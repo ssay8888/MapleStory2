@@ -78,7 +78,7 @@ auto GamePlay::ReadyLayerCamera(const std::wstring& pLayerTag) -> HRESULT
 auto GamePlay::ReadyLayerPlayer(const std::wstring& pLayerTag) -> HRESULT
 {
 	auto& objectManager = ObjectManager::GetInstance();
-	if (FAILED(objectManager.AddGameObject(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Player"), pLayerTag, _float3(0.58f, 0, 0))))
+	if (FAILED(objectManager.AddGameObject(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Fittingdool"), pLayerTag)))
 	{
 		return E_FAIL;
 	}
@@ -87,7 +87,7 @@ auto GamePlay::ReadyLayerPlayer(const std::wstring& pLayerTag) -> HRESULT
 }
 
 auto GamePlay::ReadyLayerBackGround(const std::wstring& pLayerTag) -> HRESULT
-{
+{/*
 	auto& objectManager = ObjectManager::GetInstance();
 	if (FAILED(objectManager.AddGameObject(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Terrain"), pLayerTag)))
 	{
@@ -97,7 +97,7 @@ auto GamePlay::ReadyLayerBackGround(const std::wstring& pLayerTag) -> HRESULT
 	if (FAILED(objectManager.AddGameObject(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Sky"), pLayerTag)))
 	{
 		return E_FAIL;
-	}
+	}*/
 	return S_OK;
 }
 

@@ -24,6 +24,11 @@ auto Service::CanStart() const -> bool
 
 auto Service::CloseService() -> void
 {
+	WRITE_LOCK;
+	for (const auto& session : _sessions)
+	{
+		session->Disconnect(L"");
+	}
 }
 
 auto Service::SetSessionFactory(const SessionFactory func) -> void

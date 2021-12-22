@@ -3,6 +3,7 @@
 
 #include "src/game_object/equipped/equipped.h"
 #include "src/game_object/ui/character_select/character_select_ui.h"
+#include "src/main/main_app.h"
 #include "src/managers/characters_manager/character.h"
 #include "src/managers/characters_manager/characters_manager.h"
 #include "src/network/send_manager.h"
@@ -12,6 +13,7 @@
 #include "src/utility/game_logic_manager/game_logic_manager.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/scene_utility/scene_manager.h"
+#include "string_utils/string_utils.h"
 
 auto LoginJobQueue::LoginAttempt(PacketSessionRef session, Protocol::LoginServerLogin pkt) -> Protocol::kLoginMessage
 {
@@ -75,4 +77,23 @@ auto LoginJobQueue::CreateCharacter(PacketSessionRef session,
 		CharactersManager::GetInstance().PushCharacter(character);
 	}
 	return result;
+}
+
+auto LoginJobQueue::CharacterSelect(PacketSessionRef session, Protocol::LoginServerCharacterSelect pkt) -> void
+{
+	if (pkt.result() == Protocol::kSelectSuccess)
+	{
+		const auto scene = SceneLoading::Create(GraphicDevice::GetInstance().GetDevice(), kSceneGameInit);
+		if (SUCCEEDED(SceneManager::GetInstance().SetUpScene(scene)))
+		{
+			GameLogicManager::Clear(static_cast<uint32_t>(kSceneCharacterSelect));
+		}
+		g_mainApp->SetAuthInfo(pkt);
+		g_mainApp->ClientNetworkThreadInit(
+			StringUtils::ConvertCtoW(pkt.ip().c_str()), 
+			pkt.port(), 
+			Service::kServerType::kClientGame, 
+			1, 
+			2);
+	}
 }

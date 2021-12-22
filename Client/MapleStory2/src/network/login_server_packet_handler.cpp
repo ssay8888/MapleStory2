@@ -10,29 +10,30 @@ auto LoginServerPacketHandler::HandleLoginInvalid(PacketSessionRef& session, BYT
 	return false;
 }
 
-auto LoginServerPacketHandler::HandleLoginServerLogin(PacketSessionRef& session,
-	Protocol::LoginServerLogin& pkt) -> bool
+auto LoginServerPacketHandler::HandleLoginServerLogin(const PacketSessionRef& session,
+                                                      const Protocol::LoginServerLogin& pkt) -> bool
 {
 	LoginManager::GetInstance().LoginResponse(session, pkt);
 	return true;
 }
 
-auto LoginServerPacketHandler::HandleLoginServerCharacterList(PacketSessionRef& session,
-	Protocol::LoginServerCharacterList& pkt) -> bool
+auto LoginServerPacketHandler::HandleLoginServerCharacterList(const PacketSessionRef& session,
+                                                              const Protocol::LoginServerCharacterList& pkt) -> bool
 {
 	LoginManager::GetInstance().CharacterListResponse(session, pkt);
 	return true;
 }
 
-auto LoginServerPacketHandler::HandleLoginServerCreateCharacter(PacketSessionRef& session,
-	Protocol::LoginServerCreateCharacter& pkt) -> bool
+auto LoginServerPacketHandler::HandleLoginServerCreateCharacter(const PacketSessionRef& session,
+                                                                const Protocol::LoginServerCreateCharacter& pkt) -> bool
 {
 	LoginManager::GetInstance().CreateCharacterResponse(session, pkt);
 	return true;
 }
 
-auto LoginServerPacketHandler::HandleLoginServerCharacterSelect(PacketSessionRef& session,
-	Protocol::LoginServerCharacterSelect& pkt) -> bool
+auto LoginServerPacketHandler::HandleLoginServerCharacterSelect(const PacketSessionRef& session,
+                                                                const Protocol::LoginServerCharacterSelect& pkt) -> bool
 {
+	LoginManager::GetInstance().CharacterSelectResponse(session, pkt);
 	return true;
 }

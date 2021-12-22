@@ -16,3 +16,4 @@ void GameCenterClientHandler::CenterLoginServerCreateAuth(PacketSessionRef sessi
 
 	session->Send(CenterLoginServerPacketHandler::MakeSendBuffer(sendPkt));
 }
+ 

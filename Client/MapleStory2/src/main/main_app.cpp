@@ -26,8 +26,8 @@
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/scene_utility/scene_manager.h"
 #include "src/common/xml/map_parser.h"
+#include "src/network/game_server_packet_handler.h"
 
-std::atomic<bool> MainApp::_exit = false;
 
 MainApp::MainApp()
 {
@@ -48,7 +48,7 @@ auto MainApp::NativeConstruct() -> HRESULT
 	if (FAILED(AddPrototypeGameObject()))
 		return E_FAIL;
 
-	g_service = NetworkThreadInit();
+	g_service = ClientNetworkThreadInit(L"127.0.0.1", 7777, Service::kServerType::kClientLogin, 1, 2);
 	DataReaderManager::GetInstance().Init(GraphicDevice::GetInstance().GetDevice());
 	SceneManager::GetInstance().SetUpScene(SceneLogo::Create(_graphic_device));
 	return S_OK;
@@ -85,36 +85,50 @@ auto MainApp::RenderMainApp() -> HRESULT
 	return S_OK;
 }
 
-auto MainApp::NetworkThreadInit() -> ClientServiceRef
+auto MainApp::ClientNetworkThreadInit(const std::wstring& ip, const int16_t port, Service::kServerType type, int32_t sessionCount, const int32_t threadCount) -> ClientServiceRef
 {
+	NetworkThreadStopForWait();
+	_exit = false;
 	SocketUtils::Init();
-	LoginServerPacketHandler::Init();
-	ClientServiceRef service = MakeShared<ClientService>(
-		NetAddress(L"127.0.0.1", 7777),
+	switch(type)
+	{
+	case Service::kServerType::kClientLogin:
+		LoginServerPacketHandler::Init();
+		break;
+	case Service::kServerType::kClientGame:
+		GameServerPacketHandler::Init();
+		break;
+	default: 
+		break;
+	}
+
+	g_service = MakeShared<ClientService>(
+		NetAddress(ip, port),
 		MakeShared<IocpCore>(),
 		MakeShared<ServerSession>, // TODO : SessionManager µî
-		Service::kServerType::kClientLogin,
-		1);
+		type,
+		sessionCount);
 
-	ASSERT_CRASH(service->Start());
+	ASSERT_CRASH(g_service->Start());
 
-	for (int32_t i = 0; i < 2; i++)
+	for (int32_t i = 0; i < threadCount; i++)
 	{
-		ThreadManager::GetInstance().Launch([=]()
+		ThreadManager::GetInstance().Launch([&]()
 			{
+				_iocp_thread_running_count.fetch_add(1);
 				while (!_exit)
 				{
-					service->GetIocpCore()->Dispatch(10);
+					g_service->GetIocpCore()->Dispatch(10);
 
 					SendManager::GetInstance().Execute();
 
 				}
-
+				_iocp_thread_running_count.fetch_sub(1);
 			});
 	}
 
 	WaitConnectServer();
-	return service;
+	return g_service;
 }
 
 auto MainApp::WaitConnectServer() -> void
@@ -133,6 +147,27 @@ auto MainApp::WaitConnectServer() -> void
 	}
 }
 
+auto MainApp::NetworkThreadStopForWait() -> void
+{
+	_exit = true;
+	constexpr auto maxWaitTime = 5000;
+
+	const auto startTime = GetTickCount64() + maxWaitTime;
+	while (_iocp_thread_running_count)
+	{
+		if (startTime < GetTickCount64())
+		{
+			break;
+		}
+		std::this_thread::sleep_for(10ms);
+	}
+	if (g_service)
+	{
+		SocketUtils::Clear();
+		g_service->CloseService();
+	}
+}
+
 auto MainApp::IsConnected() const -> bool
 {
 	return _is_connected;
@@ -145,6 +180,16 @@ auto MainApp::SetConnected(const bool connected) -> void
 	{
 		_exit = true;
 	}
+}
+
+auto MainApp::SetAuthInfo(Protocol::LoginServerCharacterSelect info)->void
+{
+	_auth_info = info;
+}
+
+auto MainApp::GetAuthInfo() const -> Protocol::LoginServerCharacterSelect
+{
+	return _auth_info;
 }
 
 HRESULT MainApp::AddPrototypeGameObject()
@@ -183,6 +228,7 @@ HRESULT MainApp::AddPrototypeComponent()
 
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_Default2"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Default2.jpg")))))
 		return E_FAIL;
+
 
 	return S_OK;
 }

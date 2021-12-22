@@ -71,6 +71,9 @@ auto Loading::ThreadMain()->HRESULT
 	case kSceneCharacterSelect:
 		hr = this->ReadyCharacterSelect();
 		break;
+	case kSceneGameInit:
+		hr = this->ReadyInGameLoading();
+		break;
 	case kSceneGamePlay0:
 		hr = this->ReadyGamePlay0();
 		break;
@@ -141,13 +144,13 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Texture_Filter"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Terrain/Filter.bmp")))))
 		return E_FAIL;						 
 											 
-	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Shader_Mesh"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Mesh.hlsl")))))
+	if (FAILED(componentManager.AddPrototype(kSceneStatic, TEXT("Prototype_Shader_Mesh"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Mesh.hlsl")))))
 		return E_FAIL;
 
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_GameSky"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/bg_perion_ch.dds")))))
 		return E_FAIL;
 
-	const auto modelList = MapParser::MapModelNameListExport();
+	const auto modelList = MapParser::MapModelNameListExport("character_perion");
 	for (auto& model : modelList)
 	{
 		componentManager.AddPrototype(kSceneCharacterSelect,
@@ -229,6 +232,12 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 			}
 		}
 	}
+	_is_finish = true;
+	return S_OK;
+}
+
+auto Loading::ReadyInGameLoading() -> HRESULT
+{
 	_is_finish = true;
 	return S_OK;
 }
@@ -385,7 +394,7 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Man"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Player/"), TEXT("man.x")))))
 		return E_FAIL;
 
-	const auto modelList = MapParser::MapModelNameListExport();
+	const auto modelList = MapParser::MapModelNameListExport("02000003_ad");
 	for (auto& model : modelList)
 	{
 		componentManager.AddPrototype(kSceneGamePlay0,
@@ -418,14 +427,13 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Shader_Terrain"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Terrain.hlsl")))))
 		return E_FAIL;
 
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Shader_Mesh"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Mesh.hlsl")))))
-		return E_FAIL;
+	MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0);
+	
 
 
 	_system_message.clear();
 	_system_message.append(L"로딩이 완료되었습니다.");
 
-	MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0);
 	_is_finish = true;
 	return S_OK;
 }

@@ -11,3 +11,9 @@ auto GameServerPacketHandler::HandleGameServerLogin(PacketSessionRef& session, P
 {
 	return false;
 }
+
+auto GameServerPacketHandler::HandleGameServerLoadCharacter(PacketSessionRef& session,
+	Protocol::GameServerLoadCharacter& pkt) -> bool
+{
+	return false;
+}

@@ -20,3 +20,18 @@ auto AuthStorage::AddAuth(const std::shared_ptr<AuthInfo> auth)->void
 		result->second = auth;
 	}
 }
+
+auto AuthStorage::RemoveAuth(int64_t accountId) -> bool
+{
+	return _auth_storage.erase(accountId);
+}
+
+auto AuthStorage::FindAuth(int64_t accountId) const -> std::shared_ptr<AuthInfo>
+{
+	tbb::concurrent_hash_map<int64_t, std::shared_ptr<AuthInfo>>::const_accessor result;
+	if (_auth_storage.find(result, accountId))
+	{
+		return result->second;
+	}
+	return nullptr;
+}

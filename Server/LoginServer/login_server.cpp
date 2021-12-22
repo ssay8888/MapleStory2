@@ -2,6 +2,7 @@
 #include "login_server.h"
 
 #include "center_server_session/center_login_client_packet_handler.h"
+#include "center_server_session/center_login_session.h"
 #include "login_session/login_client_packet_handler.h"
 #include "login_session/login_session.h"
 #include "src/network/socket_utils.h"
@@ -58,7 +59,7 @@ auto LoginServer::LoginCenterServerServiceCreate() -> void
 	_center_service = MakeShared<ServerService>(
 		NetAddress(L"127.0.0.1", 7779),
 		MakeShared<IocpCore>(),
-		MakeShared<LoginSession>, // TODO : SessionManager µî
+		MakeShared<CenterLoginSession>, // TODO : SessionManager µî
 		Service::kServerType::kCenterServerLogin);
 
 	ASSERT_CRASH(_center_service->Start());

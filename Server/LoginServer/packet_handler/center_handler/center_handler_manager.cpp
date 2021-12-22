@@ -12,3 +12,9 @@ void CenterHandlerManager::SocketConnectInit(PacketSessionRef& session, Protocol
 {
 	_handle->DoAsync(&CenterHandler::SocketConnectInit, session, pkt);
 }
+
+void CenterHandlerManager::CenterLoginClientCheckAuth(PacketSessionRef& session,
+	Protocol::CenterLoginClientCheckAuth& pkt) const
+{
+	_handle->DoAsync(&CenterHandler::CenterLoginClientCheckAuth, session , pkt);
+} 

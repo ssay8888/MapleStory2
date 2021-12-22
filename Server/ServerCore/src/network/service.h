@@ -24,6 +24,7 @@ public:
 		kClientLogin,
 		kServerLogin,
 		kCenterServerLogin,
+		kClientGame,
 		kServerGame,
 		kCenterClientGame
 

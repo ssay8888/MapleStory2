@@ -175,7 +175,7 @@ auto Player::AddComponents() -> HRESULT
 	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
 		return E_FAIL;
 
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Cube_co_fi_prop_bench_A01"), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
+	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Cube_he_fi_nature_tree_a04"), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
 		return E_FAIL;
 
 	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))

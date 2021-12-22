@@ -256,9 +256,6 @@ auto Fittingdoll::AddComponents() -> HRESULT
 	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
 		return E_FAIL;
 
-	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f, -16.07339f));
-
-
 	const auto animationNames = DataReaderManager::GetInstance().AllAnimationName();
 
 	std::shared_ptr<MeshDynamic> mesh;
@@ -278,7 +275,7 @@ auto Fittingdoll::AddComponents() -> HRESULT
 		_character_mesh_list.push_back(mesh);
 	}
 
-	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;
 
 

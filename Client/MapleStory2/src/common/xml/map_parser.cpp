@@ -5,10 +5,11 @@
 
 using namespace pugi;
 
-auto MapParser::MapModelNameListExport()->std::list<std::string>
+auto MapParser::MapModelNameListExport(const std::string name)->std::list<std::string>
 {
 	xml_document doc;
-	char xmlPath[100] = "../../Binary/Resources/MapData/character_perion.xblock";
+	char xmlPath[100] = "";
+	sprintf_s(xmlPath, "../../Binary/Resources/MapData/%s.xblock", name.c_str());
 	auto err = doc.load_file(xmlPath);
 	std::list<std::string> overlap_node_items;
 	std::list<std::string> real_node_items;
@@ -54,7 +55,7 @@ auto MapParser::MapParsing()->std::vector<MapEntity>
 {
 	xml_document doc;
 	//L"Client\\Character\\00012000.img.xml"
-	char xmlPath[100] = "../../Binary/Resources/MapData/character_perion.xblock";
+	char xmlPath[100] = "../../Binary/Resources/MapData/02000003_ad.xblock";
 	//snprintf(xmlPath, 100, , size);
 	auto err = doc.load_file(xmlPath);
 	std::list<std::string> overlap_node_items;
@@ -107,7 +108,6 @@ auto MapParser::MapParsing()->std::vector<MapEntity>
 			entities.push_back(map);
 		}
 	}
-	std::cout << entities.size() << std::endl;
 	return entities;
 }
 

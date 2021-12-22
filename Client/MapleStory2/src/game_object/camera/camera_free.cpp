@@ -28,7 +28,7 @@ HRESULT CameraFree::NativeConstruct(void* arg)
 }
 
 int32_t CameraFree::Tick(const double timeDelta)
-{/*
+{
 	if (InputDevice::GetInstance().GetKeyPressing(DIK_W))
 	{
 		_transform->GoStraight(timeDelta);
@@ -48,7 +48,7 @@ int32_t CameraFree::Tick(const double timeDelta)
 	{
 		_transform->WalkRight(timeDelta);
 	}
-
+	/*
 	if (InputDevice::GetInstance().GetKeyPressing(DIK_LEFT))
 	{
 		_transform->RotationAxis(_float3(0.f, 1.f, 0.f), timeDelta * -1 * 0.02f);
@@ -74,17 +74,17 @@ int32_t CameraFree::Tick(const double timeDelta)
 		_transform->RotationAxis(axis, 1, D3DXToRadian(90.f));
 	}*/
 
-	//int64_t			mouseMove = 0;
+	int64_t			mouseMove = 0;
 
-	//mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kX);
+	mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kX);
 
-	//if (0 != mouseMove)
-	//	_transform->RotationAxis(_float3(0.f, 1.f, 0.f), timeDelta * mouseMove * 0.02f);
+	if (0 != mouseMove)
+		_transform->RotationAxis(_float3(0.f, 1.f, 0.f), timeDelta * mouseMove * 0.02f);
 
-	//mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kY);
+	mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kY);
 
-	//if (0 != mouseMove)
-	//	_transform->RotationAxis(_transform->GetState(Transform::kState::kStateRight) , timeDelta * mouseMove * 0.02f);
+	if (0 != mouseMove)
+		_transform->RotationAxis(_transform->GetState(Transform::kState::kStateRight) , timeDelta * mouseMove * 0.02f);
 
 	return Camera::Tick(timeDelta);
 }

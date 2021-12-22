@@ -7,6 +7,7 @@ enum : uint16_t
 {
 	kPktGameClientLogin = 2000,
 	kPktGameServerLogin = 2001,
+	kPktGameServerLoadCharacter = 2002,
 };
 
 
@@ -17,6 +18,7 @@ public:
 	// Custom Handlers
 	static auto HandleGameInvalid(PacketSessionRef& session, BYTE* buffer, int32_t len)->bool;
 	static auto HandleGameServerLogin(PacketSessionRef& session, Protocol::GameServerLogin& pkt)->bool;
+	static auto HandleGameServerLoadCharacter(PacketSessionRef& session, Protocol::GameServerLoadCharacter& pkt)->bool;
 	static void Init()
 	{
 		for (auto& handler : _packet_handler)
@@ -24,6 +26,7 @@ public:
 			handler = HandleGameInvalid;
 		}
 		_packet_handler[kPktGameServerLogin] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerLogin>(HandleGameServerLogin, session, buffer, len); };
+		_packet_handler[kPktGameServerLoadCharacter] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerLoadCharacter>(HandleGameServerLoadCharacter, session, buffer, len); };
 	}
 
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32_t len)

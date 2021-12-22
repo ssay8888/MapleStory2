@@ -39,10 +39,6 @@ auto CenterLoginSession::OnRecvPacket(BYTE* buffer, const int32_t len) -> void
 		break;
 	default: ;
 	}
-	if (!_init)
-	{
-		this->Disconnect(L"Center Init Failed");
-	}
 }
 
 auto CenterLoginSession::OnSend(int32_t len) -> void
@@ -57,4 +53,9 @@ auto CenterLoginSession::GetSessionId() const -> int64_t
 auto CenterLoginSession::InitBool()->void
 {
 	_init = true;
+}
+
+auto CenterLoginSession::IsInit() const -> bool
+{
+	return _init;
 }

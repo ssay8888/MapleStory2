@@ -8,5 +8,6 @@ public:
 	virtual ~CenterHandler() = default;
 
 	void SocketConnectInit(PacketSessionRef session, Protocol::CenterLoginClientInit pkt);
+	void CenterLoginClientCheckAuth(PacketSessionRef session, Protocol::CenterLoginClientCheckAuth pkt);
 };
 

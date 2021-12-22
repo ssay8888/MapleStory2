@@ -1,4 +1,6 @@
 #pragma once
+#include "src/network/service.h"
+
 class MainApp
 {
 public:
@@ -11,12 +13,16 @@ public:
 	auto RenderMainApp()->HRESULT;
 
 public:
-	auto NetworkThreadInit()->ClientServiceRef;
+	auto ClientNetworkThreadInit(const std::wstring& ip, const int16_t port, Service::kServerType type, int32_t sessionCount, int32_t threadCount)->ClientServiceRef;
 	auto WaitConnectServer()->void;
+	auto NetworkThreadStopForWait()->void;
 
 public:
 	auto IsConnected() const ->bool;
 	auto SetConnected(bool connected)->void;
+
+	auto SetAuthInfo(Protocol::LoginServerCharacterSelect info)->void;
+	auto GetAuthInfo()const->Protocol::LoginServerCharacterSelect;
 
 private:
 	auto AddPrototypeGameObject()->HRESULT;
@@ -25,6 +31,9 @@ private:
 private:
 	ComPtr<IDirect3DDevice9>		 _graphic_device;
 	std::atomic<bool>				 _is_connected;
-	static std::atomic<bool>		 _exit;
+	std::atomic<bool>				_exit;
+	std::atomic<int>				_iocp_thread_running_count;
+
+	Protocol::LoginServerCharacterSelect _auth_info;
 };
 

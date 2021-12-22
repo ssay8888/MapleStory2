@@ -7,6 +7,7 @@ enum kScene
 	kSceneLogo,
 	kSceneLoading,
 	kSceneCharacterSelect,
+	kSceneGameInit,
 	kSceneGamePlay0,
 	kSceneGamePlay1,
 	kSceneEnd

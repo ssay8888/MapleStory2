@@ -26,7 +26,7 @@ SceneLogo::~SceneLogo()
 {
 }
 
-HRESULT SceneLogo::NativeConstruct()
+auto SceneLogo::NativeConstruct() -> HRESULT
 {
 	Scene::NativeConstruct();
 
@@ -40,7 +40,7 @@ HRESULT SceneLogo::NativeConstruct()
 	return S_OK;
 }
 
-int32_t SceneLogo::Tick(const double timeDelta)
+auto SceneLogo::Tick(const double timeDelta) -> int32_t
 {
 	Scene::Tick(timeDelta);
 
@@ -74,7 +74,7 @@ int32_t SceneLogo::Tick(const double timeDelta)
 	return S_OK;
 }
 
-HRESULT SceneLogo::Render()
+auto SceneLogo::Render() -> HRESULT
 {
 	return Scene::Render();
 }

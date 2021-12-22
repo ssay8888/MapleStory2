@@ -17,7 +17,8 @@ public:
 
 	auto CreateAuth(LoginSessionRef session)const->std::shared_ptr<AuthInfo>;
 	auto AddAuth(std::shared_ptr<AuthInfo> auth)->void;
-
+	auto RemoveAuth(int64_t accountId)->bool;
+	auto FindAuth(int64_t accountId) const ->std::shared_ptr<AuthInfo>;
 private:
 
 

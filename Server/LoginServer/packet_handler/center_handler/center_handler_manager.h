@@ -16,6 +16,7 @@ public:
 		return instance;
 	}
 	void SocketConnectInit(PacketSessionRef& session, Protocol::CenterLoginClientInit& pkt) const;
+	void CenterLoginClientCheckAuth(PacketSessionRef& session, Protocol::CenterLoginClientCheckAuth& pkt) const;
 	
 private:
 	std::shared_ptr<CenterHandler> _handle = nullptr;

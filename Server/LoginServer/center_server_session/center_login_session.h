@@ -23,6 +23,7 @@ public:
 	auto GetSessionId() const->int64_t;
 
 	auto InitBool()->void;
+	auto IsInit() const ->bool;
 
 private:
 	bool		_init;

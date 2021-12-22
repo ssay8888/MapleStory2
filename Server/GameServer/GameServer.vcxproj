@@ -167,6 +167,7 @@
     <ClCompile Include="game_session\game_session.cpp" />
     <ClCompile Include="game_session\game_session_manager.cpp" />
     <ClCompile Include="managers\auth_manager\game_auth_manager.cpp" />
+    <ClCompile Include="managers\game_job_queue\game_character_load_queue.cpp" />
     <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler.cpp" />
     <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.cpp" />
     <ClCompile Include="protocol\center_login_enum.pb.cc">
@@ -212,6 +213,7 @@
     <ClInclude Include="game_session\game_session.h" />
     <ClInclude Include="game_session\game_session_manager.h" />
     <ClInclude Include="managers\auth_manager\game_auth_manager.h" />
+    <ClInclude Include="managers\game_job_queue\game_character_load_queue.h" />
     <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler.h" />
     <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.h" />
     <ClInclude Include="protocol\center_login_enum.pb.h" />

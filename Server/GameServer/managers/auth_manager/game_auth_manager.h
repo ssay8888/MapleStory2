@@ -11,11 +11,12 @@ public:
 	}
 	
 	auto AddAuth(Protocol::CenterLoginServerCreateAuth auth)->void;
+	auto FindAuth(int64_t auth)->std::shared_ptr<Protocol::CenterLoginServerCreateAuth>;
 
 private:
 
 
 private:
-	tbb::concurrent_hash_map<int64_t, Protocol::CenterLoginServerCreateAuth> _auth_storage;
+	tbb::concurrent_hash_map<int64_t, std::shared_ptr<Protocol::CenterLoginServerCreateAuth>> _auth_storage;
 };
 

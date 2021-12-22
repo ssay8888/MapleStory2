@@ -52,6 +52,9 @@
     <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.cpp">
       <Filter>packet_handling\game_center_client_handler</Filter>
     </ClCompile>
+    <ClCompile Include="managers\game_job_queue\game_character_load_queue.cpp">
+      <Filter>managers\game_job_queue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -77,6 +80,9 @@
     </Filter>
     <Filter Include="packet_handling\game_center_client_handler">
       <UniqueIdentifier>{5c45f538-5f25-4151-8943-1e1d9f48ba43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="managers\game_job_queue">
+      <UniqueIdentifier>{3362fc81-01a6-4303-b3f1-487741740da9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.h">
       <Filter>packet_handling\game_center_client_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="managers\game_job_queue\game_character_load_queue.h">
+      <Filter>managers\game_job_queue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

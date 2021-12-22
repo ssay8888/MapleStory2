@@ -5,9 +5,20 @@
 
 auto GameAuthManager::AddAuth(const Protocol::CenterLoginServerCreateAuth auth) -> void
 {
-	tbb::concurrent_hash_map<int64_t, Protocol::CenterLoginServerCreateAuth>::accessor result;
-	if (_auth_storage.insert(result, auth.accountid()))
+	tbb::concurrent_hash_map<int64_t, std::shared_ptr<Protocol::CenterLoginServerCreateAuth>>::accessor result;
+	if (_auth_storage.insert(result, auth.auth()))
 	{
-		result->second = auth;
+		auto a = MakeShared<Protocol::CenterLoginServerCreateAuth>(auth);
+		result->second = a;
 	}
+}
+
+auto GameAuthManager::FindAuth(int64_t auth) ->std::shared_ptr<Protocol::CenterLoginServerCreateAuth>
+{
+	tbb::concurrent_hash_map<int64_t, std::shared_ptr<Protocol::CenterLoginServerCreateAuth>>::const_accessor result;
+	if (_auth_storage.find(result, auth))
+	{
+		return result->second;
+	}
+	return nullptr;
 }

@@ -3,6 +3,7 @@
 
 #include "loader/loading.h"
 #include "src/scene/character_select/character_select.h"
+#include "src/scene/game_init/game_init.h"
 #include "src/scene/game_play/game_play.h"
 #include "src/utility/game_logic_manager/game_logic_manager.h"
 #include "src/utility/scene_utility/scene_manager.h"
@@ -38,7 +39,7 @@ int32_t SceneLoading::Tick(const double timeDelta)
 	Scene::Tick(timeDelta);
 	if (_loader->IsFinished())
 	{
-		if (GetAsyncKeyState(VK_RETURN) & 0x0001)
+		//if (GetAsyncKeyState(VK_RETURN) & 0x0001)
 		{
 			std::shared_ptr<Scene> scene = nullptr;
 
@@ -46,6 +47,9 @@ int32_t SceneLoading::Tick(const double timeDelta)
 			{
 			case kSceneCharacterSelect:
 				scene = CharacterSelect::Create(_graphic_device);
+				break;
+			case kSceneGameInit:
+				scene = GameInit::Create(_graphic_device);
 				break;
 			case kSceneGamePlay0:
 				scene = GamePlay::Create(_graphic_device);

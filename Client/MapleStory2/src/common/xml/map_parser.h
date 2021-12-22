@@ -11,7 +11,7 @@ public:
 		std::map<std::string, _float3> propertise;
 		kScene scene;
 	};
-	static auto MapModelNameListExport()->std::list<std::string>;
+	static auto MapModelNameListExport(const std::string name)->std::list<std::string>;
 	static auto MapParsing()->std::vector<MapEntity>;
 
 

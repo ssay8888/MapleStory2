@@ -9,6 +9,7 @@ public:
 	auto LoginAttempt(PacketSessionRef session, Protocol::LoginServerLogin pkt)-> Protocol::kLoginMessage;
 	auto LoadCharacterList(PacketSessionRef session, Protocol::LoginServerCharacterList pkt)-> void;
 	auto CreateCharacter(PacketSessionRef session, Protocol::LoginServerCreateCharacter pkt)-> Protocol::kCreateMessage;
+	auto CharacterSelect(PacketSessionRef session, Protocol::LoginServerCharacterSelect pkt)-> void;
 	
 };
 

@@ -166,6 +166,9 @@
     <ClInclude Include="protocol\login_struct.pb.h">
       <Filter>protocol</Filter>
     </ClInclude>
+    <ClInclude Include="src\scene\game_init\game_init.h">
+      <Filter>scene\game_init</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -327,6 +330,9 @@
     <ClCompile Include="protocol\login_struct.pb.cc">
       <Filter>protocol</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\game_init\game_init.cpp">
+      <Filter>scene\game_init</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -447,6 +453,9 @@
     </Filter>
     <Filter Include="managers\characters_manager">
       <UniqueIdentifier>{f271d54f-800f-4f8d-ba7d-a043fb40f37e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\game_init">
+      <UniqueIdentifier>{e19217e5-ac02-46ae-9d85-4bf7c880b945}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

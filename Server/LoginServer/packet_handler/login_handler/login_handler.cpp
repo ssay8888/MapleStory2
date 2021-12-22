@@ -24,7 +24,7 @@ void LoginHandler::LoginRequest(const PacketSessionRef session, const Protocol::
 	sendPkt.set_result(Protocol::kIdInvalid);
 	if (auto con = DBConnectionPool::GetInstance().Pop())
 	{
-		/*DBBind<4, 0> bind(*con, L"{CALL dbo.spLogin(?, ?, ?, ?)}");
+		DBBind<2, 1> bind(*con, L"{CALL dbo.spLogin(?, ?)}");
 
 		std::wstring id = FileUtils::ConvertCtoW(pkt.id().c_str());
 		bind.BindParam(0, id.c_str());
@@ -32,72 +32,72 @@ void LoginHandler::LoginRequest(const PacketSessionRef session, const Protocol::
 		std::wstring pw = FileUtils::ConvertCtoW(pkt.pw().c_str());
 		bind.BindParam(1, pw.c_str());
 
-		int32_t outResult;
-		bind.BindParamOutput(2, outResult);
-		int32_t outResult2;
-		bind.BindParamOutput(3, outResult2);
-		
-		if (bind.Execute())
+		int a = 0;
+		WCHAR name[100]{ 0, };
+		//bind.BindCol(1, a);
+		bind.BindCol(0, name);
+
+		while (bind.Execute())
 		{
 			while(bind.Fetch())
 			{
 				int a = 0;
 			}
 			int b = 0;
-		}*/
-
-		DBBind<1, 4> bind(*con, L"{CALL dbo.spGetAccount(?)}");
-
-		std::wstring id = FileUtils::ConvertCtoW(pkt.id().c_str());
-		bind.BindParam(0, id.c_str());
-
-		WCHAR account[100]{ 0, };
-		bind.BindCol(0, account);
-
-		WCHAR password[100]{ 0, };
-		bind.BindCol(1, password);
-
-		int64_t accountid;
-		bind.BindCol(2, accountid);
-
-		int8_t loggedin;
-		bind.BindCol(3, loggedin);
-
-
-		if (bind.Execute())
-		{
-			if (bind.Fetch())
-			{
-				if (loggedin)
-				{
-					sendPkt.set_result(Protocol::kAlreadyConnected);
-				}
-				else
-				{
-					const auto pktPw = FileUtils::ConvertCtoW(pkt.pw().c_str());
-					if (password != pktPw)
-					{
-						sendPkt.set_result(Protocol::kPwInvlid);
-					}
-					else if (password == pktPw)
-					{
-
-						if (auto con2 = DBConnectionPool::GetInstance().Pop())
-						{
-							DBBind<1, 0> bind(*con, L"{CALL dbo.spSetLoggedin(?)}");
-							bind.BindParam(0, id.c_str());
-							if (bind.Execute())
-							{
-								
-							}
-							DBConnectionPool::GetInstance().Push(con2);
-						}
-						sendPkt.set_result(Protocol::kOk);
-						loginSession->SetAccountId(accountid);
-					}
-				}
-			}
 		}
+
+		//DBBind<1, 4> bind(*con, L"{CALL dbo.spGetAccount(?)}");
+
+		//std::wstring id = FileUtils::ConvertCtoW(pkt.id().c_str());
+		//bind.BindParam(0, id.c_str());
+
+		//WCHAR account[100]{ 0, };
+		//bind.BindCol(0, account);
+
+		//WCHAR password[100]{ 0, };
+		//bind.BindCol(1, password);
+
+		//int64_t accountid;
+		//bind.BindCol(2, accountid);
+
+		//int8_t loggedin;
+		//bind.BindCol(3, loggedin);
+
+
+		//if (bind.Execute())
+		//{
+		//	if (bind.Fetch())
+		//	{
+		//		if (loggedin)
+		//		{
+		//			sendPkt.set_result(Protocol::kAlreadyConnected);
+		//		}
+		//		else
+		//		{
+		//			const auto pktPw = FileUtils::ConvertCtoW(pkt.pw().c_str());
+		//			if (password != pktPw)
+		//			{
+		//				sendPkt.set_result(Protocol::kPwInvlid);
+		//			}
+		//			else if (password == pktPw)
+		//			{
+
+		//				if (auto con2 = DBConnectionPool::GetInstance().Pop())
+		//				{
+		//					DBBind<1, 0> bind(*con, L"{CALL dbo.spSetLoggedin(?)}");
+		//					bind.BindParam(0, id.c_str());
+		//					if (bind.Execute())
+		//					{
+		//						
+		//					}
+		//					DBConnectionPool::GetInstance().Push(con2);
+		//				}
+		//				sendPkt.set_result(Protocol::kOk);
+		//				loginSession->SetAccountId(accountid);
+		//			}
+		//		}
+		//	}
+		//}
 		DBConnectionPool::GetInstance().Push(con);
 	}
 
