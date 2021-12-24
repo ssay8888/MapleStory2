@@ -57,15 +57,15 @@ PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
 
 enum kLoginMessage : int {
-  kOk = 0,
-  kIdInvalid = 1,
-  kPwInvlid = 2,
+  kLoginSuccess = 0,
+  kIdError = 1,
+  kPasswordError = 2,
   kAlreadyConnected = 3,
   kLoginMessage_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   kLoginMessage_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool kLoginMessage_IsValid(int value);
-constexpr kLoginMessage kLoginMessage_MIN = kOk;
+constexpr kLoginMessage kLoginMessage_MIN = kLoginSuccess;
 constexpr kLoginMessage kLoginMessage_MAX = kAlreadyConnected;
 constexpr int kLoginMessage_ARRAYSIZE = kLoginMessage_MAX + 1;
 
@@ -86,12 +86,13 @@ inline bool kLoginMessage_Parse(
 enum kCreateMessage : int {
   kCreateSuccess = 0,
   kDuplication = 1,
+  kCreateFailed = 2,
   kCreateMessage_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   kCreateMessage_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool kCreateMessage_IsValid(int value);
 constexpr kCreateMessage kCreateMessage_MIN = kCreateSuccess;
-constexpr kCreateMessage kCreateMessage_MAX = kDuplication;
+constexpr kCreateMessage kCreateMessage_MAX = kCreateFailed;
 constexpr int kCreateMessage_ARRAYSIZE = kCreateMessage_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kCreateMessage_descriptor();

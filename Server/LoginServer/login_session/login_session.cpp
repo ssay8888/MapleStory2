@@ -3,6 +3,7 @@
 
 #include "login_session_manaeger.h"
 #include "login_client_packet_handler.h"
+#include "game/player.h"
 #include "game/loggedin/login.h"
 #include "src/network/service.h"
 #include "src/utils/buffer_writer.h"
@@ -65,10 +66,20 @@ auto LoginSession::SetAccountId(const int64_t id) -> void
 
 auto LoginSession::PushPlayer(const std::shared_ptr<Player> player)->void
 {
-	_players.push_back(player);
+	_players.emplace(player->GetCharacterId(), player);
 }
 
-auto LoginSession::GetPlayerList() const -> std::vector<std::shared_ptr<Player>>
+auto LoginSession::FindPlayer(int64_t characterId) -> std::shared_ptr<Player>
+{
+	const auto iterator = _players.find(characterId);
+	if (iterator == _players.end())
+	{
+		return nullptr;
+	}
+	return iterator->second;
+}
+
+auto LoginSession::GetPlayerList() const -> const std::map<int64_t, std::shared_ptr<Player>>&
 {
 	return _players;
 }

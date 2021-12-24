@@ -17,7 +17,7 @@ public:
 	static auto HandleLoginInvalid(PacketSessionRef& session, BYTE* buffer, int32_t len)->bool;
 
 	{%- for pkt in parser.recv_pkt %}
-	static auto Handle{{pkt.name}}(PacketSessionRef& session, Protocol::{{pkt.name}}& pkt)->bool;
+	static auto Handle{{pkt.name}}(const PacketSessionRef& session, const Protocol::{{pkt.name}}& pkt)->bool;
 	{%- endfor %}
 
 	static void Init()

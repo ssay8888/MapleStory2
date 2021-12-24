@@ -22,6 +22,10 @@ public:
 
 	auto Fetch() -> bool;
 
+	auto SqlNumResultCols(SQLSMALLINT* count)->void;
+	auto SqlRowCount(SQLLEN* count)->void;
+	auto SqlMoreResults()->int16_t;
+
 public:
 	template<typename T>
 	void BindParam(int32_t idx, T& value)
@@ -126,5 +130,24 @@ template <int32_t ParamCount, int32_t ColumnCount>
 auto DBBind<ParamCount, ColumnCount>::Fetch() -> bool
 {
 	return _db_connection.Fetch();
+}
+
+template <int32_t ParamCount, int32_t ColumnCount>
+auto DBBind<ParamCount, ColumnCount>::SqlNumResultCols(SQLSMALLINT* count)->void
+{
+	return _db_connection.SqlNumResultCols(count);
+}
+
+template <int32_t ParamCount, int32_t ColumnCount>
+auto DBBind<ParamCount, ColumnCount>::SqlRowCount(SQLLEN* count) -> void
+{
+	return _db_connection.SqlRowCount(count);
+}
+
+template <int32_t ParamCount, int32_t ColumnCount>
+auto DBBind<ParamCount, ColumnCount>::SqlMoreResults()->int16_t
+{
+	return _db_connection.SqlMoreResults();
+	
 }
 

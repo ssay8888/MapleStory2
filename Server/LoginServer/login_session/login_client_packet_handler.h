@@ -20,10 +20,10 @@ class LoginClientPacketHandler
 public:
 // Custom Handlers
 	static auto HandleLoginInvalid(PacketSessionRef& session, BYTE* buffer, int32_t len)->bool;
-	static auto HandleLoginClientLogin(PacketSessionRef& session, Protocol::LoginClientLogin& pkt)->bool;
-	static auto HandleLoginClientCharacterList(PacketSessionRef& session, Protocol::LoginClientCharacterList& pkt)->bool;
-	static auto HandleLoginClientCreateCharacter(PacketSessionRef& session, Protocol::LoginClientCreateCharacter& pkt)->bool;
-	static auto HandleLoginClientCharacterSelect(PacketSessionRef& session, Protocol::LoginClientCharacterSelect& pkt)->bool;
+	static auto HandleLoginClientLogin(const PacketSessionRef& session, const Protocol::LoginClientLogin& pkt)->bool;
+	static auto HandleLoginClientCharacterList(const PacketSessionRef& session, const Protocol::LoginClientCharacterList& pkt)->bool;
+	static auto HandleLoginClientCreateCharacter(const PacketSessionRef& session, const Protocol::LoginClientCreateCharacter& pkt)->bool;
+	static auto HandleLoginClientCharacterSelect(const PacketSessionRef& session, const Protocol::LoginClientCharacterSelect& pkt)->bool;
 
 	static void Init()
 	{

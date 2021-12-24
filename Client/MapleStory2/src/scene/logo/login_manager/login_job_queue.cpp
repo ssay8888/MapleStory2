@@ -18,7 +18,7 @@
 auto LoginJobQueue::LoginAttempt(PacketSessionRef session, Protocol::LoginServerLogin pkt) -> Protocol::kLoginMessage
 {
 	std::cout << " 로그인 처리 " << std::endl;
-	if (pkt.result() == Protocol::kLoginMessage::kOk)
+	if (pkt.result() == Protocol::kLoginMessage::kLoginSuccess)
 	{
 		const auto scene = SceneLoading::Create(GraphicDevice::GetInstance().GetDevice(), kSceneCharacterSelect);
 		if (SUCCEEDED(SceneManager::GetInstance().SetUpScene(scene)))
@@ -29,7 +29,7 @@ auto LoginJobQueue::LoginAttempt(PacketSessionRef session, Protocol::LoginServer
 		Protocol::LoginClientCharacterList pkt;
 		
 		SendManager::GetInstance().Push(LoginServerPacketHandler::MakeSendBuffer(pkt));
-		return Protocol::kLoginMessage::kOk;
+		return Protocol::kLoginMessage::kLoginSuccess;
 	}
 	EnableWindow(g_hEdit, true);
 	return pkt.result();

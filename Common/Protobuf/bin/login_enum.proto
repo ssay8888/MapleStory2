@@ -3,9 +3,9 @@ package Protocol;
 
 enum kLoginMessage
 {
-	kOk = 0;
-	kIdInvalid = 1;
-	kPwInvlid = 2;
+	kLoginSuccess = 0;
+	kIdError = 1;
+	kPasswordError = 2;
 	kAlreadyConnected = 3;
 }
 
@@ -13,6 +13,7 @@ enum kCreateMessage
 {
 	kCreateSuccess = 0;
 	kDuplication = 1;
+	kCreateFailed = 2;
 }
 
 enum kCharacterSelectMessage

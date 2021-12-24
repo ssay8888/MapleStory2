@@ -93,6 +93,22 @@ auto DBConnection::Unbind() -> void
 	SQLFreeStmt(_statement, SQL_CLOSE);
 }
 
+auto DBConnection::SqlNumResultCols(SQLSMALLINT* count) -> void
+{
+	auto a = SQLNumResultCols(_statement, count);
+	int b = 0;
+}
+
+auto DBConnection::SqlRowCount(SQLLEN* count) -> void
+{
+	SQLRowCount(_statement, count);
+}
+
+auto DBConnection::SqlMoreResults() -> int16_t
+{
+	return SQLMoreResults(_statement);
+}
+
 auto DBConnection::BindParam(const int32_t paramIndex, bool* value, SQLLEN* index) -> bool
 {
 	return BindParam(paramIndex, SQL_C_TINYINT, SQL_TINYINT, size32(bool), value, index);

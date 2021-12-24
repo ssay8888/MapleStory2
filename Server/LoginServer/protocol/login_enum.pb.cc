@@ -25,16 +25,17 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = n
 static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_login_5fenum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\020login_enum.proto\022\010Protocol*N\n\rkLoginMe"
-  "ssage\022\007\n\003kOk\020\000\022\016\n\nkIdInvalid\020\001\022\r\n\tkPwInv"
-  "lid\020\002\022\025\n\021kAlreadyConnected\020\003*6\n\016kCreateM"
-  "essage\022\022\n\016kCreateSuccess\020\000\022\020\n\014kDuplicati"
-  "on\020\001*@\n\027kCharacterSelectMessage\022\022\n\016kSele"
-  "ctSuccess\020\000\022\021\n\rkSelectFailed\020\001b\006proto3"
+  "\n\020login_enum.proto\022\010Protocol*[\n\rkLoginMe"
+  "ssage\022\021\n\rkLoginSuccess\020\000\022\014\n\010kIdError\020\001\022\022"
+  "\n\016kPasswordError\020\002\022\025\n\021kAlreadyConnected\020"
+  "\003*I\n\016kCreateMessage\022\022\n\016kCreateSuccess\020\000\022"
+  "\020\n\014kDuplication\020\001\022\021\n\rkCreateFailed\020\002*@\n\027"
+  "kCharacterSelectMessage\022\022\n\016kSelectSucces"
+  "s\020\000\022\021\n\rkSelectFailed\020\001b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_login_5fenum_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_login_5fenum_2eproto = {
-  false, false, 238, descriptor_table_protodef_login_5fenum_2eproto, "login_enum.proto", 
+  false, false, 270, descriptor_table_protodef_login_5fenum_2eproto, "login_enum.proto", 
   &descriptor_table_login_5fenum_2eproto_once, nullptr, 0, 0,
   schemas, file_default_instances, TableStruct_login_5fenum_2eproto::offsets,
   nullptr, file_level_enum_descriptors_login_5fenum_2eproto, file_level_service_descriptors_login_5fenum_2eproto,
@@ -70,6 +71,7 @@ bool kCreateMessage_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
+    case 2:
       return true;
     default:
       return false;

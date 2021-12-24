@@ -18,6 +18,9 @@ public:
 	auto Fetch() -> bool;
 	auto GetRowCount() ->int32_t;
 	auto Unbind() -> void;
+	auto SqlNumResultCols(SQLSMALLINT* count) -> void;
+	auto SqlRowCount(SQLLEN* count)->void;
+	auto SqlMoreResults() ->int16_t;
 
 public:
 	auto BindParam(int32_t paramIndex, bool* value, SQLLEN* index) -> bool;
@@ -44,7 +47,7 @@ public:
 	auto BindCol(int32_t columnIndex, WCHAR* str, int32_t size, SQLLEN* index) -> bool;
 	auto BindCol(int32_t columnIndex, BYTE* bin, int32_t size, SQLLEN* index) -> bool;
 	auto BindReturnValueCol(const int32_t columnIndex, int32_t* value, SQLLEN* index) -> bool;
-	
+
 private:
 	auto BindParam(SQLUSMALLINT paramIndex, SQLSMALLINT cType, SQLSMALLINT sqlType, SQLULEN len, SQLPOINTER ptr, SQLLEN* index) -> bool;
 	auto BindParamOut(SQLUSMALLINT paramIndex, SQLSMALLINT cType, SQLSMALLINT sqlType, SQLULEN len, SQLPOINTER ptr, SQLLEN* index) -> bool;

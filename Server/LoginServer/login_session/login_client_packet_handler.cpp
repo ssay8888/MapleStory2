@@ -11,26 +11,29 @@ bool LoginClientPacketHandler::HandleLoginInvalid(PacketSessionRef& session, BYT
 }
 
 
-bool LoginClientPacketHandler::HandleLoginClientLogin(PacketSessionRef& session, Protocol::LoginClientLogin& pkt)
+bool LoginClientPacketHandler::HandleLoginClientLogin(const PacketSessionRef& session, 
+	const Protocol::LoginClientLogin& pkt)
 {
 	LoginHandlerManager::GetInstance().LoginRequest(session, pkt);
 	return true;
 }
 
-bool LoginClientPacketHandler::HandleLoginClientCharacterList(PacketSessionRef& session, Protocol::LoginClientCharacterList& pkt)
+bool LoginClientPacketHandler::HandleLoginClientCharacterList(const PacketSessionRef& session, 
+	const Protocol::LoginClientCharacterList& pkt)
 {
 	LoginHandlerManager::GetInstance().CharacterListRequest(session, pkt);
 	return true;
 }
 
-bool LoginClientPacketHandler::HandleLoginClientCreateCharacter(PacketSessionRef& session, Protocol::LoginClientCreateCharacter& pkt)
+bool LoginClientPacketHandler::HandleLoginClientCreateCharacter(const PacketSessionRef& session, 
+	const Protocol::LoginClientCreateCharacter& pkt)
 {
 	LoginHandlerManager::GetInstance().CreateCharacterRequest(session, pkt);
 	return true;
 }
 
-auto LoginClientPacketHandler::HandleLoginClientCharacterSelect(PacketSessionRef& session,
-	Protocol::LoginClientCharacterSelect& pkt) -> bool
+auto LoginClientPacketHandler::HandleLoginClientCharacterSelect(const PacketSessionRef& session,
+	const Protocol::LoginClientCharacterSelect& pkt) -> bool
 {
 	LoginHandlerManager::GetInstance().CharacterSelectRequest(session, pkt);
 	return true;

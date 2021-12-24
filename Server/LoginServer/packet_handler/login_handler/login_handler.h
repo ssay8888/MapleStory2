@@ -10,6 +10,13 @@ public:
 
 public:
 #pragma region LoginRequest
+	enum class kSqlLoginResult
+	{
+		kIdError = -1,
+		kAlreadyConnected = -2,
+		kPasswordError = -3,
+		kLoginSuccess = 1
+	};
 	void LoginRequest(PacketSessionRef session, Protocol::LoginClientLogin pkt);
 #pragma endregion
 
@@ -21,7 +28,14 @@ public:
 
 
 #pragma region CreateCharacter
+	enum class kSqlCreateCharacterResult
+	{
+		kIdDuplication = -1,
+		kCreateFailed = -2,
+		kCreateSuccess = 1
+	};
 	void CreateCharacter(PacketSessionRef session, Protocol::LoginClientCreateCharacter pkt);
+	std::wstring ItemListToXml(Protocol::LoginClientCreateCharacter pkt);
 #pragma endregion
 
 #pragma region SelectCharacter

@@ -3,6 +3,7 @@
 
 #ifdef _DEBUG
 #pragma comment(lib, "ServerCore\\Debug\\ServerCore.lib")
+#pragma comment(lib, "ClientCore\\Debug\\ClientCore.lib")
 #pragma comment(lib, "Protobuf\\Debug\\libprotobufd.lib")
 #pragma comment(lib, "CommonLib\\Debug\\CommonLib.lib")
 #else

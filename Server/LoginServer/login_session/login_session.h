@@ -25,11 +25,12 @@ public:
 	auto SetAccountId(int64_t id) ->void;
 
 	auto PushPlayer(std::shared_ptr<Player> player)->void;
-	auto GetPlayerList() const ->std::vector<std::shared_ptr<Player>>;
+	auto FindPlayer(int64_t characterId)->std::shared_ptr<Player>;
+	auto GetPlayerList() const->const std::map<int64_t, std::shared_ptr<Player>>&;
 
 private:
 	int64_t										_session_id = -1;
 	int64_t										_account_id = -1;
-	std::vector<std::shared_ptr<Player>>		_players;
+	std::map<int64_t, std::shared_ptr<Player>>		_players;
 	std::shared_ptr<Login>						_login;
 };

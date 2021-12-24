@@ -55,6 +55,18 @@
     <ClCompile Include="managers\game_job_queue\game_character_load_queue.cpp">
       <Filter>managers\game_job_queue</Filter>
     </ClCompile>
+    <ClCompile Include="game\entitiy\character\game_character.cpp">
+      <Filter>game\entity\character</Filter>
+    </ClCompile>
+    <ClCompile Include="game\entitiy\game_entity.cpp">
+      <Filter>game\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="game\loader\loader.cpp">
+      <Filter>game\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="game\entitiy\character\stats\stats.cpp">
+      <Filter>game\entity\character\stats</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -83,6 +95,30 @@
     </Filter>
     <Filter Include="managers\game_job_queue">
       <UniqueIdentifier>{3362fc81-01a6-4303-b3f1-487741740da9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{782bb276-cb73-4807-8753-ea156ae13e68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity">
+      <UniqueIdentifier>{63151c8e-6086-429f-9624-d89a0bff2ebc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\character">
+      <UniqueIdentifier>{244ec12e-e1ad-404d-9cf9-45b3f819c4c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\loader">
+      <UniqueIdentifier>{5b61b399-4ce0-4c40-b395-c3518d82b3f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="managers\character_info_managers">
+      <UniqueIdentifier>{9ecdda69-290b-4db1-817a-72c39a1dd9dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="managers\character_info_managers\stats_manager">
+      <UniqueIdentifier>{1fc80115-3cb0-4efc-b22b-4103335d046f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\character\stats">
+      <UniqueIdentifier>{c879e347-0c0e-466a-97a4-5f0fe8239e73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\character\inventorys">
+      <UniqueIdentifier>{b4b88190-5f13-4fd6-bffd-89f655828278}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +172,18 @@
     </ClInclude>
     <ClInclude Include="managers\game_job_queue\game_character_load_queue.h">
       <Filter>managers\game_job_queue</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\character\game_character.h">
+      <Filter>game\entity\character</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\game_entity.h">
+      <Filter>game\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="game\loader\loader.h">
+      <Filter>game\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\character\stats\stats.h">
+      <Filter>game\entity\character\stats</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
