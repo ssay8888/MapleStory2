@@ -2,3 +2,9 @@ syntax = "proto3";
 package Protocol;
 
 import "game_enum.proto";
+
+message item
+{
+	int32 itemid = 1;
+	int32 position = 2;
+}

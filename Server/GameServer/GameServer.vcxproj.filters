@@ -64,8 +64,23 @@
     <ClCompile Include="game\loader\loader.cpp">
       <Filter>game\loader</Filter>
     </ClCompile>
-    <ClCompile Include="game\entitiy\character\stats\stats.cpp">
-      <Filter>game\entity\character\stats</Filter>
+    <ClCompile Include="game\entitiy\character\information_collection\stats\stats.cpp">
+      <Filter>game\entity\character\information_collection\stats</Filter>
+    </ClCompile>
+    <ClCompile Include="game\entitiy\character\information_collection\base_info.cpp">
+      <Filter>game\entity\character\information_collection</Filter>
+    </ClCompile>
+    <ClCompile Include="managers\character_info_manager\character_info_storage_manager.cpp">
+      <Filter>managers\character_info_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="managers\character_info_manager\character_info_storage.cpp">
+      <Filter>managers\character_info_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="game\entitiy\character\information_collection\inventorys\inventorys.cpp">
+      <Filter>game\entity\character\information_collection\inventorys</Filter>
+    </ClCompile>
+    <ClCompile Include="game\entitiy\character\information_collection\inventorys\inventory.cpp">
+      <Filter>game\entity\character\information_collection\inventorys</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,17 +123,17 @@
     <Filter Include="game\loader">
       <UniqueIdentifier>{5b61b399-4ce0-4c40-b395-c3518d82b3f7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="managers\character_info_managers">
+    <Filter Include="game\entity\character\information_collection">
+      <UniqueIdentifier>{2f06c78c-5776-49f9-a860-bd54b43725ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\character\information_collection\stats">
+      <UniqueIdentifier>{2fc8ba75-4adb-4296-990f-2656a8e2f3d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="managers\character_info_manager">
       <UniqueIdentifier>{9ecdda69-290b-4db1-817a-72c39a1dd9dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="managers\character_info_managers\stats_manager">
-      <UniqueIdentifier>{1fc80115-3cb0-4efc-b22b-4103335d046f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game\entity\character\stats">
-      <UniqueIdentifier>{c879e347-0c0e-466a-97a4-5f0fe8239e73}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game\entity\character\inventorys">
-      <UniqueIdentifier>{b4b88190-5f13-4fd6-bffd-89f655828278}</UniqueIdentifier>
+    <Filter Include="game\entity\character\information_collection\inventorys">
+      <UniqueIdentifier>{ba9fe76c-8922-4c0e-8edc-93f9c0cbcecf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -182,8 +197,23 @@
     <ClInclude Include="game\loader\loader.h">
       <Filter>game\loader</Filter>
     </ClInclude>
-    <ClInclude Include="game\entitiy\character\stats\stats.h">
-      <Filter>game\entity\character\stats</Filter>
+    <ClInclude Include="game\entitiy\character\information_collection\stats\stats.h">
+      <Filter>game\entity\character\information_collection\stats</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\character\information_collection\base_info.h">
+      <Filter>game\entity\character\information_collection</Filter>
+    </ClInclude>
+    <ClInclude Include="managers\character_info_manager\character_info_storage_manager.h">
+      <Filter>managers\character_info_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="managers\character_info_manager\character_info_storage.h">
+      <Filter>managers\character_info_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\character\information_collection\inventorys\inventorys.h">
+      <Filter>game\entity\character\information_collection\inventorys</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\character\information_collection\inventorys\inventory.h">
+      <Filter>game\entity\character\information_collection\inventorys</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

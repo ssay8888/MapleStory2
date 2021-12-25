@@ -27,8 +27,10 @@
 #include <google/protobuf/generated_message_util.h>
 #include <google/protobuf/metadata_lite.h>
 #include <google/protobuf/generated_message_reflection.h>
+#include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/unknown_field_set.h>
 #include "game_enum.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
@@ -52,13 +54,159 @@ struct TableStruct_game_5fstruct_2eproto {
   static const ::PROTOBUF_NAMESPACE_ID::uint32 offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fstruct_2eproto;
+namespace Protocol {
+class item;
+struct itemDefaultTypeInternal;
+extern itemDefaultTypeInternal _item_default_instance_;
+}  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
+template<> ::Protocol::item* Arena::CreateMaybeMessage<::Protocol::item>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
 
 // ===================================================================
 
+class item final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.item) */ {
+ public:
+  inline item() : item(nullptr) {}
+  ~item() override;
+  explicit constexpr item(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
+  item(const item& from);
+  item(item&& from) noexcept
+    : item() {
+    *this = ::std::move(from);
+  }
+
+  inline item& operator=(const item& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline item& operator=(item&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const item& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const item* internal_default_instance() {
+    return reinterpret_cast<const item*>(
+               &_item_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
+
+  friend void swap(item& a, item& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(item* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(item* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline item* New() const final {
+    return new item();
+  }
+
+  item* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<item>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const item& from);
+  void MergeFrom(const item& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(item* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.item";
+  }
+  protected:
+  explicit item(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kItemidFieldNumber = 1,
+    kPositionFieldNumber = 2,
+  };
+  // int32 itemid = 1;
+  void clear_itemid();
+  ::PROTOBUF_NAMESPACE_ID::int32 itemid() const;
+  void set_itemid(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_itemid() const;
+  void _internal_set_itemid(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 position = 2;
+  void clear_position();
+  ::PROTOBUF_NAMESPACE_ID::int32 position() const;
+  void set_position(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_position() const;
+  void _internal_set_position(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.item)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::int32 itemid_;
+  ::PROTOBUF_NAMESPACE_ID::int32 position_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fstruct_2eproto;
+};
 // ===================================================================
 
 
@@ -68,6 +216,48 @@ namespace Protocol {
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
+// item
+
+// int32 itemid = 1;
+inline void item::clear_itemid() {
+  itemid_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::_internal_itemid() const {
+  return itemid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::itemid() const {
+  // @@protoc_insertion_point(field_get:Protocol.item.itemid)
+  return _internal_itemid();
+}
+inline void item::_internal_set_itemid(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  itemid_ = value;
+}
+inline void item::set_itemid(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_itemid(value);
+  // @@protoc_insertion_point(field_set:Protocol.item.itemid)
+}
+
+// int32 position = 2;
+inline void item::clear_position() {
+  position_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::_internal_position() const {
+  return position_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::position() const {
+  // @@protoc_insertion_point(field_get:Protocol.item.position)
+  return _internal_position();
+}
+inline void item::_internal_set_position(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  position_ = value;
+}
+inline void item::set_position(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_position(value);
+  // @@protoc_insertion_point(field_set:Protocol.item.position)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__

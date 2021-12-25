@@ -1,4 +1,4 @@
-#include "game_server_pch.h"
+ï»¿#include "game_server_pch.h"
 #include "game_session.h"
 
 #include "game_client_packet_handler.h"
@@ -14,7 +14,7 @@ GameSession::GameSession() :
 
 auto GameSession::OnConnected() -> void
 {
-	std::cout << "Á¢¼Ó" << std::endl;
+	std::cout << "ì ‘ì†" << std::endl;
 	const auto game_session = std::static_pointer_cast<GameSession>(shared_from_this());
 	GameSessionManager::GetInstance().GameSessionAdd(game_session);
 }
@@ -52,7 +52,12 @@ auto GameSession::SetAccountId(const int64_t id) -> void
 	_account_id = id;
 }
 
-auto GameSession::GetPlayer() const -> std::shared_ptr<Player>
+auto GameSession::SetPlayer(std::shared_ptr<Character> character) -> void
 {
-	return _player;
+	_character = character;
+}
+
+auto GameSession::GetPlayer() const -> std::shared_ptr<Character>
+{
+	return _character;
 }

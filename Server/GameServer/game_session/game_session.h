@@ -1,7 +1,7 @@
 #pragma once
 #include "src/network/session.h"
 
-class Player;
+class Character;
 
 class GameSession final : public PacketSession
 {
@@ -24,10 +24,11 @@ public:
 	auto GetAccountId() const->int64_t;
 	auto SetAccountId(int64_t id) ->void;
 
-	auto GetPlayer() const->std::shared_ptr<Player>;
+	auto SetPlayer(std::shared_ptr<Character> character)->void;
+	auto GetPlayer() const->std::shared_ptr<Character>;
 
 private:
 	int64_t										_session_id = -1;
 	int64_t										_account_id = -1;
-	std::shared_ptr<Player>						_player;
+	std::shared_ptr<Character>					_character;
 };

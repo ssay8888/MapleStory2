@@ -5,7 +5,8 @@ import "login_enum.proto";
 
 message ViewCharacter
 {
-	bytes name = 1;
-	bool gender = 2;
-	repeated int32 eqp_items = 3;
+	int64 characterid=1;
+	bytes name = 2;
+	bool gender = 3;
+	repeated int32 eqp_items = 4;
 }

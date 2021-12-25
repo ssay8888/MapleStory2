@@ -6,6 +6,8 @@
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
 #include <src/system/input/input_device.h>
 
+#include "src/managers/characters_manager/character.h"
+#include "src/managers/characters_manager/characters_manager.h"
 #include "src/network/login_server_packet_handler.h"
 #include "src/network/send_manager.h"
 #include "src/utility/timers/timer_manager.h"
@@ -131,8 +133,12 @@ auto CharacterOkBtn::SelectCharacter(int32_t index) const -> bool
 	constexpr float limitTime = 1.f;
 	if (timerManager.IsTimeCheck(TEXT("OkBtnDelay"), limitTime))
 	{
+		auto& instance = CharactersManager::GetInstance();
 		Protocol::LoginClientCharacterSelect sendPkt;
-		sendPkt.set_characterid(index);
+		if (auto character = instance.GetCharacter(index))
+		{
+			sendPkt.set_characterid(character->GetInfo().characterid());
+		}
 		SendManager::GetInstance().Push(LoginServerPacketHandler::MakeSendBuffer(sendPkt));
 		timerManager.ResetTime(TEXT("OkBtnDelay"));
 		return true;

@@ -159,7 +159,10 @@
     <ClCompile Include="center_client_session\center_login_server_packet_handler.cpp" />
     <ClCompile Include="center_client_session\center_client_session.cpp" />
     <ClCompile Include="game\entitiy\character\game_character.cpp" />
-    <ClCompile Include="game\entitiy\character\stats\stats.cpp" />
+    <ClCompile Include="game\entitiy\character\information_collection\base_info.cpp" />
+    <ClCompile Include="game\entitiy\character\information_collection\inventorys\inventory.cpp" />
+    <ClCompile Include="game\entitiy\character\information_collection\inventorys\inventorys.cpp" />
+    <ClCompile Include="game\entitiy\character\information_collection\stats\stats.cpp" />
     <ClCompile Include="game\entitiy\game_entity.cpp" />
     <ClCompile Include="game\loader\loader.cpp" />
     <ClCompile Include="game_server.cpp" />
@@ -174,6 +177,8 @@
     <ClCompile Include="game_session\game_session.cpp" />
     <ClCompile Include="game_session\game_session_manager.cpp" />
     <ClCompile Include="managers\auth_manager\game_auth_manager.cpp" />
+    <ClCompile Include="managers\character_info_manager\character_info_storage.cpp" />
+    <ClCompile Include="managers\character_info_manager\character_info_storage_manager.cpp" />
     <ClCompile Include="managers\game_job_queue\game_character_load_queue.cpp" />
     <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler.cpp" />
     <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.cpp" />
@@ -215,7 +220,10 @@
     <ClInclude Include="center_client_session\center_login_server_packet_handler.h" />
     <ClInclude Include="center_client_session\center_client_session.h" />
     <ClInclude Include="game\entitiy\character\game_character.h" />
-    <ClInclude Include="game\entitiy\character\stats\stats.h" />
+    <ClInclude Include="game\entitiy\character\information_collection\base_info.h" />
+    <ClInclude Include="game\entitiy\character\information_collection\inventorys\inventory.h" />
+    <ClInclude Include="game\entitiy\character\information_collection\inventorys\inventorys.h" />
+    <ClInclude Include="game\entitiy\character\information_collection\stats\stats.h" />
     <ClInclude Include="game\entitiy\game_entity.h" />
     <ClInclude Include="game\loader\loader.h" />
     <ClInclude Include="game_server.h" />
@@ -224,6 +232,8 @@
     <ClInclude Include="game_session\game_session.h" />
     <ClInclude Include="game_session\game_session_manager.h" />
     <ClInclude Include="managers\auth_manager\game_auth_manager.h" />
+    <ClInclude Include="managers\character_info_manager\character_info_storage.h" />
+    <ClInclude Include="managers\character_info_manager\character_info_storage_manager.h" />
     <ClInclude Include="managers\game_job_queue\game_character_load_queue.h" />
     <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler.h" />
     <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.h" />

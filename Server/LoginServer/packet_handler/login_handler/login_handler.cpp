@@ -145,6 +145,7 @@ void LoginHandler::CharacterListSend(const std::shared_ptr<LoginSession> session
 		const auto character = sendPkt.add_characters();
 		character->set_name(StringUtils::ConvertWtoC(player.second->GetName()).c_str());
 		character->set_gender(player.second->GetGender());
+		character->set_characterid(player.second->GetCharacterId());
 		auto items = player.second->GetEquipped()->GetAllItem();
 		for (const auto item : items)
 		{

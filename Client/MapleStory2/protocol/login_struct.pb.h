@@ -174,11 +174,12 @@ class ViewCharacter final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kEqpItemsFieldNumber = 3,
-    kNameFieldNumber = 1,
-    kGenderFieldNumber = 2,
+    kEqpItemsFieldNumber = 4,
+    kNameFieldNumber = 2,
+    kCharacteridFieldNumber = 1,
+    kGenderFieldNumber = 3,
   };
-  // repeated int32 eqp_items = 3;
+  // repeated int32 eqp_items = 4;
   int eqp_items_size() const;
   private:
   int _internal_eqp_items_size() const;
@@ -200,7 +201,7 @@ class ViewCharacter final :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_eqp_items();
 
-  // bytes name = 1;
+  // bytes name = 2;
   void clear_name();
   const std::string& name() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -214,7 +215,16 @@ class ViewCharacter final :
   std::string* _internal_mutable_name();
   public:
 
-  // bool gender = 2;
+  // int64 characterid = 1;
+  void clear_characterid();
+  ::PROTOBUF_NAMESPACE_ID::int64 characterid() const;
+  void set_characterid(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_characterid() const;
+  void _internal_set_characterid(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // bool gender = 3;
   void clear_gender();
   bool gender() const;
   void set_gender(bool value);
@@ -233,6 +243,7 @@ class ViewCharacter final :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > eqp_items_;
   mutable std::atomic<int> _eqp_items_cached_byte_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+  ::PROTOBUF_NAMESPACE_ID::int64 characterid_;
   bool gender_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_login_5fstruct_2eproto;
@@ -248,7 +259,27 @@ class ViewCharacter final :
 #endif  // __GNUC__
 // ViewCharacter
 
-// bytes name = 1;
+// int64 characterid = 1;
+inline void ViewCharacter::clear_characterid() {
+  characterid_ = int64_t{0};
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 ViewCharacter::_internal_characterid() const {
+  return characterid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 ViewCharacter::characterid() const {
+  // @@protoc_insertion_point(field_get:Protocol.ViewCharacter.characterid)
+  return _internal_characterid();
+}
+inline void ViewCharacter::_internal_set_characterid(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  
+  characterid_ = value;
+}
+inline void ViewCharacter::set_characterid(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_characterid(value);
+  // @@protoc_insertion_point(field_set:Protocol.ViewCharacter.characterid)
+}
+
+// bytes name = 2;
 inline void ViewCharacter::clear_name() {
   name_.ClearToEmpty();
 }
@@ -293,7 +324,7 @@ inline void ViewCharacter::set_allocated_name(std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:Protocol.ViewCharacter.name)
 }
 
-// bool gender = 2;
+// bool gender = 3;
 inline void ViewCharacter::clear_gender() {
   gender_ = false;
 }
@@ -313,7 +344,7 @@ inline void ViewCharacter::set_gender(bool value) {
   // @@protoc_insertion_point(field_set:Protocol.ViewCharacter.gender)
 }
 
-// repeated int32 eqp_items = 3;
+// repeated int32 eqp_items = 4;
 inline int ViewCharacter::_internal_eqp_items_size() const {
   return eqp_items_.size();
 }

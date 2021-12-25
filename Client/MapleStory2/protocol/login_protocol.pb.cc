@@ -100,7 +100,7 @@ struct LoginServerCreateCharacterDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT LoginServerCreateCharacterDefaultTypeInternal _LoginServerCreateCharacter_default_instance_;
 constexpr LoginClientCharacterSelect::LoginClientCharacterSelect(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : characterid_(0){}
+  : characterid_(int64_t{0}){}
 struct LoginClientCharacterSelectDefaultTypeInternal {
   constexpr LoginClientCharacterSelectDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -228,7 +228,7 @@ const char descriptor_table_protodef_login_5fprotocol_2eproto[] PROTOBUF_SECTION
   "rverCreateCharacter\022(\n\006result\030\001 \001(\0162\030.Pr"
   "otocol.kCreateMessage\022*\n\tcharacter\030\002 \001(\013"
   "2\027.Protocol.ViewCharacter\"1\n\032LoginClient"
-  "CharacterSelect\022\023\n\013characterId\030\001 \001(\005\"w\n\032"
+  "CharacterSelect\022\023\n\013characterId\030\001 \001(\003\"w\n\032"
   "LoginServerCharacterSelect\0221\n\006result\030\001 \001"
   "(\0162!.Protocol.kCharacterSelectMessage\022\n\n"
   "\002ip\030\002 \001(\t\022\014\n\004port\030\003 \001(\005\022\014\n\004auth\030\004 \001(\003b\006p"
@@ -1683,7 +1683,7 @@ LoginClientCharacterSelect::LoginClientCharacterSelect(const LoginClientCharacte
 }
 
 void LoginClientCharacterSelect::SharedCtor() {
-characterid_ = 0;
+characterid_ = int64_t{0};
 }
 
 LoginClientCharacterSelect::~LoginClientCharacterSelect() {
@@ -1712,7 +1712,7 @@ void LoginClientCharacterSelect::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  characterid_ = 0;
+  characterid_ = int64_t{0};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1722,7 +1722,7 @@ const char* LoginClientCharacterSelect::_InternalParse(const char* ptr, ::PROTOB
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int32 characterId = 1;
+      // int64 characterId = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           characterid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
@@ -1758,10 +1758,10 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 characterId = 1;
+  // int64 characterId = 1;
   if (this->characterid() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_characterid(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(1, this->_internal_characterid(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1780,10 +1780,10 @@ size_t LoginClientCharacterSelect::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // int32 characterId = 1;
+  // int64 characterId = 1;
   if (this->characterid() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
         this->_internal_characterid());
   }
 

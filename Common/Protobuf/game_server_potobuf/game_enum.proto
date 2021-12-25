@@ -1,2 +1,16 @@
 syntax = "proto3";
 package Protocol;
+
+enum kInventoryType
+{
+	kInventoryEquipped = 0;
+	kInventoryEqp = 1;
+	kInventoryEtc = 2;
+	kInventoryEnd = 3;
+}
+
+enum kLoadState
+{
+	kLoadSuccess = 0;
+	kLoadFailed = 1;
+}

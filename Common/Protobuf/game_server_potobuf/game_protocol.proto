@@ -16,12 +16,16 @@ message GameServerLogin
 
 message GameServerLoadCharacter
 {
-	int64 account_id = 1;
-	bytes name = 2;
-	bool gender = 3;
-	int32 face_id = 4;
-	int32 str = 5;
-	int32 dex = 6;
-	int32 int = 7;
-	int32 luk = 8;
+	kLoadState state = 1;
+	int64 account_id = 2;
+	int64 character_id = 3;
+	bytes name = 4;
+	bool gender = 5;
+	int32 face_id = 6;
+	int32 str = 7;
+	int32 dex = 8;
+	int32 int = 9;
+	int32 luk = 10;
+
+	repeated item items = 11;
 }

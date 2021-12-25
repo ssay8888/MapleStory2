@@ -29,6 +29,7 @@
 #include <google/protobuf/generated_message_reflection.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_game_5fenum_2eproto
@@ -55,6 +56,58 @@ PROTOBUF_NAMESPACE_OPEN
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
 
+enum kInventoryType : int {
+  kInventoryEquipped = 0,
+  kInventoryEqp = 1,
+  kInventoryEtc = 2,
+  kInventoryEnd = 3,
+  kInventoryType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  kInventoryType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool kInventoryType_IsValid(int value);
+constexpr kInventoryType kInventoryType_MIN = kInventoryEquipped;
+constexpr kInventoryType kInventoryType_MAX = kInventoryEnd;
+constexpr int kInventoryType_ARRAYSIZE = kInventoryType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kInventoryType_descriptor();
+template<typename T>
+inline const std::string& kInventoryType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, kInventoryType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function kInventoryType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    kInventoryType_descriptor(), enum_t_value);
+}
+inline bool kInventoryType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, kInventoryType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kInventoryType>(
+    kInventoryType_descriptor(), name, value);
+}
+enum kLoadState : int {
+  kLoadSuccess = 0,
+  kLoadFailed = 1,
+  kLoadState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  kLoadState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool kLoadState_IsValid(int value);
+constexpr kLoadState kLoadState_MIN = kLoadSuccess;
+constexpr kLoadState kLoadState_MAX = kLoadFailed;
+constexpr int kLoadState_ARRAYSIZE = kLoadState_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kLoadState_descriptor();
+template<typename T>
+inline const std::string& kLoadState_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, kLoadState>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function kLoadState_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    kLoadState_descriptor(), enum_t_value);
+}
+inline bool kLoadState_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, kLoadState* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kLoadState>(
+    kLoadState_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -74,6 +127,21 @@ namespace Protocol {
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace Protocol
+
+PROTOBUF_NAMESPACE_OPEN
+
+template <> struct is_proto_enum< ::Protocol::kInventoryType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kInventoryType>() {
+  return ::Protocol::kInventoryType_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::kLoadState> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kLoadState>() {
+  return ::Protocol::kLoadState_descriptor();
+}
+
+PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

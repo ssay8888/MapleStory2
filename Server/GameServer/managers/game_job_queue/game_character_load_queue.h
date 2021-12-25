@@ -1,6 +1,8 @@
 #pragma once
 #include "protocol/game_protocol.pb.h"
 
+class GameCharacter;
+
 class GameCharacterLoadQueue : public JobQueue
 {
 public:
@@ -14,7 +16,7 @@ public:
 	auto GameClientLoginResponse(PacketSessionRef session, Protocol::GameClientLogin pkt)->void;
 
 private:
-	auto LoadCharacterInfo()->Protocol::GameServerLoadCharacter;
+	auto SettingCharacterInfoSendPacket(Protocol::GameServerLoadCharacter& sendPkt, PacketSessionRef session, std::shared_ptr<GameCharacter> player)->void;
 
 
 };

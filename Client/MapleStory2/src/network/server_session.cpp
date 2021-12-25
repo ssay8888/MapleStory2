@@ -27,7 +27,7 @@ void ServerSession::OnRecvPacket(BYTE* buffer,  int32_t len)
 	case Service::kServerType::kClientLogin:
 		LoginServerPacketHandler::HandlePacket(session, buffer, len);
 		break;
-	case Service::kServerType::kServerGame:
+	case Service::kServerType::kClientGame:
 		GameServerPacketHandler::HandlePacket(session, buffer, len);
 		break;
 	default: ;

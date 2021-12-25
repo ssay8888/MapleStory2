@@ -1110,13 +1110,13 @@ class LoginClientCharacterSelect final :
   enum : int {
     kCharacterIdFieldNumber = 1,
   };
-  // int32 characterId = 1;
+  // int64 characterId = 1;
   void clear_characterid();
-  ::PROTOBUF_NAMESPACE_ID::int32 characterid() const;
-  void set_characterid(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::int64 characterid() const;
+  void set_characterid(::PROTOBUF_NAMESPACE_ID::int64 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_characterid() const;
-  void _internal_set_characterid(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_characterid() const;
+  void _internal_set_characterid(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
   // @@protoc_insertion_point(class_scope:Protocol.LoginClientCharacterSelect)
@@ -1126,7 +1126,7 @@ class LoginClientCharacterSelect final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::int32 characterid_;
+  ::PROTOBUF_NAMESPACE_ID::int64 characterid_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_login_5fprotocol_2eproto;
 };
@@ -1770,22 +1770,22 @@ inline void LoginServerCreateCharacter::set_allocated_character(::Protocol::View
 
 // LoginClientCharacterSelect
 
-// int32 characterId = 1;
+// int64 characterId = 1;
 inline void LoginClientCharacterSelect::clear_characterid() {
-  characterid_ = 0;
+  characterid_ = int64_t{0};
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 LoginClientCharacterSelect::_internal_characterid() const {
+inline ::PROTOBUF_NAMESPACE_ID::int64 LoginClientCharacterSelect::_internal_characterid() const {
   return characterid_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 LoginClientCharacterSelect::characterid() const {
+inline ::PROTOBUF_NAMESPACE_ID::int64 LoginClientCharacterSelect::characterid() const {
   // @@protoc_insertion_point(field_get:Protocol.LoginClientCharacterSelect.characterId)
   return _internal_characterid();
 }
-inline void LoginClientCharacterSelect::_internal_set_characterid(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void LoginClientCharacterSelect::_internal_set_characterid(::PROTOBUF_NAMESPACE_ID::int64 value) {
   
   characterid_ = value;
 }
-inline void LoginClientCharacterSelect::set_characterid(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void LoginClientCharacterSelect::set_characterid(::PROTOBUF_NAMESPACE_ID::int64 value) {
   _internal_set_characterid(value);
   // @@protoc_insertion_point(field_set:Protocol.LoginClientCharacterSelect.characterId)
 }

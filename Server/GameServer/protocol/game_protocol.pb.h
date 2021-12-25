@@ -447,16 +447,37 @@ class GameServerLoadCharacter final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kNameFieldNumber = 2,
-    kAccountIdFieldNumber = 1,
-    kGenderFieldNumber = 3,
-    kFaceIdFieldNumber = 4,
-    kStrFieldNumber = 5,
-    kDexFieldNumber = 6,
-    kIntFieldNumber = 7,
-    kLukFieldNumber = 8,
+    kItemsFieldNumber = 11,
+    kNameFieldNumber = 4,
+    kAccountIdFieldNumber = 2,
+    kCharacterIdFieldNumber = 3,
+    kStateFieldNumber = 1,
+    kGenderFieldNumber = 5,
+    kFaceIdFieldNumber = 6,
+    kStrFieldNumber = 7,
+    kDexFieldNumber = 8,
+    kIntFieldNumber = 9,
+    kLukFieldNumber = 10,
   };
-  // bytes name = 2;
+  // repeated .Protocol.item items = 11;
+  int items_size() const;
+  private:
+  int _internal_items_size() const;
+  public:
+  void clear_items();
+  ::Protocol::item* mutable_items(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::item >*
+      mutable_items();
+  private:
+  const ::Protocol::item& _internal_items(int index) const;
+  ::Protocol::item* _internal_add_items();
+  public:
+  const ::Protocol::item& items(int index) const;
+  ::Protocol::item* add_items();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::item >&
+      items() const;
+
+  // bytes name = 4;
   void clear_name();
   const std::string& name() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -470,7 +491,7 @@ class GameServerLoadCharacter final :
   std::string* _internal_mutable_name();
   public:
 
-  // int64 account_id = 1;
+  // int64 account_id = 2;
   void clear_account_id();
   ::PROTOBUF_NAMESPACE_ID::int64 account_id() const;
   void set_account_id(::PROTOBUF_NAMESPACE_ID::int64 value);
@@ -479,7 +500,25 @@ class GameServerLoadCharacter final :
   void _internal_set_account_id(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
-  // bool gender = 3;
+  // int64 character_id = 3;
+  void clear_character_id();
+  ::PROTOBUF_NAMESPACE_ID::int64 character_id() const;
+  void set_character_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_character_id() const;
+  void _internal_set_character_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // .Protocol.kLoadState state = 1;
+  void clear_state();
+  ::Protocol::kLoadState state() const;
+  void set_state(::Protocol::kLoadState value);
+  private:
+  ::Protocol::kLoadState _internal_state() const;
+  void _internal_set_state(::Protocol::kLoadState value);
+  public:
+
+  // bool gender = 5;
   void clear_gender();
   bool gender() const;
   void set_gender(bool value);
@@ -488,7 +527,7 @@ class GameServerLoadCharacter final :
   void _internal_set_gender(bool value);
   public:
 
-  // int32 face_id = 4;
+  // int32 face_id = 6;
   void clear_face_id();
   ::PROTOBUF_NAMESPACE_ID::int32 face_id() const;
   void set_face_id(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -497,7 +536,7 @@ class GameServerLoadCharacter final :
   void _internal_set_face_id(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 str = 5;
+  // int32 str = 7;
   void clear_str();
   ::PROTOBUF_NAMESPACE_ID::int32 str() const;
   void set_str(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -506,7 +545,7 @@ class GameServerLoadCharacter final :
   void _internal_set_str(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 dex = 6;
+  // int32 dex = 8;
   void clear_dex();
   ::PROTOBUF_NAMESPACE_ID::int32 dex() const;
   void set_dex(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -515,7 +554,7 @@ class GameServerLoadCharacter final :
   void _internal_set_dex(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 int = 7;
+  // int32 int = 9;
   void clear_int_();
   ::PROTOBUF_NAMESPACE_ID::int32 int_() const;
   void set_int_(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -524,7 +563,7 @@ class GameServerLoadCharacter final :
   void _internal_set_int_(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 luk = 8;
+  // int32 luk = 10;
   void clear_luk();
   ::PROTOBUF_NAMESPACE_ID::int32 luk() const;
   void set_luk(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -540,8 +579,11 @@ class GameServerLoadCharacter final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::item > items_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
   ::PROTOBUF_NAMESPACE_ID::int64 account_id_;
+  ::PROTOBUF_NAMESPACE_ID::int64 character_id_;
+  int state_;
   bool gender_;
   ::PROTOBUF_NAMESPACE_ID::int32 face_id_;
   ::PROTOBUF_NAMESPACE_ID::int32 str_;
@@ -610,7 +652,27 @@ inline void GameServerLogin::set_auth(::PROTOBUF_NAMESPACE_ID::int64 value) {
 
 // GameServerLoadCharacter
 
-// int64 account_id = 1;
+// .Protocol.kLoadState state = 1;
+inline void GameServerLoadCharacter::clear_state() {
+  state_ = 0;
+}
+inline ::Protocol::kLoadState GameServerLoadCharacter::_internal_state() const {
+  return static_cast< ::Protocol::kLoadState >(state_);
+}
+inline ::Protocol::kLoadState GameServerLoadCharacter::state() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerLoadCharacter.state)
+  return _internal_state();
+}
+inline void GameServerLoadCharacter::_internal_set_state(::Protocol::kLoadState value) {
+  
+  state_ = value;
+}
+inline void GameServerLoadCharacter::set_state(::Protocol::kLoadState value) {
+  _internal_set_state(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.state)
+}
+
+// int64 account_id = 2;
 inline void GameServerLoadCharacter::clear_account_id() {
   account_id_ = int64_t{0};
 }
@@ -630,7 +692,27 @@ inline void GameServerLoadCharacter::set_account_id(::PROTOBUF_NAMESPACE_ID::int
   // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.account_id)
 }
 
-// bytes name = 2;
+// int64 character_id = 3;
+inline void GameServerLoadCharacter::clear_character_id() {
+  character_id_ = int64_t{0};
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 GameServerLoadCharacter::_internal_character_id() const {
+  return character_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 GameServerLoadCharacter::character_id() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerLoadCharacter.character_id)
+  return _internal_character_id();
+}
+inline void GameServerLoadCharacter::_internal_set_character_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  
+  character_id_ = value;
+}
+inline void GameServerLoadCharacter::set_character_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_character_id(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.character_id)
+}
+
+// bytes name = 4;
 inline void GameServerLoadCharacter::clear_name() {
   name_.ClearToEmpty();
 }
@@ -675,7 +757,7 @@ inline void GameServerLoadCharacter::set_allocated_name(std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:Protocol.GameServerLoadCharacter.name)
 }
 
-// bool gender = 3;
+// bool gender = 5;
 inline void GameServerLoadCharacter::clear_gender() {
   gender_ = false;
 }
@@ -695,7 +777,7 @@ inline void GameServerLoadCharacter::set_gender(bool value) {
   // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.gender)
 }
 
-// int32 face_id = 4;
+// int32 face_id = 6;
 inline void GameServerLoadCharacter::clear_face_id() {
   face_id_ = 0;
 }
@@ -715,7 +797,7 @@ inline void GameServerLoadCharacter::set_face_id(::PROTOBUF_NAMESPACE_ID::int32 
   // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.face_id)
 }
 
-// int32 str = 5;
+// int32 str = 7;
 inline void GameServerLoadCharacter::clear_str() {
   str_ = 0;
 }
@@ -735,7 +817,7 @@ inline void GameServerLoadCharacter::set_str(::PROTOBUF_NAMESPACE_ID::int32 valu
   // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.str)
 }
 
-// int32 dex = 6;
+// int32 dex = 8;
 inline void GameServerLoadCharacter::clear_dex() {
   dex_ = 0;
 }
@@ -755,7 +837,7 @@ inline void GameServerLoadCharacter::set_dex(::PROTOBUF_NAMESPACE_ID::int32 valu
   // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.dex)
 }
 
-// int32 int = 7;
+// int32 int = 9;
 inline void GameServerLoadCharacter::clear_int_() {
   int__ = 0;
 }
@@ -775,7 +857,7 @@ inline void GameServerLoadCharacter::set_int_(::PROTOBUF_NAMESPACE_ID::int32 val
   // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.int)
 }
 
-// int32 luk = 8;
+// int32 luk = 10;
 inline void GameServerLoadCharacter::clear_luk() {
   luk_ = 0;
 }
@@ -793,6 +875,42 @@ inline void GameServerLoadCharacter::_internal_set_luk(::PROTOBUF_NAMESPACE_ID::
 inline void GameServerLoadCharacter::set_luk(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_luk(value);
   // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.luk)
+}
+
+// repeated .Protocol.item items = 11;
+inline int GameServerLoadCharacter::_internal_items_size() const {
+  return items_.size();
+}
+inline int GameServerLoadCharacter::items_size() const {
+  return _internal_items_size();
+}
+inline ::Protocol::item* GameServerLoadCharacter::mutable_items(int index) {
+  // @@protoc_insertion_point(field_mutable:Protocol.GameServerLoadCharacter.items)
+  return items_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::item >*
+GameServerLoadCharacter::mutable_items() {
+  // @@protoc_insertion_point(field_mutable_list:Protocol.GameServerLoadCharacter.items)
+  return &items_;
+}
+inline const ::Protocol::item& GameServerLoadCharacter::_internal_items(int index) const {
+  return items_.Get(index);
+}
+inline const ::Protocol::item& GameServerLoadCharacter::items(int index) const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerLoadCharacter.items)
+  return _internal_items(index);
+}
+inline ::Protocol::item* GameServerLoadCharacter::_internal_add_items() {
+  return items_.Add();
+}
+inline ::Protocol::item* GameServerLoadCharacter::add_items() {
+  // @@protoc_insertion_point(field_add:Protocol.GameServerLoadCharacter.items)
+  return _internal_add_items();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::item >&
+GameServerLoadCharacter::items() const {
+  // @@protoc_insertion_point(field_list:Protocol.GameServerLoadCharacter.items)
+  return items_;
 }
 
 #ifdef __GNUC__

@@ -22,6 +22,7 @@ constexpr ViewCharacter::ViewCharacter(
   : eqp_items_()
   , _eqp_items_cached_byte_size_()
   , name_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , characterid_(int64_t{0})
   , gender_(false){}
 struct ViewCharacterDefaultTypeInternal {
   constexpr ViewCharacterDefaultTypeInternal()
@@ -43,6 +44,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_login_5fstruct_2eproto::offset
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Protocol::ViewCharacter, characterid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::ViewCharacter, name_),
   PROTOBUF_FIELD_OFFSET(::Protocol::ViewCharacter, gender_),
   PROTOBUF_FIELD_OFFSET(::Protocol::ViewCharacter, eqp_items_),
@@ -57,16 +59,16 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_login_5fstruct_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\022login_struct.proto\022\010Protocol\032\020login_en"
-  "um.proto\"@\n\rViewCharacter\022\014\n\004name\030\001 \001(\014\022"
-  "\016\n\006gender\030\002 \001(\010\022\021\n\teqp_items\030\003 \003(\005b\006prot"
-  "o3"
+  "um.proto\"U\n\rViewCharacter\022\023\n\013characterid"
+  "\030\001 \001(\003\022\014\n\004name\030\002 \001(\014\022\016\n\006gender\030\003 \001(\010\022\021\n\t"
+  "eqp_items\030\004 \003(\005b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_login_5fstruct_2eproto_deps[1] = {
   &::descriptor_table_login_5fenum_2eproto,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_login_5fstruct_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_login_5fstruct_2eproto = {
-  false, false, 122, descriptor_table_protodef_login_5fstruct_2eproto, "login_struct.proto", 
+  false, false, 143, descriptor_table_protodef_login_5fstruct_2eproto, "login_struct.proto", 
   &descriptor_table_login_5fstruct_2eproto_once, descriptor_table_login_5fstruct_2eproto_deps, 1, 1,
   schemas, file_default_instances, TableStruct_login_5fstruct_2eproto::offsets,
   file_level_metadata_login_5fstruct_2eproto, file_level_enum_descriptors_login_5fstruct_2eproto, file_level_service_descriptors_login_5fstruct_2eproto,
@@ -101,13 +103,18 @@ ViewCharacter::ViewCharacter(const ViewCharacter& from)
     name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_name(), 
       GetArenaForAllocation());
   }
-  gender_ = from.gender_;
+  ::memcpy(&characterid_, &from.characterid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&gender_) -
+    reinterpret_cast<char*>(&characterid_)) + sizeof(gender_));
   // @@protoc_insertion_point(copy_constructor:Protocol.ViewCharacter)
 }
 
 void ViewCharacter::SharedCtor() {
 name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-gender_ = false;
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&characterid_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&gender_) -
+    reinterpret_cast<char*>(&characterid_)) + sizeof(gender_));
 }
 
 ViewCharacter::~ViewCharacter() {
@@ -139,7 +146,9 @@ void ViewCharacter::Clear() {
 
   eqp_items_.Clear();
   name_.ClearToEmpty();
-  gender_ = false;
+  ::memset(&characterid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&gender_) -
+      reinterpret_cast<char*>(&characterid_)) + sizeof(gender_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -149,27 +158,34 @@ const char* ViewCharacter::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // bytes name = 1;
+      // int64 characterid = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          characterid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bytes name = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // bool gender = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+      // bool gender = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           gender_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated int32 eqp_items = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+      // repeated int32 eqp_items = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_eqp_items(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24) {
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32) {
           _internal_add_eqp_items(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
@@ -203,24 +219,30 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes name = 1;
+  // int64 characterid = 1;
+  if (this->characterid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(1, this->_internal_characterid(), target);
+  }
+
+  // bytes name = 2;
   if (!this->name().empty()) {
     target = stream->WriteBytesMaybeAliased(
-        1, this->_internal_name(), target);
+        2, this->_internal_name(), target);
   }
 
-  // bool gender = 2;
+  // bool gender = 3;
   if (this->gender() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(2, this->_internal_gender(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(3, this->_internal_gender(), target);
   }
 
-  // repeated int32 eqp_items = 3;
+  // repeated int32 eqp_items = 4;
   {
     int byte_size = _eqp_items_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
       target = stream->WriteInt32Packed(
-          3, _internal_eqp_items(), byte_size, target);
+          4, _internal_eqp_items(), byte_size, target);
     }
   }
 
@@ -240,7 +262,7 @@ size_t ViewCharacter::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated int32 eqp_items = 3;
+  // repeated int32 eqp_items = 4;
   {
     size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       Int32Size(this->eqp_items_);
@@ -255,14 +277,21 @@ size_t ViewCharacter::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // bytes name = 1;
+  // bytes name = 2;
   if (!this->name().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
         this->_internal_name());
   }
 
-  // bool gender = 2;
+  // int64 characterid = 1;
+  if (this->characterid() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+        this->_internal_characterid());
+  }
+
+  // bool gender = 3;
   if (this->gender() != 0) {
     total_size += 1 + 1;
   }
@@ -302,6 +331,9 @@ void ViewCharacter::MergeFrom(const ViewCharacter& from) {
   if (!from.name().empty()) {
     _internal_set_name(from._internal_name());
   }
+  if (from.characterid() != 0) {
+    _internal_set_characterid(from._internal_characterid());
+  }
   if (from.gender() != 0) {
     _internal_set_gender(from._internal_gender());
   }
@@ -334,7 +366,12 @@ void ViewCharacter::InternalSwap(ViewCharacter* other) {
       &name_, GetArenaForAllocation(),
       &other->name_, other->GetArenaForAllocation()
   );
-  swap(gender_, other->gender_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(ViewCharacter, gender_)
+      + sizeof(ViewCharacter::gender_)
+      - PROTOBUF_FIELD_OFFSET(ViewCharacter, characterid_)>(
+          reinterpret_cast<char*>(&characterid_),
+          reinterpret_cast<char*>(&other->characterid_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ViewCharacter::GetMetadata() const {

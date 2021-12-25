@@ -44,7 +44,7 @@ message LoginServerCreateCharacter
 
 message LoginClientCharacterSelect
 {
-	int32 characterId = 1;
+	int64 characterId = 1;
 }
 
 message LoginServerCharacterSelect
