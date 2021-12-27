@@ -1,6 +1,8 @@
 #include "c_pch.h"
 #include "game_server_packet_handler.h"
 
+#include "src/game_job_queue/game_logic_queue.h"
+
 PacketHandlerFunc GameServerPacketHandler::_packet_handler[UINT16_MAX];
 auto GameServerPacketHandler::HandleGameInvalid(PacketSessionRef& session, BYTE* buffer, int32_t len) -> bool
 {
@@ -9,11 +11,12 @@ auto GameServerPacketHandler::HandleGameInvalid(PacketSessionRef& session, BYTE*
 
 auto GameServerPacketHandler::HandleGameServerLogin(PacketSessionRef& session, Protocol::GameServerLogin& pkt) -> bool
 {
-	return false;
+	return true;
 }
 
 auto GameServerPacketHandler::HandleGameServerLoadCharacter(PacketSessionRef& session,
 	Protocol::GameServerLoadCharacter& pkt) -> bool
 {
-	return false;
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::CharacterLoad, session, pkt);
+	return true;
 }

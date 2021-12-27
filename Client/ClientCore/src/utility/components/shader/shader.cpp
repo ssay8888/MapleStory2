@@ -54,6 +54,17 @@ auto Shader::SetUpTextureConstantTable(D3DXHANDLE hHandle, const ComPtr<IDirect3
 	return _effect->SetTexture(hHandle, texture.Get());
 }
 
+auto Shader::SetUpBool(D3DXHANDLE hHandle, BOOL isBool) -> HRESULT
+{
+	if (nullptr == _effect)
+		return E_FAIL;
+
+
+	_effect->SetBool(hHandle, isBool);
+
+	return S_OK;
+}
+
 auto Shader::BeginShader(const int32_t passIndex) const -> HRESULT
 {
 	if (nullptr == _effect)

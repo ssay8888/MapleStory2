@@ -5,6 +5,7 @@
 #include "data_reader/data_reader_manager.h"
 #include "files_manager/file_manager.h"
 #include "files_manager/items/item_model.h"
+#include "protocol/game_protocol.pb.h"
 #include "src/common/xml/map_parser.h"
 #include "src/game_object/fittingdoll/fittingdoll.h"
 #include "src/game_object/coat/coat.h"
@@ -361,8 +362,7 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	/* 원형 게임오브젝 객체를 생성ㅇ핞다. */
 	_system_message.clear();
 	_system_message.append(L"게임리소스를 생성합니다.");
-
-
+	
 	auto& objectManager = ObjectManager::GetInstance();
 	/* For.Prototype_Player*/
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Player"), Player::Create(_graphic_device))))

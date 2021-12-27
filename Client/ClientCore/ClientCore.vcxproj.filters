@@ -109,6 +109,9 @@
     <ClInclude Include="src\utility\components\meshes\dynamic\animation\animation.h">
       <Filter>utility\components\meshes\dynamic\animation</Filter>
     </ClInclude>
+    <ClInclude Include="src\utility\components\collider\collider.h">
+      <Filter>utility\components\collider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -203,6 +206,9 @@
     </ClCompile>
     <ClCompile Include="src\utility\components\meshes\dynamic\animation\animation.cpp">
       <Filter>utility\components\meshes\dynamic\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\components\collider\collider.cpp">
+      <Filter>utility\components\collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -299,5 +305,16 @@
     <Filter Include="utility\components\meshes\dynamic\animation">
       <UniqueIdentifier>{d7a1e426-a2ae-4b31-b504-7eb82cf8b9de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="utility\components\collider">
+      <UniqueIdentifier>{fc9c89ea-a331-4c55-b8ea-3db1b90d82c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\components\collider\shader_files">
+      <UniqueIdentifier>{f496c340-a39d-4304-bd2a-153bb61cfd9f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\Binary\ShaderFiles\shader_collider.hlsl">
+      <Filter>utility\components\collider\shader_files</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

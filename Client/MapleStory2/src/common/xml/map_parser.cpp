@@ -51,11 +51,12 @@ auto MapParser::MapModelNameListExport(const std::string name)->std::list<std::s
 	return real_node_items;
 }
 
-auto MapParser::MapParsing()->std::vector<MapEntity>
+auto MapParser::MapParsing(const std::string name)->std::vector<MapEntity>
 {
 	xml_document doc;
 	//L"Client\\Character\\00012000.img.xml"
-	char xmlPath[100] = "../../Binary/Resources/MapData/02000003_ad.xblock";
+	char xmlPath[100] = "";
+	sprintf_s(xmlPath, "../../Binary/Resources/MapData/%s.xblock", name.c_str());
 	//snprintf(xmlPath, 100, , size);
 	auto err = doc.load_file(xmlPath);
 	std::list<std::string> overlap_node_items;

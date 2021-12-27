@@ -140,6 +140,12 @@
       </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>2.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -170,6 +176,7 @@
     <ClInclude Include="src\defines\engine_typedef.h" />
     <ClInclude Include="src\system\graphic\graphic_device.h" />
     <ClInclude Include="src\system\input\input_device.h" />
+    <ClInclude Include="src\utility\components\collider\collider.h" />
     <ClInclude Include="src\utility\components\component.h" />
     <ClInclude Include="src\utility\components\manager\component_manager.h" />
     <ClInclude Include="src\utility\components\meshes\dynamic\animation\animation.h" />
@@ -208,6 +215,7 @@
     </ClCompile>
     <ClCompile Include="src\system\graphic\graphic_device.cpp" />
     <ClCompile Include="src\system\input\input_device.cpp" />
+    <ClCompile Include="src\utility\components\collider\collider.cpp" />
     <ClCompile Include="src\utility\components\component.cpp" />
     <ClCompile Include="src\utility\components\manager\component_manager.cpp" />
     <ClCompile Include="src\utility\components\meshes\dynamic\animation\animation.cpp" />
@@ -236,6 +244,9 @@
     <ClCompile Include="src\utility\scene_utility\scene_manager.cpp" />
     <ClCompile Include="src\utility\timers\timer.cpp" />
     <ClCompile Include="src\utility\timers\timer_manager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\Binary\ShaderFiles\shader_collider.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

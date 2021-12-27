@@ -6,9 +6,9 @@
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 
-void MapManager::LoadMapInstance(kScene scene)
+auto MapManager::LoadMapInstance(kScene scene) -> void
 {
-	auto mapData = MapParser::MapParsing();
+	auto mapData = MapParser::MapParsing("02000003_ad");
 
 	auto mapInstance = std::make_shared<MapInstance>(GraphicDevice::GetInstance().GetDevice());
 
@@ -18,9 +18,10 @@ void MapManager::LoadMapInstance(kScene scene)
 		mapInstance->AddMapObject(entity);
 	}
 	ObjectManager::GetInstance().AddGameObject(scene, L"MapLayer_", mapInstance);
+	_maps.emplace(L"02000003_ad", mapInstance);
 }
 
-void MapManager::LoadCharacterInstance(kScene scene)
+auto MapManager::LoadCharacterInstance(kScene scene) -> void
 {
 	auto mapData = MapParser::CharacterSelectMapParsing();
 
@@ -32,4 +33,15 @@ void MapManager::LoadCharacterInstance(kScene scene)
 		mapInstance->AddMapObject(entity);
 	}
 	ObjectManager::GetInstance().AddGameObject(scene, L"MapLayer_", mapInstance);
+	_maps.emplace(L"CharacterSelect", mapInstance);
+}
+
+auto MapManager::FindMapInstance(const std::wstring& mapid) -> std::shared_ptr<MapInstance>
+{
+	const auto iterator = _maps.find(mapid);
+	if (iterator == _maps.end())
+	{
+		return nullptr;
+	}
+	return iterator->second;
 }

@@ -17,10 +17,11 @@ public:
 	auto SetUpConstantTable(D3DXHANDLE hHandle, const void* data, int32_t lengthByte) const ->HRESULT;
 	auto SetUpTextureConstantTable(D3DXHANDLE hHandle, std::shared_ptr<Texture> textureCom, int32_t textureIndex = 0)->HRESULT;
 	auto SetUpTextureConstantTable(D3DXHANDLE hHandle, ComPtr<IDirect3DBaseTexture9> texture) const ->HRESULT;
+	auto SetUpBool(D3DXHANDLE str, BOOL isBool)->HRESULT;
+
 	auto BeginShader(int32_t passIndex) const ->HRESULT;
 	auto EndShader() const ->HRESULT;
 	auto Commit() const ->void;
-
 public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& graphicDevice, const std::wstring& shaderFilePath)->std::shared_ptr<Shader>;
 	auto Clone(void* arg)->std::shared_ptr<Component> override;

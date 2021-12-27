@@ -1,186 +1,439 @@
 #include "c_pch.h"
 #include "player.h"
 
-#include <iostream>
-#include <ostream>
-
-#include "client_defines.h"
-#include "resource.h"
+#include "src/game_job_queue/game_logic_queue.h"
+#include "src/game_object/equipped/equipped.h"
+#include "src/game_object/map/map_instance.h"
+#include "src/game_object/map/map_manager.h"
+#include "src/game_object/map/cube/map_object.h"
+#include "src/managers/characters_manager/character.h"
 #include "src/system/graphic/graphic_device.h"
+#include "src/system/input/input_device.h"
+#include "src/utility/components/collider/collider.h"
 #include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
-#include "src/utility/components/meshes/static/mesh_static.h"
-#include "src/utility/components/picking/picking.h"
+#include "src/utility/components/meshes/dynamic/animation/animation.h"
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/shader/shader.h"
-#include "src/utility/components/textures/texture.h"
 #include "src/utility/components/transform/transform.h"
-#include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
-#include "src/utility/components/vi_buffer/vi_buffer_terrain/vi_buffer_terrain.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/light/light_manager.h"
 #include "src/utility/pipe_line/pipe_line.h"
+#include "string_utils/string_utils.h"
 
-Player::Player(const ComPtr<IDirect3DDevice9>& device):
+Player::Player(const ComPtr<IDirect3DDevice9>& device) :
 	GameObject(device)
 {
 }
 
 HRESULT Player::NativeConstructPrototype()
 {
-	GameObject::NativeConstructPrototype();
-	return S_OK;
+	return GameObject::NativeConstructPrototype();
 }
 
 HRESULT Player::NativeConstruct(void* arg)
 {
 	GameObject::NativeConstruct(arg);
-
-	if (FAILED(AddComponents()))
-		return E_FAIL;
 	if (arg)
 	{
-		const _float3 pos = *static_cast<_float3*>(arg);
-		_transform_com->SetState(Transform::kState::kStatePosition, pos);
+		_info = *static_cast<PlayerInfo*>(arg);
 	}
+	if (FAILED(AddComponents()))
+		return E_FAIL;
+	_transform_com->SetState(Transform::kState::kStatePosition, _float3(0.f, 0.f, 0.f));
 	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
+
+	_character_mesh_list[0]->SetAnimationIndex(1);
+	_current_mesh_num = 1;
 	return S_OK;
 }
 
 int32_t Player::Tick(const double timeDelta)
 {
-	GameObject::Tick(timeDelta);
-
-	if (GetKeyState(VK_UP) & 0x8000)
+	if (InputDevice::GetInstance().GetKeyDown(DIK_X))
 	{
-		_transform_com->GoStraight(timeDelta);
+		_is_idle = false;
+		_new_mesh_num = (_current_mesh_num + 1) % 4;
+		_character_mesh_list[0]->SetAnimationIndex(_new_mesh_num);
+		_current_mesh_num = _new_mesh_num;
 	}
 
-	if (GetKeyState(VK_RIGHT) & 0x8000)
+	bool move = false;
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_UP) && InputDevice::GetInstance().GetKeyPressing(DIK_LEFT))
 	{
-		_transform_com->RotationAxis(_float3(0.f, 1.f, 0.f), timeDelta);
+		_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(135));
+		move = true;
 	}
-	if (GetKeyState(VK_LEFT) & 0x8000)
+	else if (InputDevice::GetInstance().GetKeyPressing(DIK_UP) && InputDevice::GetInstance().GetKeyPressing(DIK_RIGHT))
 	{
-		_transform_com->RotationAxis(_float3(0.f, 1.f, 0.f), timeDelta * -1.f);
+		_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(225));
+		move = true;
 	}
-
-	if (GetKeyState(VK_DOWN) & 0x8000)
+	else if (InputDevice::GetInstance().GetKeyPressing(DIK_DOWN) && InputDevice::GetInstance().GetKeyPressing(DIK_LEFT))
+	{
+		_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(45));
+		move = true;
+	}
+	else if (InputDevice::GetInstance().GetKeyPressing(DIK_DOWN) && InputDevice::GetInstance().GetKeyPressing(DIK_RIGHT))
+	{
+		_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(315));
+		move = true;
+	}
+	else
+	{
+		if (InputDevice::GetInstance().GetKeyPressing(DIK_UP))
+		{
+			_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(180));
+			move = true;
+		}
+		if (InputDevice::GetInstance().GetKeyPressing(DIK_LEFT))
+		{
+			_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(90));
+			move = true;
+		}
+		if (InputDevice::GetInstance().GetKeyPressing(DIK_DOWN))
+		{
+			_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(0));
+			move = true;
+		}
+		if (InputDevice::GetInstance().GetKeyPressing(DIK_RIGHT))
+		{
+			_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(270));
+			move = true;
+		}
+	}
+	if (move)
 	{
 		_transform_com->BackStraight(timeDelta);
 	}
-	if (GetKeyState(VK_RETURN) & 0x8000)
+
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_SPACE))
 	{
-		SetFocus(g_hEdit);
-		wchar_t* a = new wchar_t[100];
-		GetWindowText(g_hEdit, a, 100);
-		std::wcout.imbue(std::locale("kor"));
-		std::wcout << a << std::endl;
-		SetWindowText(g_hEdit, L"");
-		delete[] a;
+		auto pos = _transform_com->GetState(Transform::kState::kStatePosition);
+		pos.y += 0.1f;
+		_transform_com->SetState(Transform::kState::kStatePosition, pos);
 	}
-	if (GetKeyState('P') & 0x8000)
+	_character_shose_aabb_com->UpdateCollider();
+	for (const auto& reload : _reload_ragne_aabb_com)
 	{
-		EnableWindow(g_hEdit, true);
+		reload->UpdateCollider();
 	}
 
-	
-	const auto& object_manager = ObjectManager::GetInstance();
-	const std::shared_ptr<ViBufferTerrain> viBuffer = std::static_pointer_cast<ViBufferTerrain>(
-		object_manager.GetComponentPtr(
-		static_cast<uint32_t>(kSceneGamePlay0), 
-			L"Layer_BackGround", 
-			L"Com_VIBuffer"));
-
-
-	const std::shared_ptr<Transform> transform = std::static_pointer_cast<Transform>(object_manager.GetComponentPtr(static_cast<uint32_t>(
-			kSceneGamePlay0),
-	                                                                                                                 L"Layer_BackGround",
-	                                                                                                                 L"Com_Transform"));
-
-	_transform_com->StandOnTerrain(viBuffer, &transform->GetWorldMatrix());
-
-
-	auto& picking = Picking::GetInstance();
-
-	if (GetKeyState(VK_LBUTTON) & 0x8000)
+	if (move)
 	{
-		const _float3* pTargetPos = picking.ComputePickingPoint(viBuffer, transform->GetWorldMatrix());
-
-		if (nullptr != pTargetPos)
+		if (StraightCheck())
 		{
-			_target_pos = *pTargetPos;
-			_transform_com->SetMovingState(true);
+			_transform_com->BackStraight(-timeDelta);
 		}
 	}
-
-	_transform_com->ChaseTarget(_target_pos, timeDelta);
-	//if (GetKeyState(VK_RBUTTON) & 0x8000)
-	//{
-	//	const _float3*	vPickingPos = picking.ComputePickingPoint(_vi_buffer_com, _transform_com->GetWorldMatrix());
-	//}
-
+	_character_shose_aabb_com->UpdateCollider();
+	for (const auto& reload : _reload_ragne_aabb_com)
+	{
+		reload->UpdateCollider();
+	}
 
 	return GameObject::Tick(timeDelta);
 }
 
 int32_t Player::LateTick(const double timeDelta)
 {
-	GameObject::LateTick(timeDelta);
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());
-	return S_OK;
+	auto mesh = _character_mesh_list[0];
+	mesh->PlayAnimation(timeDelta);
+	mesh = _character_mesh_list[_current_mesh_num];
+	mesh->PlayAnimation(timeDelta);
+	for (const auto& reaload : _reload_ragne_aabb_com)
+	{
+		if (!reaload->CollisionAabb(_block_ragne_aabb_com))
+		{
+			_block_ragne_aabb_com->UpdateCollider();
+			auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad");
+			_map_objects = mapInstance->FindRangeCellObject(_block_ragne_aabb_com);
+		}
+	}
+
+	GravityPlayer(timeDelta);
+	return GameObject::LateTick(timeDelta);
 }
 
 HRESULT Player::Render()
 {
-
 	GameObject::Render();
-
 	if (FAILED(SetUpConstantTable()))
 		return E_FAIL;
-	
+
 	auto result = _shader_com->BeginShader(0);
 
+	auto mesh = _character_mesh_list[0];
 
-	size_t iNumMeshContainers = _mesh_com->GetNumMeshContainer();
+	size_t iNumMeshContainers = mesh->GetNumMeshContainer();
 
 	for (uint32_t i = 0; i < iNumMeshContainers; ++i)
 	{
-		uint32_t iNumMaterials = _mesh_com->GetNumMaterials(i);
+		const uint32_t iNumMaterials = mesh->GetNumMaterials(i);
 
-		_mesh_com->UpdateSkinnedMesh(i);
+		mesh->UpdateSkinnedMesh(i);
 
 		for (uint32_t j = 0; j < iNumMaterials; ++j)
 		{
-			if (FAILED(_mesh_com->SetUpTextureOnShader(_shader_com, "g_DiffuseTexture", MeshMaterialTexture::kType::kTypeDiffuse, i, j)))
+			if (FAILED(mesh->SetUpTextureOnShader(_shader_com, "g_DiffuseTexture", MeshMaterialTexture::kType::kTypeDiffuse, i, j)))
 				return E_FAIL;
 
 			_shader_com->Commit();
 
-			_mesh_com->Render(i, j);
+			mesh->Render(i, j);
 		}
 	}
 
 	result = _shader_com->EndShader();
 
+
+	std::wstring str;
+
+	RECT rc = {
+		0, 0,
+		1000, 1000
+	};
+	str.append(L"라 : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).x)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).y)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).z)).append(L"\r\n");
+
+	str.append(L"업 : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).x)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).y)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).z)).append(L"\r\n");
+
+	str.append(L"룩 : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).x)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).y)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).z)).append(L"\r\n");
+
+	str.append(L"포 : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).x)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).y)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).z)).append(L"\r\n");
+
+	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rc, DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
+
+#ifdef _DEBUG
+	_character_shose_aabb_com->RenderDebug();
+	_block_ragne_aabb_com->RenderDebug();
+	for (const auto& reaload : _reload_ragne_aabb_com)
+	{
+		reaload->RenderDebug();
+	}
+#endif
 	return S_OK;
+}
+
+auto Player::GetCurrentDynamicMesh() -> std::pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>
+{
+	return std::make_pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>(static_cast<std::shared_ptr<MeshDynamic>>(_character_mesh_list[0]), static_cast<std::shared_ptr<MeshDynamic>>(_character_mesh_list[_current_mesh_num]));
+}
+
+auto Player::GetInfo() const -> PlayerInfo
+{
+	return _info;
+}
+
+auto Player::ChangeEqp(const GameContents::kEquipeType type, int32_t itemId)->void
+{
+	const auto& instance = ObjectManager::GetInstance();
+	auto iter = _eqp_mesh.find(itemId);
+	if (iter != _eqp_mesh.end())
+	{
+		switch (type)
+		{
+		case GameContents::kEquipeType::kPants:
+			_character_mesh_list[0]->ChangeSkinnedMesh(iter->second, "PA_");
+			_eqp_list->AddItem(type, itemId);
+			break;
+		case GameContents::kEquipeType::kCoat:
+			_character_mesh_list[0]->ChangeSkinnedMesh(iter->second, "CL_");
+			_eqp_list->AddItem(type, itemId);
+			break;
+		case GameContents::kEquipeType::kShoes:
+			_character_mesh_list[0]->ChangeSkinnedMesh(iter->second, "SH_");
+			_eqp_list->AddItem(type, itemId);
+			break;
+		default:
+			return;
+		}
+	}
+	else
+	{
+
+		std::wstring prototypeName(L"Prototype_ItemModel_");
+		prototypeName.append(std::to_wstring(itemId)).append(L"_").append(std::to_wstring(_info.sex));
+		std::wstring componentTag(L"Com");
+		componentTag.append(std::to_wstring(itemId)).append(L"_").append(std::to_wstring(_info.sex));
+		if (auto component = std::static_pointer_cast<MeshDynamic>(CloneComponent(kSceneStatic, prototypeName, componentTag, nullptr)))
+		{
+			switch (type)
+			{
+			case GameContents::kEquipeType::kPants:
+				_character_mesh_list[0]->ChangeSkinnedMesh(component, "PA_");
+				_eqp_list->AddItem(type, itemId);
+				break;
+			case GameContents::kEquipeType::kCoat:
+				_character_mesh_list[0]->ChangeSkinnedMesh(component, "CL_");
+				_eqp_list->AddItem(type, itemId);
+				break;
+			case GameContents::kEquipeType::kShoes:
+				_character_mesh_list[0]->ChangeSkinnedMesh(component, "SH_");
+				_eqp_list->AddItem(type, itemId);
+				break;
+			case GameContents::kEquipeType::kFace:
+			{
+				auto texture = DataReaderManager::GetInstance().FindFace(itemId);
+				_character_mesh_list[0]->ChangeFaceTexture(texture->diffuse_map[0]);
+				break;
+			}
+			default:
+				return;
+			}
+			_eqp_mesh.emplace(itemId, component);
+
+			const auto playerMesh = this->GetCurrentDynamicMesh();
+			const auto rootFrame = playerMesh.first->GetRootFrame();
+			int32_t index = 0;
+			component->TargetCombinedTransformationMatrices(component, playerMesh.first, component->GetRootFrame(), rootFrame, index);
+		}
+
+		switch (type)
+		{
+		case GameContents::kEquipeType::kFace:
+		{
+			auto texture = DataReaderManager::GetInstance().FindFace(itemId);
+			_character_mesh_list[0]->ChangeFaceTexture(texture->diffuse_map[0]);
+			_eqp_list->AddItem(type, itemId);
+			break;
+		}
+		default:
+			return;
+		}
+	}
+}
+
+auto Player::GetEqpList() const -> std::shared_ptr<Equipped>
+{
+	return _eqp_list;
 }
 
 auto Player::AddComponents() -> HRESULT
 {
+	const auto gameLogicManager = GameLogicQueue::GetInstance();
+	const auto characterInfo = gameLogicManager->GetCharacterInfo();
 	/* Com_Transform */
 	Transform::TransformDesc		transformDesc;
-	transformDesc.speed_per_sec = 5.0f;
+	transformDesc.speed_per_sec = 1.5f;
 	transformDesc.rotation_per_sec = D3DXToRadian(90.0);
 
+	_info.sex = characterInfo.gender();
 	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
 		return E_FAIL;
 
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Cube_he_fi_nature_tree_a04"), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
+	const auto animationNames = DataReaderManager::GetInstance().AllAnimationName();
+
+	std::shared_ptr<MeshDynamic> mesh;
+	for (auto animation : animationNames)
+	{
+		std::wstring prototypeName(TEXT("Prototype_Mesh_Ani_"));
+		if (characterInfo.gender())
+		{
+			prototypeName.append(L"F_");
+		}
+		auto aniName = animation->animation_name;
+		prototypeName.append(StringUtils::ConvertCtoW(aniName.c_str()));
+		aniName.append(".x");
+		if (FAILED(AddComponent(kScene::kSceneStatic, prototypeName, StringUtils::ConvertCtoW(aniName.c_str()), reinterpret_cast<std::shared_ptr<Component>*>(&mesh), &animation)))
+			return E_FAIL;
+
+		_character_mesh_list.push_back(mesh);
+	}
+
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;
 
-	if (FAILED(AddComponent(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
+	Collider::TagColliderDesc		ColliderDesc;
+	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
+	ColliderDesc.scale = _float3(0.25f, 0.50f, 0.29f);
+	ColliderDesc.init_pos = _float3(0.f, 0.25f, 0.f);
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Shose_AABB"), reinterpret_cast<std::shared_ptr<Component>*>(&_character_shose_aabb_com), &ColliderDesc)))
 		return E_FAIL;
-	
+
+	ColliderDesc.scale = _float3(0.25f, 0.50f, 0.29f);
+	ColliderDesc.init_pos = _float3(0.f, 0.25f, 0.f);
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Body_AABB"), reinterpret_cast<std::shared_ptr<Component>*>(&_character_body_aabb_com), &ColliderDesc)))
+		return E_FAIL;
+
+	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
+	ColliderDesc.scale = _float3(2.5f, 2.5f, 2.5f);
+	ColliderDesc.init_pos = _transform_com->GetState(Transform::kState::kStatePosition);
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_NoTarget_AABB"), TEXT("Com_Block_AABB"), reinterpret_cast<std::shared_ptr<Component>*>(&_block_ragne_aabb_com), &ColliderDesc)))
+		return E_FAIL;
+
+	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
+	ColliderDesc.scale = _float3(0.1f, 0.1f, 0.1f);
+
+	constexpr float initPos = 0.4f;
+	ColliderDesc.init_pos = _float3(0.f, initPos + 0.29f, 0.f);
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Up"), 
+		reinterpret_cast<std::shared_ptr<Component>*>(&_reload_ragne_aabb_com[kReloadUp]), &ColliderDesc)))
+		return E_FAIL;
+
+	ColliderDesc.init_pos = _float3(0.f, -initPos + 0.29f, 0.f);
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Down"), 
+		reinterpret_cast<std::shared_ptr<Component>*>(&_reload_ragne_aabb_com[kReloadDown]), &ColliderDesc)))
+		return E_FAIL;
+
+	ColliderDesc.init_pos = _float3(-initPos, 0.29f, 0.f);
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Left"), 
+		reinterpret_cast<std::shared_ptr<Component>*>(&_reload_ragne_aabb_com[kReloadLeft]), &ColliderDesc)))
+		return E_FAIL;
+
+	ColliderDesc.init_pos = _float3(initPos, 0.29f, 0.f);
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Right"), 
+		reinterpret_cast<std::shared_ptr<Component>*>(&_reload_ragne_aabb_com[kReloadRight]), &ColliderDesc)))
+		return E_FAIL;
+
+	ColliderDesc.init_pos = _float3(0.f, 0.29f, initPos);
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Front"), 
+		reinterpret_cast<std::shared_ptr<Component>*>(&_reload_ragne_aabb_com[kReloadFront]), &ColliderDesc)))
+		return E_FAIL;
+
+	ColliderDesc.init_pos = _float3(0.f, 0.29f, -initPos);
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Back"), 
+		reinterpret_cast<std::shared_ptr<Component>*>(&_reload_ragne_aabb_com[kReloadBack]), &ColliderDesc)))
+		return E_FAIL;
+
+	for (auto& meshDynamic : _character_mesh_list)
+	{
+		if (_character_mesh_list[0] != meshDynamic)
+		{
+			LPD3DXANIMATIONSET		pAS = nullptr;
+			meshDynamic->GetAnimation()->GetAnimationController()->GetAnimationSet(0, &pAS);
+			if (FAILED(_character_mesh_list[0]->GetAnimation()->GetAnimationController()->RegisterAnimationSet(pAS)))
+			{
+				std::cout << "애니메이션 추가도중 실패함" << std::endl;
+			}
+			pAS->Release();
+		}
+	}
+
+	auto face = DataReaderManager::GetInstance().FindFace(characterInfo.face_id());
+	if (face != 0)
+	{
+		_character_mesh_list[0]->ChangeFaceTexture(face->diffuse_map[0]);
+	}
+	else
+	{
+		_character_mesh_list[0]->ChangeFaceTexture(DataReaderManager::GetInstance().FindFace(300001)->diffuse_map[0]);
+	}
+
+	_eqp_list = Equipped::Create();
+	for (auto item : characterInfo.items())
+	{
+		ChangeEqp(GameContents::EquipeType(item.itemid()), item.itemid());
+	}
+
+
 	return S_OK;
 }
 
@@ -205,13 +458,89 @@ auto Player::SetUpConstantTable() const -> HRESULT
 	return S_OK;
 }
 
+auto Player::GravityPlayer(const double timeDelta) -> void
+{
+	if (_map_objects.empty())
+	{
+		return;
+	}
+	bool check = false;
+	for (const auto& object : _map_objects)
+	{
+		if (object->GetCollider()->CollisionAabb(_character_shose_aabb_com))
+		{
+			//object->GetCollider()->CollisionAabb(_character_shose_aabb_com);
+			_last_tile_map_object = object;
+			check = true;
+		}
+	}
+	if (!check)
+	{
+		auto pos = _transform_com->GetState(Transform::kState::kStatePosition);
+		pos.y -= static_cast<float>(2.0 * timeDelta);
+		_transform_com->SetState(Transform::kState::kStatePosition, pos);
+	}
+	else
+	{
+		if (_last_tile_map_object)
+		{
+			if (_character_shose_aabb_com->GetMin().y >= _last_tile_map_object->GetCollider()->GetMax().y)
+			{
+				return;
+			}
+			auto pos = _transform_com->GetState(Transform::kState::kStatePosition);
+			pos.y = _last_tile_map_object->GetCollider()->GetMax().y;
+			_transform_com->SetState(Transform::kState::kStatePosition, pos);
+		}
+	}
+}
+
+auto Player::StraightCheck() -> bool
+{
+	if (_map_objects.empty())
+	{
+		return false;
+	}
+	bool check = false;
+	for (const auto& object : _map_objects)
+	{
+		if (_character_shose_aabb_com->GetMin().y >= object->GetCollider()->GetMax().y)
+		{
+			continue;
+		}
+		if (object->GetCollider()->CollisionAabb(_character_shose_aabb_com))
+		{
+			check = true;
+			_last_wall_map_object = object;
+		}
+	}
+	if (check)
+	{
+		if (_last_wall_map_object)
+		{
+			auto targetMin = _last_wall_map_object->GetCollider()->GetMin();
+			auto Min = _character_shose_aabb_com->GetMin();
+			auto targetMax = _last_wall_map_object->GetCollider()->GetMax();
+			auto Max = _character_shose_aabb_com->GetMax();
+
+			auto maxValue = std::max(Min.z, targetMin.z);
+			auto minValue = min(Max.z, targetMax.z);
+			auto result = minValue - maxValue;
+			auto pos = _transform_com->GetState(Transform::kState::kStatePosition);
+			//pos.z = _last_tile_map_object->GetCollider()->GetMin().z;
+			//	_transform_com->SetState(Transform::kState::kStatePosition, pos);
+		}
+	}
+	return check;
+}
+
 auto Player::Create(const ComPtr<IDirect3DDevice9>& device) -> std::shared_ptr<Player>
 {
-	std::shared_ptr<Player> instance = std::make_shared<Player>(device);
+	auto instance = std::make_shared<Player>(device);
 
 	if (FAILED(instance->NativeConstructPrototype()))
 	{
-		MSGBOX("Failed to Creating Player");
+		MSGBOX("Failed to Create Player");
 		return nullptr;
 	}
 	return instance;
@@ -219,7 +548,7 @@ auto Player::Create(const ComPtr<IDirect3DDevice9>& device) -> std::shared_ptr<P
 
 auto Player::Clone(void* arg) -> std::shared_ptr<GameObject>
 {
-	std::shared_ptr<Player> instance = std::make_shared<Player>(*this);
+	auto instance = std::make_shared<Player>(*this);
 
 	if (FAILED(instance->NativeConstruct(arg)))
 	{

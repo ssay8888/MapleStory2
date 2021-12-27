@@ -184,7 +184,7 @@ auto DataReaderManager::FaceLoader(const Microsoft::WRL::ComPtr<IDirect3DDevice9
 				swprintf_s(name, MAX_PATH, iconPath.c_str(), info->item_id);
 				if (FAILED(D3DXCreateTextureFromFile(device.Get(), name, &diffuse)))
 				{
-					std::cout << "Face Icon 로드 실패. 얼굴 코드 : " << face_id << std::endl;
+				std::cout << "Face Icon 로드 실패. 얼굴 코드 : " << face_id << std::endl;
 					continue;
 				}
 				info->icon_diffuse_map = diffuse;

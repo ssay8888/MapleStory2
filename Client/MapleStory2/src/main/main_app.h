@@ -34,6 +34,10 @@ private:
 	std::atomic<bool>				_exit;
 	std::atomic<int>				_iocp_thread_running_count;
 
+	uint64_t				m_dwNumRender = 0;
+	WCHAR					m_szFPS[MAX_PATH] = TEXT("");
+	double					m_TimeAcc = 0.0;
+
 	Protocol::LoginServerCharacterSelect _auth_info;
 };
 

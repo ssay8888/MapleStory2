@@ -169,6 +169,12 @@
     <ClInclude Include="src\scene\game_init\game_init.h">
       <Filter>scene\game_init</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_job_queue\game_logic_queue.h">
+      <Filter>game_job_queue</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\camera\ingame_camera.h">
+      <Filter>game_object\camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -333,6 +339,12 @@
     <ClCompile Include="src\scene\game_init\game_init.cpp">
       <Filter>scene\game_init</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_job_queue\game_logic_queue.cpp">
+      <Filter>game_job_queue</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\camera\ingame_camera.cpp">
+      <Filter>game_object\camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -456,6 +468,9 @@
     </Filter>
     <Filter Include="scene\game_init">
       <UniqueIdentifier>{e19217e5-ac02-46ae-9d85-4bf7c880b945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_job_queue">
+      <UniqueIdentifier>{0cd375a6-26ad-42de-9683-5d2c8ed35a5d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

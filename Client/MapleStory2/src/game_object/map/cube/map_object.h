@@ -2,6 +2,7 @@
 #include "src/common/xml/map_parser.h"
 #include "src/utility/game_objects/game_object.h"
 
+class Collider;
 class Shader;
 class MeshStatic;
 class Transform;
@@ -20,6 +21,8 @@ public:
 	auto Render(const std::shared_ptr<Shader>& shaderCom)->HRESULT;
 	auto Clone(void* arg)->std::shared_ptr<GameObject> override;
 	static auto Create(void* arg)->std::shared_ptr<MapObject>;
+public:
+	auto GetCollider()->std::shared_ptr<Collider>;
 	auto GetTransform()->std::shared_ptr<Transform>&;
 
 private:
@@ -28,6 +31,7 @@ private:
 private:
 	std::shared_ptr<Transform>		_transform_com = nullptr;
 	std::shared_ptr<MeshStatic>		_mesh_com = nullptr;
+	std::shared_ptr<Collider>		_aabb_com = nullptr;
 	float							_scale = 1;
 
 };

@@ -176,8 +176,10 @@
     <ClInclude Include="protocol\login_struct.pb.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\common\xml\map_parser.h" />
+    <ClInclude Include="src\game_job_queue\game_logic_queue.h" />
     <ClInclude Include="src\game_object\back_ground\back_ground.h" />
     <ClInclude Include="src\game_object\camera\camera_free.h" />
+    <ClInclude Include="src\game_object\camera\ingame_camera.h" />
     <ClInclude Include="src\game_object\coat\coat.h" />
     <ClInclude Include="src\game_object\effect\effect.h" />
     <ClInclude Include="src\game_object\equipped\equipped.h" />
@@ -261,8 +263,10 @@
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
     </ClCompile>
     <ClCompile Include="src\common\xml\map_parser.cpp" />
+    <ClCompile Include="src\game_job_queue\game_logic_queue.cpp" />
     <ClCompile Include="src\game_object\back_ground\back_ground.cpp" />
     <ClCompile Include="src\game_object\camera\camera_free.cpp" />
+    <ClCompile Include="src\game_object\camera\ingame_camera.cpp" />
     <ClCompile Include="src\game_object\coat\coat.cpp" />
     <ClCompile Include="src\game_object\effect\effect.cpp" />
     <ClCompile Include="src\game_object\equipped\equipped.cpp" />

@@ -4,6 +4,7 @@
 #include "src/utility/light/light_manager.h"
 #include "src/utility/pipe_line/pipe_line.h"
 
+class Collider;
 class MapObject;
 class Shader;
 
@@ -23,9 +24,10 @@ public:
 
 public:
 	auto AddMapObject(MapParser::MapEntity modelName)->bool;
-
-
 	auto SetUpConstantTable(std::shared_ptr<Transform> transformCom) const->HRESULT;
+
+public:
+	auto FindRangeCellObject(const std::shared_ptr<Collider>& targetCollider)->std::vector<std::shared_ptr<MapObject>>;
 
 private:
 	std::shared_ptr<Shader>			 _shader_com = nullptr;

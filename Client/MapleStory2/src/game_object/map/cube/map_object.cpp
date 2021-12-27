@@ -3,6 +3,7 @@
 
 #include "src/common/xml/map_parser.h"
 #include "src/system/graphic/graphic_device.h"
+#include "src/utility/components/collider/collider.h"
 #include "src/utility/components/meshes/static/mesh_static.h"
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/shader/shader.h"
@@ -30,6 +31,7 @@ auto MapObject::NativeConstruct(void* arg)->HRESULT
 
 auto MapObject::Tick(double timeDelta)-> int32_t
 {
+	_aabb_com->UpdateCollider();
 	return S_OK;
 }
 
@@ -56,6 +58,9 @@ auto MapObject::Render(const std::shared_ptr<Shader>& shaderCom)->HRESULT
 			return E_FAIL;
 	}
 
+#ifdef _DEBUG
+	_aabb_com->RenderDebug();
+#endif
 	return S_OK;
 }
 
@@ -74,6 +79,11 @@ auto MapObject::Create(void* arg) -> std::shared_ptr<MapObject>
 		return nullptr;
 	}
 	return instance;
+}
+
+auto MapObject::GetCollider() -> std::shared_ptr<Collider>
+{
+	return _aabb_com;
 }
 
 auto MapObject::AddComponents(MapParser::MapEntity& entity) -> HRESULT
@@ -120,6 +130,35 @@ auto MapObject::AddComponents(MapParser::MapEntity& entity) -> HRESULT
 		//_transform_com->SetUpRotation(_float3{ 0, 1, 0 }, D3DXToRadian(270.f));
 
 	}
+
+
+	Collider::TagColliderDesc		ColliderDesc;
+	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
+	ColliderDesc.scale = _float3(0.59f, 0.59f, 0.59f);
+	ColliderDesc.init_pos = _float3(0.f, 0.295f, 0.f);
+
+	if (!entity.propertise.empty())
+	{
+		auto en = entity.propertise.find("Rotation");
+		if (en != entity.propertise.end())
+		{
+			if (en->second.x != 0)
+			{
+				ColliderDesc.radians = _float3(D3DXToRadian(en->second.x), 0.f, 0.f);
+			}
+			if (en->second.z != 0)
+			{
+				ColliderDesc.radians = _float3(0.f, D3DXToRadian(en->second.z), 0.f);
+			}
+			if (en->second.y != 0)
+			{
+				ColliderDesc.radians = _float3(0.f, 0.f, D3DXToRadian(en->second.y));
+			}
+		}
+	}
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_AABB"), reinterpret_cast<std::shared_ptr<Component>*>(&_aabb_com), &ColliderDesc)))
+		return E_FAIL;
+
 	_transform_com->SetScale((_scale * 0.01f), (_scale * 0.01f), (_scale * 0.01f));
 
 	if (FAILED(AddComponent(entity.scene, std::wstring(L"Prototype_Mesh_Cube_").append(FileUtils::ConvertCtoW(entity.modelName.c_str())), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))

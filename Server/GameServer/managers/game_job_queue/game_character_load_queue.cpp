@@ -57,7 +57,7 @@ auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServer
 		{
 			auto item = sendPkt.add_items();
 			item->set_position(itemPair.first);
-			item->set_itemid(itemPair.first);
+			item->set_itemid(itemPair.second);
 		}
 	}
 }

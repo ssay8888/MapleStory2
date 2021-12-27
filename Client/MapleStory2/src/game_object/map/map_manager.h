@@ -13,8 +13,12 @@ public:
 		return instance;
 	}
 
-	void LoadMapInstance(kScene scene);
-	void LoadCharacterInstance(kScene scene);
+	auto LoadMapInstance(kScene scene)->void;
+	auto LoadCharacterInstance(kScene scene)->void;
+
+	auto FindMapInstance(const std::wstring& mapid)->std::shared_ptr<MapInstance>;
+
+
 
 private:
 	std::map<std::wstring, std::shared_ptr<MapInstance>> _maps;

@@ -63,6 +63,11 @@ auto Transform::SetScale(const float scaleX, const float scaleY, const float sca
 	SetState(kState::kStateLook, *D3DXVec3Normalize(&look, &look) * scaleZ);
 }
 
+void Transform::SetWorldMatrix(const _matrix& matrix)
+{
+	_world_matrix = matrix;
+}
+
 auto Transform::SetMovingState(const bool isMoving) -> void
 {
 	_is_moving = isMoving;
@@ -123,6 +128,22 @@ auto Transform::RotationAxis(const _float3 axis, const double timeDelta) -> void
 	_matrix	rotationMatrix;
 
 	D3DXMatrixRotationAxis(&rotationMatrix, &axis, static_cast<float>(_transform_state.speed_per_sec * timeDelta));
+
+	SetState(kState::kStateRight, *D3DXVec3TransformNormal(&right, &right, &rotationMatrix));
+	SetState(kState::kStateUp, *D3DXVec3TransformNormal(&up, &up, &rotationMatrix));
+	SetState(kState::kStateLook, *D3DXVec3TransformNormal(&look, &look, &rotationMatrix));
+}
+
+void Transform::RotationAxis(float radian, _float3 axis)
+{
+	_float3			right, up, look;
+
+	right = GetState(kState::kStateRight);
+	up = GetState(kState::kStateUp);
+	look = GetState(kState::kStateLook);
+
+	_matrix			rotationMatrix;
+	D3DXMatrixRotationAxis(&rotationMatrix, &axis, radian);
 
 	SetState(kState::kStateRight, *D3DXVec3TransformNormal(&right, &right, &rotationMatrix));
 	SetState(kState::kStateUp, *D3DXVec3TransformNormal(&up, &up, &rotationMatrix));
@@ -253,6 +274,14 @@ auto Transform::StandOnTerrain(std::shared_ptr<ViBufferTerrain> viBuffer, const 
 	//TODO : 지형위에올라가는것 구현해야함
 }
 
+auto Transform::RemoveRotation() -> void
+{
+	const auto scale = GetScale();
+	SetState(kState::kStateRight, _float3(1.f, 0.f, 0.f) * scale.x);
+	SetState(kState::kStateUp, _float3(0.f, 1.f, 0.f) * scale.y);
+	SetState(kState::kStateLook, _float3(0.f, 0.f, 1.f) * scale.z);
+}
+
 auto Transform::NativeConstructPrototype()->HRESULT
 {
 	D3DXMatrixIdentity(&_world_matrix);
@@ -265,6 +294,21 @@ auto Transform::NativeConstruct(void* arg)->HRESULT
 		memcpy(&_transform_state, arg, sizeof(TransformDesc));
 
 	return S_OK;
+}
+
+auto Transform::OrbitRotation(std::shared_ptr<Transform> targer, _float3 axis, double timeDelta) -> _float3
+{
+	_matrix RotationMatrix;
+	_float3 vComputeAngle;
+	constexpr double limitAngle = 14.5;
+
+	const float angle = static_cast<float>(_transform_state.rotation_per_sec) * static_cast<float>(timeDelta);
+
+	D3DXMatrixRotationAxis(&RotationMatrix, &axis, angle);
+
+	D3DXVec3TransformCoord(&vComputeAngle, &_orbit_angle, &RotationMatrix);
+	_orbit_angle = vComputeAngle;
+	return _orbit_angle;
 }
 
 auto Transform::Create(const ComPtr<IDirect3DDevice9>& graphicDevice) -> std::shared_ptr<Transform>

@@ -26,7 +26,9 @@
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/scene_utility/scene_manager.h"
 #include "src/common/xml/map_parser.h"
+#include "src/game_object/camera/ingame_camera.h"
 #include "src/network/game_server_packet_handler.h"
+#include "src/utility/components/collider/collider.h"
 
 
 MainApp::MainApp()
@@ -56,6 +58,8 @@ auto MainApp::NativeConstruct() -> HRESULT
 
 auto MainApp::Tick(const double timeDelta) -> int32_t
 {
+	m_TimeAcc += timeDelta;
+
 	constexpr int32_t workerTick = 64;
 
 	GameLogicManager::Tick(timeDelta);
@@ -82,6 +86,15 @@ auto MainApp::RenderMainApp() -> HRESULT
 		return E_FAIL;
 	
 	device.RenderEnd();
+	++m_dwNumRender;
+
+	if (m_TimeAcc > 1.0)
+	{
+		wsprintf(m_szFPS, TEXT("FPS : %d"), m_dwNumRender);
+		m_TimeAcc = 0.0;
+		m_dwNumRender = 0;
+	}
+	SetWindowText(g_Wnd, m_szFPS);
 	return S_OK;
 }
 
@@ -200,6 +213,9 @@ HRESULT MainApp::AddPrototypeGameObject()
 
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Camera_Free"), CameraFree::Create(_graphic_device))))
 		return E_FAIL;
+
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Ingame_Camera"), IngameCamera::Create(_graphic_device))))
+		return E_FAIL;
 	
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Login_Textbox"), TextBoxUi::Create())))
 		return E_FAIL;
@@ -229,6 +245,17 @@ HRESULT MainApp::AddPrototypeComponent()
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_Default2"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Default2.jpg")))))
 		return E_FAIL;
 
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Collider_AABB"), Collider::Create(_graphic_device, Collider::kTypeAabb))))
+		return E_FAIL;
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Collider_OBB"), Collider::Create(_graphic_device, Collider::kTypeObb))))
+		return E_FAIL;
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Collider_NoTarget_OBB"), Collider::Create(_graphic_device, Collider::kNoTargetObb))))
+		return E_FAIL;
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Collider_NoTarget_AABB"), Collider::Create(_graphic_device, Collider::kNoTargetAabb))))
+		return E_FAIL;
 
 	return S_OK;
 }

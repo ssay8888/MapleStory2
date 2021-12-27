@@ -30,6 +30,7 @@ auto GameInit::Tick(double timeDelta) -> int32_t
 		sendPkt.set_auth(authInfo.auth());
 		g_service->Broadcast(GameServerPacketHandler::MakeSendBuffer(sendPkt));
 	}
+	EnableWindow(g_hEdit, false);
 
 	return Scene::Tick(timeDelta);
 }

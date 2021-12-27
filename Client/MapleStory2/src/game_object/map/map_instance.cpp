@@ -2,6 +2,7 @@
 #include "map_instance.h"
 
 #include "cube/map_object.h"
+#include "src/utility/components/collider/collider.h"
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/transform/transform.h"
@@ -40,6 +41,7 @@ HRESULT MapInstance::Render()
 		auto result = _shader_com->BeginShader(0);
 		for (auto& mesh : _map_objects)
 		{
+			mesh->Tick(0);
 			SetUpConstantTable(mesh->GetTransform());
 			mesh->Render(_shader_com);
 		}
@@ -87,4 +89,17 @@ auto MapInstance::SetUpConstantTable(const std::shared_ptr<Transform> transformC
 	const auto camPos = _float4(pipeline.GetCamPosition(), 1.f);
 	result = _shader_com->SetUpConstantTable("g_vCamPosition", &camPos, sizeof(_float4));
 	return S_OK;
+}
+
+auto MapInstance::FindRangeCellObject(const std::shared_ptr<Collider>& targetCollider)->std::vector<std::shared_ptr<MapObject>>
+{
+	std::vector<std::shared_ptr<MapObject>> objects;
+	for (auto& object : _map_objects)
+	{
+		if (object->GetCollider()->CollisionAabb(targetCollider))
+		{
+			objects.push_back(object);
+		}
+	}
+	return objects;
 }

@@ -12,7 +12,7 @@ public:
 		kScene scene;
 	};
 	static auto MapModelNameListExport(const std::string name)->std::list<std::string>;
-	static auto MapParsing()->std::vector<MapEntity>;
+	static auto MapParsing(const std::string name)->std::vector<MapEntity>;
 
 
 	static auto CharacterSelectMapParsing()->std::vector<MapEntity>;
