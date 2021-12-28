@@ -1,6 +1,7 @@
 #pragma once
 #include "src/utility/game_objects/game_object.h"
 
+class CharacterState;
 class MapObject;
 class Collider;
 class Equipped;
@@ -32,17 +33,38 @@ public:
 		bool	sex;
 		std::shared_ptr<Character> character;
 	};
+
+	enum class kAnimationType
+	{
+		kIdle,
+		kRun,
+		kJumpUp,
+		kJumpDown,
+		kJumpFall,
+		kAttackIdle,
+		kBreakingSkull
+	};
+
+	auto GetTransform()const->std::shared_ptr<Transform>;
 	auto GetCurrentDynamicMesh()->std::pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>;
 	auto GetInfo() const->PlayerInfo;
+	auto GetCharacterColliderAabb()const->std::shared_ptr<Collider>;
+	auto GetReloadRangeAabb()const->std::vector<std::shared_ptr<Collider>>;
+	auto GetBlockRangeAabb()const->std::shared_ptr<Collider>;
+
+
+
+
 	auto ChangeEqp(GameContents::kEquipeType type, int32_t itemId)->void;
 	auto GetEqpList() const->std::shared_ptr<Equipped>;
+	auto ChangeCharacterState(const std::shared_ptr<CharacterState>& state)->void;
+	auto ChangeAnimation(kAnimationType type)->void;
+	auto PlayAnimation(const double timeDelta)->void;
 
 private:
 	auto AddComponents()->HRESULT;
 	auto SetUpConstantTable() const->HRESULT;
-
-	auto GravityPlayer(double timeDelta)->void;
-	auto StraightCheck()->bool;
+	
 
 public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& device)->std::shared_ptr<Player>;
@@ -60,18 +82,15 @@ private:
 		kReloadEnd
 	};
 	std::shared_ptr<Transform>						_transform_com = nullptr;
-	std::shared_ptr<Collider>						_character_shose_aabb_com = nullptr;
-	std::shared_ptr<Collider>						_character_body_aabb_com = nullptr;
-	std::shared_ptr<Collider>						_block_ragne_aabb_com = nullptr;
-	std::shared_ptr<Collider>						_reload_ragne_aabb_com[kReloadEnd];
+	std::shared_ptr<Collider>						_character_aabb_com = nullptr;
+	std::shared_ptr<Collider>						_block_ragne_aabb_com = nullptr; // 블록가져올 범위
+	std::vector<std::shared_ptr<Collider>>			_reload_ragne_aabb_com;
 	std::shared_ptr<Shader>							_shader_com = nullptr;
 	std::vector<std::shared_ptr<MeshDynamic>>		_character_mesh_list;
 	std::shared_ptr<Equipped>						_eqp_list;
 	std::map<int32_t, std::shared_ptr<MeshDynamic>>	_eqp_mesh;
 	std::vector<std::shared_ptr<MapObject>>			_map_objects;
-	std::shared_ptr<MapObject>						_last_tile_map_object;
-	std::shared_ptr<MapObject>						_last_wall_map_object;
-
+	std::shared_ptr<CharacterState>					_character_state;
 
 	bool				_is_idle = true;
 	int32_t				_current_mesh_num = 0;

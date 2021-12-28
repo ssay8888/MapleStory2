@@ -190,6 +190,10 @@
     <ClInclude Include="src\game_object\map\map_manager.h" />
     <ClInclude Include="src\game_object\pants\pants.h" />
     <ClInclude Include="src\game_object\player\player.h" />
+    <ClInclude Include="src\game_object\player\states\character_state.h" />
+    <ClInclude Include="src\game_object\player\states\idle_state\idle_state.h" />
+    <ClInclude Include="src\game_object\player\states\jump_state\jump_state.h" />
+    <ClInclude Include="src\game_object\player\states\move_state\move_state.h" />
     <ClInclude Include="src\game_object\sky\sky.h" />
     <ClInclude Include="src\game_object\terrain\terrain.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_beauty\character_beauty_select_sex.h" />
@@ -277,6 +281,10 @@
     <ClCompile Include="src\game_object\map\map_manager.cpp" />
     <ClCompile Include="src\game_object\pants\pants.cpp" />
     <ClCompile Include="src\game_object\player\player.cpp" />
+    <ClCompile Include="src\game_object\player\states\character_state.cpp" />
+    <ClCompile Include="src\game_object\player\states\idle_state\idle_state.cpp" />
+    <ClCompile Include="src\game_object\player\states\jump_state\jump_state.cpp" />
+    <ClCompile Include="src\game_object\player\states\move_state\move_state.cpp" />
     <ClCompile Include="src\game_object\sky\sky.cpp" />
     <ClCompile Include="src\game_object\terrain\terrain.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_beauty\character_beauty_select_sex.cpp" />

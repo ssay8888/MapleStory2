@@ -23,5 +23,8 @@ private:
 public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& device)->std::shared_ptr<IngameCamera>;
 	auto Clone(void* arg = nullptr)->std::shared_ptr<GameObject> override;
+
+private:
+	bool _free_camera = false;
 };
 

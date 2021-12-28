@@ -59,7 +59,10 @@ auto MapInstance::AddMapObject(MapParser::MapEntity modelName) -> bool
 {
 	auto& objectManager = ObjectManager::GetInstance();
 	const auto object = MapObject::Create(&modelName);
-	_map_objects.push_back(object);
+	if (object)
+	{
+		_map_objects.push_back(object);
+	}
 
 
 	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))

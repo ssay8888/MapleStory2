@@ -1,6 +1,7 @@
 #include "c_pch.h"
 #include "game_play.h"
 
+#include "src/game_object/back_ground/back_ground.h"
 #include "src/utility/game_objects/camera/camera.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/light/light_manager.h"
@@ -13,6 +14,15 @@ GamePlay::GamePlay(const ComPtr<IDirect3DDevice9>& device):
 HRESULT GamePlay::NativeConstruct()
 {
 	Scene::NativeConstruct();
+
+	BackGround::BackGroundInfo info;
+	info.prototype_texture_name = TEXT("Prototype_Texture_GameSky_Henesys");
+	info.image_size_x = 1280;
+	info.image_size_y = 720;
+	info.pos_x = 1280 >> 1;
+	info.pos_y = 720 >> 1;
+	if (FAILED(ObjectManager::GetInstance().AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_BackGround"), TEXT("Layer_SKY"), &info)))
+		return E_FAIL;
 
 	if (FAILED(ReadyLight()))
 		return E_FAIL;

@@ -59,7 +59,7 @@ auto Animation::SetAnimationIndex(const uint32_t animIndex) -> HRESULT
 	//_animation_controller->SetTrackSpeed(animIndex, 0.1f);
 
 	/* �ִϸ��̼� �ϳ��� ����ϴ� ���ӽð�. */
-	//auto a =  pAS->GetPeriod();
+	auto a =  pAS->GetPeriod();
 	//D3DXTRACK_DESC			trackDesc;
 	//_animation_controller->GetTrackDesc(_current_track, &trackDesc);
 

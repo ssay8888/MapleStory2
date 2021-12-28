@@ -126,32 +126,26 @@ auto DataReaderManager::LoadAnimationInfo()->void
 			info->animation_name = model.node().attribute("animation_name").value();
 			info->target_node = model.node().attribute("targetnode").value();
 
-			_animations_info.emplace(info->animation_name, info);
+			_animations_info.push_back(info);
 		}
 	}
 }
 
 auto DataReaderManager::FindAnimationInfo(const std::string& name) -> std::shared_ptr<AnimationInfo>
 {
-	auto iterator = _animations_info.find(name);
+	/*auto iterator = _animations_info.find(name);
 
 	if (iterator != _animations_info.end())
 	{
 		return iterator->second;
-	}
+	}*/
 
 	return nullptr;
 }
 
-auto DataReaderManager::AllAnimationName() -> std::vector<std::shared_ptr<AnimationInfo>>
+auto DataReaderManager::AllAnimationName() const -> std::vector<std::shared_ptr<AnimationInfo>>
 {
-	std::vector<std::shared_ptr<AnimationInfo>>	infos;
-	for (auto& ani : _animations_info)
-	{
-		infos.push_back(ani.second);
-	}
-
-	return infos;
+	return _animations_info;
 }
 
 auto DataReaderManager::FaceLoader(const Microsoft::WRL::ComPtr<IDirect3DDevice9> device) -> void

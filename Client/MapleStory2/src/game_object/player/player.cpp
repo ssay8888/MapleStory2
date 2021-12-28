@@ -18,6 +18,7 @@
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/light/light_manager.h"
 #include "src/utility/pipe_line/pipe_line.h"
+#include "states/idle_state/idle_state.h"
 #include "string_utils/string_utils.h"
 
 Player::Player(const ComPtr<IDirect3DDevice9>& device) :
@@ -42,22 +43,24 @@ HRESULT Player::NativeConstruct(void* arg)
 	_transform_com->SetState(Transform::kState::kStatePosition, _float3(0.f, 0.f, 0.f));
 	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
 
-	_character_mesh_list[0]->SetAnimationIndex(1);
-	_current_mesh_num = 1;
+	ChangeAnimation(kAnimationType::kIdle);
+	ChangeCharacterState(IdleState::GetInstance());
 	return S_OK;
 }
 
 int32_t Player::Tick(const double timeDelta)
 {
-	if (InputDevice::GetInstance().GetKeyDown(DIK_X))
-	{
-		_is_idle = false;
-		_new_mesh_num = (_current_mesh_num + 1) % 4;
-		_character_mesh_list[0]->SetAnimationIndex(_new_mesh_num);
-		_current_mesh_num = _new_mesh_num;
-	}
+	_character_state->HandleInput();
+	_character_state->Tick(timeDelta);
+	//if (InputDevice::GetInstance().GetKeyDown(DIK_X))
+	//{
+	//	_is_idle = false;
+	//	_new_mesh_num = (_current_mesh_num + 1) % 4;
+	//	_character_mesh_list[0]->SetAnimationIndex(_new_mesh_num);
+	//	_current_mesh_num = _new_mesh_num;
+	//}
 
-	bool move = false;
+	/*bool move = false;
 	if (InputDevice::GetInstance().GetKeyPressing(DIK_UP) && InputDevice::GetInstance().GetKeyPressing(DIK_LEFT))
 	{
 		_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(135));
@@ -104,7 +107,7 @@ int32_t Player::Tick(const double timeDelta)
 	if (move)
 	{
 		_transform_com->BackStraight(timeDelta);
-	}
+	}*/
 
 	if (InputDevice::GetInstance().GetKeyPressing(DIK_SPACE))
 	{
@@ -112,24 +115,24 @@ int32_t Player::Tick(const double timeDelta)
 		pos.y += 0.1f;
 		_transform_com->SetState(Transform::kState::kStatePosition, pos);
 	}
-	_character_shose_aabb_com->UpdateCollider();
-	for (const auto& reload : _reload_ragne_aabb_com)
-	{
-		reload->UpdateCollider();
-	}
+	//_character_aabb_com->UpdateCollider();
+	//for (const auto& reload : _reload_ragne_aabb_com)
+	//{
+	//	reload->UpdateCollider();
+	//}
 
-	if (move)
-	{
-		if (StraightCheck())
-		{
-			_transform_com->BackStraight(-timeDelta);
-		}
-	}
-	_character_shose_aabb_com->UpdateCollider();
-	for (const auto& reload : _reload_ragne_aabb_com)
-	{
-		reload->UpdateCollider();
-	}
+	//if (move)
+	//{
+	//	if (StraightCheck())
+	//	{
+	//		_transform_com->BackStraight(-timeDelta);
+	//	}
+	//}
+	//_character_aabb_com->UpdateCollider();
+	//for (const auto& reload : _reload_ragne_aabb_com)
+	//{
+	//	reload->UpdateCollider();
+	//}
 
 	return GameObject::Tick(timeDelta);
 }
@@ -137,21 +140,9 @@ int32_t Player::Tick(const double timeDelta)
 int32_t Player::LateTick(const double timeDelta)
 {
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());
-	auto mesh = _character_mesh_list[0];
-	mesh->PlayAnimation(timeDelta);
-	mesh = _character_mesh_list[_current_mesh_num];
-	mesh->PlayAnimation(timeDelta);
-	for (const auto& reaload : _reload_ragne_aabb_com)
-	{
-		if (!reaload->CollisionAabb(_block_ragne_aabb_com))
-		{
-			_block_ragne_aabb_com->UpdateCollider();
-			auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad");
-			_map_objects = mapInstance->FindRangeCellObject(_block_ragne_aabb_com);
-		}
-	}
-
-	GravityPlayer(timeDelta);
+	_character_state->LateTick(timeDelta);
+	//PlayAnimation(timeDelta);
+	//GravityPlayer(timeDelta);
 	return GameObject::LateTick(timeDelta);
 }
 
@@ -183,9 +174,9 @@ HRESULT Player::Render()
 			mesh->Render(i, j);
 		}
 	}
-
 	result = _shader_com->EndShader();
 
+	_character_state->Render();
 
 	std::wstring str;
 
@@ -212,7 +203,7 @@ HRESULT Player::Render()
 	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rc, DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
 
 #ifdef _DEBUG
-	_character_shose_aabb_com->RenderDebug();
+	_character_aabb_com->RenderDebug();
 	_block_ragne_aabb_com->RenderDebug();
 	for (const auto& reaload : _reload_ragne_aabb_com)
 	{
@@ -220,6 +211,11 @@ HRESULT Player::Render()
 	}
 #endif
 	return S_OK;
+}
+
+auto Player::GetTransform() const -> std::shared_ptr<Transform>
+{
+	return _transform_com;
 }
 
 auto Player::GetCurrentDynamicMesh() -> std::pair<std::shared_ptr<MeshDynamic>, std::shared_ptr<MeshDynamic>>
@@ -230,6 +226,21 @@ auto Player::GetCurrentDynamicMesh() -> std::pair<std::shared_ptr<MeshDynamic>, 
 auto Player::GetInfo() const -> PlayerInfo
 {
 	return _info;
+}
+
+auto Player::GetCharacterColliderAabb() const -> std::shared_ptr<Collider>
+{
+	return _character_aabb_com;
+}
+
+auto Player::GetReloadRangeAabb() const -> std::vector<std::shared_ptr<Collider>>
+{
+	return _reload_ragne_aabb_com;
+}
+
+auto Player::GetBlockRangeAabb() const -> std::shared_ptr<Collider>
+{
+	return _block_ragne_aabb_com;
 }
 
 auto Player::ChangeEqp(const GameContents::kEquipeType type, int32_t itemId)->void
@@ -316,6 +327,26 @@ auto Player::GetEqpList() const -> std::shared_ptr<Equipped>
 	return _eqp_list;
 }
 
+auto Player::ChangeCharacterState(const std::shared_ptr<CharacterState>& state)->void
+{
+	_character_state = state;
+	_character_state->SetPlayer(std::static_pointer_cast<Player>(shared_from_this()));
+	_character_state->Enter();
+}
+
+auto Player::ChangeAnimation(kAnimationType type) -> void
+{
+	_new_mesh_num = static_cast<int32_t>(type);
+	_character_mesh_list[0]->SetAnimationIndex(_new_mesh_num);
+	_current_mesh_num = _new_mesh_num;
+}
+
+auto Player::PlayAnimation(const double timeDelta) -> void
+{
+	auto mesh = _character_mesh_list[0];
+	mesh->PlayAnimation(timeDelta);
+}
+
 auto Player::AddComponents() -> HRESULT
 {
 	const auto gameLogicManager = GameLogicQueue::GetInstance();
@@ -355,14 +386,9 @@ auto Player::AddComponents() -> HRESULT
 	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
 	ColliderDesc.scale = _float3(0.25f, 0.50f, 0.29f);
 	ColliderDesc.init_pos = _float3(0.f, 0.25f, 0.f);
-	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Shose_AABB"), reinterpret_cast<std::shared_ptr<Component>*>(&_character_shose_aabb_com), &ColliderDesc)))
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Shose_AABB"), reinterpret_cast<std::shared_ptr<Component>*>(&_character_aabb_com), &ColliderDesc)))
 		return E_FAIL;
-
-	ColliderDesc.scale = _float3(0.25f, 0.50f, 0.29f);
-	ColliderDesc.init_pos = _float3(0.f, 0.25f, 0.f);
-	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Body_AABB"), reinterpret_cast<std::shared_ptr<Component>*>(&_character_body_aabb_com), &ColliderDesc)))
-		return E_FAIL;
-
+	
 	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
 	ColliderDesc.scale = _float3(2.5f, 2.5f, 2.5f);
 	ColliderDesc.init_pos = _transform_com->GetState(Transform::kState::kStatePosition);
@@ -372,6 +398,7 @@ auto Player::AddComponents() -> HRESULT
 	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
 	ColliderDesc.scale = _float3(0.1f, 0.1f, 0.1f);
 
+	_reload_ragne_aabb_com.resize(kReloadEnd);
 	constexpr float initPos = 0.4f;
 	ColliderDesc.init_pos = _float3(0.f, initPos + 0.29f, 0.f);
 	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Up"), 
@@ -456,82 +483,6 @@ auto Player::SetUpConstantTable() const -> HRESULT
 	const auto camPos = _float4(pipeline.GetCamPosition(), 1.f);
 	result = _shader_com->SetUpConstantTable("g_vCamPosition", &camPos, sizeof(_float4));
 	return S_OK;
-}
-
-auto Player::GravityPlayer(const double timeDelta) -> void
-{
-	if (_map_objects.empty())
-	{
-		return;
-	}
-	bool check = false;
-	for (const auto& object : _map_objects)
-	{
-		if (object->GetCollider()->CollisionAabb(_character_shose_aabb_com))
-		{
-			//object->GetCollider()->CollisionAabb(_character_shose_aabb_com);
-			_last_tile_map_object = object;
-			check = true;
-		}
-	}
-	if (!check)
-	{
-		auto pos = _transform_com->GetState(Transform::kState::kStatePosition);
-		pos.y -= static_cast<float>(2.0 * timeDelta);
-		_transform_com->SetState(Transform::kState::kStatePosition, pos);
-	}
-	else
-	{
-		if (_last_tile_map_object)
-		{
-			if (_character_shose_aabb_com->GetMin().y >= _last_tile_map_object->GetCollider()->GetMax().y)
-			{
-				return;
-			}
-			auto pos = _transform_com->GetState(Transform::kState::kStatePosition);
-			pos.y = _last_tile_map_object->GetCollider()->GetMax().y;
-			_transform_com->SetState(Transform::kState::kStatePosition, pos);
-		}
-	}
-}
-
-auto Player::StraightCheck() -> bool
-{
-	if (_map_objects.empty())
-	{
-		return false;
-	}
-	bool check = false;
-	for (const auto& object : _map_objects)
-	{
-		if (_character_shose_aabb_com->GetMin().y >= object->GetCollider()->GetMax().y)
-		{
-			continue;
-		}
-		if (object->GetCollider()->CollisionAabb(_character_shose_aabb_com))
-		{
-			check = true;
-			_last_wall_map_object = object;
-		}
-	}
-	if (check)
-	{
-		if (_last_wall_map_object)
-		{
-			auto targetMin = _last_wall_map_object->GetCollider()->GetMin();
-			auto Min = _character_shose_aabb_com->GetMin();
-			auto targetMax = _last_wall_map_object->GetCollider()->GetMax();
-			auto Max = _character_shose_aabb_com->GetMax();
-
-			auto maxValue = std::max(Min.z, targetMin.z);
-			auto minValue = min(Max.z, targetMax.z);
-			auto result = minValue - maxValue;
-			auto pos = _transform_com->GetState(Transform::kState::kStatePosition);
-			//pos.z = _last_tile_map_object->GetCollider()->GetMin().z;
-			//	_transform_com->SetState(Transform::kState::kStatePosition, pos);
-		}
-	}
-	return check;
 }
 
 auto Player::Create(const ComPtr<IDirect3DDevice9>& device) -> std::shared_ptr<Player>

@@ -175,6 +175,18 @@
     <ClInclude Include="src\game_object\camera\ingame_camera.h">
       <Filter>game_object\camera</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\player\states\idle_state\idle_state.h">
+      <Filter>game_object\player\states\idle_state</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\player\states\move_state\move_state.h">
+      <Filter>game_object\player\states\move_state</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\player\states\character_state.h">
+      <Filter>game_object\player\states</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\player\states\jump_state\jump_state.h">
+      <Filter>game_object\player\states\jump_state</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -345,6 +357,18 @@
     <ClCompile Include="src\game_object\camera\ingame_camera.cpp">
       <Filter>game_object\camera</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\player\states\idle_state\idle_state.cpp">
+      <Filter>game_object\player\states\idle_state</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\player\states\move_state\move_state.cpp">
+      <Filter>game_object\player\states\move_state</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\player\states\character_state.cpp">
+      <Filter>game_object\player\states</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\player\states\jump_state\jump_state.cpp">
+      <Filter>game_object\player\states\jump_state</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -471,6 +495,18 @@
     </Filter>
     <Filter Include="game_job_queue">
       <UniqueIdentifier>{0cd375a6-26ad-42de-9683-5d2c8ed35a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\player\states">
+      <UniqueIdentifier>{845f50b6-febe-484c-a70a-eb51b77ed595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\player\states\idle_state">
+      <UniqueIdentifier>{e69a1239-ab19-42df-8517-44f07810820e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\player\states\move_state">
+      <UniqueIdentifier>{e79829ad-6185-4215-9236-07c766cebd93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\player\states\jump_state">
+      <UniqueIdentifier>{438cfded-4bf1-4ef4-b01f-e56450042a52}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

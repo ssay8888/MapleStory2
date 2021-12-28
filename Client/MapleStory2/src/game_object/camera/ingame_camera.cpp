@@ -28,56 +28,65 @@ HRESULT IngameCamera::NativeConstruct(void* arg)
 	_target_transform_com = std::static_pointer_cast<Transform>(target);
 	_transform->LookAtTarget(_target_transform_com);
 	Camera::NativeConstruct(arg);
-
-
+	
 	return S_OK;
 }
 
 int32_t IngameCamera::Tick(const double timeDelta)
 {
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_W))
+	if (_free_camera)
 	{
-		_transform->GoStraight(timeDelta);
+		if (InputDevice::GetInstance().GetKeyPressing(DIK_W))
+		{
+			_transform->GoStraight(timeDelta);
+		}
+
+		if (InputDevice::GetInstance().GetKeyPressing(DIK_S))
+		{
+			_transform->BackStraight(timeDelta);
+		}
+
+		if (InputDevice::GetInstance().GetKeyPressing(DIK_A))
+		{
+			_transform->WalkLeft(timeDelta);
+		}
+
+		if (InputDevice::GetInstance().GetKeyPressing(DIK_D))
+		{
+			_transform->WalkRight(timeDelta);
+		}
+
+		int64_t			mouseMove = 0;
+
+		mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kX);
+
+		if (0 != mouseMove)
+			_transform->RotationAxis(_float3(0.f, 1.f, 0.f), timeDelta * mouseMove * 0.02f);
+
+		mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kY);
+
+		if (0 != mouseMove)
+			_transform->RotationAxis(_transform->GetState(Transform::kState::kStateRight), timeDelta * mouseMove * 0.02f);
 	}
 
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_S))
+	if (InputDevice::GetInstance().GetKeyDown(DIK_F4))
 	{
-		_transform->BackStraight(timeDelta);
+		_free_camera = !_free_camera;
 	}
-
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_A))
-	{
-		_transform->WalkLeft(timeDelta);
-	}
-
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_D))
-	{
-		_transform->WalkRight(timeDelta);
-	}
-
-	int64_t			mouseMove = 0;
-
-	mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kX);
-
-	if (0 != mouseMove)
-		_transform->RotationAxis(_float3(0.f, 1.f, 0.f), timeDelta * mouseMove * 0.02f);
-
-	mouseMove = InputDevice::GetInstance().GetDirectMouseMoveState(InputDevice::kDirectInMouseState::kY);
-
-	if (0 != mouseMove)
-		_transform->RotationAxis(_transform->GetState(Transform::kState::kStateRight) , timeDelta * mouseMove * 0.02f);
-
 	return Camera::Tick(timeDelta);
 }
 
 int32_t IngameCamera::LateTick(const double timeDelta)
 {
-	/*auto targetPos = _target_transform_com->GetState(Transform::kState::kStatePosition);
-	targetPos.y += 1.854213f;
-	targetPos.z += -1.5f;
-	_transform->SetState(Transform::kState::kStatePosition,
-		targetPos);
-*/
+	if (!_free_camera)
+	{
+		auto targetPos = _target_transform_com->GetState(Transform::kState::kStatePosition);
+		targetPos.y += 1.854213f;
+		targetPos.z += -1.5f;
+		_transform->SetState(Transform::kState::kStatePosition,
+			targetPos);
+	}
+
 
 	return Camera::LateTick(timeDelta);
 }

@@ -39,7 +39,7 @@ public:
 	};
 	auto LoadAnimationInfo()->void;
 	auto FindAnimationInfo(const std::string& name)->std::shared_ptr<AnimationInfo>;
-	auto AllAnimationName()->std::vector<std::shared_ptr<AnimationInfo>>;
+	auto AllAnimationName() const ->std::vector<std::shared_ptr<AnimationInfo>>;
 
 #pragma endregion
 
@@ -79,7 +79,7 @@ public:
 private:
 	std::map<int32_t, std::shared_ptr<FaceInfo>>			_face_info;
 	std::map<int32_t, std::shared_ptr<ItemModel>>			_item_model;
-	std::map<std::string, std::shared_ptr<AnimationInfo>>	_animations_info;
+	std::vector<std::shared_ptr<AnimationInfo>>				_animations_info;
 	std::vector<std::shared_ptr<CreateCharacterItemInfo>>	_create_item_info;
 };
 

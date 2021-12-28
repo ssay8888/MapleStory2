@@ -2,6 +2,9 @@
 <ms2>
     <model animation_name="idle_a" targetnode="Weapon_Back_R_Point" />
     <model animation_name="run_a" targetnode="Weapon_Back_R_Point" />
+    <model animation_name="jump_down_a" targetnode="Weapon_Back_R_Point" />
+    <model animation_name="jump_up_a" targetnode="Weapon_Back_R_Point" />
+    <model animation_name="jump_fall_a" targetnode="Weapon_Back_R_Point" />
     <model animation_name="objectweapon_typea_attack_idle_a" targetnode="Weapon_Hand_R_Point" />
     <model animation_name="berserker_breakingskull_01_a" targetnode="Weapon_Hand_R_Point" />
 </ms2>

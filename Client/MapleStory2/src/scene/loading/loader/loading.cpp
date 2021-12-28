@@ -150,6 +150,8 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_GameSky"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/bg_perion_ch.dds")))))
 		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_GameSky_Henesys"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/bg_henesys_a.dds")))))
+		return E_FAIL;
 
 	const auto modelList = MapParser::MapModelNameListExport("character_perion");
 	for (auto& model : modelList)
