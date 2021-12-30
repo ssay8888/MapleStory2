@@ -12,6 +12,8 @@
 #endif
 // 여기에 미리 컴파일하려는 헤더 추가
 #include "core_pch.h"
+#include "engine_pch.h"
+#include "game_defines.h"
 #include "game_session/game_session.h"
 using GameSessionRef = std::shared_ptr<GameSession>;
 #include "game_contents/game_contents.h"

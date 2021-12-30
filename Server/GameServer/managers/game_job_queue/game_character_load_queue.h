@@ -8,7 +8,7 @@ class GameCharacterLoadQueue : public JobQueue
 public:
 	static auto GetInstance() ->std::shared_ptr<GameCharacterLoadQueue>&
 	{
-		static auto instance = MakeShared<GameCharacterLoadQueue>();
+		static auto instance = std::make_shared<GameCharacterLoadQueue>();
 		return instance;
 	}
 

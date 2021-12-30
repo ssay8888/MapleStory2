@@ -8,6 +8,9 @@ enum : uint16_t
 	kPktGameClientLogin = 2000,
 	kPktGameServerLogin = 2001,
 	kPktGameServerLoadCharacter = 2002,
+	kPktGameServerRespawnPlayer = 2003,
+	kPktGameClientMovePlayer = 2004,
+	kPktGameServerMovePlayer = 2005,
 };
 
 
@@ -18,6 +21,7 @@ public:
 	// Custom Handlers
 	static auto HandleGameInvalid(PacketSessionRef& session, BYTE* buffer, int32_t len)->bool;
 	static auto HandleGameClientLogin(PacketSessionRef& session, Protocol::GameClientLogin& pkt)->bool;
+	static auto HandleGameClientMovePlayer(PacketSessionRef& session, Protocol::GameClientMovePlayer& pkt)->bool;
 	static void Init()
 	{
 		for (auto& handler : _packet_handler)
@@ -25,6 +29,7 @@ public:
 			handler = HandleGameInvalid;
 		}
 		_packet_handler[kPktGameClientLogin] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientLogin>(HandleGameClientLogin, session, buffer, len); };
+		_packet_handler[kPktGameClientMovePlayer] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientMovePlayer>(HandleGameClientMovePlayer, session, buffer, len); };
 	}
 
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32_t len)
@@ -34,6 +39,8 @@ public:
 	}
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerLogin& pkt) { return MakeSendBuffer(pkt, kPktGameServerLogin); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerLoadCharacter& pkt) { return MakeSendBuffer(pkt, kPktGameServerLoadCharacter); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameServerRespawnPlayer& pkt) { return MakeSendBuffer(pkt, kPktGameServerRespawnPlayer); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameServerMovePlayer& pkt) { return MakeSendBuffer(pkt, kPktGameServerMovePlayer); }
 
 private:
 	template<typename PacketType, typename ProcessFunc>

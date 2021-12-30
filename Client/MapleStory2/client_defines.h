@@ -21,6 +21,18 @@ enum class kEqpType
 	kSh
 };
 
+enum class kAnimationType
+{
+	kIdle,
+	kRun,
+	kJumpUp,
+	kJumpDown,
+	kJumpFall,
+	kAttackIdle,
+	kBreakingSkull
+};
+
+
 constexpr int16_t		g_WinCX = 1280;
 constexpr int16_t		g_WinCY = 720;
 extern HWND				g_Wnd;

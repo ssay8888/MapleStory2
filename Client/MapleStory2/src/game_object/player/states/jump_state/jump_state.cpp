@@ -15,7 +15,7 @@ auto JumpState::Enter() -> void
 	timerManager.AddTimers(L"JumpTimerUp");
 	timerManager.ComputeTimeDelta(L"JumpTimerUp");
 	timerManager.ResetTime(TEXT("JumpTimerUp"));
-	_player->ChangeAnimation(Player::kAnimationType::kJumpUp);
+	_player->ChangeAnimation(kAnimationType::kJumpUp);
 	_is_jump_up = false;
 	_is_jump_down = false;
 }
@@ -86,7 +86,7 @@ auto JumpState::Tick(const double timeDelta) -> void
 		{
 			_is_jump_up = false;
 			_is_jump_down = true;
-			_player->ChangeAnimation(Player::kAnimationType::kJumpDown);
+			_player->ChangeAnimation(kAnimationType::kJumpDown);
 			timerManager.ResetTime(TEXT("JumpTimerUp"));
 		}
 		else

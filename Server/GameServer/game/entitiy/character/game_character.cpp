@@ -1,11 +1,14 @@
 #include "game_server_pch.h"
 #include "game_character.h"
 
+#include "game/map/map_instance.h"
+#include "game/map/map_manager.h"
 #include "information_collection/inventorys/inventorys.h"
 #include "information_collection/stats/stats.h"
 #include "managers/character_info_manager/character_info_storage_manager.h"
 #include "src/database/db_connection_pool.h"
 #include "src/database/db_bind.h"
+#include "src/utility/components/transform/transform.h"
 
 GameCharacter::GameCharacter(const int64_t characterId):
 	_character_id(characterId),
@@ -50,34 +53,54 @@ auto GameCharacter::GetName() const -> std::wstring
 	return _name;
 }
 
+auto GameCharacter::GetMapId() const -> int32_t
+{
+	return _map_id;
+}
+
+auto GameCharacter::GetSpawnPoint() const -> int32_t
+{
+	return _spawn_point;
+}
+
+auto GameCharacter::GetTransForm() const -> std::shared_ptr<Transform>
+{
+	return _transform;
+}
+
 auto GameCharacter::NativeConstruct() -> HRESULT
 {
+	_transform = Transform::Create(nullptr);
+	_transform->NativeConstruct(nullptr);
 	if (auto con = DBConnectionPool::GetInstance().Pop())
 	{
-		DBBind<1, 10> bind(*con, L"{CALL dbo.spLoadCharacter(?)}");
+		DBBind<1, 12> bind(*con, L"{CALL dbo.spLoadCharacter(?)}");
 
 
 		bind.BindParam(0, _character_id);
 
 		WCHAR name[100]{0};
-		bind.BindCol(0, name);
-		bind.BindCol(1, _account_id);
-		bind.BindCol(2, _gender);
-		bind.BindCol(3, _face_id);
+		int colIndex = 0;
+		bind.BindCol(colIndex++, name);
+		bind.BindCol(colIndex++, _account_id);
+		bind.BindCol(colIndex++, _gender);
+		bind.BindCol(colIndex++, _face_id);
+		bind.BindCol(colIndex++, _map_id);
+		bind.BindCol(colIndex++, _spawn_point);
 
 		int32_t str;
-		bind.BindCol(4, str);
+		bind.BindCol(colIndex++, str);
 		int32_t dex;
-		bind.BindCol(5, dex);
+		bind.BindCol(colIndex++, dex);
 		int32_t int_;
-		bind.BindCol(6, int_);
+		bind.BindCol(colIndex++, int_);
 		int32_t luk;
-		bind.BindCol(7, luk);
+		bind.BindCol(colIndex++, luk);
 
 		int32_t itemid;
-		bind.BindCol(8, itemid);
+		bind.BindCol(colIndex++, itemid);
 		int32_t position;
-		bind.BindCol(9, position);
+		bind.BindCol(colIndex++, position);
 
 		if (bind.Execute())
 		{
@@ -114,6 +137,9 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 			{
 				return E_FAIL;
 			}
+			const auto mapInstance = MapManager::GetInstance().FindMapInstance(this->GetMapId());
+			auto position = mapInstance->GetSpawnPoint(this->GetSpawnPoint());
+			_transform->SetState(Transform::kState::kStatePosition, position);
 		}
 
 		DBConnectionPool::GetInstance().Push(con);

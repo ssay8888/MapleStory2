@@ -26,6 +26,36 @@ message GameServerLoadCharacter
 	int32 dex = 8;
 	int32 int = 9;
 	int32 luk = 10;
+	float pos_x = 11;
+	float pos_y = 12;
+	float pos_z = 13;
 
-	repeated item items = 11;
+	repeated item items = 14;
+}
+
+message GameServerRespawnPlayer
+{
+	int64 character_id = 1;
+	bytes name = 2;
+	bool gender = 3;
+	int32 face_id = 4;
+	float pos_x = 5;
+	float pos_y = 6;
+	float pos_z = 7;
+
+	repeated item items = 8;
+}
+
+message GameClientMovePlayer
+{
+	int32 state = 1;
+	float radian = 2;
+	float3 position = 3;
+}
+message GameServerMovePlayer
+{
+	int64 character_id = 1;
+	int32 state = 2;
+	float radian = 3;
+	float3 position = 4;
 }

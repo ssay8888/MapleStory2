@@ -82,13 +82,16 @@
     <ClCompile Include="game\entitiy\character\information_collection\inventorys\inventory.cpp">
       <Filter>game\entity\character\information_collection\inventorys</Filter>
     </ClCompile>
+    <ClCompile Include="game\map\map_manager.cpp">
+      <Filter>game\map</Filter>
+    </ClCompile>
+    <ClCompile Include="game\map\map_instance.cpp">
+      <Filter>game\map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
       <UniqueIdentifier>{b1a49d1e-f3a5-42d2-90a7-dd97a42542e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game_session">
-      <UniqueIdentifier>{2b189cef-e701-4278-80ff-b5de4914219d}</UniqueIdentifier>
     </Filter>
     <Filter Include="protocol">
       <UniqueIdentifier>{6c75954c-96a9-4ef0-91e7-84eb712cfde1}</UniqueIdentifier>
@@ -134,6 +137,12 @@
     </Filter>
     <Filter Include="game\entity\character\information_collection\inventorys">
       <UniqueIdentifier>{ba9fe76c-8922-4c0e-8edc-93f9c0cbcecf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\map">
+      <UniqueIdentifier>{1623921c-3122-47e8-aec2-9846877bd68b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_session">
+      <UniqueIdentifier>{2b189cef-e701-4278-80ff-b5de4914219d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +223,15 @@
     </ClInclude>
     <ClInclude Include="game\entitiy\character\information_collection\inventorys\inventory.h">
       <Filter>game\entity\character\information_collection\inventorys</Filter>
+    </ClInclude>
+    <ClInclude Include="game\map\map_manager.h">
+      <Filter>game\map</Filter>
+    </ClInclude>
+    <ClInclude Include="game\map\map_instance.h">
+      <Filter>game\map</Filter>
+    </ClInclude>
+    <ClInclude Include="game_defines.h">
+      <Filter>main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

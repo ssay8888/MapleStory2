@@ -15,6 +15,8 @@ public:
 
 	auto FindInfo(CharacterInfoStorage::kInfoTypes type, int64_t characterId) const ->std::shared_ptr<BaseInfo>;
 	auto PushInfo(CharacterInfoStorage::kInfoTypes type, int64_t characterId, const std::shared_ptr<BaseInfo>& info) const ->bool;
+	auto RemoveInfo(CharacterInfoStorage::kInfoTypes type, int64_t characterId) const ->bool;
+	auto RemoveAllInfo(int64_t characterId) const ->bool;
 
 private:
 	tbb::concurrent_hash_map<CharacterInfoStorage::kInfoTypes, std::shared_ptr<CharacterInfoStorage>> _information;

@@ -20,3 +20,16 @@ auto GameServerPacketHandler::HandleGameServerLoadCharacter(PacketSessionRef& se
 	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::CharacterLoad, session, pkt);
 	return true;
 }
+
+auto GameServerPacketHandler::HandleGameServerRespawnPlayer(PacketSessionRef& session,
+	Protocol::GameServerRespawnPlayer& pkt) -> bool
+{
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::AddUser, session, pkt);
+	return true;
+}
+
+auto GameServerPacketHandler::HandleGameServerMovePlayer(PacketSessionRef& session,
+	Protocol::GameServerMovePlayer& pkt) -> bool
+{
+	return true;
+}

@@ -38,3 +38,29 @@ auto CharacterInfoStorageManager::PushInfo(const CharacterInfoStorage::kInfoType
 	}
 	return false;
 }
+
+auto CharacterInfoStorageManager::RemoveInfo(const CharacterInfoStorage::kInfoTypes type, const int64_t characterId) const ->bool
+{
+	tbb::concurrent_hash_map<CharacterInfoStorage::kInfoTypes, std::shared_ptr<CharacterInfoStorage>>::const_accessor result;
+	if (_information.find(result, type))
+	{
+		if (const auto check = result->second->RemoveInfo(characterId))
+		{
+			return check;
+		}
+	}
+	return false;
+}
+
+auto CharacterInfoStorageManager::RemoveAllInfo(const int64_t characterId) const ->bool
+{
+	for (auto i = 0; i < static_cast<int32_t>(CharacterInfoStorage::kInfoTypes::kEnd); ++i)
+	{
+		tbb::concurrent_hash_map<CharacterInfoStorage::kInfoTypes, std::shared_ptr<CharacterInfoStorage>>::const_accessor result;
+		if (_information.find(result, static_cast<CharacterInfoStorage::kInfoTypes>(i)))
+		{
+			result->second->RemoveInfo(characterId);
+		}
+	}
+	return true;
+}

@@ -210,6 +210,7 @@
     <ClInclude Include="src\game_object\ui\character_select\character_select_ui.h" />
     <ClInclude Include="src\game_object\ui\login\text_box_ui.h" />
     <ClInclude Include="src\game_object\ui\ui.h" />
+    <ClInclude Include="src\game_object\user\user.h" />
     <ClInclude Include="src\main\main_app.h" />
     <ClInclude Include="src\managers\characters_manager\character.h" />
     <ClInclude Include="src\managers\characters_manager\characters_manager.h" />
@@ -301,6 +302,7 @@
     <ClCompile Include="src\game_object\ui\character_select\character_select_ui.cpp" />
     <ClCompile Include="src\game_object\ui\login\text_box_ui.cpp" />
     <ClCompile Include="src\game_object\ui\ui.cpp" />
+    <ClCompile Include="src\game_object\user\user.cpp" />
     <ClCompile Include="src\main\main_app.cpp" />
     <ClCompile Include="src\managers\characters_manager\character.cpp" />
     <ClCompile Include="src\managers\characters_manager\characters_manager.cpp" />

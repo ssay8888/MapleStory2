@@ -40,7 +40,6 @@ HRESULT Player::NativeConstruct(void* arg)
 	}
 	if (FAILED(AddComponents()))
 		return E_FAIL;
-	_transform_com->SetState(Transform::kState::kStatePosition, _float3(0.f, 0.f, 0.f));
 	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
 
 	ChangeAnimation(kAnimationType::kIdle);
@@ -359,7 +358,7 @@ auto Player::AddComponents() -> HRESULT
 	_info.sex = characterInfo.gender();
 	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
 		return E_FAIL;
-
+	_transform_com->SetState(Transform::kState::kStatePosition, _float3(characterInfo.pos_x(), characterInfo.pos_y(), characterInfo.pos_z()));
 	const auto animationNames = DataReaderManager::GetInstance().AllAnimationName();
 
 	std::shared_ptr<MeshDynamic> mesh;
@@ -391,7 +390,7 @@ auto Player::AddComponents() -> HRESULT
 	
 	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
 	ColliderDesc.scale = _float3(2.5f, 2.5f, 2.5f);
-	ColliderDesc.init_pos = _transform_com->GetState(Transform::kState::kStatePosition);
+	ColliderDesc.init_pos = _float3(0.f, 0, 0.f);
 	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_NoTarget_AABB"), TEXT("Com_Block_AABB"), reinterpret_cast<std::shared_ptr<Component>*>(&_block_ragne_aabb_com), &ColliderDesc)))
 		return E_FAIL;
 

@@ -187,6 +187,9 @@
     <ClInclude Include="src\game_object\player\states\jump_state\jump_state.h">
       <Filter>game_object\player\states\jump_state</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\user\user.h">
+      <Filter>game_object\user</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -369,6 +372,9 @@
     <ClCompile Include="src\game_object\player\states\jump_state\jump_state.cpp">
       <Filter>game_object\player\states\jump_state</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\user\user.cpp">
+      <Filter>game_object\user</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -507,6 +513,9 @@
     </Filter>
     <Filter Include="game_object\player\states\jump_state">
       <UniqueIdentifier>{438cfded-4bf1-4ef4-b01f-e56450042a52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\user">
+      <UniqueIdentifier>{17922e18-722d-4824-9172-b38be65350b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -47,7 +47,7 @@ struct TableStruct_game_5fstruct_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[1]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[2]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -55,11 +55,15 @@ struct TableStruct_game_5fstruct_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fstruct_2eproto;
 namespace Protocol {
+class float3;
+struct float3DefaultTypeInternal;
+extern float3DefaultTypeInternal _float3_default_instance_;
 class item;
 struct itemDefaultTypeInternal;
 extern itemDefaultTypeInternal _item_default_instance_;
 }  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
+template<> ::Protocol::float3* Arena::CreateMaybeMessage<::Protocol::float3>(Arena*);
 template<> ::Protocol::item* Arena::CreateMaybeMessage<::Protocol::item>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
@@ -207,6 +211,160 @@ class item final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fstruct_2eproto;
 };
+// -------------------------------------------------------------------
+
+class float3 final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.float3) */ {
+ public:
+  inline float3() : float3(nullptr) {}
+  ~float3() override;
+  explicit constexpr float3(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  float3(const float3& from);
+  float3(float3&& from) noexcept
+    : float3() {
+    *this = ::std::move(from);
+  }
+
+  inline float3& operator=(const float3& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline float3& operator=(float3&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const float3& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const float3* internal_default_instance() {
+    return reinterpret_cast<const float3*>(
+               &_float3_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(float3& a, float3& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(float3* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(float3* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline float3* New() const final {
+    return new float3();
+  }
+
+  float3* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<float3>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const float3& from);
+  void MergeFrom(const float3& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(float3* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.float3";
+  }
+  protected:
+  explicit float3(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kXFieldNumber = 1,
+    kYFieldNumber = 2,
+    kZFieldNumber = 3,
+  };
+  // float x = 1;
+  void clear_x();
+  float x() const;
+  void set_x(float value);
+  private:
+  float _internal_x() const;
+  void _internal_set_x(float value);
+  public:
+
+  // float y = 2;
+  void clear_y();
+  float y() const;
+  void set_y(float value);
+  private:
+  float _internal_y() const;
+  void _internal_set_y(float value);
+  public:
+
+  // float z = 3;
+  void clear_z();
+  float z() const;
+  void set_z(float value);
+  private:
+  float _internal_z() const;
+  void _internal_set_z(float value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.float3)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  float x_;
+  float y_;
+  float z_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fstruct_2eproto;
+};
 // ===================================================================
 
 
@@ -258,9 +416,75 @@ inline void item::set_position(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:Protocol.item.position)
 }
 
+// -------------------------------------------------------------------
+
+// float3
+
+// float x = 1;
+inline void float3::clear_x() {
+  x_ = 0;
+}
+inline float float3::_internal_x() const {
+  return x_;
+}
+inline float float3::x() const {
+  // @@protoc_insertion_point(field_get:Protocol.float3.x)
+  return _internal_x();
+}
+inline void float3::_internal_set_x(float value) {
+  
+  x_ = value;
+}
+inline void float3::set_x(float value) {
+  _internal_set_x(value);
+  // @@protoc_insertion_point(field_set:Protocol.float3.x)
+}
+
+// float y = 2;
+inline void float3::clear_y() {
+  y_ = 0;
+}
+inline float float3::_internal_y() const {
+  return y_;
+}
+inline float float3::y() const {
+  // @@protoc_insertion_point(field_get:Protocol.float3.y)
+  return _internal_y();
+}
+inline void float3::_internal_set_y(float value) {
+  
+  y_ = value;
+}
+inline void float3::set_y(float value) {
+  _internal_set_y(value);
+  // @@protoc_insertion_point(field_set:Protocol.float3.y)
+}
+
+// float z = 3;
+inline void float3::clear_z() {
+  z_ = 0;
+}
+inline float float3::_internal_z() const {
+  return z_;
+}
+inline float float3::z() const {
+  // @@protoc_insertion_point(field_get:Protocol.float3.z)
+  return _internal_z();
+}
+inline void float3::_internal_set_z(float value) {
+  
+  z_ = value;
+}
+inline void float3::set_z(float value) {
+  _internal_set_z(value);
+  // @@protoc_insertion_point(field_set:Protocol.float3.z)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 

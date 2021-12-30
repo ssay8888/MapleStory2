@@ -13,7 +13,7 @@ auto IdleState::Enter() -> void
 {
 	// 상태가 바뀌었을때 최초 1회 호출됨.
 	_is_move = false;
-	_player->ChangeAnimation(Player::kAnimationType::kIdle);
+	_player->ChangeAnimation(kAnimationType::kIdle);
 }
 
 auto IdleState::HandleInput() -> void

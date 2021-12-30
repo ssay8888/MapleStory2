@@ -3,7 +3,10 @@
 
 #include "game_client_packet_handler.h"
 #include "game_session_manager.h"
-#include "src/network/service.h"
+#include "game/entitiy/character/game_character.h"
+#include "game/map/map_instance.h"
+#include "game/map/map_manager.h"
+#include "managers/character_info_manager/character_info_storage_manager.h"
 
 static std::atomic<int> g_session_id = 1;
 
@@ -24,6 +27,12 @@ auto GameSession::OnDisconnected() -> void
 	auto packetSession = std::static_pointer_cast<PacketSession>(shared_from_this());
 	const auto gameSession = std::static_pointer_cast<GameSession>(shared_from_this());
 	GameSessionManager::GetInstance().GameSessionRemove(gameSession);
+
+	const auto mapInstance = MapManager::GetInstance().FindMapInstance(_character->GetMapId());
+	mapInstance->DoAsync(&MapInstance::RemoveCharacter, _character->GetCharacterId());
+
+	const auto& InfoStorageManager = CharacterInfoStorageManager::GetInstance();
+	auto result = InfoStorageManager.RemoveAllInfo(_character->GetCharacterId());
 
 }
 
@@ -52,12 +61,12 @@ auto GameSession::SetAccountId(const int64_t id) -> void
 	_account_id = id;
 }
 
-auto GameSession::SetPlayer(std::shared_ptr<Character> character) -> void
+auto GameSession::SetPlayer(std::shared_ptr<GameCharacter> character) -> void
 {
 	_character = character;
 }
 
-auto GameSession::GetPlayer() const -> std::shared_ptr<Character>
+auto GameSession::GetPlayer() const -> std::shared_ptr<GameCharacter>
 {
 	return _character;
 }

@@ -1,0 +1,71 @@
+#include "game_server_pch.h"
+#include "map_manager.h"
+
+#include <pugixml.hpp>
+#include <sstream>
+#include "map_instance.h"
+#include "data_reader/data_reader_manager.h"
+
+MapManager::MapManager()
+{
+	LoadMapInstance();
+}
+
+auto MapManager::FindMapInstance(const int32_t mapId) -> std::shared_ptr<MapInstance>
+{
+	auto iterator = _maps.find(mapId);
+	if (iterator != _maps.end())
+	{
+		return iterator->second;
+	}
+	return nullptr;
+}
+
+auto MapManager::LoadMapInstance() -> void
+{
+	auto fieldDatas = DataReaderManager::GetInstance().AllFieldData();
+
+	for (auto& fieldDataPair : fieldDatas)
+	{
+		if (const auto spawnPoint = MapSpawnPointParsing(fieldDataPair.second->environment.name); !spawnPoint.empty())
+		{
+			auto mapInstance = std::make_shared<MapInstance>(fieldDataPair.first);
+			mapInstance->SetSpawnPoint(spawnPoint);
+			_maps.emplace(fieldDataPair.first, mapInstance);
+		}
+	}
+}
+
+auto MapManager::MapSpawnPointParsing(const std::wstring name) -> std::vector<_float3>
+{
+	pugi::xml_document doc;
+	//L"Client\\Character\\00012000.img.xml"
+	wchar_t xmlPath[100] = L"";
+	swprintf_s(xmlPath, L"../../Binary/Resources/MapData/%s.xblock", name.c_str());
+	//snprintf(xmlPath, 100, , size);
+	auto err = doc.load_file(xmlPath);
+	std::vector<_float3> positions;
+	if (err.status == pugi::status_ok)
+	{
+		const auto data = doc.select_nodes("game/entitySet/entity[@modelName='SpawnPointPC']/property[@name='Position']/set");
+
+		for (auto& entity : data)
+		{
+			_float3 position;
+			auto modelName = std::string(entity.node().attribute("modelName").value());
+			auto posValue = entity.node().attribute("value").value();
+			std::istringstream ss(posValue);
+			std::string temp;
+			std::vector<float> values;
+			while (std::getline(ss, temp, ','))
+			{
+				values.push_back(std::stof(temp));
+			}
+			if (values.size() >= 3)
+			{
+				positions.push_back(_float3(values[0] / 150.f * 0.58f, values[2] / 150.f * 0.58f, values[1] / 150.f * 0.58f));
+			}
+		}
+	}
+	return positions;
+}

@@ -31,18 +31,6 @@ public:
 	{
 		_float3 pos;
 		bool	sex;
-		std::shared_ptr<Character> character;
-	};
-
-	enum class kAnimationType
-	{
-		kIdle,
-		kRun,
-		kJumpUp,
-		kJumpDown,
-		kJumpFall,
-		kAttackIdle,
-		kBreakingSkull
 	};
 
 	auto GetTransform()const->std::shared_ptr<Transform>;

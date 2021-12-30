@@ -8,3 +8,10 @@ message item
 	int32 itemid = 1;
 	int32 position = 2;
 }
+
+message float3
+{
+	float x = 1;
+	float y = 2;
+	float z = 3;
+}

@@ -76,10 +76,35 @@ public:
 #pragma endregion
 
 
+#pragma region FieldDataReader
+	struct FieldData
+	{
+		int32_t id;
+		struct Environment
+		{
+			std::wstring feature;
+			std::wstring name;
+			struct Bgm
+			{
+				int32_t id;
+				int32_t param;
+			};
+			Bgm bgm;
+		};
+		Environment environment;
+
+	};
+
+	auto LoadFieldData()->void;
+	auto AllFieldData() const ->std::map<int32_t, std::shared_ptr<FieldData>>;
+#pragma endregion
+
+
 private:
 	std::map<int32_t, std::shared_ptr<FaceInfo>>			_face_info;
 	std::map<int32_t, std::shared_ptr<ItemModel>>			_item_model;
 	std::vector<std::shared_ptr<AnimationInfo>>				_animations_info;
 	std::vector<std::shared_ptr<CreateCharacterItemInfo>>	_create_item_info;
+	std::map<int32_t, std::shared_ptr<FieldData>>			_field_data;
 };
 

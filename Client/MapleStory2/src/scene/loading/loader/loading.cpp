@@ -18,6 +18,7 @@
 #include "src/game_object/terrain/terrain.h"
 #include "src/game_object/ui/character_select/character_select_ui.h"
 #include "src/game_object/ui/character_select/character_beauty/character_beauty_ui.h"
+#include "src/game_object/user/user.h"
 #include "src/utility/components/manager/component_manager.h"
 #include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
 #include "src/utility/components/meshes/static/mesh_static.h"
@@ -370,6 +371,7 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Player"), Player::Create(_graphic_device))))
 		return E_FAIL;
 
+
 	/* For.Prototype_Terrain*/
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Terrain"), Terrain::Create(_graphic_device))))
 		return E_FAIL;
@@ -395,7 +397,6 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	/* For.Prototype_Mesh_Stone*/
 	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Man"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Player/"), TEXT("man.x")))))
 		return E_FAIL;
-
 	const auto modelList = MapParser::MapModelNameListExport("02000003_ad");
 	for (auto& model : modelList)
 	{

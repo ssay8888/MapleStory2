@@ -22,7 +22,11 @@ auto DataReaderManager::Init(const Microsoft::WRL::ComPtr<IDirect3DDevice9> devi
 	LoadItemModel("../../Binary/Resources/Xml/itemmodel/150.xml");
 	LoadAnimationInfo();
 	LoadCreateCharacterItemInfo();
-	FaceLoader(device);
+	LoadFieldData();
+	if (device)
+	{
+		FaceLoader(device);
+	}
 }
 
 #pragma region ItemInfoMethod
@@ -230,6 +234,51 @@ auto DataReaderManager::LoadCreateCharacterItemInfo() -> void
 auto DataReaderManager::GetCreateItemInfo() const -> std::vector<std::shared_ptr<CreateCharacterItemInfo>>
 {
 	return _create_item_info;
+}
+
+auto DataReaderManager::LoadFieldData() -> void
+{
+	xml_document doc;
+	const auto err = doc.load_file("../../Binary/Resources/MapData/fielddata.xml");
+
+	if (err.status == status_ok)
+	{
+		const auto fieldList = doc.select_nodes("ms2/fieldData");
+
+		for (auto field : fieldList)
+		{
+			auto fieldData = std::make_shared<FieldData>();
+			fieldData->id = std::stoi(field.node().attribute("id").value());
+
+			for (auto environmentNode : field.node())
+			{
+				fieldData->environment.feature = StringUtils::ConvertCtoW(environmentNode.attribute("feature").value());
+				for (auto dataNode : environmentNode)
+				{
+					std::string data = dataNode.name();
+
+					if (data == "xblock")
+					{
+						fieldData->environment.name = StringUtils::ConvertCtoW(dataNode.attribute("name").value());
+					}
+					else if (data == "bgm")
+					{
+						fieldData->environment.bgm.id = std::stoi(dataNode.attribute("id").value());
+						if (dataNode.attribute("param"))
+						{
+							fieldData->environment.bgm.param = std::stoi(dataNode.attribute("param").value());
+						}
+					}
+				}
+			}
+			_field_data.emplace(fieldData->id, fieldData);
+		}
+	}
+}
+
+auto DataReaderManager::AllFieldData() const -> std::map<int32_t, std::shared_ptr<FieldData>>
+{
+	return _field_data;
 }
 
 #pragma endregion

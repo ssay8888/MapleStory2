@@ -102,6 +102,7 @@ auto Shader::Create(const ComPtr<IDirect3DDevice9>& graphicDevice,
 	if (FAILED(pInstance->NativeConstructPrototype(shaderFilePath)))
 	{
 		MSGBOX("Failed to Creating CShader");
+		MessageBox(0, shaderFilePath.c_str(), L"", MB_OK);
 		return nullptr;
 	}
 	return pInstance;

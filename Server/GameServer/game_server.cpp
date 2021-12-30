@@ -3,7 +3,9 @@
 
 #include "center_client_session/center_client_session.h"
 #include "center_client_session/center_login_server_packet_handler.h"
+#include "data_reader/data_reader_manager.h"
 #include "game/loader/loader.h"
+#include "game/map/map_manager.h"
 #include "game_session/game_client_packet_handler.h"
 #include "src/database/db_connection_pool.h"
 #include "src/network/service.h"
@@ -15,6 +17,8 @@ void GameServer::GameServerInit()
 	SocketUtils::Init();
 	CenterLoginServerPacketHandler::Init();
 	GameClientPacketHandler::Init();
+	DataReaderManager::GetInstance().Init(nullptr);
+	MapManager::GetInstance();
 	ASSERT_CRASH(DBConnectionPool::GetInstance().Connect(10, L"Driver={SQL Server Native Client 11.0};Server=(localdb)\\MSSQLLocalDB;Database=maplestory2;Trusted_Connection=Yes;"));
 	Loader::GetInstance();
 	CreateServerService();

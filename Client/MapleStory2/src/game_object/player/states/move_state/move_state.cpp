@@ -13,7 +13,7 @@
 
 auto MoveState::Enter() -> void
 {
-	_player->ChangeAnimation(Player::kAnimationType::kRun);
+	_player->ChangeAnimation(kAnimationType::kRun);
 }
 
 auto MoveState::HandleInput() -> void

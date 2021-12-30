@@ -27,6 +27,7 @@
 #include "src/utility/scene_utility/scene_manager.h"
 #include "src/common/xml/map_parser.h"
 #include "src/game_object/camera/ingame_camera.h"
+#include "src/game_object/user/user.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/utility/components/collider/collider.h"
 
@@ -220,6 +221,8 @@ HRESULT MainApp::AddPrototypeGameObject()
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Login_Textbox"), TextBoxUi::Create())))
 		return E_FAIL;
 
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_User"), User::Create(_graphic_device))))
+		return E_FAIL;
 	return S_OK; 
 }
 

@@ -14,3 +14,9 @@ auto GameClientPacketHandler::HandleGameClientLogin(PacketSessionRef& session, P
 	GameCharacterLoadQueue::GetInstance()->DoAsync(&GameCharacterLoadQueue::GameClientLoginResponse, session, pkt);
 	return true;
 }
+
+auto GameClientPacketHandler::HandleGameClientMovePlayer(PacketSessionRef& session,
+	Protocol::GameClientMovePlayer& pkt) -> bool
+{
+	return true;
+}
