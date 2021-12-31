@@ -31,5 +31,6 @@ auto GameServerPacketHandler::HandleGameServerRespawnPlayer(PacketSessionRef& se
 auto GameServerPacketHandler::HandleGameServerMovePlayer(PacketSessionRef& session,
 	Protocol::GameServerMovePlayer& pkt) -> bool
 {
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::MovePlayer, session, pkt);
 	return true;
 }

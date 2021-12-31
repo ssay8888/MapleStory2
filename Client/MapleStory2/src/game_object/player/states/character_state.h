@@ -17,6 +17,7 @@ public:
 
 public:
 	auto GravityPlayer(double timeDelta)->bool;
+	auto GravityPlayerSendMessage(kAnimationType type) const->void;
 	auto StraightCheck()->bool;
 
 protected:

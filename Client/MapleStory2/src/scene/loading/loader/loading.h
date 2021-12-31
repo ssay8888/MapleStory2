@@ -23,6 +23,10 @@ private:
 
 
 	auto ReadyGamePlay0()->HRESULT;
+	auto LoadMainPlayerInfo()->HRESULT;
+
+
+
 	auto ReadyGamePlay1()->HRESULT;
 
 private:

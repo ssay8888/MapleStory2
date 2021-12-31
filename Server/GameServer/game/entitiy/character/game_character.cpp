@@ -75,8 +75,6 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 	if (auto con = DBConnectionPool::GetInstance().Pop())
 	{
 		DBBind<1, 12> bind(*con, L"{CALL dbo.spLoadCharacter(?)}");
-
-
 		bind.BindParam(0, _character_id);
 
 		WCHAR name[100]{0};
@@ -127,6 +125,8 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 					_name = name;
 				}
 			} while (bind.SqlMoreResults() != SQL_NO_DATA);
+
+			std::cout << "몇번이오냐?" << _character_id << std::endl;
 
 			const auto& InfoStorageManager = CharacterInfoStorageManager::GetInstance();
 			if (false == InfoStorageManager.PushInfo(CharacterInfoStorage::kInfoTypes::kStats, _character_id, stats))

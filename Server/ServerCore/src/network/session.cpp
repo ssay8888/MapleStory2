@@ -288,6 +288,8 @@ auto Session::ProcessRecv(const int32_t numOfBytes)-> void
 		Disconnect(L"OnRead Overflow");
 		return;
 	}
+	
+	_recv_buffer.Clean();
 
 	RegisterRecv();
 }

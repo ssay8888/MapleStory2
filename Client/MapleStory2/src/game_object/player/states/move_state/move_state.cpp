@@ -1,12 +1,15 @@
 #include "c_pch.h"
 #include "move_state.h"
 
+#include "protocol/game_protocol.pb.h"
 #include "src/game_object/map/map_instance.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
 #include "src/game_object/player/player.h"
 #include "src/game_object/player/states/idle_state/idle_state.h"
 #include "src/game_object/player/states/jump_state/jump_state.h"
+#include "src/network/game_server_packet_handler.h"
+#include "src/network/send_manager.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/collider/collider.h"
 #include "src/utility/components/transform/transform.h"
@@ -19,6 +22,10 @@ auto MoveState::Enter() -> void
 auto MoveState::HandleInput() -> void
 {
 	_is_move = false;
+	if (!g_isWindowsActive)
+	{
+		return;
+	}
 	const auto upKey = InputDevice::GetInstance().GetKeyPressing(DIK_UP);
 	const auto downKey = InputDevice::GetInstance().GetKeyPressing(DIK_DOWN);
 	const auto leftKey = InputDevice::GetInstance().GetKeyPressing(DIK_LEFT);
@@ -26,44 +33,44 @@ auto MoveState::HandleInput() -> void
 	_is_jump = InputDevice::GetInstance().GetKeyPressing(DIK_C);
 	if (upKey && leftKey)
 	{
-		_radian = D3DXToRadian(135);
+		_player->SetRadian(D3DXToRadian(135));
 		_is_move = true;
 	}
 	else if (upKey && rightKey)
 	{
-		_radian = D3DXToRadian(225);
+		_player->SetRadian(D3DXToRadian(225));
 		_is_move = true;
 	}
 	else if (downKey && leftKey)
 	{
-		_radian = D3DXToRadian(45);
+		_player->SetRadian(D3DXToRadian(45));
 		_is_move = true;
 	}
 	else if (downKey && rightKey)
 	{
-		_radian = D3DXToRadian(315);
+		_player->SetRadian(D3DXToRadian(315));
 		_is_move = true;
 	}
 	else
 	{
 		if (upKey)
 		{
-			_radian = D3DXToRadian(180);
+			_player->SetRadian(D3DXToRadian(180));
 			_is_move = true;
 		}
 		if (leftKey)
 		{
-			_radian = D3DXToRadian(90);
+			_player->SetRadian(D3DXToRadian(90));
 			_is_move = true;
 		}
 		if (downKey)
 		{
-			_radian = D3DXToRadian(0);
+			_player->SetRadian(D3DXToRadian(0));
 			_is_move = true;
 		}
 		if (rightKey)
 		{
-			_radian = D3DXToRadian(270);
+			_player->SetRadian(D3DXToRadian(270));
 			_is_move = true;
 		}
 	}
@@ -74,7 +81,7 @@ auto MoveState::Tick(const double timeDelta) -> void
 	auto transform = _player->GetTransform();
 	if (_is_move)
 	{
-		transform->SetUpRotation(_float3(0.f, 1.f, 0.f), _radian);
+		transform->SetUpRotation(_float3(0.f, 1.f, 0.f), _player->GetRadian());
 		transform->BackStraight(timeDelta);
 
 		_player->GetCharacterColliderAabb()->UpdateCollider();
@@ -87,6 +94,20 @@ auto MoveState::Tick(const double timeDelta) -> void
 		if (StraightCheck())
 		{
 			transform->BackStraight(-timeDelta);
+		}
+		else
+		{
+
+			const auto transform = _player->GetTransform();
+			Protocol::GameClientMovePlayer sendPkt;
+			sendPkt.set_state(static_cast<int32_t>(kAnimationType::kRun));
+			sendPkt.set_radian(_player->GetRadian());
+			const auto playerPos = transform->GetState(Transform::kState::kStatePosition);
+			const auto position = sendPkt.mutable_position();
+			position->set_x(playerPos.x);
+			position->set_y(playerPos.y);
+			position->set_z(playerPos.z);
+			SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
 		}
 
 		_player->GetCharacterColliderAabb()->UpdateCollider();
@@ -102,7 +123,11 @@ auto MoveState::LateTick(const double timeDelta) -> void
 {
 	_player->PlayAnimation(timeDelta);
 
-	GravityPlayer(timeDelta);
+	auto check = GravityPlayer(timeDelta);
+	if (check)
+	{
+		GravityPlayerSendMessage(kAnimationType::kRun);
+	}
 	ReloadMapObject();
 	if (!_is_move)
 	{

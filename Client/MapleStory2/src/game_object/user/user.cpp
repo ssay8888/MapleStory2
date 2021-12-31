@@ -176,15 +176,30 @@ auto User::GetEqpList() const -> std::shared_ptr<Equipped>
 
 auto User::ChangeAnimation(kAnimationType type) -> void
 {
+	if (GetAnimationType() == type)
+	{
+		return;
+	}
 	_new_mesh_num = static_cast<int32_t>(type);
 	_character_mesh_list[0]->SetAnimationIndex(_new_mesh_num);
 	_current_mesh_num = _new_mesh_num;
+	SetAnimationType(type);
 }
 
 auto User::PlayAnimation(const double timeDelta) -> void
 {
 	auto mesh = _character_mesh_list[0];
 	mesh->PlayAnimation(timeDelta);
+}
+
+auto User::SetAnimationType(kAnimationType type) -> void
+{
+	_animation_type = type;
+}
+
+auto User::GetAnimationType() const -> kAnimationType
+{
+	return _animation_type;
 }
 
 auto User::AddComponents() -> HRESULT

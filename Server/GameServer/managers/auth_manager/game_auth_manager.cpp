@@ -5,6 +5,7 @@
 
 auto GameAuthManager::AddAuth(const Protocol::CenterLoginServerCreateAuth auth) -> void
 {
+	std::cout << "Auth Add" << auth.auth() << std::endl;
 	tbb::concurrent_hash_map<int64_t, std::shared_ptr<Protocol::CenterLoginServerCreateAuth>>::accessor result;
 	if (_auth_storage.insert(result, auth.auth()))
 	{

@@ -28,6 +28,7 @@ auto GameCharacterLoadQueue::GameClientLoginResponse(PacketSessionRef session, P
 	if (authInfo)
 	{
 		gameSession->SetAccountId(authInfo->accountid());
+		std::cout << gameSession->GetAccountId() << "/" << authInfo->characterid() << std::endl;
 		auto character = GameCharacter::Create(authInfo->characterid());
 		SettingCharacterInfoSendPacket(sendPkt, session, character);
 		gameSession->SetPlayer(character);

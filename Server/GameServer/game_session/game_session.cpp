@@ -13,6 +13,7 @@ static std::atomic<int> g_session_id = 1;
 GameSession::GameSession() :
 	_session_id(g_session_id.fetch_add(1))
 {
+	std::cout << _session_id << "생성" << std::endl;
 }
 
 auto GameSession::OnConnected() -> void

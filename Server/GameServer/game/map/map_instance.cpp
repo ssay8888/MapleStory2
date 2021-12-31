@@ -2,7 +2,9 @@
 #include "map_instance.h"
 
 #include "game/entitiy/character/game_character.h"
+#include "game/entitiy/character/information_collection/inventorys/inventorys.h"
 #include "game_session/game_client_packet_handler.h"
+#include "managers/character_info_manager/character_info_storage_manager.h"
 #include "src/utility/components/transform/transform.h"
 #include "string_utils/string_utils.h"
 
@@ -35,32 +37,57 @@ auto MapInstance::FindCharacter(const int64_t characterId) -> std::shared_ptr<Ga
 
 auto MapInstance::BroadCastAddCharacter(std::shared_ptr<GameSession> session) -> void
 {
+	Protocol::GameServerRespawnPlayer respawnPlayerPkt;
+	auto player = session->GetPlayer();
+	respawnPlayerPkt.set_character_id(player->GetCharacterId());
+	respawnPlayerPkt.set_name(StringUtils::ConvertWtoC(player->GetName().c_str()).c_str());
+	respawnPlayerPkt.set_gender(player->GetGender());
+	respawnPlayerPkt.set_face_id(player->GetFaceId());
+	auto pos = player->GetTransForm()->GetState(Transform::kState::kStatePosition);
+	respawnPlayerPkt.set_pos_x(pos.x);
+	respawnPlayerPkt.set_pos_y(pos.y);
+	respawnPlayerPkt.set_pos_z(pos.z);
+	auto baseInfo =
+		CharacterInfoStorageManager::GetInstance().FindInfo(CharacterInfoStorage::kInfoTypes::kInventory, player->GetCharacterId());
+	auto inventoryInfo = std::static_pointer_cast<Inventorys>(baseInfo);
+
+	auto eqpItems = inventoryInfo->AllItems(Protocol::kInventoryEquipped);
+	for (auto eqp : eqpItems)
+	{
+		auto item = respawnPlayerPkt.add_items();
+		item->set_position(eqp.first);
+		item->set_itemid(eqp.second);
+	}
+
 	for (auto [key, targetSession] : _characters)
 	{
 		if (targetSession->GetAccountId() != session->GetAccountId()) // 본인을 제외한 모든 맵안에있는 캐릭터들의 정보를 쏴준다.
 		{
-			Protocol::GameServerRespawnPlayer respawnPlayerPkt;
-			auto player = session->GetPlayer();
-			respawnPlayerPkt.set_character_id(player->GetCharacterId());
-			respawnPlayerPkt.set_name(StringUtils::ConvertWtoC(player->GetName().c_str()).c_str());
-			respawnPlayerPkt.set_gender(player->GetGender());
-			respawnPlayerPkt.set_face_id(player->GetFaceId());
-			auto pos = player->GetTransForm()->GetState(Transform::kState::kStatePosition);
-			respawnPlayerPkt.set_pos_x(pos.x);
-			respawnPlayerPkt.set_pos_y(pos.y);
-			respawnPlayerPkt.set_pos_z(pos.z);
 			targetSession->Send(GameClientPacketHandler::MakeSendBuffer(respawnPlayerPkt));
 
+			Protocol::GameServerRespawnPlayer respawnTargetPlayerPkt;
 			player = targetSession->GetPlayer();
-			respawnPlayerPkt.set_character_id(player->GetCharacterId());
-			respawnPlayerPkt.set_name(StringUtils::ConvertWtoC(player->GetName().c_str()).c_str());
-			respawnPlayerPkt.set_gender(player->GetGender());
-			respawnPlayerPkt.set_face_id(player->GetFaceId());
+			respawnTargetPlayerPkt.set_character_id(player->GetCharacterId());
+			respawnTargetPlayerPkt.set_name(StringUtils::ConvertWtoC(player->GetName().c_str()).c_str());
+			respawnTargetPlayerPkt.set_gender(player->GetGender());
+			respawnTargetPlayerPkt.set_face_id(player->GetFaceId());
 			pos = player->GetTransForm()->GetState(Transform::kState::kStatePosition);
-			respawnPlayerPkt.set_pos_x(pos.x);
-			respawnPlayerPkt.set_pos_y(pos.y);
-			respawnPlayerPkt.set_pos_z(pos.z);
-			session->Send(GameClientPacketHandler::MakeSendBuffer(respawnPlayerPkt));
+			respawnTargetPlayerPkt.set_pos_x(pos.x);
+			respawnTargetPlayerPkt.set_pos_y(pos.y);
+			respawnTargetPlayerPkt.set_pos_z(pos.z);
+			baseInfo =
+				CharacterInfoStorageManager::GetInstance().FindInfo(CharacterInfoStorage::kInfoTypes::kInventory, player->GetCharacterId());
+			inventoryInfo = std::static_pointer_cast<Inventorys>(baseInfo);
+
+			eqpItems = inventoryInfo->AllItems(Protocol::kInventoryEquipped);
+			for (auto eqp : eqpItems)
+			{
+				auto item = respawnTargetPlayerPkt.add_items();
+				item->set_position(eqp.first);
+				item->set_itemid(eqp.second);
+			}
+
+			session->Send(GameClientPacketHandler::MakeSendBuffer(respawnTargetPlayerPkt));
 		}
 	}
 }

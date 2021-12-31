@@ -40,6 +40,9 @@ public:
 	auto GetReloadRangeAabb()const->std::vector<std::shared_ptr<Collider>>;
 	auto GetBlockRangeAabb()const->std::shared_ptr<Collider>;
 
+	auto GetRadian()const->float;
+	auto SetRadian(float radian)->void;
+
 
 
 
@@ -81,6 +84,7 @@ private:
 	std::shared_ptr<CharacterState>					_character_state;
 
 	bool				_is_idle = true;
+	float				_radian = 0.f;
 	int32_t				_current_mesh_num = 0;
 	int32_t				_new_mesh_num = 0;
 	_float3				_target_pos;

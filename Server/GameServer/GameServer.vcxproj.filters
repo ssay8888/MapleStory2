@@ -88,6 +88,9 @@
     <ClCompile Include="game\map\map_instance.cpp">
       <Filter>game\map</Filter>
     </ClCompile>
+    <ClCompile Include="managers\game_job_queue\game_character_moving_queue.cpp">
+      <Filter>managers\game_job_queue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="game_defines.h">
       <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="managers\game_job_queue\game_character_moving_queue.h">
+      <Filter>managers\game_job_queue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

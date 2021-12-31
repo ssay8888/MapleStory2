@@ -49,6 +49,18 @@ auto Inventorys::AllItems() -> std::vector<std::pair<int32_t, int32_t>>
 	return allItems;
 }
 
+auto Inventorys::AllItems(Protocol::kInventoryType type) -> std::vector<std::pair<int32_t, int32_t>>
+{
+	std::vector<std::pair<int32_t, int32_t>> allItems;
+	auto iterator = _inventory.find(Protocol::kInventoryType::kInventoryEquipped);
+	if (iterator != _inventory.end())
+	{
+		auto items = iterator->second->AllItems();
+		allItems.insert(allItems.end(), items.begin(), items.end());
+	}
+	return allItems;
+}
+
 auto Inventorys::Create(const int64_t characterId) -> std::shared_ptr<Inventorys>
 {
 	auto instance = MakeShared<Inventorys>(characterId);

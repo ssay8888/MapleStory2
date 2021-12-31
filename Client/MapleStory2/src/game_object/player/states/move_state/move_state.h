@@ -26,6 +26,5 @@ private:
 	bool	_is_move = false;
 	bool	_is_jump = false;
 	_float3 _axis = _float3(0.f, 1.f, 0.f);
-	float	_radian = 0;
 };
 

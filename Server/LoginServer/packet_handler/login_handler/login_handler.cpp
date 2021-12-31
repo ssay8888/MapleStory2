@@ -293,6 +293,7 @@ void LoginHandler::SelectCharacter(PacketSessionRef session, Protocol::LoginClie
 
 	const auto authInfo = authInstance.CreateAuth(game_session);
 	Protocol::CenterLoginServerCreateAuth centerSendPkt;
+	std::cout << "CreateAuth" << authInfo->auth;
 	centerSendPkt.set_auth(authInfo->auth);
 	centerSendPkt.set_accountid(game_session->GetAccountId());
 	centerSendPkt.set_characterid(pkt.characterid());

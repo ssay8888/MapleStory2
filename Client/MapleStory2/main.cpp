@@ -36,6 +36,7 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+bool g_isWindowsActive;
 
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -187,6 +188,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
+	case WM_ACTIVATE:
+	{
+		g_isWindowsActive = (bool)wParam;
+		break;
+	}
 	case WM_CREATE:
 	{
 

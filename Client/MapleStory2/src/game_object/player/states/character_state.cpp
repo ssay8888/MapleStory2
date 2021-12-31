@@ -1,10 +1,13 @@
 #include "c_pch.h"
 #include "character_state.h"
 
+#include "protocol/game_protocol.pb.h"
 #include "src/game_object/map/map_instance.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
 #include "src/game_object/player/player.h"
+#include "src/network/game_server_packet_handler.h"
+#include "src/network/send_manager.h"
 #include "src/utility/components/collider/collider.h"
 #include "src/utility/components/transform/transform.h"
 
@@ -52,6 +55,20 @@ auto CharacterState::GravityPlayer(const double timeDelta) -> bool
 		}
 	}
 	return true;
+}
+
+auto CharacterState::GravityPlayerSendMessage(kAnimationType type) const ->void
+{
+	const auto transform = _player->GetTransform();
+	Protocol::GameClientMovePlayer sendPkt;
+	sendPkt.set_state(static_cast<int32_t>(type));
+	sendPkt.set_radian(_player->GetRadian());
+	const auto playerPos = transform->GetState(Transform::kState::kStatePosition);
+	const auto position = sendPkt.mutable_position();
+	position->set_x(playerPos.x);
+	position->set_y(playerPos.y);
+	position->set_z(playerPos.z);
+	SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
 }
 
 auto CharacterState::StraightCheck() -> bool

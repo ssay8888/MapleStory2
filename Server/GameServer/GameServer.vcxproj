@@ -182,6 +182,7 @@
     <ClCompile Include="managers\character_info_manager\character_info_storage.cpp" />
     <ClCompile Include="managers\character_info_manager\character_info_storage_manager.cpp" />
     <ClCompile Include="managers\game_job_queue\game_character_load_queue.cpp" />
+    <ClCompile Include="managers\game_job_queue\game_character_moving_queue.cpp" />
     <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler.cpp" />
     <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.cpp" />
     <ClCompile Include="protocol\center_login_enum.pb.cc">
@@ -240,6 +241,7 @@
     <ClInclude Include="managers\character_info_manager\character_info_storage.h" />
     <ClInclude Include="managers\character_info_manager\character_info_storage_manager.h" />
     <ClInclude Include="managers\game_job_queue\game_character_load_queue.h" />
+    <ClInclude Include="managers\game_job_queue\game_character_moving_queue.h" />
     <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler.h" />
     <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.h" />
     <ClInclude Include="protocol\center_login_enum.pb.h" />

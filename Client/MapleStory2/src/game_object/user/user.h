@@ -28,6 +28,9 @@ public:
 	auto ChangeAnimation(kAnimationType type)->void;
 	auto PlayAnimation(const double timeDelta)->void;
 
+	auto SetAnimationType(kAnimationType type)-> void;
+	auto GetAnimationType()const->kAnimationType;
+
 private:
 	auto AddComponents()->HRESULT;
 	auto SetUpConstantTable() const->HRESULT;
@@ -42,11 +45,12 @@ private:
 	std::vector<std::shared_ptr<MeshDynamic>>		_character_mesh_list;
 	std::shared_ptr<Equipped>						_eqp_list;
 	std::map<int32_t, std::shared_ptr<MeshDynamic>>	_eqp_mesh;
-
-	bool				_is_idle = true;
+	
 	int32_t				_current_mesh_num = 0;
 	int32_t				_new_mesh_num = 0;
 	_float3				_target_pos;
-	Protocol::GameServerRespawnPlayer			_info;
+
+	kAnimationType			_animation_type;
+	Protocol::GameServerRespawnPlayer				_info;
 };
 

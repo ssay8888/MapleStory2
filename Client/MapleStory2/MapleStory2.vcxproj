@@ -209,6 +209,7 @@
     <ClInclude Include="src\game_object\ui\character_select\character_select_item.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_select_ui.h" />
     <ClInclude Include="src\game_object\ui\login\text_box_ui.h" />
+    <ClInclude Include="src\game_object\ui\player_info\player_info.h" />
     <ClInclude Include="src\game_object\ui\ui.h" />
     <ClInclude Include="src\game_object\user\user.h" />
     <ClInclude Include="src\main\main_app.h" />
@@ -301,6 +302,7 @@
     <ClCompile Include="src\game_object\ui\character_select\character_select_item.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_select_ui.cpp" />
     <ClCompile Include="src\game_object\ui\login\text_box_ui.cpp" />
+    <ClCompile Include="src\game_object\ui\player_info\player_info.cpp" />
     <ClCompile Include="src\game_object\ui\ui.cpp" />
     <ClCompile Include="src\game_object\user\user.cpp" />
     <ClCompile Include="src\main\main_app.cpp" />

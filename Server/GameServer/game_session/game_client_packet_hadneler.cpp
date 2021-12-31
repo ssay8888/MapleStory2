@@ -1,6 +1,7 @@
 #include "game_server_pch.h"
 #include "game_client_packet_handler.h"
 #include "managers/game_job_queue/game_character_load_queue.h"
+#include "managers/game_job_queue/game_character_moving_queue.h"
 
 PacketHandlerFunc GameClientPacketHandler::_packet_handler[UINT16_MAX]{};
 
@@ -18,5 +19,6 @@ auto GameClientPacketHandler::HandleGameClientLogin(PacketSessionRef& session, P
 auto GameClientPacketHandler::HandleGameClientMovePlayer(PacketSessionRef& session,
 	Protocol::GameClientMovePlayer& pkt) -> bool
 {
+	GameCharacterMovingQueue::GetInstance()->DoAsync(&GameCharacterMovingQueue::MovePlayer, session, pkt);
 	return true;
 }

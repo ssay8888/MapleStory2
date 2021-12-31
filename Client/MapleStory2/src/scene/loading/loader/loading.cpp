@@ -433,11 +433,36 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0);
 	
 
+	if (FAILED(LoadMainPlayerInfo()))
+	{
+		return E_FAIL;
+	}
 
 	_system_message.clear();
 	_system_message.append(L"로딩이 완료되었습니다.");
 
 	_is_finish = true;
+	return S_OK;
+}
+
+auto Loading::LoadMainPlayerInfo() -> HRESULT
+{
+	auto& componentManager = ComponentManager::GetInstance();
+	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_Frame"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/frame_0%d.png"), 2))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_HpGage"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/hp_gage.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_MpGage"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/mp_gage.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_AttackKey"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/attack_key.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_JumpKey"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/jump_key.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_PickupKey"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/pickup_key.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_SkillSet"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/skill_set.png")))))
+		return E_FAIL;
+
 	return S_OK;
 }
 

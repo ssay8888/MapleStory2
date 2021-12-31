@@ -15,6 +15,7 @@ public:
 	auto FindItem(Protocol::kInventoryType type, int32_t position)->int32_t;
 	auto RemoveItem(Protocol::kInventoryType type, int32_t position)->bool;
 	auto AllItems()->std::vector<std::pair<int32_t, int32_t>>;
+	auto AllItems(Protocol::kInventoryType type)->std::vector<std::pair<int32_t, int32_t>>;
 
 public:
 	static auto Create(int64_t characterId)->std::shared_ptr<Inventorys>;

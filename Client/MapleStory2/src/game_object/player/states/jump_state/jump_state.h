@@ -24,7 +24,6 @@ private:
 	bool _is_jump_down = false;
 
 	bool	_is_move = false;
-	float	_radian = 0;
 
 	const float _jump_up_time = 0.31f;
 	const float _jump_power = 3.2f;

@@ -186,7 +186,7 @@ auto CharacterSelectUi::SelectUpdateTick(const double timeDelta) -> HRESULT
 	if (_ok_btn)
 	{
 		_ok_btn->Tick(timeDelta);
-		if (_ok_btn->IsCollision() && instance.GetDirectMouseKeyPressing(InputDevice::kDirectInMouseButton::kLeftButton))
+		if (_ok_btn->IsCollision() && instance.GetDirectMouseKeyDown(InputDevice::kDirectInMouseButton::kLeftButton))
 		{
 			auto result = _ok_btn->SelectCharacter(_select_item_index);
 			_ok_btn->Tick(timeDelta);

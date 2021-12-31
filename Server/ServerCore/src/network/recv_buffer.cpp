@@ -14,7 +14,7 @@ RecvBuffer::~RecvBuffer()
 auto RecvBuffer::Clean() -> void
 {
 	int32_t dataSize = DataSize();
-	std::cout << dataSize << "dataSize" << std::endl;
+
 	if (dataSize == 0)
 	{
 		_read_pos = _write_pos = 0;

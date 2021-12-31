@@ -190,6 +190,7 @@
     <ClInclude Include="src\game_object\user\user.h">
       <Filter>game_object\user</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\ui\player_info\player_info.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -375,6 +376,7 @@
     <ClCompile Include="src\game_object\user\user.cpp">
       <Filter>game_object\user</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\ui\player_info\player_info.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -516,6 +518,9 @@
     </Filter>
     <Filter Include="game_object\user">
       <UniqueIdentifier>{17922e18-722d-4824-9172-b38be65350b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\player_info">
+      <UniqueIdentifier>{0b2c4725-384f-4418-9f16-95c47d6b5b16}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

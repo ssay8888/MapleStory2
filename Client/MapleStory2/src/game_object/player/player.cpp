@@ -242,6 +242,16 @@ auto Player::GetBlockRangeAabb() const -> std::shared_ptr<Collider>
 	return _block_ragne_aabb_com;
 }
 
+auto Player::GetRadian() const -> float
+{
+	return _radian;
+}
+
+auto Player::SetRadian(const float radian) -> void
+{
+	_radian = radian;
+}
+
 auto Player::ChangeEqp(const GameContents::kEquipeType type, int32_t itemId)->void
 {
 	const auto& instance = ObjectManager::GetInstance();

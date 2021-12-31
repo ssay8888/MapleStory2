@@ -40,3 +40,4 @@ extern HINSTANCE		g_hInst;
 extern HWND				g_hEdit;
 extern ClientServiceRef g_service;
 extern class MainApp*	g_mainApp;
+extern bool g_isWindowsActive;
