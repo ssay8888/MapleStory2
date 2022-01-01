@@ -57,7 +57,14 @@ constexpr GameServerLoadCharacter::GameServerLoadCharacter(
   , luk_(0)
   , pos_x_(0)
   , pos_y_(0)
-  , pos_z_(0){}
+  , pos_z_(0)
+  , hp_(0)
+  , max_hp_(0)
+  , mp_(0)
+  , max_mp_(0)
+  , level_(0)
+  , exp_(0)
+  , money_(0){}
 struct GameServerLoadCharacterDefaultTypeInternal {
   constexpr GameServerLoadCharacterDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -151,6 +158,13 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fprotocol_2eproto::offse
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, pos_x_),
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, pos_y_),
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, pos_z_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, hp_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, max_hp_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, mp_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, max_mp_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, level_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, exp_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, money_),
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, items_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerRespawnPlayer, _internal_metadata_),
@@ -187,9 +201,9 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 0, -1, sizeof(::Protocol::GameClientLogin)},
   { 6, -1, sizeof(::Protocol::GameServerLogin)},
   { 12, -1, sizeof(::Protocol::GameServerLoadCharacter)},
-  { 31, -1, sizeof(::Protocol::GameServerRespawnPlayer)},
-  { 44, -1, sizeof(::Protocol::GameClientMovePlayer)},
-  { 52, -1, sizeof(::Protocol::GameServerMovePlayer)},
+  { 38, -1, sizeof(::Protocol::GameServerRespawnPlayer)},
+  { 51, -1, sizeof(::Protocol::GameClientMovePlayer)},
+  { 59, -1, sizeof(::Protocol::GameServerMovePlayer)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -205,23 +219,26 @@ const char descriptor_table_protodef_game_5fprotocol_2eproto[] PROTOBUF_SECTION_
   "\n\023game_protocol.proto\022\010Protocol\032\017game_en"
   "um.proto\032\021game_struct.proto\"\037\n\017GameClien"
   "tLogin\022\014\n\004auth\030\001 \001(\003\"\037\n\017GameServerLogin\022"
-  "\014\n\004auth\030\001 \001(\003\"\227\002\n\027GameServerLoadCharacte"
+  "\014\n\004auth\030\001 \001(\003\"\372\002\n\027GameServerLoadCharacte"
   "r\022#\n\005state\030\001 \001(\0162\024.Protocol.kLoadState\022\022"
   "\n\naccount_id\030\002 \001(\003\022\024\n\014character_id\030\003 \001(\003"
   "\022\014\n\004name\030\004 \001(\014\022\016\n\006gender\030\005 \001(\010\022\017\n\007face_i"
   "d\030\006 \001(\005\022\013\n\003str\030\007 \001(\005\022\013\n\003dex\030\010 \001(\005\022\013\n\003int"
   "\030\t \001(\005\022\013\n\003luk\030\n \001(\005\022\r\n\005pos_x\030\013 \001(\002\022\r\n\005po"
-  "s_y\030\014 \001(\002\022\r\n\005pos_z\030\r \001(\002\022\035\n\005items\030\016 \003(\0132"
-  "\016.Protocol.item\"\252\001\n\027GameServerRespawnPla"
-  "yer\022\024\n\014character_id\030\001 \001(\003\022\014\n\004name\030\002 \001(\014\022"
-  "\016\n\006gender\030\003 \001(\010\022\017\n\007face_id\030\004 \001(\005\022\r\n\005pos_"
-  "x\030\005 \001(\002\022\r\n\005pos_y\030\006 \001(\002\022\r\n\005pos_z\030\007 \001(\002\022\035\n"
-  "\005items\030\010 \003(\0132\016.Protocol.item\"Y\n\024GameClie"
-  "ntMovePlayer\022\r\n\005state\030\001 \001(\005\022\016\n\006radian\030\002 "
-  "\001(\002\022\"\n\010position\030\003 \001(\0132\020.Protocol.float3\""
-  "o\n\024GameServerMovePlayer\022\024\n\014character_id\030"
-  "\001 \001(\003\022\r\n\005state\030\002 \001(\005\022\016\n\006radian\030\003 \001(\002\022\"\n\010"
-  "position\030\004 \001(\0132\020.Protocol.float3b\006proto3"
+  "s_y\030\014 \001(\002\022\r\n\005pos_z\030\r \001(\002\022\n\n\002hp\030\016 \001(\005\022\016\n\006"
+  "max_hp\030\017 \001(\005\022\n\n\002mp\030\020 \001(\005\022\016\n\006max_mp\030\021 \001(\005"
+  "\022\r\n\005level\030\022 \001(\005\022\013\n\003exp\030\023 \001(\005\022\r\n\005money\030\024 "
+  "\001(\005\022\035\n\005items\030\025 \003(\0132\016.Protocol.item\"\252\001\n\027G"
+  "ameServerRespawnPlayer\022\024\n\014character_id\030\001"
+  " \001(\003\022\014\n\004name\030\002 \001(\014\022\016\n\006gender\030\003 \001(\010\022\017\n\007fa"
+  "ce_id\030\004 \001(\005\022\r\n\005pos_x\030\005 \001(\002\022\r\n\005pos_y\030\006 \001("
+  "\002\022\r\n\005pos_z\030\007 \001(\002\022\035\n\005items\030\010 \003(\0132\016.Protoc"
+  "ol.item\"Y\n\024GameClientMovePlayer\022\r\n\005state"
+  "\030\001 \001(\005\022\016\n\006radian\030\002 \001(\002\022\"\n\010position\030\003 \001(\013"
+  "2\020.Protocol.float3\"o\n\024GameServerMovePlay"
+  "er\022\024\n\014character_id\030\001 \001(\003\022\r\n\005state\030\002 \001(\005\022"
+  "\016\n\006radian\030\003 \001(\002\022\"\n\010position\030\004 \001(\0132\020.Prot"
+  "ocol.float3b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_game_5fprotocol_2eproto_deps[2] = {
   &::descriptor_table_game_5fenum_2eproto,
@@ -229,7 +246,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fprotocol_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fprotocol_2eproto = {
-  false, false, 800, descriptor_table_protodef_game_5fprotocol_2eproto, "game_protocol.proto", 
+  false, false, 899, descriptor_table_protodef_game_5fprotocol_2eproto, "game_protocol.proto", 
   &descriptor_table_game_5fprotocol_2eproto_once, descriptor_table_game_5fprotocol_2eproto_deps, 2, 6,
   schemas, file_default_instances, TableStruct_game_5fprotocol_2eproto::offsets,
   file_level_metadata_game_5fprotocol_2eproto, file_level_enum_descriptors_game_5fprotocol_2eproto, file_level_service_descriptors_game_5fprotocol_2eproto,
@@ -648,8 +665,8 @@ GameServerLoadCharacter::GameServerLoadCharacter(const GameServerLoadCharacter& 
       GetArenaForAllocation());
   }
   ::memcpy(&account_id_, &from.account_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&pos_z_) -
-    reinterpret_cast<char*>(&account_id_)) + sizeof(pos_z_));
+    static_cast<size_t>(reinterpret_cast<char*>(&money_) -
+    reinterpret_cast<char*>(&account_id_)) + sizeof(money_));
   // @@protoc_insertion_point(copy_constructor:Protocol.GameServerLoadCharacter)
 }
 
@@ -657,8 +674,8 @@ void GameServerLoadCharacter::SharedCtor() {
 name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&account_id_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&pos_z_) -
-    reinterpret_cast<char*>(&account_id_)) + sizeof(pos_z_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&money_) -
+    reinterpret_cast<char*>(&account_id_)) + sizeof(money_));
 }
 
 GameServerLoadCharacter::~GameServerLoadCharacter() {
@@ -691,8 +708,8 @@ void GameServerLoadCharacter::Clear() {
   items_.Clear();
   name_.ClearToEmpty();
   ::memset(&account_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&pos_z_) -
-      reinterpret_cast<char*>(&account_id_)) + sizeof(pos_z_));
+      reinterpret_cast<char*>(&money_) -
+      reinterpret_cast<char*>(&account_id_)) + sizeof(money_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -795,16 +812,65 @@ const char* GameServerLoadCharacter::_InternalParse(const char* ptr, ::PROTOBUF_
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
-      // repeated .Protocol.item items = 14;
+      // int32 hp = 14;
       case 14:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 114)) {
-          ptr -= 1;
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 112)) {
+          hp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 max_hp = 15;
+      case 15:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 120)) {
+          max_hp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 mp = 16;
+      case 16:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 128)) {
+          mp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 max_mp = 17;
+      case 17:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 136)) {
+          max_mp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 level = 18;
+      case 18:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 144)) {
+          level_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 exp = 19;
+      case 19:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 152)) {
+          exp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 money = 20;
+      case 20:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 160)) {
+          money_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated .Protocol.item items = 21;
+      case 21:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 170)) {
+          ptr -= 2;
           do {
-            ptr += 1;
+            ptr += 2;
             ptr = ctx->ParseMessage(_internal_add_items(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<114>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<170>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -915,12 +981,54 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(13, this->_internal_pos_z(), target);
   }
 
-  // repeated .Protocol.item items = 14;
+  // int32 hp = 14;
+  if (this->hp() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(14, this->_internal_hp(), target);
+  }
+
+  // int32 max_hp = 15;
+  if (this->max_hp() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(15, this->_internal_max_hp(), target);
+  }
+
+  // int32 mp = 16;
+  if (this->mp() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(16, this->_internal_mp(), target);
+  }
+
+  // int32 max_mp = 17;
+  if (this->max_mp() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(17, this->_internal_max_mp(), target);
+  }
+
+  // int32 level = 18;
+  if (this->level() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(18, this->_internal_level(), target);
+  }
+
+  // int32 exp = 19;
+  if (this->exp() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(19, this->_internal_exp(), target);
+  }
+
+  // int32 money = 20;
+  if (this->money() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(20, this->_internal_money(), target);
+  }
+
+  // repeated .Protocol.item items = 21;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_items_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(14, this->_internal_items(i), target, stream);
+      InternalWriteMessage(21, this->_internal_items(i), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -939,8 +1047,8 @@ size_t GameServerLoadCharacter::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .Protocol.item items = 14;
-  total_size += 1UL * this->_internal_items_size();
+  // repeated .Protocol.item items = 21;
+  total_size += 2UL * this->_internal_items_size();
   for (const auto& msg : this->items_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
@@ -1028,6 +1136,55 @@ size_t GameServerLoadCharacter::ByteSizeLong() const {
     total_size += 1 + 4;
   }
 
+  // int32 hp = 14;
+  if (this->hp() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_hp());
+  }
+
+  // int32 max_hp = 15;
+  if (this->max_hp() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_max_hp());
+  }
+
+  // int32 mp = 16;
+  if (this->mp() != 0) {
+    total_size += 2 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_mp());
+  }
+
+  // int32 max_mp = 17;
+  if (this->max_mp() != 0) {
+    total_size += 2 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_max_mp());
+  }
+
+  // int32 level = 18;
+  if (this->level() != 0) {
+    total_size += 2 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_level());
+  }
+
+  // int32 exp = 19;
+  if (this->exp() != 0) {
+    total_size += 2 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_exp());
+  }
+
+  // int32 money = 20;
+  if (this->money() != 0) {
+    total_size += 2 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_money());
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -1099,6 +1256,27 @@ void GameServerLoadCharacter::MergeFrom(const GameServerLoadCharacter& from) {
   if (!(from.pos_z() <= 0 && from.pos_z() >= 0)) {
     _internal_set_pos_z(from._internal_pos_z());
   }
+  if (from.hp() != 0) {
+    _internal_set_hp(from._internal_hp());
+  }
+  if (from.max_hp() != 0) {
+    _internal_set_max_hp(from._internal_max_hp());
+  }
+  if (from.mp() != 0) {
+    _internal_set_mp(from._internal_mp());
+  }
+  if (from.max_mp() != 0) {
+    _internal_set_max_mp(from._internal_max_mp());
+  }
+  if (from.level() != 0) {
+    _internal_set_level(from._internal_level());
+  }
+  if (from.exp() != 0) {
+    _internal_set_exp(from._internal_exp());
+  }
+  if (from.money() != 0) {
+    _internal_set_money(from._internal_money());
+  }
 }
 
 void GameServerLoadCharacter::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -1129,8 +1307,8 @@ void GameServerLoadCharacter::InternalSwap(GameServerLoadCharacter* other) {
       &other->name_, other->GetArenaForAllocation()
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(GameServerLoadCharacter, pos_z_)
-      + sizeof(GameServerLoadCharacter::pos_z_)
+      PROTOBUF_FIELD_OFFSET(GameServerLoadCharacter, money_)
+      + sizeof(GameServerLoadCharacter::money_)
       - PROTOBUF_FIELD_OFFSET(GameServerLoadCharacter, account_id_)>(
           reinterpret_cast<char*>(&account_id_),
           reinterpret_cast<char*>(&other->account_id_));

@@ -215,6 +215,7 @@
     <ClInclude Include="src\main\main_app.h" />
     <ClInclude Include="src\managers\characters_manager\character.h" />
     <ClInclude Include="src\managers\characters_manager\characters_manager.h" />
+    <ClInclude Include="src\managers\character_stat\character_stat.h" />
     <ClInclude Include="src\network\game_server_packet_handler.h" />
     <ClInclude Include="src\network\login_server_packet_handler.h" />
     <ClInclude Include="src\network\send_manager.h" />
@@ -308,6 +309,7 @@
     <ClCompile Include="src\main\main_app.cpp" />
     <ClCompile Include="src\managers\characters_manager\character.cpp" />
     <ClCompile Include="src\managers\characters_manager\characters_manager.cpp" />
+    <ClCompile Include="src\managers\character_stat\character_stat.cpp" />
     <ClCompile Include="src\network\game_server_packet_handler.cpp" />
     <ClCompile Include="src\network\send_manager.cpp" />
     <ClCompile Include="src\network\login_server_packet_handler.cpp" />
@@ -333,6 +335,7 @@
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_rect.hlsl" />
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_terrain.hlsl" />
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_ui.hlsl" />
+    <FxCompile Include="..\..\Binary\ShaderFiles\shader_ui_gage.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

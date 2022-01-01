@@ -48,6 +48,66 @@ auto Stats::SetLuk(const int32_t luk) -> void
 	_luk = luk;
 }
 
+auto Stats::GetHp() const -> int32_t
+{
+	return _hp;
+}
+
+auto Stats::SetHp(const int32_t hp) -> void
+{
+	_hp = hp;
+}
+
+auto Stats::GetMaxHp() const -> int32_t
+{
+	return _max_hp;
+}
+
+auto Stats::SetMaxHp(const int32_t maxHp) -> void
+{
+	_max_hp = maxHp;
+}
+
+auto Stats::GetMp() const -> int32_t
+{
+	return _mp;
+}
+
+auto Stats::SetMp(const int32_t mp) -> void
+{
+	_mp = mp;
+}
+
+auto Stats::GetMaxMp() const -> int32_t
+{
+	return _max_mp;
+}
+
+auto Stats::SetMaxMp(const int32_t maxMp) -> void
+{
+	_max_mp = maxMp;
+}
+
+auto Stats::GetLevel() const -> int32_t
+{
+	return _level;
+}
+
+auto Stats::SetLevel(const int32_t level) -> void
+{
+	_level = level;
+}
+
+auto Stats::GetExp() const -> int32_t
+{
+	return _exp;
+}
+
+auto Stats::SetExp(const int32_t exp) -> void
+{
+	_exp = exp;
+}
+
 auto Stats::Create(const int64_t characterId) -> std::shared_ptr<Stats>
 {
 	auto instance = MakeShared<Stats>(characterId);

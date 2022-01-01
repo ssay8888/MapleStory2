@@ -7,6 +7,7 @@
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
 #include "src/managers/characters_manager/character.h"
+#include "src/managers/character_stat/character_stat.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/collider/collider.h"
@@ -360,6 +361,7 @@ auto Player::AddComponents() -> HRESULT
 {
 	const auto gameLogicManager = GameLogicQueue::GetInstance();
 	const auto characterInfo = gameLogicManager->GetCharacterInfo();
+	CharacterStat::GetInstance();
 	/* Com_Transform */
 	Transform::TransformDesc		transformDesc;
 	transformDesc.speed_per_sec = 1.5f;

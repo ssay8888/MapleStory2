@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include "src/utility/game_objects/game_object.h"
 
 class Shader;
@@ -23,12 +23,24 @@ public:
 private:
 	auto AddComponents()->HRESULT;
 
+	auto HpMpRender()->HRESULT;
+	auto HpRender()->HRESULT;
+	auto MpRender()->HRESULT;
+	auto ExpRender()->HRESULT;
+	auto ExpProgressRender()->HRESULT;
+	auto SubFrameRender()->HRESULT;
+
 private:
 	std::shared_ptr<Texture>							_texture_com = nullptr;
+	std::shared_ptr<Texture>							_texture_hp = nullptr;
+	std::shared_ptr<Texture>							_texture_mp = nullptr;
+	std::shared_ptr<Texture>							_texture_exp_frame= nullptr;
+	std::shared_ptr<Texture>							_texture_exp_progress= nullptr;
 	std::shared_ptr<ViBufferRect>						_vi_buffer_com = nullptr;
 	std::shared_ptr<Shader>								_shader_com = nullptr;
+	std::shared_ptr<Shader>								_shader_gage = nullptr;
 
 	_matrix					_proj_matrix;
-	float					_x, _y, _size_x, _size_y;
+	float					_x{}, _y{}, _size_x{}, _size_y{};
 };
 

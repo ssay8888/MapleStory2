@@ -60,6 +60,12 @@ auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServer
 		sendPkt.set_pos_x(position.x);
 		sendPkt.set_pos_y(position.y);
 		sendPkt.set_pos_z(position.z);
+		sendPkt.set_hp(statInfo->GetHp());
+		sendPkt.set_max_hp(statInfo->GetMaxHp());
+		sendPkt.set_mp(statInfo->GetMp());
+		sendPkt.set_max_mp(statInfo->GetMaxMp());
+		sendPkt.set_level(statInfo->GetLevel());
+		sendPkt.set_exp(statInfo->GetExp());
 	}
 	auto baseInventoryInfo = InfoManager.FindInfo(CharacterInfoStorage::kInfoTypes::kInventory, player->GetCharacterId());
 	if (baseInventoryInfo)

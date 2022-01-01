@@ -29,8 +29,15 @@ message GameServerLoadCharacter
 	float pos_x = 11;
 	float pos_y = 12;
 	float pos_z = 13;
+	int32 hp = 14;
+	int32 max_hp = 15;
+	int32 mp = 16;
+	int32 max_mp = 17;
+	int32 level = 18;
+	int32 exp = 19;
+	int32 money = 20;
 
-	repeated item items = 14;
+	repeated item items = 21;
 }
 
 message GameServerRespawnPlayer

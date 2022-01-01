@@ -18,6 +18,7 @@
 #include "src/game_object/terrain/terrain.h"
 #include "src/game_object/ui/character_select/character_select_ui.h"
 #include "src/game_object/ui/character_select/character_beauty/character_beauty_ui.h"
+#include "src/game_object/ui/player_info/player_info.h"
 #include "src/game_object/user/user.h"
 #include "src/utility/components/manager/component_manager.h"
 #include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
@@ -447,20 +448,31 @@ auto Loading::ReadyGamePlay0()->HRESULT
 
 auto Loading::LoadMainPlayerInfo() -> HRESULT
 {
-	auto& componentManager = ComponentManager::GetInstance();
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_Frame"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/frame_0%d.png"), 2))))
+	const auto& componentManager = ComponentManager::GetInstance();
+	auto& objectManager = ObjectManager::GetInstance();
+	/* For.Prototype_Player*/
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_PlayerInfo"), PlayerInfo::Create(_graphic_device))))
 		return E_FAIL;
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_HpGage"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/hp_gage.png")))))
+
+	if (FAILED(componentManager.AddPrototype(kSceneStatic, TEXT("Prototype_Shader_Ui_Gage"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_ui_gage.hlsl")))))
 		return E_FAIL;
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_MpGage"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/mp_gage.png")))))
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_Frame"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/frame_0%d.png"), 2))))
 		return E_FAIL;
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_AttackKey"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/attack_key.png")))))
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_HpGage"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/hp_gage.png")))))
 		return E_FAIL;
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_JumpKey"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/jump_key.png")))))
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_MpGage"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/mp_gage.png")))))
 		return E_FAIL;
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_PickupKey"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/pickup_key.png")))))
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_AttackKey"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/attack_key.png")))))
 		return E_FAIL;
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_PlayerInfo_SkillSet"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/skill_set.png")))))
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_JumpKey"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/jump_key.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_PickupKey"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/pickup_key.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_SkillSet"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/mainplayerinfo/skill_set.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_ExpBarFrame"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/expbar/uiexpbar_frame.png")))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_ExpBarProgress"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/expbar/uiexpbar_progress.png")))))
 		return E_FAIL;
 
 	return S_OK;

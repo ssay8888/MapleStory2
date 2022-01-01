@@ -190,7 +190,12 @@
     <ClInclude Include="src\game_object\user\user.h">
       <Filter>game_object\user</Filter>
     </ClInclude>
-    <ClInclude Include="src\game_object\ui\player_info\player_info.h" />
+    <ClInclude Include="src\game_object\ui\player_info\player_info.h">
+      <Filter>game_object\ui\player_info</Filter>
+    </ClInclude>
+    <ClInclude Include="src\managers\character_stat\character_stat.h">
+      <Filter>managers\character_stat</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -376,7 +381,12 @@
     <ClCompile Include="src\game_object\user\user.cpp">
       <Filter>game_object\user</Filter>
     </ClCompile>
-    <ClCompile Include="src\game_object\ui\player_info\player_info.cpp" />
+    <ClCompile Include="src\game_object\ui\player_info\player_info.cpp">
+      <Filter>game_object\ui\player_info</Filter>
+    </ClCompile>
+    <ClCompile Include="src\managers\character_stat\character_stat.cpp">
+      <Filter>managers\character_stat</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -522,6 +532,9 @@
     <Filter Include="game_object\ui\player_info">
       <UniqueIdentifier>{0b2c4725-384f-4418-9f16-95c47d6b5b16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="managers\character_stat">
+      <UniqueIdentifier>{63c2c5de-1040-4b20-b690-8d0735f09732}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="maplestory2.rc">
@@ -539,6 +552,9 @@
       <Filter>shader_files</Filter>
     </FxCompile>
     <FxCompile Include="..\..\Binary\ShaderFiles\shader_ui.hlsl">
+      <Filter>shader_files</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\Binary\ShaderFiles\shader_ui_gage.hlsl">
       <Filter>shader_files</Filter>
     </FxCompile>
   </ItemGroup>

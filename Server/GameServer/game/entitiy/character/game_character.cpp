@@ -74,7 +74,7 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 	_transform->NativeConstruct(nullptr);
 	if (auto con = DBConnectionPool::GetInstance().Pop())
 	{
-		DBBind<1, 12> bind(*con, L"{CALL dbo.spLoadCharacter(?)}");
+		DBBind<1, 19> bind(*con, L"{CALL dbo.spLoadCharacter(?)}");
 		bind.BindParam(0, _character_id);
 
 		WCHAR name[100]{0};
@@ -85,6 +85,22 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 		bind.BindCol(colIndex++, _face_id);
 		bind.BindCol(colIndex++, _map_id);
 		bind.BindCol(colIndex++, _spawn_point);
+
+		int32_t hp;
+		bind.BindCol(colIndex++, hp);
+		int32_t maxhp;
+		bind.BindCol(colIndex++, maxhp);
+		int32_t mp;
+		bind.BindCol(colIndex++, mp);
+		int32_t maxmp;
+		bind.BindCol(colIndex++, maxmp);
+		int32_t level;
+		bind.BindCol(colIndex++, level);
+		int32_t exp;
+		bind.BindCol(colIndex++, exp);
+		int32_t money;
+		bind.BindCol(colIndex++, money);
+
 
 		int32_t str;
 		bind.BindCol(colIndex++, str);
@@ -122,11 +138,15 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 					stats->SetDex(str);
 					stats->SetInt(str);
 					stats->SetLuk(str);
+					stats->SetHp(hp);
+					stats->SetMaxHp(maxhp);
+					stats->SetMp(mp);
+					stats->SetMaxMp(maxmp);
+					stats->SetLevel(level);
+					stats->SetExp(exp);
 					_name = name;
 				}
 			} while (bind.SqlMoreResults() != SQL_NO_DATA);
-
-			std::cout << "몇번이오냐?" << _character_id << std::endl;
 
 			const auto& InfoStorageManager = CharacterInfoStorageManager::GetInstance();
 			if (false == InfoStorageManager.PushInfo(CharacterInfoStorage::kInfoTypes::kStats, _character_id, stats))

@@ -459,7 +459,7 @@ class GameServerLoadCharacter final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kItemsFieldNumber = 14,
+    kItemsFieldNumber = 21,
     kNameFieldNumber = 4,
     kAccountIdFieldNumber = 2,
     kCharacterIdFieldNumber = 3,
@@ -473,8 +473,15 @@ class GameServerLoadCharacter final :
     kPosXFieldNumber = 11,
     kPosYFieldNumber = 12,
     kPosZFieldNumber = 13,
+    kHpFieldNumber = 14,
+    kMaxHpFieldNumber = 15,
+    kMpFieldNumber = 16,
+    kMaxMpFieldNumber = 17,
+    kLevelFieldNumber = 18,
+    kExpFieldNumber = 19,
+    kMoneyFieldNumber = 20,
   };
-  // repeated .Protocol.item items = 14;
+  // repeated .Protocol.item items = 21;
   int items_size() const;
   private:
   int _internal_items_size() const;
@@ -614,6 +621,69 @@ class GameServerLoadCharacter final :
   void _internal_set_pos_z(float value);
   public:
 
+  // int32 hp = 14;
+  void clear_hp();
+  ::PROTOBUF_NAMESPACE_ID::int32 hp() const;
+  void set_hp(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_hp() const;
+  void _internal_set_hp(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 max_hp = 15;
+  void clear_max_hp();
+  ::PROTOBUF_NAMESPACE_ID::int32 max_hp() const;
+  void set_max_hp(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_max_hp() const;
+  void _internal_set_max_hp(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 mp = 16;
+  void clear_mp();
+  ::PROTOBUF_NAMESPACE_ID::int32 mp() const;
+  void set_mp(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_mp() const;
+  void _internal_set_mp(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 max_mp = 17;
+  void clear_max_mp();
+  ::PROTOBUF_NAMESPACE_ID::int32 max_mp() const;
+  void set_max_mp(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_max_mp() const;
+  void _internal_set_max_mp(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 level = 18;
+  void clear_level();
+  ::PROTOBUF_NAMESPACE_ID::int32 level() const;
+  void set_level(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_level() const;
+  void _internal_set_level(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 exp = 19;
+  void clear_exp();
+  ::PROTOBUF_NAMESPACE_ID::int32 exp() const;
+  void set_exp(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_exp() const;
+  void _internal_set_exp(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 money = 20;
+  void clear_money();
+  ::PROTOBUF_NAMESPACE_ID::int32 money() const;
+  void set_money(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_money() const;
+  void _internal_set_money(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.GameServerLoadCharacter)
  private:
   class _Internal;
@@ -635,6 +705,13 @@ class GameServerLoadCharacter final :
   float pos_x_;
   float pos_y_;
   float pos_z_;
+  ::PROTOBUF_NAMESPACE_ID::int32 hp_;
+  ::PROTOBUF_NAMESPACE_ID::int32 max_hp_;
+  ::PROTOBUF_NAMESPACE_ID::int32 mp_;
+  ::PROTOBUF_NAMESPACE_ID::int32 max_mp_;
+  ::PROTOBUF_NAMESPACE_ID::int32 level_;
+  ::PROTOBUF_NAMESPACE_ID::int32 exp_;
+  ::PROTOBUF_NAMESPACE_ID::int32 money_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fprotocol_2eproto;
 };
@@ -1542,7 +1619,147 @@ inline void GameServerLoadCharacter::set_pos_z(float value) {
   // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.pos_z)
 }
 
-// repeated .Protocol.item items = 14;
+// int32 hp = 14;
+inline void GameServerLoadCharacter::clear_hp() {
+  hp_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::_internal_hp() const {
+  return hp_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::hp() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerLoadCharacter.hp)
+  return _internal_hp();
+}
+inline void GameServerLoadCharacter::_internal_set_hp(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  hp_ = value;
+}
+inline void GameServerLoadCharacter::set_hp(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_hp(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.hp)
+}
+
+// int32 max_hp = 15;
+inline void GameServerLoadCharacter::clear_max_hp() {
+  max_hp_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::_internal_max_hp() const {
+  return max_hp_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::max_hp() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerLoadCharacter.max_hp)
+  return _internal_max_hp();
+}
+inline void GameServerLoadCharacter::_internal_set_max_hp(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  max_hp_ = value;
+}
+inline void GameServerLoadCharacter::set_max_hp(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_max_hp(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.max_hp)
+}
+
+// int32 mp = 16;
+inline void GameServerLoadCharacter::clear_mp() {
+  mp_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::_internal_mp() const {
+  return mp_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::mp() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerLoadCharacter.mp)
+  return _internal_mp();
+}
+inline void GameServerLoadCharacter::_internal_set_mp(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  mp_ = value;
+}
+inline void GameServerLoadCharacter::set_mp(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_mp(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.mp)
+}
+
+// int32 max_mp = 17;
+inline void GameServerLoadCharacter::clear_max_mp() {
+  max_mp_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::_internal_max_mp() const {
+  return max_mp_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::max_mp() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerLoadCharacter.max_mp)
+  return _internal_max_mp();
+}
+inline void GameServerLoadCharacter::_internal_set_max_mp(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  max_mp_ = value;
+}
+inline void GameServerLoadCharacter::set_max_mp(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_max_mp(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.max_mp)
+}
+
+// int32 level = 18;
+inline void GameServerLoadCharacter::clear_level() {
+  level_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::_internal_level() const {
+  return level_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::level() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerLoadCharacter.level)
+  return _internal_level();
+}
+inline void GameServerLoadCharacter::_internal_set_level(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  level_ = value;
+}
+inline void GameServerLoadCharacter::set_level(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_level(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.level)
+}
+
+// int32 exp = 19;
+inline void GameServerLoadCharacter::clear_exp() {
+  exp_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::_internal_exp() const {
+  return exp_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::exp() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerLoadCharacter.exp)
+  return _internal_exp();
+}
+inline void GameServerLoadCharacter::_internal_set_exp(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  exp_ = value;
+}
+inline void GameServerLoadCharacter::set_exp(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_exp(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.exp)
+}
+
+// int32 money = 20;
+inline void GameServerLoadCharacter::clear_money() {
+  money_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::_internal_money() const {
+  return money_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerLoadCharacter::money() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerLoadCharacter.money)
+  return _internal_money();
+}
+inline void GameServerLoadCharacter::_internal_set_money(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  money_ = value;
+}
+inline void GameServerLoadCharacter::set_money(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_money(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.money)
+}
+
+// repeated .Protocol.item items = 21;
 inline int GameServerLoadCharacter::_internal_items_size() const {
   return items_.size();
 }

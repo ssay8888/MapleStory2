@@ -73,8 +73,6 @@ int32_t CharacterSelectUi::Tick(double timeDelta)
 
 int32_t CharacterSelectUi::LateTick(const double timeDelta)
 {
-	GameObject::Render();
-
 	for (const auto& item : _character_list)
 	{
 		item->LateTick(timeDelta);
