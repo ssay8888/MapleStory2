@@ -7,7 +7,7 @@ class GameCharacter final : public GameEntity
 {
 public:
 	explicit GameCharacter(int64_t characterId);
-	~GameCharacter() = default;
+	virtual ~GameCharacter() = default;
 
 public:
 	static auto Create(int64_t characterId)->std::shared_ptr<GameCharacter>;

@@ -188,6 +188,7 @@
     <ClInclude Include="src\game_object\map\cube\map_object.h" />
     <ClInclude Include="src\game_object\map\map_instance.h" />
     <ClInclude Include="src\game_object\map\map_manager.h" />
+    <ClInclude Include="src\game_object\monster\monster.h" />
     <ClInclude Include="src\game_object\pants\pants.h" />
     <ClInclude Include="src\game_object\player\player.h" />
     <ClInclude Include="src\game_object\player\states\character_state.h" />
@@ -282,6 +283,7 @@
     <ClCompile Include="src\game_object\map\cube\map_object.cpp" />
     <ClCompile Include="src\game_object\map\map_instance.cpp" />
     <ClCompile Include="src\game_object\map\map_manager.cpp" />
+    <ClCompile Include="src\game_object\monster\monster.cpp" />
     <ClCompile Include="src\game_object\pants\pants.cpp" />
     <ClCompile Include="src\game_object\player\player.cpp" />
     <ClCompile Include="src\game_object\player\states\character_state.cpp" />

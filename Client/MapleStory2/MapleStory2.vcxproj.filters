@@ -196,6 +196,9 @@
     <ClInclude Include="src\managers\character_stat\character_stat.h">
       <Filter>managers\character_stat</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\monster\monster.h">
+      <Filter>game_object\monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -386,6 +389,9 @@
     </ClCompile>
     <ClCompile Include="src\managers\character_stat\character_stat.cpp">
       <Filter>managers\character_stat</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\monster\monster.cpp">
+      <Filter>game_object\monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

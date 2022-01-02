@@ -8,7 +8,7 @@ class GameSession final : public PacketSession
 {
 public:
 	GameSession();
-	~GameSession()
+	virtual ~GameSession()
 	{
 		std::cout << "~LoginSession" << std::endl;
 	}

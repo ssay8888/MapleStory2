@@ -100,11 +100,58 @@ public:
 #pragma endregion
 
 
+#pragma region MonsterInfo
+	struct ModelAtt
+	{
+		std::wstring kfm;
+		int32_t walk_speed;
+		int32_t run_speed;
+	};
+	struct StatAtt
+	{
+		int32_t hp;
+		int32_t asp;
+		int32_t msp;
+		int32_t atp;
+		int32_t evp;
+		int32_t cap;
+		int32_t cad;
+		int32_t car;
+		int32_t ndd;
+		int32_t pap;
+		int32_t map;
+		int32_t par;
+		int32_t mar;
+	};
+	struct Distance
+	{
+		int32_t sight;
+		int32_t sight_height_up;
+		int32_t sight_height_down;
+	};
+	struct Collision
+	{
+		int32_t width;
+		int32_t height;
+		int32_t depth;
+	};
+	struct MonsterInfo
+	{
+		int32_t id;
+		ModelAtt model;
+		StatAtt stat;
+		Distance distance;
+		Collision collision;
+	};
+	auto LoadMonsterInfo()->void;
+#pragma endregion
+	
 private:
 	std::map<int32_t, std::shared_ptr<FaceInfo>>			_face_info;
 	std::map<int32_t, std::shared_ptr<ItemModel>>			_item_model;
 	std::vector<std::shared_ptr<AnimationInfo>>				_animations_info;
 	std::vector<std::shared_ptr<CreateCharacterItemInfo>>	_create_item_info;
 	std::map<int32_t, std::shared_ptr<FieldData>>			_field_data;
+	std::map<int32_t, std::shared_ptr<MonsterInfo>>				_monster_info;
 };
 

@@ -7,6 +7,7 @@
 #include "managers/character_info_manager/character_info_storage_manager.h"
 #include "src/utility/components/transform/transform.h"
 #include "string_utils/string_utils.h"
+#include "game/map/map_object/map_object.h"
 
 MapInstance::MapInstance(const int32_t mapId):
 	_map_id(mapId)
@@ -102,7 +103,39 @@ auto MapInstance::SetSpawnPoint(const std::vector<_float3> sp) -> void
 	_spawn_points = sp;
 }
 
-auto MapInstance::GetSpawnPoint(int32_t index) -> _float3
+auto MapInstance::GetSpawnPoint(const int32_t index) -> const _float3* const
 {
-	return _spawn_points[index];
+	if (_spawn_points.size() >= index)
+	{
+		return nullptr;
+	}
+	return &_spawn_points[index];
+}
+
+auto MapInstance::SetRegionPoint(std::vector<_float3> sp) -> void
+{
+	_region_points = sp;
+}
+
+auto MapInstance::GetRegionPoint(const int32_t index) -> const _float3* const
+{
+	if (_region_points.size() >= index)
+	{
+		return nullptr;
+	}
+	return &_region_points[index];
+}
+
+auto MapInstance::AddObjects(std::vector<MapManager::MapEntity> objects) -> void
+{
+	for (auto& object : objects)
+	{
+		//auto block = MapObject::Create(object);
+		//_objects.push_back(block);
+	}
+}
+
+auto MapInstance::GetObjects() const -> std::vector<std::shared_ptr<MapObject>>
+{
+	return _objects;
 }

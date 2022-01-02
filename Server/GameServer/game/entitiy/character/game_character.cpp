@@ -159,7 +159,7 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 			}
 			const auto mapInstance = MapManager::GetInstance().FindMapInstance(this->GetMapId());
 			auto position = mapInstance->GetSpawnPoint(this->GetSpawnPoint());
-			_transform->SetState(Transform::kState::kStatePosition, position);
+			_transform->SetState(Transform::kState::kStatePosition, *position);
 		}
 
 		DBConnectionPool::GetInstance().Push(con);

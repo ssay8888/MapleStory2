@@ -4,7 +4,7 @@ class CenterClientSession final : public PacketSession
 {
 public:
 	CenterClientSession();
-	~CenterClientSession()
+	virtual ~CenterClientSession()
 	{
 		std::cout << "~CenterClientSession" << std::endl;
 	}

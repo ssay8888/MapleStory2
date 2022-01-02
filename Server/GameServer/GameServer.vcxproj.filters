@@ -91,6 +91,15 @@
     <ClCompile Include="managers\game_job_queue\game_character_moving_queue.cpp">
       <Filter>managers\game_job_queue</Filter>
     </ClCompile>
+    <ClCompile Include="game\entitiy\monster\game_monster.cpp">
+      <Filter>game\entity\monster</Filter>
+    </ClCompile>
+    <ClCompile Include="game\map\map_object\map_object.cpp">
+      <Filter>game\map\map_object</Filter>
+    </ClCompile>
+    <ClCompile Include="game\map\map_object\xblock\map_xblock.cpp">
+      <Filter>game\map\map_object\xblock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -146,6 +155,15 @@
     </Filter>
     <Filter Include="game_session">
       <UniqueIdentifier>{2b189cef-e701-4278-80ff-b5de4914219d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\monster">
+      <UniqueIdentifier>{86dabb16-5daf-47dc-a8e7-f7706fb91a57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\map\map_object">
+      <UniqueIdentifier>{cb19a3d4-a970-4860-875b-972da3e8d864}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\map\map_object\xblock">
+      <UniqueIdentifier>{6ca9dda0-4d42-4d03-a9d8-9b9f3175c590}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +256,15 @@
     </ClInclude>
     <ClInclude Include="managers\game_job_queue\game_character_moving_queue.h">
       <Filter>managers\game_job_queue</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\monster\game_monster.h">
+      <Filter>game\entity\monster</Filter>
+    </ClInclude>
+    <ClInclude Include="game\map\map_object\map_object.h">
+      <Filter>game\map\map_object</Filter>
+    </ClInclude>
+    <ClInclude Include="game\map\map_object\xblock\map_xblock.h">
+      <Filter>game\map\map_object\xblock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

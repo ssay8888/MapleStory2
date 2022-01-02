@@ -8,7 +8,7 @@ class Inventorys : public BaseInfo
 {
 public:
 	explicit Inventorys(int64_t characterId);
-	~Inventorys() = default;
+	virtual ~Inventorys() = default;
 
 public:
 	auto PushItem(Protocol::kInventoryType type, int32_t position, int32_t itemId)->bool;
