@@ -28,7 +28,6 @@ auto GameCharacterLoadQueue::GameClientLoginResponse(PacketSessionRef session, P
 	if (authInfo)
 	{
 		gameSession->SetAccountId(authInfo->accountid());
-		std::cout << gameSession->GetAccountId() << "/" << authInfo->characterid() << std::endl;
 		auto character = GameCharacter::Create(authInfo->characterid());
 		SettingCharacterInfoSendPacket(sendPkt, session, character);
 		gameSession->SetPlayer(character);
@@ -47,16 +46,16 @@ auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServer
 	sendPkt.set_name(StringUtils::ConvertWtoC(player->GetName().c_str()));
 	sendPkt.set_gender(player->GetGender());
 	sendPkt.set_face_id(player->GetFaceId());
-	auto& InfoManager = CharacterInfoStorageManager::GetInstance();
-	auto baseStatInfo = InfoManager.FindInfo(CharacterInfoStorage::kInfoTypes::kStats, player->GetCharacterId());
+	const auto& InfoManager = CharacterInfoStorageManager::GetInstance();
+	const auto baseStatInfo = InfoManager.FindInfo(CharacterInfoStorage::kInfoTypes::kStats, player->GetCharacterId());
 	if (baseStatInfo)
 	{
-		auto statInfo = std::static_pointer_cast<Stats>(baseStatInfo);
+		const auto statInfo = std::static_pointer_cast<Stats>(baseStatInfo);
 		sendPkt.set_str(statInfo->GetStr());
 		sendPkt.set_dex(statInfo->GetDex());
 		sendPkt.set_int_(statInfo->GetInt());
 		sendPkt.set_luk(statInfo->GetLuk());
-		auto position = player->GetTransForm()->GetState(Transform::kState::kStatePosition);
+		const auto position = player->GetTransForm()->GetState(Transform::kState::kStatePosition);
 		sendPkt.set_pos_x(position.x);
 		sendPkt.set_pos_y(position.y);
 		sendPkt.set_pos_z(position.z);
@@ -67,7 +66,7 @@ auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServer
 		sendPkt.set_level(statInfo->GetLevel());
 		sendPkt.set_exp(statInfo->GetExp());
 	}
-	auto baseInventoryInfo = InfoManager.FindInfo(CharacterInfoStorage::kInfoTypes::kInventory, player->GetCharacterId());
+	const auto baseInventoryInfo = InfoManager.FindInfo(CharacterInfoStorage::kInfoTypes::kInventory, player->GetCharacterId());
 	if (baseInventoryInfo)
 	{
 		const auto statInfo = std::static_pointer_cast<Inventorys>(baseInventoryInfo);

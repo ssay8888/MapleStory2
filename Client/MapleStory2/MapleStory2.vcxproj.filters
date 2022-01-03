@@ -199,6 +199,9 @@
     <ClInclude Include="src\game_object\monster\monster.h">
       <Filter>game_object\monster</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\monster\stats\monster_stats.h">
+      <Filter>game_object\monster\stats</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -393,6 +396,9 @@
     <ClCompile Include="src\game_object\monster\monster.cpp">
       <Filter>game_object\monster</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\monster\stats\monster_stats.cpp">
+      <Filter>game_object\monster\stats</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -540,6 +546,9 @@
     </Filter>
     <Filter Include="managers\character_stat">
       <UniqueIdentifier>{63c2c5de-1040-4b20-b690-8d0735f09732}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\monster\stats">
+      <UniqueIdentifier>{cba61391-2820-4843-ba82-d5fa0f0ce48a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

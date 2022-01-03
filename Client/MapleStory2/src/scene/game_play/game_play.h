@@ -17,6 +17,7 @@ private:
 	auto ReadyLayerCamera(const std::wstring& pLayerTag)->HRESULT;
 	auto ReadyLayerPlayer(const std::wstring& pLayerTag)->HRESULT;
 	auto ReadyLayerBackGround(const std::wstring& pLayerTag)->HRESULT;
+	auto ReadyMonster()->HRESULT;
 public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& device)->std::shared_ptr<GamePlay>;
 };

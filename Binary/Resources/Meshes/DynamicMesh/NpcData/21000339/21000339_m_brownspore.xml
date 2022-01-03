@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="euc-kr"?>
+<ms2>
+  <Up_A>
+    <key text="emo_idle" time="0.0000"/>
+  </Up_A>
+  <Down_A>
+    <key text="emo_idle" time="0.0000"/>
+  </Down_A>     
+  <Idle_A>
+    <key text="emo_idle" time="0.0000"/>
+  </Idle_A>    
+  <Bore_A>
+    <key text="emo_idle" time="0.0000"/>
+  </Bore_A>
+  <Walk_A>
+    <key text="emo_idle" time="0.0000"/>
+  </Walk_A>  
+  <Stun_A>
+    <key text="emo_damg" time="0.0000"/>
+  </Stun_A>  
+  <Damg_A>
+    <key text="emo_damg" time="0.0000"/>
+  </Damg_A>
+  <Damg_B>
+    <key text="emo_damg" time="0.0000"/>
+  </Damg_B>
+  <Dead_A>
+    <key text="emo_dead" time="0.0000"/>
+	<key text="effect_NPC/Skill/Spore/Eff_Spore_Dead_A.xml" time="0.0000"/>
+  </Dead_A>
+  <Dead_B>
+    <key text="emo_dead" time="0.0000"/>
+	<key text="effect_NPC/Skill/Tiger/Eff_Spore_Dead_B.xml" time="0.0000"/>
+  </Dead_B>  
+  <Run_A>
+    <key text="emo_attack" time="0.0000"/>
+  </Run_A>
+  <Attack_Idle_A>
+    <key text="emo_attack" time="0.0000"/>
+  </Attack_Idle_A>  
+  <Attack_01_A>
+	 <key text="emo_attack" time="0.0000"/>
+  </Attack_01_A>
+  <Attack_02_A>
+  	 <key text="emo_attack" time="0.0000"/>
+    <key text="e0" time="0.0100" />
+    <key text="p0" time="0.1200" />
+    <key text="p1" time="0.2200" />
+    <key text="p2" time="0.4000" />
+    <key text="move0" time="0.0600" />
+    <key text="move1" time="0.5000" />
+  </Attack_02_A>
+  <Attack_03_A>
+  	 <key text="emo_attack" time="0.0000"/>
+    <key text="move0" time="0.0010" />
+    <key text="move1" time="0.1450" />
+  </Attack_03_A>
+    <Attack_01_B>
+	<key text="emo_attack" time="0.0000"/>
+    <key text="e0" time="0.0100" />
+    <key text="p0" time="0.9500" />
+  </Attack_01_B>
+</ms2>

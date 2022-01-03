@@ -144,6 +144,23 @@ public:
 		Collision collision;
 	};
 	auto LoadMonsterInfo()->void;
+	auto AllMonsterInfo()->std::vector<std::shared_ptr<MonsterInfo>>;
+	auto FindMonsterInfo(int32_t id)->std::shared_ptr<MonsterInfo>;
+	
+	struct Seq
+	{
+		int id;
+		std::wstring name;
+		std::map<std::wstring, float> key;
+	};
+	struct Kfm
+	{
+		std::wstring name;
+		Seq seq;
+	};
+
+	auto LoadAniKeyText()->void;
+	auto FindAnyKey(int32_t npcId)->std::shared_ptr<Kfm>;
 #pragma endregion
 	
 private:
@@ -152,6 +169,7 @@ private:
 	std::vector<std::shared_ptr<AnimationInfo>>				_animations_info;
 	std::vector<std::shared_ptr<CreateCharacterItemInfo>>	_create_item_info;
 	std::map<int32_t, std::shared_ptr<FieldData>>			_field_data;
-	std::map<int32_t, std::shared_ptr<MonsterInfo>>				_monster_info;
+	std::map<int32_t, std::shared_ptr<MonsterInfo>>			_monster_info;
+	std::map<int32_t, std::shared_ptr<Kfm>>	_ani_key;
 };
 

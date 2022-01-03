@@ -105,7 +105,7 @@ auto MapInstance::SetSpawnPoint(const std::vector<_float3> sp) -> void
 
 auto MapInstance::GetSpawnPoint(const int32_t index) -> const _float3* const
 {
-	if (_spawn_points.size() >= index)
+	if (index >= _spawn_points.size())
 	{
 		return nullptr;
 	}
@@ -119,7 +119,7 @@ auto MapInstance::SetRegionPoint(std::vector<_float3> sp) -> void
 
 auto MapInstance::GetRegionPoint(const int32_t index) -> const _float3* const
 {
-	if (_region_points.size() >= index)
+	if (index >=_region_points.size())
 	{
 		return nullptr;
 	}

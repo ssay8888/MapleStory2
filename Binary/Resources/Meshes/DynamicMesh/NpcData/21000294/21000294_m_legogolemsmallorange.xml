@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ms2>
+  <Up_A>
+    <key text="emo_idle" time="0.0000" />
+  </Up_A>
+  <Down_A>
+    <key text="emo_idle" time="0.0000" />
+  </Down_A>
+  <Idle_A>
+    <key text="emo_idle" time="0.0000" />
+  </Idle_A>
+  <Bore_A>
+    <key text="emo_idle" time="0.0000" />
+  </Bore_A>
+  <Walk_A>
+    <key text="emo_idle" time="0.0000" />
+  </Walk_A>
+  <Stun_A>
+    <key text="emo_damg" time="0.0000" />
+  </Stun_A>
+  <Damg_A>
+    <key text="emo_damg" time="0.0000" />
+  </Damg_A>
+  <Damg_B>
+    <key text="emo_damg" time="0.0000" />
+  </Damg_B>
+  <Dead_A>
+    <key text="emo_dead" time="0.0000" />
+	<key text="effect_NPC/Skill/LegoGolemSmall/Eff_LegoGolemSmall_Dead_A.xml" time="0.000"/>	
+  </Dead_A>
+  <Dead_B>
+    <key text="emo_dead" time="0.0000" />
+	<key text="effect_NPC/Skill/LegoGolemSmall/Eff_LegoGolemSmall_Dead_A.xml" time="0.000"/>	
+  </Dead_B>
+  <Run_A>
+    <key text="emo_attack" time="0.0000" />
+  </Run_A>
+  <Attack_Idle_A>
+    <key text="emo_attack" time="0.0000" />
+  </Attack_Idle_A>
+  <Attack_01_A>
+    <key text="emo_skill" time="0.0000" />
+    <key text="p0" time="0.6520" />
+    <key text="p1" time="0.9160" />
+	<key text="e0" time="0.6020"/>
+  </Attack_01_A>
+  <Attack_01_B>
+    <key text="emo_skill" time="0.0000" />
+    <key text="p0" time="1.4900" />
+	<key text="e0" time="0.6000"/>
+  </Attack_01_B>
+  <Attack_01_C>
+    <key text="emo_skill" time="0.0000" />
+    <key text="p0" time="0.8640" />
+	<key text="e0" time="0.8500"/>
+  </Attack_01_C>
+</ms2>

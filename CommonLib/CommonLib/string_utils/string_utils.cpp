@@ -1,6 +1,7 @@
 #include "common_pch.h"
 #include "string_utils.h"
 
+#include <algorithm>
 #include <winstring.h>
 
 auto StringUtils::ConvertWtoC(const wchar_t* str) -> std::string
@@ -18,4 +19,14 @@ auto StringUtils::ConvertCtoW(const char* str) -> std::wstring
 	const int strSize = MultiByteToWideChar(CP_ACP, 0, str, -1, NULL, NULL);
 	MultiByteToWideChar(CP_ACP, 0, str, static_cast<int32_t>(strlen(str)) + 1, pStr, strSize);
 	return pStr;
+}
+
+auto StringUtils::ToLower(std::wstring& str) -> void
+{
+	std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+}
+
+auto StringUtils::ToUpper(std::wstring& str) -> void
+{
+	std::transform(str.begin(), str.end(), str.begin(), ::tolower);
 }

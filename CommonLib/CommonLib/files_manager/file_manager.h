@@ -10,7 +10,8 @@ private:
 public:
     static auto ReadFile(std::wstring path)->std::string;
     static auto GetDirFileCount(std::wstring folderPath)->int;
-    static auto GetDirFileName(std::wstring folderPath)->std::list<std::wstring>;
+    static auto GetDirFileName(std::wstring folderPath, std::wstring option = L"*.*")->std::list<std::wstring>;
+    static auto GetDirs(std::wstring folderPath)->std::list<std::wstring>;
 
     static auto GetFileName(std::wstring path)->std::wstring;
     static auto GetFileName(std::string path)->std::string;

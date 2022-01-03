@@ -1,6 +1,7 @@
 #include "common_pch.h"
 #include "data_reader_manager.h"
 
+#include <algorithm>
 #include <d3d9.h>
 #include <d3dx9tex.h>
 #include <iostream>
@@ -24,6 +25,7 @@ auto DataReaderManager::Init(const Microsoft::WRL::ComPtr<IDirect3DDevice9> devi
 	LoadCreateCharacterItemInfo();
 	LoadFieldData();
 	LoadMonsterInfo();
+	LoadAniKeyText();
 	if (device)
 	{
 		FaceLoader(device);
@@ -286,113 +288,186 @@ auto DataReaderManager::LoadMonsterInfo() -> void
 	xml_document doc;
 	const auto err = doc.load_file("../../Binary/Resources/xml/npcdata/210.xml");
 
+	auto dirs = FileManager::GetDirs(L"../../Binary/Resources/Meshes/DynamicMesh/NpcData");
 	if (err.status == status_ok)
 	{
-		const auto fieldList = doc.select_nodes("ms2/npc");
-
-		for (auto npcNode : fieldList)
+		for (auto dir : dirs)
 		{
-			auto monsterInfo = std::make_shared<MonsterInfo>();
-			monsterInfo->id = std::stoi(npcNode.node().attribute("id").value());
+			char_t xmlPath[100] = "";
+			sprintf_s(xmlPath, "ms2/npc[@id='%d']", std::stoi(FileManager::GetFileName(dir)));
+			const auto fieldList = doc.select_nodes(xmlPath);
 
-			for (auto enviromnment : npcNode.node())
+			for (auto npcNode : fieldList)
 			{
-				for (auto node : enviromnment)
+				auto monsterInfo = std::make_shared<MonsterInfo>();
+				monsterInfo->id = std::stoi(npcNode.node().attribute("id").value());
+
+				for (auto enviromnment : npcNode.node())
 				{
-					std::string nodeName = node.name();
-					if (nodeName == "model")
+					for (auto node : enviromnment)
 					{
-						monsterInfo->model.kfm = StringUtils::ConvertCtoW(node.attribute("kfm").value());
-						if (strcmp(node.attribute("walkSpeed").value(), ""))
+						std::string nodeName = node.name();
+						if (nodeName == "model")
 						{
-							monsterInfo->model.walk_speed = std::stoi(node.attribute("walkSpeed").value());
+							monsterInfo->model.kfm = StringUtils::ConvertCtoW(node.attribute("kfm").value());
+							if (strcmp(node.attribute("walkSpeed").value(), ""))
+							{
+								monsterInfo->model.walk_speed = std::stoi(node.attribute("walkSpeed").value());
+							}
+							if (strcmp(node.attribute("runSpeed").value(), ""))
+							{
+								monsterInfo->model.run_speed = std::stoi(node.attribute("runSpeed").value());
+							}
 						}
-						if (strcmp(node.attribute("runSpeed").value(), ""))
+						else if (nodeName == "stat")
 						{
-							monsterInfo->model.run_speed = std::stoi(node.attribute("runSpeed").value());
+							if (strcmp(node.attribute("hp").value(), ""))
+							{
+								monsterInfo->stat.hp = std::stoi(node.attribute("hp").value());
+							}
+							if (strcmp(node.attribute("asp").value(), ""))
+							{
+								monsterInfo->stat.asp = std::stoi(node.attribute("asp").value());
+							}
+							if (strcmp(node.attribute("msp").value(), ""))
+							{
+								monsterInfo->stat.msp = std::stoi(node.attribute("msp").value());
+							}
+							if (strcmp(node.attribute("atp").value(), ""))
+							{
+								monsterInfo->stat.atp = std::stoi(node.attribute("atp").value());
+							}
+							if (strcmp(node.attribute("evp").value(), ""))
+							{
+								monsterInfo->stat.evp = std::stoi(node.attribute("evp").value());
+							}
+							if (strcmp(node.attribute("cap").value(), ""))
+							{
+								monsterInfo->stat.cap = std::stoi(node.attribute("cap").value());
+							}
+							if (strcmp(node.attribute("cad").value(), ""))
+							{
+								monsterInfo->stat.cad = std::stoi(node.attribute("cad").value());
+							}
+							if (strcmp(node.attribute("car").value(), ""))
+							{
+								monsterInfo->stat.car = std::stoi(node.attribute("car").value());
+							}
+							if (strcmp(node.attribute("ndd").value(), ""))
+							{
+								monsterInfo->stat.ndd = std::stoi(node.attribute("ndd").value());
+							}
+							if (strcmp(node.attribute("pap").value(), ""))
+							{
+								monsterInfo->stat.pap = std::stoi(node.attribute("pap").value());
+							}
+							if (strcmp(node.attribute("map").value(), ""))
+							{
+								monsterInfo->stat.map = std::stoi(node.attribute("map").value());
+							}
+							if (strcmp(node.attribute("par").value(), ""))
+							{
+								monsterInfo->stat.par = std::stoi(node.attribute("par").value());
+							}
+							if (strcmp(node.attribute("par").value(), ""))
+							{
+								monsterInfo->stat.mar = std::stoi(node.attribute("mar").value());
+							}
 						}
-					}
-					else if (nodeName == "stat")
-					{
-						if (strcmp(node.attribute("hp").value(), ""))
+						else if (nodeName == "distance")
 						{
-							monsterInfo->stat.hp = std::stoi(node.attribute("hp").value());
+							if (strcmp(node.attribute("sight").value(), ""))
+							{
+								monsterInfo->distance.sight = std::stoi(node.attribute("sight").value());
+							}
+							if (strcmp(node.attribute("sightHeightUP").value(), ""))
+							{
+								monsterInfo->distance.sight_height_up = std::stoi(node.attribute("sightHeightUP").value());
+							}
+							if (strcmp(node.attribute("sightHeightDown").value(), ""))
+							{
+								monsterInfo->distance.sight_height_down = std::stoi(node.attribute("sightHeightDown").value());
+							}
 						}
-						if (strcmp(node.attribute("asp").value(), ""))
+						else if (nodeName == "collision")
 						{
-							monsterInfo->stat.asp = std::stoi(node.attribute("asp").value());
+							monsterInfo->collision.width = std::stoi(node.attribute("width").value());
+							monsterInfo->collision.height = std::stoi(node.attribute("height").value());
+							monsterInfo->collision.depth = std::stoi(node.attribute("depth").value());
 						}
-						if (strcmp(node.attribute("msp").value(), ""))
-						{
-							monsterInfo->stat.msp = std::stoi(node.attribute("msp").value());
-						}
-						if (strcmp(node.attribute("atp").value(), ""))
-						{
-							monsterInfo->stat.atp = std::stoi(node.attribute("atp").value());
-						}
-						if (strcmp(node.attribute("evp").value(), ""))
-						{
-							monsterInfo->stat.evp = std::stoi(node.attribute("evp").value());
-						}
-						if (strcmp(node.attribute("cap").value(), ""))
-						{
-							monsterInfo->stat.cap = std::stoi(node.attribute("cap").value());
-						}
-						if (strcmp(node.attribute("cad").value(), ""))
-						{
-							monsterInfo->stat.cad = std::stoi(node.attribute("cad").value());
-						}
-						if (strcmp(node.attribute("car").value(), ""))
-						{
-							monsterInfo->stat.car = std::stoi(node.attribute("car").value());
-						}
-						if (strcmp(node.attribute("ndd").value(), ""))
-						{
-							monsterInfo->stat.ndd = std::stoi(node.attribute("ndd").value());
-						}
-						if (strcmp(node.attribute("pap").value(), ""))
-						{
-							monsterInfo->stat.pap = std::stoi(node.attribute("pap").value());
-						}
-						if (strcmp(node.attribute("map").value(), ""))
-						{
-							monsterInfo->stat.map = std::stoi(node.attribute("map").value());
-						}
-						if (strcmp(node.attribute("par").value(), ""))
-						{
-							monsterInfo->stat.par = std::stoi(node.attribute("par").value());
-						}
-						if (strcmp(node.attribute("par").value(), ""))
-						{
-							monsterInfo->stat.mar = std::stoi(node.attribute("mar").value());
-						}
-					}
-					else if (nodeName == "distance")
-					{
-						if (strcmp(node.attribute("sight").value(), ""))
-						{
-							monsterInfo->distance.sight = std::stoi(node.attribute("sight").value());
-						}
-						if (strcmp(node.attribute("sightHeightUP").value(), ""))
-						{
-							monsterInfo->distance.sight_height_up = std::stoi(node.attribute("sightHeightUP").value());
-						}
-						if (strcmp(node.attribute("sightHeightDown").value(), ""))
-						{
-							monsterInfo->distance.sight_height_down = std::stoi(node.attribute("sightHeightDown").value());
-						}
-					}
-					else if (nodeName == "collision")
-					{
-						monsterInfo->collision.width = std::stoi(node.attribute("width").value());
-						monsterInfo->collision.height = std::stoi(node.attribute("height").value());
-						monsterInfo->collision.depth = std::stoi(node.attribute("depth").value());
 					}
 				}
-			}
-			_monster_info.emplace(monsterInfo->id, monsterInfo);
+				_monster_info.emplace(monsterInfo->id, monsterInfo);
+		}
 		}
 	}
+}
+
+auto DataReaderManager::AllMonsterInfo() -> std::vector<std::shared_ptr<MonsterInfo>>
+{
+	std::vector<std::shared_ptr<MonsterInfo>> infos;
+	for (const auto& monster : _monster_info)
+	{
+		infos.push_back(monster.second);
+	}
+	return infos;
+}
+
+auto DataReaderManager::FindMonsterInfo(const int32_t id) -> std::shared_ptr<MonsterInfo>
+{
+	const auto iterator = _monster_info.find(id);
+	if (iterator != _monster_info.end())
+	{
+		return iterator->second;
+	}
+	return nullptr;
+}
+
+auto DataReaderManager::LoadAniKeyText() -> void
+{
+
+	xml_document doc;
+	const auto err = doc.load_file("../../Binary/Resources/xml/anikeytext.xml");
+	
+	if (err.status == status_ok)
+	{
+		const auto kfmNode = doc.select_nodes("ms2ani/kfm");
+		for (auto kfm : kfmNode)
+		{
+			auto name = StringUtils::ConvertCtoW(kfm.node().attribute("name").value());
+			for (const auto monsterInfo : _monster_info)
+			{
+				auto kfmLower = monsterInfo.second->model.kfm;
+				StringUtils::ToLower(kfmLower);
+				if (name.find(kfmLower) != std::wstring::npos)
+				{
+					auto kfmObject = std::make_shared<Kfm>();
+					kfmObject->name = StringUtils::ConvertCtoW(kfm.node().attribute("name").value());
+					for (auto seqNode : kfm.node())
+					{
+						kfmObject->seq.id = std::stoi(seqNode.attribute("id").value());
+						kfmObject->seq.name = StringUtils::ConvertCtoW(seqNode.attribute("name").value());
+						for (auto keyNode : seqNode)
+						{
+							kfmObject->seq.key.emplace(StringUtils::ConvertCtoW(keyNode.attribute("name").value()),
+								std::stof(keyNode.attribute("time").value()));
+						}
+					}
+					_ani_key.emplace(monsterInfo.first, kfmObject);
+				}
+			}
+		}
+	}
+}
+
+auto DataReaderManager::FindAnyKey(const int32_t npcId) -> std::shared_ptr<Kfm>
+{
+	const auto iterator = _ani_key.find(npcId);
+	if (iterator != _ani_key.end())
+	{
+		return iterator->second;
+	}
+	return nullptr;
 }
 
 #pragma endregion

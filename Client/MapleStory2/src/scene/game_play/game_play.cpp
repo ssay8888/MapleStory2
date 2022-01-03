@@ -1,6 +1,7 @@
 #include "c_pch.h"
 #include "game_play.h"
 
+#include "data_reader/data_reader_manager.h"
 #include "src/game_object/back_ground/back_ground.h"
 #include "src/utility/game_objects/camera/camera.h"
 #include "src/utility/game_objects/manager/object_manager.h"
@@ -113,6 +114,23 @@ auto GamePlay::ReadyLayerBackGround(const std::wstring& pLayerTag) -> HRESULT
 	{
 		return E_FAIL;
 	}*/
+	return S_OK;
+}
+
+auto GamePlay::ReadyMonster() -> HRESULT
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	const auto monsters = DataReaderManager::GetInstance().AllMonsterInfo();
+	for (auto monster : monsters)
+	{
+		wchar_t LayerTag[MAX_PATH];
+		swprintf_s(LayerTag, L"Layer_Monster_%d", monster->id);
+		if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_Mesh_Monster"), LayerTag, &monster)))
+		{
+			return E_FAIL;
+		}
+	}
+
 	return S_OK;
 }
 

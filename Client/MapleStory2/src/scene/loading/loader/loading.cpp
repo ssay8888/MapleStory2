@@ -12,6 +12,7 @@
 #include "src/game_object/item/item.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
+#include "src/game_object/monster/monster.h"
 #include "src/game_object/pants/pants.h"
 #include "src/game_object/player/player.h"
 #include "src/game_object/sky/sky.h"
@@ -109,18 +110,9 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Coat"), Coat::Create(_graphic_device))))
 		return E_FAIL;
 
-	//if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Pants"), Pants::Crdjeleate(_graphic_device))))
-	//	return E_FAIL;
-
-	//if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_Man"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Player/"), TEXT("man.x")))))
-	//	return E_FAIL;
-
-	//if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_Weapon"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Weapon/"), TEXT("15000014_zweihander.x")))))
-	//	return E_FAIL;
-
-	//if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Mesh_Weapon_2"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Weapon/"), TEXT("15000004_vikingsword.x")))))
-	//	return E_FAIL;
-
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Monster"), Monster::Create(_graphic_device))))
+		return E_FAIL;
+	
 	auto animationNames = DataReaderManager::GetInstance().AllAnimationName();
 
 	for (const auto& animation : animationNames)
@@ -143,7 +135,28 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 		if (FAILED(componentManager.AddPrototype(kSceneStatic, prototypeName, MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/MaplePlayerF/"), aniName))))
 			return E_FAIL;
 	}
-											 
+
+	auto allMonster = DataReaderManager::GetInstance().AllMonsterInfo();
+	for (auto monsterInfo : allMonster)
+	{
+		wchar_t path[MAX_PATH];
+		swprintf_s(path, MAX_PATH, L"../../Binary/Resources/Meshes/DynamicMesh/NpcData/%d/", monsterInfo->id);
+		auto filesPath = FileManager::GetDirFileName(path, L"*.X");
+
+		for (auto filePath : filesPath)
+		{
+			auto fileName = FileManager::GetFileName(filePath);
+			std::wstring prototypeName(TEXT("Prototype_Npc_"));
+			prototypeName.append(std::to_wstring(monsterInfo->id)).append(L"_");
+			prototypeName.append(fileName);
+			wchar_t path[MAX_PATH];
+			swprintf_s(path, MAX_PATH, L"../../Binary/Resources/Meshes/DynamicMesh/NpcData/%d/", monsterInfo->id);
+			if (FAILED(componentManager.AddPrototype(kSceneStatic, prototypeName,
+				MeshDynamic::Create(_graphic_device, path, fileName))))
+				return E_FAIL;
+		}
+	}
+
 	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Texture_Filter"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Terrain/Filter.bmp")))))
 		return E_FAIL;						 
 											 

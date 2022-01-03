@@ -1,6 +1,7 @@
 #include "common_pch.h"
 #include "file_manager.h"
 
+#include <filesystem>
 #include <io.h>
 #include <fstream>
 #include <Windows.h>
@@ -40,13 +41,13 @@ auto FileManager::GetDirFileCount(std::wstring folderPath) -> int
 	return size;
 }
 
-auto FileManager::GetDirFileName(std::wstring folderPath) -> std::list<std::wstring>
+auto FileManager::GetDirFileName(std::wstring folderPath, std::wstring option) -> std::list<std::wstring>
 {
 	std::list<std::wstring> list;
 	WIN32_FIND_DATAW data;
 	int size = 0;
 	std::wstring folderPath_(folderPath);
-	const HANDLE hFind = FindFirstFileW(folderPath_.append(L"*.*").c_str(), &data);
+	const HANDLE hFind = FindFirstFileW(folderPath_.append(option).c_str(), &data);
 
 	if (hFind != INVALID_HANDLE_VALUE)
 	{
@@ -62,6 +63,16 @@ auto FileManager::GetDirFileName(std::wstring folderPath) -> std::list<std::wstr
 		FindClose(hFind);
 	}
 	return list;
+}
+
+auto FileManager::GetDirs(std::wstring folderPath) -> std::list<std::wstring>
+{
+	std::list<std::wstring> dirs;
+	for (auto dir : std::filesystem::directory_iterator(folderPath))
+	{
+		dirs.push_back(dir.path().wstring());
+	}
+	return dirs;
 }
 
 auto FileManager::GetFileName(std::wstring path) -> std::wstring

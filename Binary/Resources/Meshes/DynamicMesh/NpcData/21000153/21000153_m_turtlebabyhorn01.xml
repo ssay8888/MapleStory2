@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ms2>
+  <Up_A>
+    <key text="emo_idle" time="0.0000" />
+  </Up_A>
+  <Down_A>
+    <key text="emo_idle" time="0.0000" />
+  </Down_A>
+  <Idle_A>
+    <key text="emo_idle" time="0.0000" />
+  </Idle_A>
+  <Bore_A>
+    <key text="emo_idle" time="0.0000" />
+  </Bore_A>
+  <Walk_A>
+    <key text="emo_idle" time="0.0000" />
+  </Walk_A>
+  <Stun_A>
+    <key text="emo_damg" time="0.0000" />
+  </Stun_A>
+  <Damg_A>
+    <key text="emo_damg" time="0.0000" />
+  </Damg_A>
+  <Damg_B>
+    <key text="emo_damg" time="0.0000" />
+  </Damg_B>
+  <Dead_A>
+    <key text="emo_dead" time="0.0000" />
+    <key text="effect_NPC/Skill/TurtleBaby/Eff_TurtleBaby_Dead01_Sound.xml" time="0.0000" />
+  </Dead_A>
+  <Dead_B>
+    <key text="emo_dead" time="0.0000" />
+    <key text="effect_NPC/Skill/TurtleBaby/Eff_TurtleBaby_Dead02_Sound.xml" time="0.0000" />
+  </Dead_B>
+   <Dead_Idle_A>
+    <key text="emo_dead" time="0.0000" />
+  </Dead_Idle_A>
+  <Run_A>
+    <key text="emo_attack" time="0.0000" />
+  </Run_A>
+  <Attack_Idle_A>
+    <key text="emo_attack" time="0.0000" />
+  </Attack_Idle_A>
+  <Attack_01_A>
+    <key text="emo_attack" time="0.0000" />
+    <key text="move0" time="0.5500" />
+    <key text="move1" time="0.9500" />
+    <key text="p0" time="1.1500" />
+    <key text="e0" time="1.1000" />
+  </Attack_01_A>
+  <Attack_01_B>
+    <key text="emo_attack" time="0.0000" />
+  </Attack_01_B>
+   <Attack_02_B>
+    <key text="emo_attack" time="0.0000" />
+	<key text="move0" time="0.0100" />
+    <key text="move1" time="0.5900" />
+    <key text="p0" time="0.0110" />
+	<key text="p1" time="0.300" />
+	<key text="p2" time="0.500" />
+  </Attack_02_B>
+  <Attack_03_B>
+    <key text="emo_attack" time="0.0000" />
+  </Attack_03_B>
+</ms2>
