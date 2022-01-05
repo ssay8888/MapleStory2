@@ -3,6 +3,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 #include <wrl/client.h>
 
@@ -104,6 +105,7 @@ public:
 	struct ModelAtt
 	{
 		std::wstring kfm;
+		float scale;
 		int32_t walk_speed;
 		int32_t run_speed;
 	};
@@ -156,7 +158,7 @@ public:
 	struct Kfm
 	{
 		std::wstring name;
-		Seq seq;
+		std::unordered_map<int32_t, std::shared_ptr<Seq>> seqs;
 	};
 
 	auto LoadAniKeyText()->void;
@@ -170,6 +172,6 @@ private:
 	std::vector<std::shared_ptr<CreateCharacterItemInfo>>	_create_item_info;
 	std::map<int32_t, std::shared_ptr<FieldData>>			_field_data;
 	std::map<int32_t, std::shared_ptr<MonsterInfo>>			_monster_info;
-	std::map<int32_t, std::shared_ptr<Kfm>>	_ani_key;
+	std::unordered_map<int32_t, std::shared_ptr<Kfm>>		_ani_key;
 };
 

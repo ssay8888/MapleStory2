@@ -60,8 +60,6 @@ private:
 public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& device)->std::shared_ptr<Player>;
 	virtual auto Clone(void* arg = nullptr)->std::shared_ptr<GameObject> override;
-
-private:
 	enum kReloadRegenAabb
 	{
 		kReloadUp,
@@ -72,6 +70,8 @@ private:
 		kReloadBack,
 		kReloadEnd
 	};
+
+private:
 	std::shared_ptr<Transform>						_transform_com = nullptr;
 	std::shared_ptr<Collider>						_character_aabb_com = nullptr;
 	std::shared_ptr<Collider>						_block_ragne_aabb_com = nullptr; // 블록가져올 범위

@@ -110,8 +110,6 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Coat"), Coat::Create(_graphic_device))))
 		return E_FAIL;
 
-	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Monster"), Monster::Create(_graphic_device))))
-		return E_FAIL;
 	
 	auto animationNames = DataReaderManager::GetInstance().AllAnimationName();
 
@@ -134,27 +132,6 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 
 		if (FAILED(componentManager.AddPrototype(kSceneStatic, prototypeName, MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/DynamicMesh/MaplePlayerF/"), aniName))))
 			return E_FAIL;
-	}
-
-	auto allMonster = DataReaderManager::GetInstance().AllMonsterInfo();
-	for (auto monsterInfo : allMonster)
-	{
-		wchar_t path[MAX_PATH];
-		swprintf_s(path, MAX_PATH, L"../../Binary/Resources/Meshes/DynamicMesh/NpcData/%d/", monsterInfo->id);
-		auto filesPath = FileManager::GetDirFileName(path, L"*.X");
-
-		for (auto filePath : filesPath)
-		{
-			auto fileName = FileManager::GetFileName(filePath);
-			std::wstring prototypeName(TEXT("Prototype_Npc_"));
-			prototypeName.append(std::to_wstring(monsterInfo->id)).append(L"_");
-			prototypeName.append(fileName);
-			wchar_t path[MAX_PATH];
-			swprintf_s(path, MAX_PATH, L"../../Binary/Resources/Meshes/DynamicMesh/NpcData/%d/", monsterInfo->id);
-			if (FAILED(componentManager.AddPrototype(kSceneStatic, prototypeName,
-				MeshDynamic::Create(_graphic_device, path, fileName))))
-				return E_FAIL;
-		}
 	}
 
 	if (FAILED(componentManager.AddPrototype(kSceneCharacterSelect, TEXT("Prototype_Texture_Filter"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Terrain/Filter.bmp")))))
@@ -381,6 +358,7 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	_system_message.append(L"게임리소스를 생성합니다.");
 	
 	auto& objectManager = ObjectManager::GetInstance();
+	auto& componentManager = ComponentManager::GetInstance();
 	/* For.Prototype_Player*/
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Player"), Player::Create(_graphic_device))))
 		return E_FAIL;
@@ -394,6 +372,31 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Sky"), Sky::Create(_graphic_device))))
 		return E_FAIL;
 
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Monster"), Monster::Create(_graphic_device))))
+		return E_FAIL;
+
+	auto allMonster = DataReaderManager::GetInstance().AllMonsterInfo();
+	for (auto monsterInfo : allMonster)
+	{
+		wchar_t path[MAX_PATH];
+		swprintf_s(path, MAX_PATH, L"../../Binary/Resources/Meshes/DynamicMesh/NpcData/%d/", monsterInfo->id);
+		auto filesPath = FileManager::GetDirFileName(path, L"*.X");
+
+		for (auto filePath : filesPath)
+		{
+			auto fileName = FileManager::GetFileName(filePath);
+			std::wstring prototypeName(TEXT("Prototype_Npc_"));
+			prototypeName.append(std::to_wstring(monsterInfo->id)).append(L"_");
+			StringUtils::ToLower(fileName);
+			prototypeName.append(fileName);
+			wchar_t path[MAX_PATH];
+			swprintf_s(path, MAX_PATH, L"../../Binary/Resources/Meshes/DynamicMesh/NpcData/%d/", monsterInfo->id);
+			if (FAILED(componentManager.AddPrototype(kSceneStatic, prototypeName,
+				MeshDynamic::Create(_graphic_device, path, fileName))))
+				return E_FAIL;
+		}
+	}
+
 
 	/* For.Prototype_UI */
 	//if (FAILED(objectManager->AddPrototype(TEXT("Prototype_UI"), UI::Create(m_pGraphic_Device))))
@@ -405,7 +408,6 @@ auto Loading::ReadyGamePlay0()->HRESULT
 
 
 
-	auto& componentManager = ComponentManager::GetInstance();
 	/* 원형 리소스 객체를 생성한다. */
 
 	/* For.Prototype_Mesh_Stone*/

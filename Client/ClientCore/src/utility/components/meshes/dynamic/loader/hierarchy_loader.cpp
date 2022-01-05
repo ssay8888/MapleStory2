@@ -94,23 +94,40 @@ auto HierarchyLoader::CreateMeshContainer(LPCSTR Name, const D3DXMESHDATA* pMesh
 				break;
 			}
 		}
+		std::wstring fullPath(szFullPath);
+		if (fullPath.find(L"_d") != std::wstring::npos || fullPath.find(L"_D") != std::wstring::npos)
+		{
+			/* For.Diffuse map */
+			szFullPath[iIndex] = L'D';
+			D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->diffuse_map);
 
+			/* For.Normal map */
+			szFullPath[iIndex] = L'N';
+			D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->normal_map);
 
-		/* For.Diffuse map */
-		szFullPath[iIndex] = L'D';
-		D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->diffuse_map);
+			/* For.Specular map */
+			szFullPath[iIndex] = L'S';
+			D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->specular_map);
 
-		/* For.Normal map */
-		szFullPath[iIndex] = L'N';
-		D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->normal_map);
+			/* For.Specular map */
+			szFullPath[iIndex] = L'C';
+			D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->color_map);
+		}
+		else
+		{
+			/* For.Diffuse map */
+			D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->diffuse_map);
 
-		/* For.Specular map */
-		szFullPath[iIndex] = L'S';
-		D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->specular_map);
+			/* For.Normal map */
+			D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->normal_map);
 
-		/* For.Specular map */
-		szFullPath[iIndex] = L'C';
-		D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->color_map);
+			/* For.Specular map */
+			D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->specular_map);
+
+			/* For.Specular map */
+			D3DXCreateTextureFromFile(device, szFullPath, &pMeshContainer->ppMaterialTextures[i]->color_map);
+		}
+
 	}
 	const uint64_t numFaces = pMeshContainer->MeshData.pMesh->GetNumFaces();
 	uint64_t size = static_cast<uint64_t>(numFaces * 3);

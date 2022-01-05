@@ -17,6 +17,8 @@ public:
 	auto PlayAnimation(double timeDelta)->HRESULT;
 	auto BindFrames(D3DxFrameDerived* pRootFrame) const ->HRESULT;
 
+	auto GetTimeAcc()->double;
+
 private:
 	ComPtr<ID3DXAnimationController>	_animation_controller = nullptr;
 	uint32_t							_current_animation_index = -1;

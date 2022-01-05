@@ -318,6 +318,14 @@ auto DataReaderManager::LoadMonsterInfo() -> void
 							{
 								monsterInfo->model.run_speed = std::stoi(node.attribute("runSpeed").value());
 							}
+							if (strcmp(node.attribute("scale").value(), ""))
+							{
+								monsterInfo->model.scale = std::stof(node.attribute("scale").value()) / 100.f;
+							}
+							else
+							{
+								monsterInfo->model.scale = 0.01f;
+							}
 						}
 						else if (nodeName == "stat")
 						{
@@ -445,11 +453,13 @@ auto DataReaderManager::LoadAniKeyText() -> void
 					kfmObject->name = StringUtils::ConvertCtoW(kfm.node().attribute("name").value());
 					for (auto seqNode : kfm.node())
 					{
-						kfmObject->seq.id = std::stoi(seqNode.attribute("id").value());
-						kfmObject->seq.name = StringUtils::ConvertCtoW(seqNode.attribute("name").value());
+						int key = std::stoi(seqNode.attribute("id").value());
+						auto seq = std::make_shared<Seq>();
+						seq->name = StringUtils::ConvertCtoW(seqNode.attribute("name").value());
+						kfmObject->seqs.emplace(key, seq);
 						for (auto keyNode : seqNode)
 						{
-							kfmObject->seq.key.emplace(StringUtils::ConvertCtoW(keyNode.attribute("name").value()),
+							kfmObject->seqs[key]->key.emplace(StringUtils::ConvertCtoW(keyNode.attribute("name").value()),
 								std::stof(keyNode.attribute("time").value()));
 						}
 					}

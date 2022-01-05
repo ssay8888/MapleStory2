@@ -16,5 +16,7 @@ public:
 
 	static auto Rand(double max)->double;
 	static auto Rand(double min, double max)->double;
+
+	static auto IsSuccess(int32_t rate)->bool;
 };
 

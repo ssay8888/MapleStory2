@@ -65,7 +65,6 @@ auto Animation::SetAnimationIndex(const uint32_t animIndex) -> HRESULT
 
 	pAS->Release();
 	//pAS2->Release();
-
 	_animation_controller->UnkeyAllTrackEvents(_current_track);
 	_animation_controller->UnkeyAllTrackEvents(_new_track);
 
@@ -122,6 +121,11 @@ auto Animation::BindFrames(D3DxFrameDerived* pRootFrame) const -> HRESULT
 		return E_FAIL;
 
 	return S_OK;
+}
+
+auto Animation::GetTimeAcc() -> double
+{
+	return _time_acc;
 }
 
 std::shared_ptr<Animation> Animation::Create(const ComPtr<ID3DXAnimationController>& animationController)

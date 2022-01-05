@@ -202,6 +202,18 @@
     <ClInclude Include="src\game_object\monster\stats\monster_stats.h">
       <Filter>game_object\monster\stats</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\monster\states\monster_state.h">
+      <Filter>game_object\monster\states</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\monster\states\idle_state\monster_idle_state.h">
+      <Filter>game_object\monster\states\idle_state</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\monster\states\walk_state\monster_walk_state.h">
+      <Filter>game_object\monster\states\walk_state</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\monster\states\bore_state\monster_bore_state.h">
+      <Filter>game_object\monster\states\bore_State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -399,6 +411,18 @@
     <ClCompile Include="src\game_object\monster\stats\monster_stats.cpp">
       <Filter>game_object\monster\stats</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\monster\states\monster_state.cpp">
+      <Filter>game_object\monster\states</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\monster\states\idle_state\monster_idle_state.cpp">
+      <Filter>game_object\monster\states\idle_state</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\monster\states\walk_state\monster_walk_state.cpp">
+      <Filter>game_object\monster\states\walk_state</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\monster\states\bore_state\monster_bore_state.cpp">
+      <Filter>game_object\monster\states\bore_State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -549,6 +573,18 @@
     </Filter>
     <Filter Include="game_object\monster\stats">
       <UniqueIdentifier>{cba61391-2820-4843-ba82-d5fa0f0ce48a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\monster\states">
+      <UniqueIdentifier>{609aca9b-4351-4f0d-ade8-58854cb3501d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\monster\states\idle_state">
+      <UniqueIdentifier>{9b6dd27c-2a68-46b7-9849-9115d1b2c9fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\monster\states\walk_state">
+      <UniqueIdentifier>{56209bdc-bb62-4359-9a23-2b7a165315dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\monster\states\bore_State">
+      <UniqueIdentifier>{bc05bd2e-f9d2-48bd-938c-7cd23f77ac99}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -37,6 +37,9 @@ HRESULT GamePlay::NativeConstruct()
 	if (FAILED(ReadyLayerBackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;
 
+	if (FAILED(ReadyMonster()))
+		return E_FAIL;
+
 	auto& objectManager = ObjectManager::GetInstance();
 	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_PlayerInfo"), L"Layer_PlayerInfo")))
 	{
