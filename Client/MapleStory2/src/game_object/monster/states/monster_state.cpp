@@ -144,8 +144,11 @@ auto MonsterState::ReloadMapObject(std::shared_ptr<Monster> monster, bool check)
 		{
 			blockRange->UpdateCollider();
 			auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad");
-			_map_objects = mapInstance->FindRangeCellObject(blockRange);
-			std::cout << "사이즈 : " << _map_objects.size() << std::endl;
+			if (mapInstance)
+			{
+				_map_objects = mapInstance->FindRangeCellObject(blockRange);
+				std::cout << "사이즈 : " << _map_objects.size() << std::endl;
+			}
 			break;
 		}
 	}

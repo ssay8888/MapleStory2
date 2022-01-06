@@ -34,3 +34,10 @@ auto GameServerPacketHandler::HandleGameServerMovePlayer(PacketSessionRef& sessi
 	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::MovePlayer, session, pkt);
 	return true;
 }
+
+auto GameServerPacketHandler::HandleGameServerRespawnMonster(PacketSessionRef& session,
+	Protocol::GameServerRespawnMonster& pkt) -> bool
+{
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::RespawnMonster, session, pkt);
+	return true;
+}

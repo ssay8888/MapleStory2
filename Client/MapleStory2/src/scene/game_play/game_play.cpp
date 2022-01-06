@@ -2,7 +2,10 @@
 #include "game_play.h"
 
 #include "data_reader/data_reader_manager.h"
+#include "protocol/game_protocol.pb.h"
 #include "src/game_object/back_ground/back_ground.h"
+#include "src/main/main_app.h"
+#include "src/network/game_server_packet_handler.h"
 #include "src/utility/game_objects/camera/camera.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/light/light_manager.h"
@@ -45,6 +48,12 @@ HRESULT GamePlay::NativeConstruct()
 	{
 		return E_FAIL;
 	}
+	Protocol::GameClientLoading sendPkt;
+	auto authInfo = g_mainApp->GetAuthInfo();
+	sendPkt.set_auth(authInfo.auth());
+	sendPkt.set_state(Protocol::kLoadSuccess);
+	g_service->Broadcast(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+	std::this_thread::sleep_for(100ms);
 	return S_OK;
 
 }
@@ -122,7 +131,7 @@ auto GamePlay::ReadyLayerBackGround(const std::wstring& pLayerTag) -> HRESULT
 
 auto GamePlay::ReadyMonster() -> HRESULT
 {
-	auto& objectManager = ObjectManager::GetInstance();
+	/*auto& objectManager = ObjectManager::GetInstance();
 	const auto monsters = DataReaderManager::GetInstance().AllMonsterInfo();
 	for (auto monster : monsters)
 	{
@@ -132,7 +141,7 @@ auto GamePlay::ReadyMonster() -> HRESULT
 		{
 			return E_FAIL;
 		}
-	}
+	}*/
 
 	return S_OK;
 }

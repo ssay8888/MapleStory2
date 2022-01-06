@@ -31,11 +31,23 @@ auto GameCharacterLoadQueue::GameClientLoginResponse(PacketSessionRef session, P
 		auto character = GameCharacter::Create(authInfo->characterid());
 		SettingCharacterInfoSendPacket(sendPkt, session, character);
 		gameSession->SetPlayer(character);
-		const auto mapInstance = MapManager::GetInstance().FindMapInstance(character->GetMapId());
+	}
+	session->Send(GameClientPacketHandler::MakeSendBuffer(sendPkt));
+}
+
+auto GameCharacterLoadQueue::GameClientLoadingResponse(PacketSessionRef session,
+	Protocol::GameClientLoading pkt) -> void
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+
+	auto& authManager = GameAuthManager::GetInstance();
+	const auto authInfo = authManager.FindAuth(pkt.auth());
+	if (gameSession->GetPlayer())
+	{
+		const auto mapInstance = MapManager::GetInstance().FindMapInstance(gameSession->GetPlayer()->GetMapId());
 		mapInstance->DoAsync(&MapInstance::AddCharacter, gameSession);
 		mapInstance->DoAsync(&MapInstance::BroadCastAddCharacter, gameSession);
 	}
-	session->Send(GameClientPacketHandler::MakeSendBuffer(sendPkt));
 }
 
 auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServerLoadCharacter& sendPkt, PacketSessionRef session, std::shared_ptr<GameCharacter> player) -> void

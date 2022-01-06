@@ -2390,6 +2390,9 @@
 			<property name="Position">
 				<set value="-2100, -450, 900" />
 			</property>
+			<property name="spawnMonster">
+				<set value="21000153" />
+			</property>
 		</entity>
 		<entity id="1e4994c9be8642f39987f4362e4c432d" modelName="he_ground_rock_A05_" name="he_ground_rock_A05_[-17, 0, 5]" iterations="5">
 			<property name="Position">
@@ -2788,6 +2791,9 @@
 		<entity id="23142c71bcbc4c9ca5eeb90451cd7515" modelName="MS2RegionSpawn_1" name="MS2RegionSpawn_0" iterations="1">
 			<property name="Position">
 				<set value="1350, 1350, 3300" />
+			</property>
+			<property name="spawnMonster">
+				<set value="21000339" />
 			</property>
 		</entity>
 		<entity id="2316b345edf449aca017d9b3222c008f" modelName="he_ground_grass_B01_" name="he_ground_grass_B01_[9, 11, 21]" iterations="5">
@@ -3528,6 +3534,9 @@
 		<entity id="2c9e08ea50704793a637eacdf73f91fe" modelName="MS2RegionSpawn_6" name="MS2RegionSpawn_6" iterations="3">
 			<property name="Position">
 				<set value="-1650, -1200, 900" />
+			</property>
+			<property name="spawnMonster">
+				<set value="21000294" />
 			</property>
 		</entity>
 		<entity id="2c9f577fa4514545a75c080fdc3e0355" modelName="he_ground_grass_B01_" name="he_ground_grass_B01_[6, 17, 21]" iterations="5">
@@ -4919,6 +4928,9 @@
 		<entity id="3e9d3770903548c39f731d4bfd9b2e3d" modelName="MS2RegionSpawn_4" name="MS2RegionSpawn_3" iterations="3">
 			<property name="Position">
 				<set value="750, 750, 3300" />
+			</property>
+			<property name="spawnMonster">
+				<set value="21000153" />
 			</property>
 		</entity>
 		<entity id="3ee1160b9f6f405aa22ce5d4602dc83d" modelName="he_ground_grass_A03_" name="he_ground_grass_A03_[-5, -4, 7]" iterations="5">
@@ -7275,6 +7287,9 @@
 			<property name="Position">
 				<set value="150, -1650, 900" />
 			</property>
+			<property name="spawnMonster">
+				<set value="21000294" />
+			</property>
 		</entity>
 		<entity id="5a34962dcd374a36a0f4d28574830f34" modelName="he_ground_rock_A05_" name="he_ground_rock_A05_[-5, 2, 17]" iterations="5">
 			<property name="Position">
@@ -8171,6 +8186,9 @@
 			<property name="Position">
 				<set value="-900, 300, 2700" />
 			</property>
+			<property name="spawnMonster">
+				<set value="21000339" />
+			</property>
 		</entity>
 		<entity id="65ecbbdb4ea141daa328f305fa5a2afd" modelName="he_ground_rock_A04_" name="he_ground_rock_A04_[-8, -1, 9]" iterations="4">
 			<property name="Position">
@@ -8215,6 +8233,9 @@
 		<entity id="66655e13c905419ea6a35c9b4fb0fb9c" modelName="MS2RegionSpawn_14" name="MS2RegionSpawn_15" iterations="3">
 			<property name="Position">
 				<set value="-150, -3150, 750" />
+			</property>
+			<property name="spawnMonster">
+				<set value="21000153" />
 			</property>
 		</entity>
 		<entity id="66b93c0638984442b5aedda0c1e14207" modelName="he_ground_rock_A03_" name="he_ground_rock_A03_[-11, -3, 5]" iterations="5">
@@ -8763,6 +8784,9 @@
 		<entity id="6d73579373f44feaa83e4717bd24e0c1" modelName="MS2RegionSpawn_8" name="MS2RegionSpawn_9" iterations="5">
 			<property name="Position">
 				<set value="2550, -1500, 1800" />
+			</property>
+			<property name="spawnMonster">
+				<set value="21000294" />
 			</property>
 		</entity>
 		<entity id="6d8d027d3cf142caa1e0d800ba31c0b1" modelName="he_ground_rock_A04_" name="he_ground_rock_A04_[-9, -1, 13]" iterations="4">
@@ -11630,6 +11654,9 @@
 			<property name="Position">
 				<set value="2250, -450, 1800" />
 			</property>
+			<property name="spawnMonster">
+				<set value="21000339" />
+			</property>
 		</entity>
 		<entity id="92bf823795104865919dacea83307e9b" modelName="co_fluid_water_C01_" name="co_fluid_water_C01_[6, 7, 20]" iterations="4">
 			<property name="Position">
@@ -13650,6 +13677,9 @@
 		<entity id="aa639f8984ae46c691fa4d674d95c83c" modelName="MS2RegionSpawn_13" name="MS2RegionSpawn_14" iterations="3">
 			<property name="Position">
 				<set value="600, -2400, 750" />
+			</property>
+			<property name="spawnMonster">
+				<set value="21000153" />
 			</property>
 		</entity>
 		<entity id="aa6f3fe58b454f51b8338dfc7d3daae9" modelName="lu_floor_blue_A01_" name="lu_floor_blue_A01_[8, -13, 5]" iterations="4">
@@ -15873,6 +15903,9 @@
 			<property name="Position">
 				<set value="-1050, -3300, 750" />
 			</property>
+			<property name="spawnMonster">
+				<set value="21000294" />
+			</property>
 		</entity>
 		<entity id="c800d558fe1b42208b692d15a0918c83" modelName="he_ground_grass_A01_" name="he_ground_grass_A01_[19, -5, 11]" iterations="4">
 			<property name="Position">
@@ -15962,6 +15995,9 @@
 		<entity id="c8c2b49d12dc4f8c820eeceb40dbca8a" modelName="MS2RegionSpawn_9" name="MS2RegionSpawn_10" iterations="7">
 			<property name="Position">
 				<set value="150, -1050, 900" />
+			</property>
+			<property name="spawnMonster">
+				<set value="21000339" />
 			</property>
 		</entity>
 		<entity id="c8e52c1d311544a2a80fa491b11bbad6" modelName="lu_floor_yellow_A02_" name="lu_floor_yellow_A02_[12, -9, 8]" iterations="3">
@@ -17063,6 +17099,9 @@
 			<property name="Position">
 				<set value="-300, -2250, 900" />
 			</property>
+			<property name="spawnMonster">
+				<set value="21000153" />
+			</property>
 		</entity>
 		<entity id="d8d955b664784c1fa3f5578dafb36014" modelName="he_ground_rock_A05_" name="he_ground_rock_A05_[-4, 11, 19]" iterations="3">
 			<property name="Position">
@@ -17911,6 +17950,9 @@
 			<property name="Position">
 				<set value="1050, -1200, 900" />
 			</property>
+			<property name="spawnMonster">
+				<set value="21000294" />
+			</property>
 		</entity>
 		<entity id="e3a3ea960d5148a09d087497a78cfbdb" modelName="he_ground_rock_A05_" name="he_ground_rock_A05_[10, 6, 19]" iterations="1">
 			<property name="Position">
@@ -18721,6 +18763,9 @@
 		<entity id="eebb959627bb47f1883e4bf015ce2827" modelName="MS2RegionSpawn_2" name="MS2RegionSpawn_1" iterations="1">
 			<property name="Position">
 				<set value="0, 1350, 3300" />
+			</property>
+			<property name="spawnMonster">
+				<set value="21000339" />
 			</property>
 		</entity>
 		<entity id="eee31415096941b3ac6dca9efc5b2c62" modelName="he_ground_rock_A05_" name="he_ground_rock_A05_[6, 15, 21]" iterations="3">

@@ -1,7 +1,10 @@
 #include "game_server_pch.h"
 #include "map_xblock.h"
 
+#include "data_reader/data_reader_manager.h"
+#include "src/system/graphic/graphic_device.h"
 #include "src/utility/components/collider/collider.h"
+#include "src/utility/components/manager/component_manager.h"
 #include "src/utility/components/transform/transform.h"
 #include "src/utils/file_utils.h"
 
@@ -85,7 +88,9 @@ auto MapXblock::NativeConstruct(MapManager::MapEntity& entity) -> HRESULT
 			}
 		}
 	}
-	_aabb_com = Collider::Create(nullptr, Collider::kTypeAabb);
+	const auto& componentManager = ComponentManager::GetInstance();
+	auto component = componentManager.CloneComponent(0, TEXT("Prototype_Collider_AABB"), &ColliderDesc);
+	_aabb_com = std::static_pointer_cast<Collider>(component);
 	_aabb_com->NativeConstruct(&ColliderDesc);
 
 	_transform_com->SetScale((_scale * 0.01f), (_scale * 0.01f), (_scale * 0.01f));

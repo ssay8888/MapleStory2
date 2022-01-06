@@ -165,12 +165,14 @@
     <ClCompile Include="game\entitiy\character\information_collection\stats\stats.cpp" />
     <ClCompile Include="game\entitiy\game_entity.cpp" />
     <ClCompile Include="game\entitiy\monster\game_monster.cpp" />
+    <ClCompile Include="game\entitiy\monster\spawn_point\spawn_point.cpp" />
     <ClCompile Include="game\loader\loader.cpp" />
     <ClCompile Include="game\map\map_instance.cpp" />
     <ClCompile Include="game\map\map_manager.cpp" />
     <ClCompile Include="game\map\map_object\map_object.cpp" />
     <ClCompile Include="game\map\map_object\xblock\map_xblock.cpp" />
     <ClCompile Include="game_server.cpp" />
+    <ClCompile Include="game_tick\game_tick.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="game_server_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -232,6 +234,7 @@
     <ClInclude Include="game\entitiy\character\information_collection\stats\stats.h" />
     <ClInclude Include="game\entitiy\game_entity.h" />
     <ClInclude Include="game\entitiy\monster\game_monster.h" />
+    <ClInclude Include="game\entitiy\monster\spawn_point\spawn_point.h" />
     <ClInclude Include="game\loader\loader.h" />
     <ClInclude Include="game\map\map_instance.h" />
     <ClInclude Include="game\map\map_manager.h" />
@@ -243,6 +246,7 @@
     <ClInclude Include="game_session\game_client_packet_handler.h" />
     <ClInclude Include="game_session\game_session.h" />
     <ClInclude Include="game_session\game_session_manager.h" />
+    <ClInclude Include="game_tick\game_tick.h" />
     <ClInclude Include="managers\auth_manager\game_auth_manager.h" />
     <ClInclude Include="managers\character_info_manager\character_info_storage.h" />
     <ClInclude Include="managers\character_info_manager\character_info_storage_manager.h" />

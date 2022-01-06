@@ -14,6 +14,7 @@ public:
 
 public:
 	auto GameClientLoginResponse(PacketSessionRef session, Protocol::GameClientLogin pkt)->void;
+	auto GameClientLoadingResponse(PacketSessionRef session, Protocol::GameClientLoading pkt)->void;
 
 private:
 	auto SettingCharacterInfoSendPacket(Protocol::GameServerLoadCharacter& sendPkt, PacketSessionRef session, std::shared_ptr<GameCharacter> player)->void;

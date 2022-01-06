@@ -100,6 +100,12 @@
     <ClCompile Include="game\map\map_object\xblock\map_xblock.cpp">
       <Filter>game\map\map_object\xblock</Filter>
     </ClCompile>
+    <ClCompile Include="game\entitiy\monster\spawn_point\spawn_point.cpp">
+      <Filter>game\entity\monster\spawn_point</Filter>
+    </ClCompile>
+    <ClCompile Include="game_tick\game_tick.cpp">
+      <Filter>game_tick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -164,6 +170,15 @@
     </Filter>
     <Filter Include="game\map\map_object\xblock">
       <UniqueIdentifier>{6ca9dda0-4d42-4d03-a9d8-9b9f3175c590}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\monster\spawn_point">
+      <UniqueIdentifier>{e7e8528a-b260-4093-bbd4-473c80adc99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_tick">
+      <UniqueIdentifier>{ef7a394c-1583-42d7-a953-b7d530bd7088}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\monster\states">
+      <UniqueIdentifier>{a83e5345-ceb1-47ff-9304-1f05524ec9da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +280,12 @@
     </ClInclude>
     <ClInclude Include="game\map\map_object\xblock\map_xblock.h">
       <Filter>game\map\map_object\xblock</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\monster\spawn_point\spawn_point.h">
+      <Filter>game\entity\monster\spawn_point</Filter>
+    </ClInclude>
+    <ClInclude Include="game_tick\game_tick.h">
+      <Filter>game_tick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

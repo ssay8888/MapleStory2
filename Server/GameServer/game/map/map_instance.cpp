@@ -3,11 +3,14 @@
 
 #include "game/entitiy/character/game_character.h"
 #include "game/entitiy/character/information_collection/inventorys/inventorys.h"
+#include "game/entitiy/monster/game_monster.h"
+#include "game/entitiy/monster/spawn_point/spawn_point.h"
 #include "game_session/game_client_packet_handler.h"
 #include "managers/character_info_manager/character_info_storage_manager.h"
 #include "src/utility/components/transform/transform.h"
 #include "string_utils/string_utils.h"
 #include "game/map/map_object/map_object.h"
+#include "map_object/xblock/map_xblock.h"
 
 MapInstance::MapInstance(const int32_t mapId):
 	_map_id(mapId)
@@ -81,14 +84,70 @@ auto MapInstance::BroadCastAddCharacter(std::shared_ptr<GameSession> session) ->
 			inventoryInfo = std::static_pointer_cast<Inventorys>(baseInfo);
 
 			eqpItems = inventoryInfo->AllItems(Protocol::kInventoryEquipped);
-			for (auto eqp : eqpItems)
+			for (const auto eqp : eqpItems)
 			{
-				auto item = respawnTargetPlayerPkt.add_items();
+				const auto item = respawnTargetPlayerPkt.add_items();
 				item->set_position(eqp.first);
 				item->set_itemid(eqp.second);
 			}
 
 			session->Send(GameClientPacketHandler::MakeSendBuffer(respawnTargetPlayerPkt));
+		}
+	}
+}
+
+auto MapInstance::Respawn() -> void
+{
+	if (_characters.empty())
+	{
+		return;
+	}
+
+	for (const auto& regionPoint : _region_points)
+	{
+		const auto iterator = _monsters.find(regionPoint);
+
+		if (iterator == _monsters.end())
+		{
+			auto monster = GameMonster::Create(regionPoint);
+			_monsters.emplace(regionPoint, monster);
+
+			Protocol::GameServerRespawnMonster sendPkt;
+			const auto transform = monster->GetTransform();
+			sendPkt.set_object_id(monster->GetObjectId());
+			sendPkt.set_monster_id(regionPoint->GetSpawnNpcId());
+			sendPkt.set_hp(50);
+			sendPkt.set_is_spawn(true);
+
+			const auto right = transform->GetState(Transform::kState::kStateRight);
+			const auto sendRight = sendPkt.mutable_right();
+			sendRight->set_x(right.x);
+			sendRight->set_y(right.y);
+			sendRight->set_z(right.z);
+
+			const auto up = transform->GetState(Transform::kState::kStateUp);
+			const auto sendUp = sendPkt.mutable_up();
+			sendUp->set_x(up.x);
+			sendUp->set_y(up.y);
+			sendUp->set_z(up.z);
+
+			const auto look = transform->GetState(Transform::kState::kStateLook);
+			const auto sendLook = sendPkt.mutable_look();
+			sendLook->set_x(look.x);
+			sendLook->set_y(look.y);
+			sendLook->set_z(look.z);
+
+			const auto position = transform->GetState(Transform::kState::kStatePosition);
+			const auto sendPosition = sendPkt.mutable_position();
+			sendPosition->set_x(position.x);
+			sendPosition->set_y(position.y);
+			sendPosition->set_z(position.z);
+
+			const auto sendBuf = GameClientPacketHandler::MakeSendBuffer(sendPkt);
+			for (const auto& character : _characters)
+			{
+				character.second->Send(sendBuf);
+			}
 		}
 	}
 }
@@ -112,30 +171,30 @@ auto MapInstance::GetSpawnPoint(const int32_t index) -> const _float3* const
 	return &_spawn_points[index];
 }
 
-auto MapInstance::SetRegionPoint(std::vector<_float3> sp) -> void
+auto MapInstance::SetRegionPoint(std::vector<std::shared_ptr<SpawnPoint>> sp) -> void
 {
 	_region_points = sp;
 }
 
-auto MapInstance::GetRegionPoint(const int32_t index) -> const _float3* const
+auto MapInstance::GetRegionPoint(const int32_t index) -> std::shared_ptr<SpawnPoint>
 {
 	if (index >=_region_points.size())
 	{
 		return nullptr;
 	}
-	return &_region_points[index];
+	return _region_points[index];
 }
 
 auto MapInstance::AddObjects(std::vector<MapManager::MapEntity> objects) -> void
 {
 	for (auto& object : objects)
 	{
-		//auto block = MapObject::Create(object);
-		//_objects.push_back(block);
+		auto block = MapXblock::Create(object);
+		_objects.push_back(block);
 	}
 }
 
-auto MapInstance::GetObjects() const -> std::vector<std::shared_ptr<MapObject>>
+auto MapInstance::GetObjects() const -> std::vector<std::shared_ptr<MapXblock>>
 {
 	return _objects;
 }

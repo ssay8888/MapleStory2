@@ -37,12 +37,13 @@ HRESULT Monster::NativeConstruct(void* arg)
 		return E_FAIL;
 	}
 
-	_monster_info = *static_cast<std::shared_ptr<DataReaderManager::MonsterInfo>*>(arg);
+	auto monsterInfo = static_cast<Protocol::GameServerRespawnMonster*>(arg);
 
-	if (_monster_info == nullptr)
+	if (monsterInfo == nullptr)
 	{
 		return E_FAIL;
 	}
+	_monster_info = *monsterInfo;
 	_monster_stat = MakeShared<MonsterStats>(_monster_info);
 
 	if(FAILED(AddComponents()))
@@ -156,7 +157,7 @@ auto Monster::GetBlockRangeAabb() const -> std::shared_ptr<Collider>
 	return _block_range_aabb_com;
 }
 
-auto Monster::GetMonsterInfo() const -> std::shared_ptr<DataReaderManager::MonsterInfo>
+auto Monster::GetMonsterInfo() const -> Protocol::GameServerRespawnMonster
 {
 	return _monster_info;
 }
@@ -206,17 +207,23 @@ auto Monster::AddComponents() -> HRESULT
 {
 
 	const auto gameLogicManager = GameLogicQueue::GetInstance();
+	auto monsterInfo = DataReaderManager::GetInstance().FindMonsterInfo(_monster_info.monster_id());
 	/* Com_Transform */
 	Transform::TransformDesc		transformDesc;
-	transformDesc.speed_per_sec = _monster_info->model.walk_speed / 150.f;
+	transformDesc.speed_per_sec = monsterInfo->model.walk_speed / 150.f;
 	transformDesc.rotation_per_sec = D3DXToRadian(90.0);
 
 	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
 		return E_FAIL;
-	
-	_transform_com->SetScale(_monster_info->model.scale, _monster_info->model.scale, _monster_info->model.scale);
-	_transform_com->SetState(Transform::kState::kStatePosition, _float3((float)Randomizer::Rand(0.8, 4.64),
-		(float)Randomizer::Rand(12.77, 16.77), 9.02f));
+
+	const auto right = _monster_info.right();
+	const auto up = _monster_info.up();
+	const auto look = _monster_info.look();
+	const auto position = _monster_info.position();
+	_transform_com->SetState(Transform::kState::kStateRight, _float3(right.x(), right.y(), right.z()));
+	_transform_com->SetState(Transform::kState::kStateUp, _float3(up.x(), up.y(), up.z()));
+	_transform_com->SetState(Transform::kState::kStateLook, _float3(look.x(), look.y(), look.z()));
+	_transform_com->SetState(Transform::kState::kStatePosition, _float3(position.x(), position.y(), position.z()));
 
 
 	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_Shader_Mesh"), TEXT("Com_Shader"), reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
@@ -225,10 +232,10 @@ auto Monster::AddComponents() -> HRESULT
 	Collider::TagColliderDesc		ColliderDesc;
 	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
 	ColliderDesc.scale = _float3(
-		_monster_info->collision.width / 2 / 100.f,
-		_monster_info->collision.height / 2 / 100.f,
-		_monster_info->collision.depth / 2 / 100.f);
-	ColliderDesc.init_pos = _float3(0.f, (_monster_info->collision.height / 2 / 100.f) * 0.5f, 0.f);
+		monsterInfo->collision.width / 2 / 100.f,
+		monsterInfo->collision.height / 2 / 100.f,
+		monsterInfo->collision.depth / 2 / 100.f);
+	ColliderDesc.init_pos = _float3(0.f, (monsterInfo->collision.height / 2 / 100.f) * 0.5f, 0.f);
 
 	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_OBB"), TEXT("Com_Shose_Obb"), reinterpret_cast<std::shared_ptr<Component>*>(&_obb_com), &ColliderDesc)))
 		return E_FAIL;
@@ -277,7 +284,7 @@ auto Monster::AddComponents() -> HRESULT
 		return E_FAIL;
 
 	const int32_t idleIndex = AnimationLoad();
-	if (idleIndex == -1)
+	if (FAILED(idleIndex))
 	{
 		return E_FAIL;
 	}
@@ -299,7 +306,8 @@ auto Monster::AddComponents() -> HRESULT
 
 auto Monster::AnimationLoad() -> int32_t
 {
-	const auto animationNames = DataReaderManager::GetInstance().FindAnyKey(_monster_info->id);
+	auto monsterInfo = DataReaderManager::GetInstance().FindMonsterInfo(_monster_info.monster_id());
+	const auto animationNames = DataReaderManager::GetInstance().FindAnyKey(monsterInfo->id);
 
 	if (animationNames == nullptr)
 	{
@@ -312,7 +320,7 @@ auto Monster::AnimationLoad() -> int32_t
 	{
 		std::wstring prototypeName(TEXT("Prototype_Npc_"));
 		auto Seq = animation.second;
-		prototypeName.append(std::to_wstring(_monster_info->id)).append(L"_");
+		prototypeName.append(std::to_wstring(monsterInfo->id)).append(L"_");
 		auto name = Seq->name;
 		StringUtils::ToLower(name);
 		prototypeName.append(name).append(L".x");

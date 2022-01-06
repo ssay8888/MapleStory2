@@ -14,7 +14,6 @@ public:
 	virtual	auto Tick()->void = 0;
 	virtual	auto LateTick()->void = 0;
 
-private:
 
 private:
 	std::shared_ptr<Transform>		_transform_com = nullptr;

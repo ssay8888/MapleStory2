@@ -43,7 +43,18 @@ auto GameLogicQueue::MovePlayer(PacketSessionRef session, Protocol::GameServerMo
 		transform->SetState(Transform::kState::kStatePosition, _float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
 		transform->SetUpRotation(_float3(0.f, 1.f, 0.f), pkt.radian());
 		userObject->ChangeAnimation(static_cast<kAnimationType>(pkt.state()));
+	}
+}
 
+auto GameLogicQueue::RespawnMonster(PacketSessionRef session, Protocol::GameServerRespawnMonster pkt) -> void
+{
+	auto& objectManager = ObjectManager::GetInstance();
+
+	wchar_t LayerTag[MAX_PATH];
+	swprintf_s(LayerTag, L"Layer_Monster_%lld", pkt.object_id());
+	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_Mesh_Monster"), LayerTag, &pkt)))
+	{
+		GetInstance()->DoAsync(&GameLogicQueue::RespawnMonster, session, pkt);
 	}
 }
 

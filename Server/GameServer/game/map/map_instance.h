@@ -1,6 +1,8 @@
 #pragma once
 #include "map_manager.h"
 #include "game_session/game_client_packet_handler.h"
+class MapXblock;
+class GameMonster;
 class MapObject;
 class GameCharacter;
 
@@ -22,24 +24,29 @@ public:
 	auto BroadCastAddCharacter(std::shared_ptr<GameSession> session)->void;
 
 public:
+	auto Respawn()->void;
+
+public:
 	auto GetMapId()const->int32_t;
 
 	auto SetSpawnPoint(std::vector<_float3> sp)->void;
 	auto GetSpawnPoint(int32_t index)->const _float3* const;
 
-	auto SetRegionPoint(std::vector<_float3> sp)->void;
-	auto GetRegionPoint(int32_t index)->const _float3* const;
+	auto SetRegionPoint(std::vector<std::shared_ptr<SpawnPoint>> sp)->void;
+	auto GetRegionPoint(int32_t index)->std::shared_ptr<SpawnPoint>;
 
 	auto AddObjects(std::vector<MapManager::MapEntity> objects)->void;
-	auto GetObjects()const->std::vector<std::shared_ptr<MapObject>>;
+	auto GetObjects()const->std::vector<std::shared_ptr<MapXblock>>;
 
 
 private:
-	const int32_t			_map_id;
-	std::vector<_float3>	_spawn_points;
-	std::vector<_float3>	_region_points;
-	std::vector<std::shared_ptr<MapObject>>	_objects;
-	std::map<int64_t, std::shared_ptr<GameSession>> _characters;
+	const int32_t														_map_id;
+
+	std::vector<_float3>													_spawn_points;
+	std::vector<std::shared_ptr<SpawnPoint>>								_region_points;
+	std::vector<std::shared_ptr<MapXblock>>									_objects;
+	std::map<int64_t, std::shared_ptr<GameSession>>							_characters;
+	std::map<std::shared_ptr<SpawnPoint>, std::shared_ptr<GameMonster>>		_monsters;
 };
 
 template <typename T>

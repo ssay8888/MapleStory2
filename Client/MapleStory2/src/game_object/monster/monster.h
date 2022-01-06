@@ -1,5 +1,6 @@
 #pragma once
 #include "data_reader/data_reader_manager.h"
+#include "protocol/game_protocol.pb.h"
 #include "src/utility/game_objects/game_object.h"
 
 class MonsterState;
@@ -49,7 +50,7 @@ public:
 	auto GetMonsterColliderAabb()const->std::shared_ptr<Collider>;
 	auto GetReloadRangeAabb()const->std::vector<std::shared_ptr<Collider>>;
 	auto GetBlockRangeAabb()const->std::shared_ptr<Collider>;
-	auto GetMonsterInfo()const->std::shared_ptr<DataReaderManager::MonsterInfo>;
+	auto GetMonsterInfo()const->Protocol::GameServerRespawnMonster;
 	auto GetAnimationPeriod(kMonsterState type)->double;
 	auto GetAnimationTimeAcc()->double;
 	auto GetStateIndex(kMonsterState state)->int32_t;
@@ -75,7 +76,7 @@ private:
 	std::map<int32_t, std::shared_ptr<MeshDynamic>>						_mesh_list; 
 	std::vector<std::shared_ptr<MapObject>>								_map_objects;
 
-	std::shared_ptr<DataReaderManager::MonsterInfo>						_monster_info;
+	Protocol::GameServerRespawnMonster									_monster_info;
 	std::shared_ptr<MonsterStats>										_monster_stat;
 
 	std::map<int32_t, std::shared_ptr<MonsterState>>					_monster_states;

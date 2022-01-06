@@ -52,7 +52,7 @@ auto MonsterWalkState::LateTick(const double timeDelta, std::shared_ptr<Monster>
 {
 	ReloadMapObject(monster);
 	monster->PlayAnimation(timeDelta);
-	auto kfm = DataReaderManager::GetInstance().FindAnyKey(monster->GetMonsterInfo()->id);
+	auto kfm = DataReaderManager::GetInstance().FindAnyKey(monster->GetMonsterInfo().monster_id());
 
 	auto index = monster->GetStateIndex(Monster::kMonsterState::kIdleA);
 	auto seq = kfm->seqs[index];

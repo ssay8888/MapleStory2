@@ -9,9 +9,12 @@
 HRESULT GameLogicManager::InitDevice(const HINSTANCE hInst, const HWND hWnd, const int32_t numLevel)
 {
 
-	if (FAILED(InputDevice::GetInstance().InitDevice(hInst, hWnd)))
+	if (hInst && hWnd)
 	{
-		return E_FAIL;
+		if (FAILED(InputDevice::GetInstance().InitDevice(hInst, hWnd)))
+		{
+			return E_FAIL;
+		}
 	}
 
 	if (FAILED(ObjectManager::GetInstance().ReserveContainer(numLevel)))

@@ -5,6 +5,7 @@
 #include <sstream>
 #include "map_instance.h"
 #include "data_reader/data_reader_manager.h"
+#include "game/entitiy/monster/spawn_point/spawn_point.h"
 #include "map_object/map_object.h"
 
 MapManager::MapManager()
@@ -14,12 +15,17 @@ MapManager::MapManager()
 
 auto MapManager::FindMapInstance(const int32_t mapId) -> std::shared_ptr<MapInstance>
 {
-	auto iterator = _maps.find(mapId);
+	const auto iterator = _maps.find(mapId);
 	if (iterator != _maps.end())
 	{
 		return iterator->second;
 	}
 	return nullptr;
+}
+
+auto MapManager::AllMapInstance() const -> std::vector<std::shared_ptr<MapInstance>>
+{
+	return _map_instances;
 }
 
 auto MapManager::LoadMapInstance() -> void
@@ -30,12 +36,14 @@ auto MapManager::LoadMapInstance() -> void
 	{
 		if (const auto spawnPoint = MapSpawnPointParsing(fieldDataPair.second->environment.name); !spawnPoint.empty())
 		{
-			const auto MapObjects = MapPasing(fieldDataPair.second->environment.name);
-			const auto Regions = MapResionPointParsing(fieldDataPair.second->environment.name);
+			const auto mapObjects = MapPasing(fieldDataPair.second->environment.name);
+			const auto regions = MapResionPointParsing(fieldDataPair.second->environment.name);
 			auto mapInstance = std::make_shared<MapInstance>(fieldDataPair.first);
 			mapInstance->SetSpawnPoint(spawnPoint);
-			mapInstance->AddObjects(MapObjects);
+			mapInstance->SetRegionPoint(regions);
+			mapInstance->AddObjects(mapObjects);
 			_maps.emplace(fieldDataPair.first, mapInstance);
+			_map_instances.push_back(mapInstance);
 		}
 	}
 }
@@ -131,13 +139,13 @@ auto MapManager::MapSpawnPointParsing(const std::wstring name) -> std::vector<_f
 	return positions;
 }
 
-auto MapManager::MapResionPointParsing(std::wstring name) -> std::vector<_float3>
+auto MapManager::MapResionPointParsing(std::wstring name) -> std::vector<std::shared_ptr<SpawnPoint>>
 {
 	pugi::xml_document doc;
 	wchar_t xmlPath[100] = L"";
 	swprintf_s(xmlPath, L"../../Binary/Resources/MapData/%s.xblock", name.c_str());
 	auto err = doc.load_file(xmlPath);
-	std::vector<_float3> positions;
+	std::vector<std::shared_ptr<SpawnPoint>> positions;
 	if (err.status == pugi::status_ok)
 	{
 		const auto data = doc.select_nodes("game/entitySet/entity");
@@ -150,9 +158,8 @@ auto MapManager::MapResionPointParsing(std::wstring name) -> std::vector<_float3
 			{
 				auto posValue = entity.node().attribute("value").value();
 				std::istringstream ss(posValue);
-				std::string temp;
-				std::vector<float> values;
 
+				auto spawnPoint = std::make_shared<SpawnPoint>();
 				for (auto& property : entity.node())
 				{
 					if (!strcmp(property.attribute("name").value(), "Position"))
@@ -169,11 +176,19 @@ auto MapManager::MapResionPointParsing(std::wstring name) -> std::vector<_float3
 							}
 							if (values.size() >= 3)
 							{
-								positions.push_back(_float3(values[0] / 150.f * 0.58f, values[2] / 150.f * 0.58f, values[1] / 150.f * 0.58f));
+								spawnPoint->SetPosition(_float3(values[0] / 150.f * 0.58f, values[2] / 150.f * 0.58f, values[1] / 150.f * 0.58f));
 							}
+						}
+					} else if (!strcmp(property.attribute("name").value(), "spawnMonster"))
+					{
+						for (auto& value : property)
+						{
+							int32_t spawnNpcId = std::stoi(value.attribute("value").value());
+							spawnPoint->SetSpawnNpcId(spawnNpcId);
 						}
 					}
 				}
+				positions.push_back(spawnPoint);
 			}
 		}
 	}
