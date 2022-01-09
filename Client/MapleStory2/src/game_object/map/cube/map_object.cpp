@@ -34,10 +34,10 @@ auto MapObject::NativeConstruct(void* arg)->HRESULT
 
 auto MapObject::Tick(double timeDelta)-> int32_t
 {
-	if (_aabb_com)
-	{
-		_aabb_com->UpdateCollider();
-	}
+	//if (_aabb_com)
+	//{
+	//	_aabb_com->UpdateCollider();
+	//}
 	return S_OK;
 }
 
@@ -137,6 +137,7 @@ auto MapObject::AddComponents(MapParser::MapEntity& entity) -> HRESULT
 
 	}
 
+	_transform_com->SetScale((_scale * 0.01f), (_scale * 0.01f), (_scale * 0.01f));
 
 	Collider::TagColliderDesc		ColliderDesc;
 	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
@@ -162,13 +163,18 @@ auto MapObject::AddComponents(MapParser::MapEntity& entity) -> HRESULT
 			}
 		}
 	}
+
+
+
 	if (FAILED(AddComponent(entity.scene, std::wstring(L"Prototype_Mesh_Cube_").append(FileUtils::ConvertCtoW(entity.modelName.c_str())), TEXT("Com_Mesh"), reinterpret_cast<std::shared_ptr<Component>*>(&_mesh_com))))
 		return E_FAIL;
 
-	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_AABB"), reinterpret_cast<std::shared_ptr<Component>*>(&_aabb_com), &ColliderDesc)))
-		return E_FAIL;
-
-	_transform_com->SetScale((_scale * 0.01f), (_scale * 0.01f), (_scale * 0.01f));
+	if (entity.modelName.find("_fi_") == std::string::npos)
+	{
+		if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_AABB"), reinterpret_cast<std::shared_ptr<Component>*>(&_aabb_com), &ColliderDesc)))
+			return E_FAIL;
+		_aabb_com->UpdateCollider();
+	}
 
 	return S_OK;
 }

@@ -11,6 +11,9 @@ public:
 
 public:
 	static auto Create(int64_t characterId)->std::shared_ptr<GameCharacter>;
+public:
+	auto Tick(double timeDelta) -> void override;
+	auto LateTick(double timeDelta) -> void override;
 
 public:
 	auto GetCharacterId()const->int64_t;
@@ -21,6 +24,7 @@ public:
 	auto GetMapId()const->int32_t;
 	auto GetSpawnPoint()const->int32_t;
 	auto GetTransForm()const->std::shared_ptr<Transform>;
+
 private:
 	auto NativeConstruct()->HRESULT;
 

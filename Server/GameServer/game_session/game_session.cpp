@@ -6,6 +6,7 @@
 #include "game/entitiy/character/game_character.h"
 #include "game/map/map_instance.h"
 #include "game/map/map_manager.h"
+#include "game_tick/game_tick.h"
 #include "managers/character_info_manager/character_info_storage_manager.h"
 
 static std::atomic<int> g_session_id = 1;
@@ -30,7 +31,7 @@ auto GameSession::OnDisconnected() -> void
 	GameSessionManager::GetInstance().GameSessionRemove(gameSession);
 
 	const auto mapInstance = MapManager::GetInstance().FindMapInstance(_character->GetMapId());
-	mapInstance->DoAsync(&MapInstance::RemoveCharacter, _character->GetCharacterId());
+	GameTick::GetInstance()->DoAsync(&GameTick::RemoveCharacter, mapInstance, _character->GetCharacterId());
 
 	const auto& InfoStorageManager = CharacterInfoStorageManager::GetInstance();
 	auto result = InfoStorageManager.RemoveAllInfo(_character->GetCharacterId());

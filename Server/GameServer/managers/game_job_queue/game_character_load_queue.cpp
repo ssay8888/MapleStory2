@@ -9,6 +9,7 @@
 #include "game/map/map_instance.h"
 #include "game/map/map_manager.h"
 #include "game_session/game_client_packet_handler.h"
+#include "game_tick/game_tick.h"
 #include "managers/auth_manager/game_auth_manager.h"
 #include "managers/character_info_manager/character_info_storage_manager.h"
 #include "src/database/db_connection_pool.h"
@@ -45,8 +46,8 @@ auto GameCharacterLoadQueue::GameClientLoadingResponse(PacketSessionRef session,
 	if (gameSession->GetPlayer())
 	{
 		const auto mapInstance = MapManager::GetInstance().FindMapInstance(gameSession->GetPlayer()->GetMapId());
-		mapInstance->DoAsync(&MapInstance::AddCharacter, gameSession);
-		mapInstance->DoAsync(&MapInstance::BroadCastAddCharacter, gameSession);
+		GameTick::GetInstance()->DoAsync(&GameTick::AddCharcter, mapInstance, gameSession);
+		GameTick::GetInstance()->DoAsync(&GameTick::BroadCastAddCharacter, mapInstance, gameSession);
 	}
 }
 

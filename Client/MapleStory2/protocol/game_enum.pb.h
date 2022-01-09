@@ -108,6 +108,42 @@ inline bool kLoadState_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kLoadState>(
     kLoadState_descriptor(), name, value);
 }
+enum kMonsterState : int {
+  kIdleA = 0,
+  kWalkA = 1,
+  kBoreA = 2,
+  kRegenA = 3,
+  kRunA = 4,
+  kDeadA = 5,
+  kDeadB = 6,
+  kAttackA = 7,
+  kAttackB = 8,
+  kAttackC = 9,
+  kDamgA = 10,
+  kDamgB = 11,
+  kDamgC = 12,
+  kMonsterState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  kMonsterState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool kMonsterState_IsValid(int value);
+constexpr kMonsterState kMonsterState_MIN = kIdleA;
+constexpr kMonsterState kMonsterState_MAX = kDamgC;
+constexpr int kMonsterState_ARRAYSIZE = kMonsterState_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kMonsterState_descriptor();
+template<typename T>
+inline const std::string& kMonsterState_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, kMonsterState>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function kMonsterState_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    kMonsterState_descriptor(), enum_t_value);
+}
+inline bool kMonsterState_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, kMonsterState* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kMonsterState>(
+    kMonsterState_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -139,6 +175,11 @@ template <> struct is_proto_enum< ::Protocol::kLoadState> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kLoadState>() {
   return ::Protocol::kLoadState_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::kMonsterState> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kMonsterState>() {
+  return ::Protocol::kMonsterState_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

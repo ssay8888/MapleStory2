@@ -17,6 +17,8 @@
 #include "src/utility/components/manager/component_manager.h"
 #include "src/utility/game_logic_manager/game_logic_manager.h"
 
+std::atomic<int64_t> default_object_id = 1;
+
 void GameServer::GameServerInit()
 {
 	if (SUCCEEDED(GraphicDevice::GetInstance().ReadyGraphicDevice(NULL, GraphicDevice::kWindowMode::kModeWin, 1280, 720, nullptr)))

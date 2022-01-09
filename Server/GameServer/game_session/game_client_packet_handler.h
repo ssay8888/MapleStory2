@@ -13,6 +13,7 @@ enum : uint16_t
 	kPktGameClientMovePlayer = 2005,
 	kPktGameServerMovePlayer = 2006,
 	kPktGameServerRespawnMonster = 2007,
+	kPktGameServerMoveMonster = 2008,
 };
 
 
@@ -46,6 +47,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerRespawnPlayer& pkt) { return MakeSendBuffer(pkt, kPktGameServerRespawnPlayer); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerMovePlayer& pkt) { return MakeSendBuffer(pkt, kPktGameServerMovePlayer); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerRespawnMonster& pkt) { return MakeSendBuffer(pkt, kPktGameServerRespawnMonster); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameServerMoveMonster& pkt) { return MakeSendBuffer(pkt, kPktGameServerMoveMonster); }
 
 private:
 	template<typename PacketType, typename ProcessFunc>

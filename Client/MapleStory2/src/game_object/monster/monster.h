@@ -16,23 +16,6 @@ public:
 	explicit Monster(const ComPtr<IDirect3DDevice9>& device);
 	virtual ~Monster() = default;
 
-	enum class kMonsterState
-	{
-		kIdleA,
-		kWalkA,
-		kBoreA,
-		kRegenA,
-		kRunA,
-		kDeadA,
-		kDeadB,
-		kAttackA,
-		kAttackB,
-		kAttackC,
-		kDamgA,
-		kDamgB,
-		kDamgC,
-	};
-
 public:
 	auto NativeConstructPrototype() -> HRESULT override;
 	auto NativeConstruct(void* arg) -> HRESULT override;
@@ -51,14 +34,16 @@ public:
 	auto GetReloadRangeAabb()const->std::vector<std::shared_ptr<Collider>>;
 	auto GetBlockRangeAabb()const->std::shared_ptr<Collider>;
 	auto GetMonsterInfo()const->Protocol::GameServerRespawnMonster;
-	auto GetAnimationPeriod(kMonsterState type)->double;
+	auto GetAnimationPeriod(Protocol::kMonsterState type)->double;
 	auto GetAnimationTimeAcc()->double;
-	auto GetStateIndex(kMonsterState state)->int32_t;
+	auto GetStateIndex(Protocol::kMonsterState state)->int32_t;
+	auto GetMonsterState(Protocol::kMonsterState state)->std::shared_ptr<MonsterState>;
+	auto GetCurrentState()const->std::shared_ptr<MonsterState>;
 
 	auto PlayAnimation(double timeDelta)->void;
 
-	auto ChangeAnimation(kMonsterState index)->void;
-	auto ChangeMonsterState(int32_t index)->void;
+	auto ChangeAnimation(Protocol::kMonsterState index)->void;
+	auto ChangeMonsterState(int32_t index)->bool;
 
 private:
 	auto AddComponents()->HRESULT;
@@ -80,8 +65,8 @@ private:
 	std::shared_ptr<MonsterStats>										_monster_stat;
 
 	std::map<int32_t, std::shared_ptr<MonsterState>>					_monster_states;
-	std::map<kMonsterState, int32_t>									_state_index;
-	std::map<kMonsterState, int32_t>									_animaion_index;
+	std::map<Protocol::kMonsterState, int32_t>							_state_index;
+	std::map<Protocol::kMonsterState, int32_t>							_animaion_index;
 	std::shared_ptr<MonsterState>										_current_monster_state;
 
 

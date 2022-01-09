@@ -18,7 +18,7 @@
 PROTOBUF_PRAGMA_INIT_SEG
 namespace Protocol {
 }  // namespace Protocol
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_game_5fenum_2eproto[2];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_game_5fenum_2eproto[3];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_game_5fenum_2eproto = nullptr;
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fenum_2eproto::offsets[1] = {};
 static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = nullptr;
@@ -29,11 +29,16 @@ const char descriptor_table_protodef_game_5fenum_2eproto[] PROTOBUF_SECTION_VARI
   "yType\022\026\n\022kInventoryEquipped\020\000\022\021\n\rkInvent"
   "oryEqp\020\001\022\021\n\rkInventoryEtc\020\002\022\021\n\rkInventor"
   "yEnd\020\003*/\n\nkLoadState\022\020\n\014kLoadSuccess\020\000\022\017"
-  "\n\013kLoadFailed\020\001b\006proto3"
+  "\n\013kLoadFailed\020\001*\261\001\n\rkMonsterState\022\n\n\006kId"
+  "leA\020\000\022\n\n\006kWalkA\020\001\022\n\n\006kBoreA\020\002\022\013\n\007kRegenA"
+  "\020\003\022\t\n\005kRunA\020\004\022\n\n\006kDeadA\020\005\022\n\n\006kDeadB\020\006\022\014\n"
+  "\010kAttackA\020\007\022\014\n\010kAttackB\020\010\022\014\n\010kAttackC\020\t\022"
+  "\n\n\006kDamgA\020\n\022\n\n\006kDamgB\020\013\022\n\n\006kDamgC\020\014b\006pro"
+  "to3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fenum_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fenum_2eproto = {
-  false, false, 183, descriptor_table_protodef_game_5fenum_2eproto, "game_enum.proto", 
+  false, false, 363, descriptor_table_protodef_game_5fenum_2eproto, "game_enum.proto", 
   &descriptor_table_game_5fenum_2eproto_once, nullptr, 0, 0,
   schemas, file_default_instances, TableStruct_game_5fenum_2eproto::offsets,
   nullptr, file_level_enum_descriptors_game_5fenum_2eproto, file_level_service_descriptors_game_5fenum_2eproto,
@@ -69,6 +74,31 @@ bool kLoadState_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kMonsterState_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_game_5fenum_2eproto);
+  return file_level_enum_descriptors_game_5fenum_2eproto[2];
+}
+bool kMonsterState_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
       return true;
     default:
       return false;

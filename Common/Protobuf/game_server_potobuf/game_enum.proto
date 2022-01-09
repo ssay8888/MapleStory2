@@ -14,3 +14,20 @@ enum kLoadState
 	kLoadSuccess = 0;
 	kLoadFailed = 1;
 }
+
+enum kMonsterState
+{
+	kIdleA = 0;
+	kWalkA = 1;
+	kBoreA = 2;
+	kRegenA = 3;
+	kRunA = 4;
+	kDeadA = 5;
+	kDeadB = 6;
+	kAttackA = 7;
+	kAttackB = 8;
+	kAttackC = 9;
+	kDamgA = 10;
+	kDamgB = 11;
+	kDamgC = 12;
+};

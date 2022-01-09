@@ -8,10 +8,13 @@
 
 auto MonsterWalkState::Enter(std::shared_ptr<Monster> monster) -> void
 {
-	int64_t degree = Randomizer::Rand(static_cast<int64_t>(0), 360);
-	_radian = D3DXToRadian(degree);
-	_is_move = true;
-	ReloadMapObject(monster, true);
+	//auto transform = monster->GetTransform();
+	//transform->SetMovingState(true);
+	//int64_t degree = Randomizer::Rand(static_cast<int64_t>(0), 360);
+	//_radian = D3DXToRadian(degree);
+	//_is_move = true;
+	//ReloadMapObject(monster, true);
+	_next_state.set_state(Protocol::kWalkA);
 }
 
 auto MonsterWalkState::HandleInput() -> void
@@ -20,56 +23,78 @@ auto MonsterWalkState::HandleInput() -> void
 
 auto MonsterWalkState::Tick(const double timeDelta, std::shared_ptr<Monster> monster) -> void
 {
-	auto transform = monster->GetTransform();
-	if (_is_move)
-	{
-		transform->SetUpRotation(_float3(0.f, 1.f, 0.f), _radian);
-		transform->BackStraight(timeDelta);
+	const auto transform = monster->GetTransform();
+	//transform->BackStraight(timeDelta);
 
-		monster->GetMonsterColliderAabb()->UpdateCollider();
-		auto range = monster->GetReloadRangeAabb();
-		for (const auto& reload : range)
-		{
-			reload->UpdateCollider();
-		}
-		_last_tile_map_object = LoadLastTile(monster);
-		if (StraightCheck(monster) || !BlockUpCheck(monster))
-		{
-			transform->BackStraight(-timeDelta);
-		}
+	//auto range = monster->GetReloadRangeAabb();
+	//monster->GetMonsterColliderAabb()->UpdateCollider();
+	//for (const auto& reload : range)
+	//{
+	//	reload->UpdateCollider();
+	//}
+	//
+	transform->BackStraight(timeDelta);
+	
 
-		monster->GetMonsterColliderObb()->UpdateCollider();
-		monster->GetMonsterColliderAabb()->UpdateCollider();
-		for (const auto& reload : range)
-		{
-			reload->UpdateCollider();
-		}
-
-	}
 }
 
 auto MonsterWalkState::LateTick(const double timeDelta, std::shared_ptr<Monster> monster) -> void
 {
-	ReloadMapObject(monster);
+	//ReloadMapObject(monster);
 	monster->PlayAnimation(timeDelta);
-	auto kfm = DataReaderManager::GetInstance().FindAnyKey(monster->GetMonsterInfo().monster_id());
-
-	auto index = monster->GetStateIndex(Monster::kMonsterState::kIdleA);
-	auto seq = kfm->seqs[index];
-	auto endTime = seq->key[L"end"];
-	if (monster->GetAnimationTimeAcc() >= endTime * 2.f)
+	const auto transform = monster->GetTransform();
+	_float3 position = transform->GetState(Transform::kState::kStatePosition);
+	_float3	dir = _targetPos - position;
+	const float	distance = D3DXVec3Length(&dir);
+	D3DXVec3Normalize(&dir, &dir);
+	if (distance < 0.01f)
 	{
-		if (Randomizer::IsSuccess(0))
-		{
-			monster->ChangeAnimation(Monster::kMonsterState::kBoreA);
-		}
-		else
-		{
-			monster->ChangeAnimation(Monster::kMonsterState::kIdleA);
-		}
+		transform->SetState(Transform::kState::kStatePosition, _targetPos);
+		monster->ChangeAnimation(_next_state.state());
 	}
+	else if (distance >= 0.2)
+	{
+		transform->SetState(Transform::kState::kStatePosition, _targetPos);
+		monster->ChangeAnimation(_next_state.state());
+	}
+	//auto kfm = DataReaderManager::GetInstance().FindAnyKey(monster->GetMonsterInfo().monster_id());
+
+	//auto index = monster->GetStateIndex(Monster::kMonsterState::kIdleA);
+	//auto seq = kfm->seqs[index];
+	//auto endTime = seq->key[L"end"];
+	//if (monster->GetAnimationTimeAcc() >= endTime * 2.f)
+	//{
+	//	if (Randomizer::IsSuccess(0))
+	//	{
+	//		monster->ChangeAnimation(Monster::kMonsterState::kBoreA);
+	//	}
+	//	else
+	//	{
+	//		monster->ChangeAnimation(Monster::kMonsterState::kIdleA);
+	//	}
+	//}
 }
 
 auto MonsterWalkState::Render(std::shared_ptr<Monster> monster) -> void
 {
+}
+
+auto MonsterWalkState::GetTargetPos() const -> _float3
+{
+	return _targetPos;
+}
+
+auto MonsterWalkState::SetTargeetPos(_float3 pos) -> void
+{
+	_targetPos = pos;
+}
+
+auto MonsterWalkState::GetNextState() const -> Protocol::GameServerMoveMonster
+{
+	return _next_state;
+}
+
+auto MonsterWalkState::SetNextState(Protocol::GameServerMoveMonster state) -> void
+{
+	_next_state = state;
 }

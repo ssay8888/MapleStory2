@@ -99,9 +99,12 @@ auto MapInstance::FindRangeCellObject(const std::shared_ptr<Collider>& targetCol
 	std::vector<std::shared_ptr<MapObject>> objects;
 	for (auto& object : _map_objects)
 	{
-		if (object->GetCollider()->CollisionAabb(targetCollider))
+		if (object->GetCollider())
 		{
-			objects.push_back(object);
+			if (object->GetCollider()->CollisionAabb(targetCollider))
+			{
+				objects.push_back(object);
+			}
 		}
 	}
 	return objects;

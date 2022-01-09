@@ -48,7 +48,7 @@ struct TableStruct_game_5fprotocol_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[8]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[9]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -71,6 +71,9 @@ extern GameServerLoadCharacterDefaultTypeInternal _GameServerLoadCharacter_defau
 class GameServerLogin;
 struct GameServerLoginDefaultTypeInternal;
 extern GameServerLoginDefaultTypeInternal _GameServerLogin_default_instance_;
+class GameServerMoveMonster;
+struct GameServerMoveMonsterDefaultTypeInternal;
+extern GameServerMoveMonsterDefaultTypeInternal _GameServerMoveMonster_default_instance_;
 class GameServerMovePlayer;
 struct GameServerMovePlayerDefaultTypeInternal;
 extern GameServerMovePlayerDefaultTypeInternal _GameServerMovePlayer_default_instance_;
@@ -87,6 +90,7 @@ template<> ::Protocol::GameClientLogin* Arena::CreateMaybeMessage<::Protocol::Ga
 template<> ::Protocol::GameClientMovePlayer* Arena::CreateMaybeMessage<::Protocol::GameClientMovePlayer>(Arena*);
 template<> ::Protocol::GameServerLoadCharacter* Arena::CreateMaybeMessage<::Protocol::GameServerLoadCharacter>(Arena*);
 template<> ::Protocol::GameServerLogin* Arena::CreateMaybeMessage<::Protocol::GameServerLogin>(Arena*);
+template<> ::Protocol::GameServerMoveMonster* Arena::CreateMaybeMessage<::Protocol::GameServerMoveMonster>(Arena*);
 template<> ::Protocol::GameServerMovePlayer* Arena::CreateMaybeMessage<::Protocol::GameServerMovePlayer>(Arena*);
 template<> ::Protocol::GameServerRespawnMonster* Arena::CreateMaybeMessage<::Protocol::GameServerRespawnMonster>(Arena*);
 template<> ::Protocol::GameServerRespawnPlayer* Arena::CreateMaybeMessage<::Protocol::GameServerRespawnPlayer>(Arena*);
@@ -1671,6 +1675,309 @@ class GameServerRespawnMonster final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fprotocol_2eproto;
 };
+// -------------------------------------------------------------------
+
+class GameServerMoveMonster final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.GameServerMoveMonster) */ {
+ public:
+  inline GameServerMoveMonster() : GameServerMoveMonster(nullptr) {}
+  ~GameServerMoveMonster() override;
+  explicit constexpr GameServerMoveMonster(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GameServerMoveMonster(const GameServerMoveMonster& from);
+  GameServerMoveMonster(GameServerMoveMonster&& from) noexcept
+    : GameServerMoveMonster() {
+    *this = ::std::move(from);
+  }
+
+  inline GameServerMoveMonster& operator=(const GameServerMoveMonster& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GameServerMoveMonster& operator=(GameServerMoveMonster&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GameServerMoveMonster& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GameServerMoveMonster* internal_default_instance() {
+    return reinterpret_cast<const GameServerMoveMonster*>(
+               &_GameServerMoveMonster_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  friend void swap(GameServerMoveMonster& a, GameServerMoveMonster& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GameServerMoveMonster* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GameServerMoveMonster* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GameServerMoveMonster* New() const final {
+    return new GameServerMoveMonster();
+  }
+
+  GameServerMoveMonster* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GameServerMoveMonster>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const GameServerMoveMonster& from);
+  void MergeFrom(const GameServerMoveMonster& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GameServerMoveMonster* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.GameServerMoveMonster";
+  }
+  protected:
+  explicit GameServerMoveMonster(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kRightFieldNumber = 3,
+    kUpFieldNumber = 4,
+    kLookFieldNumber = 5,
+    kPositionFieldNumber = 6,
+    kCrightFieldNumber = 7,
+    kCupFieldNumber = 8,
+    kClookFieldNumber = 9,
+    kCpositionFieldNumber = 10,
+    kObjectIdFieldNumber = 1,
+    kStateFieldNumber = 2,
+  };
+  // .Protocol.float3 right = 3;
+  bool has_right() const;
+  private:
+  bool _internal_has_right() const;
+  public:
+  void clear_right();
+  const ::Protocol::float3& right() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::Protocol::float3* release_right();
+  ::Protocol::float3* mutable_right();
+  void set_allocated_right(::Protocol::float3* right);
+  private:
+  const ::Protocol::float3& _internal_right() const;
+  ::Protocol::float3* _internal_mutable_right();
+  public:
+  void unsafe_arena_set_allocated_right(
+      ::Protocol::float3* right);
+  ::Protocol::float3* unsafe_arena_release_right();
+
+  // .Protocol.float3 up = 4;
+  bool has_up() const;
+  private:
+  bool _internal_has_up() const;
+  public:
+  void clear_up();
+  const ::Protocol::float3& up() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::Protocol::float3* release_up();
+  ::Protocol::float3* mutable_up();
+  void set_allocated_up(::Protocol::float3* up);
+  private:
+  const ::Protocol::float3& _internal_up() const;
+  ::Protocol::float3* _internal_mutable_up();
+  public:
+  void unsafe_arena_set_allocated_up(
+      ::Protocol::float3* up);
+  ::Protocol::float3* unsafe_arena_release_up();
+
+  // .Protocol.float3 look = 5;
+  bool has_look() const;
+  private:
+  bool _internal_has_look() const;
+  public:
+  void clear_look();
+  const ::Protocol::float3& look() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::Protocol::float3* release_look();
+  ::Protocol::float3* mutable_look();
+  void set_allocated_look(::Protocol::float3* look);
+  private:
+  const ::Protocol::float3& _internal_look() const;
+  ::Protocol::float3* _internal_mutable_look();
+  public:
+  void unsafe_arena_set_allocated_look(
+      ::Protocol::float3* look);
+  ::Protocol::float3* unsafe_arena_release_look();
+
+  // .Protocol.float3 position = 6;
+  bool has_position() const;
+  private:
+  bool _internal_has_position() const;
+  public:
+  void clear_position();
+  const ::Protocol::float3& position() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::Protocol::float3* release_position();
+  ::Protocol::float3* mutable_position();
+  void set_allocated_position(::Protocol::float3* position);
+  private:
+  const ::Protocol::float3& _internal_position() const;
+  ::Protocol::float3* _internal_mutable_position();
+  public:
+  void unsafe_arena_set_allocated_position(
+      ::Protocol::float3* position);
+  ::Protocol::float3* unsafe_arena_release_position();
+
+  // .Protocol.float3 cright = 7;
+  bool has_cright() const;
+  private:
+  bool _internal_has_cright() const;
+  public:
+  void clear_cright();
+  const ::Protocol::float3& cright() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::Protocol::float3* release_cright();
+  ::Protocol::float3* mutable_cright();
+  void set_allocated_cright(::Protocol::float3* cright);
+  private:
+  const ::Protocol::float3& _internal_cright() const;
+  ::Protocol::float3* _internal_mutable_cright();
+  public:
+  void unsafe_arena_set_allocated_cright(
+      ::Protocol::float3* cright);
+  ::Protocol::float3* unsafe_arena_release_cright();
+
+  // .Protocol.float3 cup = 8;
+  bool has_cup() const;
+  private:
+  bool _internal_has_cup() const;
+  public:
+  void clear_cup();
+  const ::Protocol::float3& cup() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::Protocol::float3* release_cup();
+  ::Protocol::float3* mutable_cup();
+  void set_allocated_cup(::Protocol::float3* cup);
+  private:
+  const ::Protocol::float3& _internal_cup() const;
+  ::Protocol::float3* _internal_mutable_cup();
+  public:
+  void unsafe_arena_set_allocated_cup(
+      ::Protocol::float3* cup);
+  ::Protocol::float3* unsafe_arena_release_cup();
+
+  // .Protocol.float3 clook = 9;
+  bool has_clook() const;
+  private:
+  bool _internal_has_clook() const;
+  public:
+  void clear_clook();
+  const ::Protocol::float3& clook() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::Protocol::float3* release_clook();
+  ::Protocol::float3* mutable_clook();
+  void set_allocated_clook(::Protocol::float3* clook);
+  private:
+  const ::Protocol::float3& _internal_clook() const;
+  ::Protocol::float3* _internal_mutable_clook();
+  public:
+  void unsafe_arena_set_allocated_clook(
+      ::Protocol::float3* clook);
+  ::Protocol::float3* unsafe_arena_release_clook();
+
+  // .Protocol.float3 cposition = 10;
+  bool has_cposition() const;
+  private:
+  bool _internal_has_cposition() const;
+  public:
+  void clear_cposition();
+  const ::Protocol::float3& cposition() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::Protocol::float3* release_cposition();
+  ::Protocol::float3* mutable_cposition();
+  void set_allocated_cposition(::Protocol::float3* cposition);
+  private:
+  const ::Protocol::float3& _internal_cposition() const;
+  ::Protocol::float3* _internal_mutable_cposition();
+  public:
+  void unsafe_arena_set_allocated_cposition(
+      ::Protocol::float3* cposition);
+  ::Protocol::float3* unsafe_arena_release_cposition();
+
+  // int64 object_id = 1;
+  void clear_object_id();
+  ::PROTOBUF_NAMESPACE_ID::int64 object_id() const;
+  void set_object_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_object_id() const;
+  void _internal_set_object_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // .Protocol.kMonsterState state = 2;
+  void clear_state();
+  ::Protocol::kMonsterState state() const;
+  void set_state(::Protocol::kMonsterState value);
+  private:
+  ::Protocol::kMonsterState _internal_state() const;
+  void _internal_set_state(::Protocol::kMonsterState value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.GameServerMoveMonster)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::Protocol::float3* right_;
+  ::Protocol::float3* up_;
+  ::Protocol::float3* look_;
+  ::Protocol::float3* position_;
+  ::Protocol::float3* cright_;
+  ::Protocol::float3* cup_;
+  ::Protocol::float3* clook_;
+  ::Protocol::float3* cposition_;
+  ::PROTOBUF_NAMESPACE_ID::int64 object_id_;
+  int state_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fprotocol_2eproto;
+};
 // ===================================================================
 
 
@@ -3106,9 +3413,687 @@ inline void GameServerRespawnMonster::set_is_spawn(bool value) {
   // @@protoc_insertion_point(field_set:Protocol.GameServerRespawnMonster.is_spawn)
 }
 
+// -------------------------------------------------------------------
+
+// GameServerMoveMonster
+
+// int64 object_id = 1;
+inline void GameServerMoveMonster::clear_object_id() {
+  object_id_ = int64_t{0};
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 GameServerMoveMonster::_internal_object_id() const {
+  return object_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 GameServerMoveMonster::object_id() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerMoveMonster.object_id)
+  return _internal_object_id();
+}
+inline void GameServerMoveMonster::_internal_set_object_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  
+  object_id_ = value;
+}
+inline void GameServerMoveMonster::set_object_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_object_id(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerMoveMonster.object_id)
+}
+
+// .Protocol.kMonsterState state = 2;
+inline void GameServerMoveMonster::clear_state() {
+  state_ = 0;
+}
+inline ::Protocol::kMonsterState GameServerMoveMonster::_internal_state() const {
+  return static_cast< ::Protocol::kMonsterState >(state_);
+}
+inline ::Protocol::kMonsterState GameServerMoveMonster::state() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerMoveMonster.state)
+  return _internal_state();
+}
+inline void GameServerMoveMonster::_internal_set_state(::Protocol::kMonsterState value) {
+  
+  state_ = value;
+}
+inline void GameServerMoveMonster::set_state(::Protocol::kMonsterState value) {
+  _internal_set_state(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerMoveMonster.state)
+}
+
+// .Protocol.float3 right = 3;
+inline bool GameServerMoveMonster::_internal_has_right() const {
+  return this != internal_default_instance() && right_ != nullptr;
+}
+inline bool GameServerMoveMonster::has_right() const {
+  return _internal_has_right();
+}
+inline const ::Protocol::float3& GameServerMoveMonster::_internal_right() const {
+  const ::Protocol::float3* p = right_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::float3&>(
+      ::Protocol::_float3_default_instance_);
+}
+inline const ::Protocol::float3& GameServerMoveMonster::right() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerMoveMonster.right)
+  return _internal_right();
+}
+inline void GameServerMoveMonster::unsafe_arena_set_allocated_right(
+    ::Protocol::float3* right) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(right_);
+  }
+  right_ = right;
+  if (right) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.GameServerMoveMonster.right)
+}
+inline ::Protocol::float3* GameServerMoveMonster::release_right() {
+  
+  ::Protocol::float3* temp = right_;
+  right_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::unsafe_arena_release_right() {
+  // @@protoc_insertion_point(field_release:Protocol.GameServerMoveMonster.right)
+  
+  ::Protocol::float3* temp = right_;
+  right_ = nullptr;
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::_internal_mutable_right() {
+  
+  if (right_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::float3>(GetArenaForAllocation());
+    right_ = p;
+  }
+  return right_;
+}
+inline ::Protocol::float3* GameServerMoveMonster::mutable_right() {
+  // @@protoc_insertion_point(field_mutable:Protocol.GameServerMoveMonster.right)
+  return _internal_mutable_right();
+}
+inline void GameServerMoveMonster::set_allocated_right(::Protocol::float3* right) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(right_);
+  }
+  if (right) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<
+            ::PROTOBUF_NAMESPACE_ID::MessageLite>::GetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(right));
+    if (message_arena != submessage_arena) {
+      right = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, right, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  right_ = right;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.GameServerMoveMonster.right)
+}
+
+// .Protocol.float3 up = 4;
+inline bool GameServerMoveMonster::_internal_has_up() const {
+  return this != internal_default_instance() && up_ != nullptr;
+}
+inline bool GameServerMoveMonster::has_up() const {
+  return _internal_has_up();
+}
+inline const ::Protocol::float3& GameServerMoveMonster::_internal_up() const {
+  const ::Protocol::float3* p = up_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::float3&>(
+      ::Protocol::_float3_default_instance_);
+}
+inline const ::Protocol::float3& GameServerMoveMonster::up() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerMoveMonster.up)
+  return _internal_up();
+}
+inline void GameServerMoveMonster::unsafe_arena_set_allocated_up(
+    ::Protocol::float3* up) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(up_);
+  }
+  up_ = up;
+  if (up) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.GameServerMoveMonster.up)
+}
+inline ::Protocol::float3* GameServerMoveMonster::release_up() {
+  
+  ::Protocol::float3* temp = up_;
+  up_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::unsafe_arena_release_up() {
+  // @@protoc_insertion_point(field_release:Protocol.GameServerMoveMonster.up)
+  
+  ::Protocol::float3* temp = up_;
+  up_ = nullptr;
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::_internal_mutable_up() {
+  
+  if (up_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::float3>(GetArenaForAllocation());
+    up_ = p;
+  }
+  return up_;
+}
+inline ::Protocol::float3* GameServerMoveMonster::mutable_up() {
+  // @@protoc_insertion_point(field_mutable:Protocol.GameServerMoveMonster.up)
+  return _internal_mutable_up();
+}
+inline void GameServerMoveMonster::set_allocated_up(::Protocol::float3* up) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(up_);
+  }
+  if (up) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<
+            ::PROTOBUF_NAMESPACE_ID::MessageLite>::GetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(up));
+    if (message_arena != submessage_arena) {
+      up = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, up, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  up_ = up;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.GameServerMoveMonster.up)
+}
+
+// .Protocol.float3 look = 5;
+inline bool GameServerMoveMonster::_internal_has_look() const {
+  return this != internal_default_instance() && look_ != nullptr;
+}
+inline bool GameServerMoveMonster::has_look() const {
+  return _internal_has_look();
+}
+inline const ::Protocol::float3& GameServerMoveMonster::_internal_look() const {
+  const ::Protocol::float3* p = look_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::float3&>(
+      ::Protocol::_float3_default_instance_);
+}
+inline const ::Protocol::float3& GameServerMoveMonster::look() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerMoveMonster.look)
+  return _internal_look();
+}
+inline void GameServerMoveMonster::unsafe_arena_set_allocated_look(
+    ::Protocol::float3* look) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(look_);
+  }
+  look_ = look;
+  if (look) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.GameServerMoveMonster.look)
+}
+inline ::Protocol::float3* GameServerMoveMonster::release_look() {
+  
+  ::Protocol::float3* temp = look_;
+  look_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::unsafe_arena_release_look() {
+  // @@protoc_insertion_point(field_release:Protocol.GameServerMoveMonster.look)
+  
+  ::Protocol::float3* temp = look_;
+  look_ = nullptr;
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::_internal_mutable_look() {
+  
+  if (look_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::float3>(GetArenaForAllocation());
+    look_ = p;
+  }
+  return look_;
+}
+inline ::Protocol::float3* GameServerMoveMonster::mutable_look() {
+  // @@protoc_insertion_point(field_mutable:Protocol.GameServerMoveMonster.look)
+  return _internal_mutable_look();
+}
+inline void GameServerMoveMonster::set_allocated_look(::Protocol::float3* look) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(look_);
+  }
+  if (look) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<
+            ::PROTOBUF_NAMESPACE_ID::MessageLite>::GetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(look));
+    if (message_arena != submessage_arena) {
+      look = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, look, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  look_ = look;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.GameServerMoveMonster.look)
+}
+
+// .Protocol.float3 position = 6;
+inline bool GameServerMoveMonster::_internal_has_position() const {
+  return this != internal_default_instance() && position_ != nullptr;
+}
+inline bool GameServerMoveMonster::has_position() const {
+  return _internal_has_position();
+}
+inline const ::Protocol::float3& GameServerMoveMonster::_internal_position() const {
+  const ::Protocol::float3* p = position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::float3&>(
+      ::Protocol::_float3_default_instance_);
+}
+inline const ::Protocol::float3& GameServerMoveMonster::position() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerMoveMonster.position)
+  return _internal_position();
+}
+inline void GameServerMoveMonster::unsafe_arena_set_allocated_position(
+    ::Protocol::float3* position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(position_);
+  }
+  position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.GameServerMoveMonster.position)
+}
+inline ::Protocol::float3* GameServerMoveMonster::release_position() {
+  
+  ::Protocol::float3* temp = position_;
+  position_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::unsafe_arena_release_position() {
+  // @@protoc_insertion_point(field_release:Protocol.GameServerMoveMonster.position)
+  
+  ::Protocol::float3* temp = position_;
+  position_ = nullptr;
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::_internal_mutable_position() {
+  
+  if (position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::float3>(GetArenaForAllocation());
+    position_ = p;
+  }
+  return position_;
+}
+inline ::Protocol::float3* GameServerMoveMonster::mutable_position() {
+  // @@protoc_insertion_point(field_mutable:Protocol.GameServerMoveMonster.position)
+  return _internal_mutable_position();
+}
+inline void GameServerMoveMonster::set_allocated_position(::Protocol::float3* position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(position_);
+  }
+  if (position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<
+            ::PROTOBUF_NAMESPACE_ID::MessageLite>::GetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(position));
+    if (message_arena != submessage_arena) {
+      position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  position_ = position;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.GameServerMoveMonster.position)
+}
+
+// .Protocol.float3 cright = 7;
+inline bool GameServerMoveMonster::_internal_has_cright() const {
+  return this != internal_default_instance() && cright_ != nullptr;
+}
+inline bool GameServerMoveMonster::has_cright() const {
+  return _internal_has_cright();
+}
+inline const ::Protocol::float3& GameServerMoveMonster::_internal_cright() const {
+  const ::Protocol::float3* p = cright_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::float3&>(
+      ::Protocol::_float3_default_instance_);
+}
+inline const ::Protocol::float3& GameServerMoveMonster::cright() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerMoveMonster.cright)
+  return _internal_cright();
+}
+inline void GameServerMoveMonster::unsafe_arena_set_allocated_cright(
+    ::Protocol::float3* cright) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(cright_);
+  }
+  cright_ = cright;
+  if (cright) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.GameServerMoveMonster.cright)
+}
+inline ::Protocol::float3* GameServerMoveMonster::release_cright() {
+  
+  ::Protocol::float3* temp = cright_;
+  cright_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::unsafe_arena_release_cright() {
+  // @@protoc_insertion_point(field_release:Protocol.GameServerMoveMonster.cright)
+  
+  ::Protocol::float3* temp = cright_;
+  cright_ = nullptr;
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::_internal_mutable_cright() {
+  
+  if (cright_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::float3>(GetArenaForAllocation());
+    cright_ = p;
+  }
+  return cright_;
+}
+inline ::Protocol::float3* GameServerMoveMonster::mutable_cright() {
+  // @@protoc_insertion_point(field_mutable:Protocol.GameServerMoveMonster.cright)
+  return _internal_mutable_cright();
+}
+inline void GameServerMoveMonster::set_allocated_cright(::Protocol::float3* cright) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(cright_);
+  }
+  if (cright) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<
+            ::PROTOBUF_NAMESPACE_ID::MessageLite>::GetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(cright));
+    if (message_arena != submessage_arena) {
+      cright = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, cright, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  cright_ = cright;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.GameServerMoveMonster.cright)
+}
+
+// .Protocol.float3 cup = 8;
+inline bool GameServerMoveMonster::_internal_has_cup() const {
+  return this != internal_default_instance() && cup_ != nullptr;
+}
+inline bool GameServerMoveMonster::has_cup() const {
+  return _internal_has_cup();
+}
+inline const ::Protocol::float3& GameServerMoveMonster::_internal_cup() const {
+  const ::Protocol::float3* p = cup_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::float3&>(
+      ::Protocol::_float3_default_instance_);
+}
+inline const ::Protocol::float3& GameServerMoveMonster::cup() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerMoveMonster.cup)
+  return _internal_cup();
+}
+inline void GameServerMoveMonster::unsafe_arena_set_allocated_cup(
+    ::Protocol::float3* cup) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(cup_);
+  }
+  cup_ = cup;
+  if (cup) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.GameServerMoveMonster.cup)
+}
+inline ::Protocol::float3* GameServerMoveMonster::release_cup() {
+  
+  ::Protocol::float3* temp = cup_;
+  cup_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::unsafe_arena_release_cup() {
+  // @@protoc_insertion_point(field_release:Protocol.GameServerMoveMonster.cup)
+  
+  ::Protocol::float3* temp = cup_;
+  cup_ = nullptr;
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::_internal_mutable_cup() {
+  
+  if (cup_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::float3>(GetArenaForAllocation());
+    cup_ = p;
+  }
+  return cup_;
+}
+inline ::Protocol::float3* GameServerMoveMonster::mutable_cup() {
+  // @@protoc_insertion_point(field_mutable:Protocol.GameServerMoveMonster.cup)
+  return _internal_mutable_cup();
+}
+inline void GameServerMoveMonster::set_allocated_cup(::Protocol::float3* cup) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(cup_);
+  }
+  if (cup) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<
+            ::PROTOBUF_NAMESPACE_ID::MessageLite>::GetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(cup));
+    if (message_arena != submessage_arena) {
+      cup = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, cup, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  cup_ = cup;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.GameServerMoveMonster.cup)
+}
+
+// .Protocol.float3 clook = 9;
+inline bool GameServerMoveMonster::_internal_has_clook() const {
+  return this != internal_default_instance() && clook_ != nullptr;
+}
+inline bool GameServerMoveMonster::has_clook() const {
+  return _internal_has_clook();
+}
+inline const ::Protocol::float3& GameServerMoveMonster::_internal_clook() const {
+  const ::Protocol::float3* p = clook_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::float3&>(
+      ::Protocol::_float3_default_instance_);
+}
+inline const ::Protocol::float3& GameServerMoveMonster::clook() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerMoveMonster.clook)
+  return _internal_clook();
+}
+inline void GameServerMoveMonster::unsafe_arena_set_allocated_clook(
+    ::Protocol::float3* clook) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(clook_);
+  }
+  clook_ = clook;
+  if (clook) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.GameServerMoveMonster.clook)
+}
+inline ::Protocol::float3* GameServerMoveMonster::release_clook() {
+  
+  ::Protocol::float3* temp = clook_;
+  clook_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::unsafe_arena_release_clook() {
+  // @@protoc_insertion_point(field_release:Protocol.GameServerMoveMonster.clook)
+  
+  ::Protocol::float3* temp = clook_;
+  clook_ = nullptr;
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::_internal_mutable_clook() {
+  
+  if (clook_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::float3>(GetArenaForAllocation());
+    clook_ = p;
+  }
+  return clook_;
+}
+inline ::Protocol::float3* GameServerMoveMonster::mutable_clook() {
+  // @@protoc_insertion_point(field_mutable:Protocol.GameServerMoveMonster.clook)
+  return _internal_mutable_clook();
+}
+inline void GameServerMoveMonster::set_allocated_clook(::Protocol::float3* clook) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(clook_);
+  }
+  if (clook) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<
+            ::PROTOBUF_NAMESPACE_ID::MessageLite>::GetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(clook));
+    if (message_arena != submessage_arena) {
+      clook = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, clook, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  clook_ = clook;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.GameServerMoveMonster.clook)
+}
+
+// .Protocol.float3 cposition = 10;
+inline bool GameServerMoveMonster::_internal_has_cposition() const {
+  return this != internal_default_instance() && cposition_ != nullptr;
+}
+inline bool GameServerMoveMonster::has_cposition() const {
+  return _internal_has_cposition();
+}
+inline const ::Protocol::float3& GameServerMoveMonster::_internal_cposition() const {
+  const ::Protocol::float3* p = cposition_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::float3&>(
+      ::Protocol::_float3_default_instance_);
+}
+inline const ::Protocol::float3& GameServerMoveMonster::cposition() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerMoveMonster.cposition)
+  return _internal_cposition();
+}
+inline void GameServerMoveMonster::unsafe_arena_set_allocated_cposition(
+    ::Protocol::float3* cposition) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(cposition_);
+  }
+  cposition_ = cposition;
+  if (cposition) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.GameServerMoveMonster.cposition)
+}
+inline ::Protocol::float3* GameServerMoveMonster::release_cposition() {
+  
+  ::Protocol::float3* temp = cposition_;
+  cposition_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::unsafe_arena_release_cposition() {
+  // @@protoc_insertion_point(field_release:Protocol.GameServerMoveMonster.cposition)
+  
+  ::Protocol::float3* temp = cposition_;
+  cposition_ = nullptr;
+  return temp;
+}
+inline ::Protocol::float3* GameServerMoveMonster::_internal_mutable_cposition() {
+  
+  if (cposition_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::float3>(GetArenaForAllocation());
+    cposition_ = p;
+  }
+  return cposition_;
+}
+inline ::Protocol::float3* GameServerMoveMonster::mutable_cposition() {
+  // @@protoc_insertion_point(field_mutable:Protocol.GameServerMoveMonster.cposition)
+  return _internal_mutable_cposition();
+}
+inline void GameServerMoveMonster::set_allocated_cposition(::Protocol::float3* cposition) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(cposition_);
+  }
+  if (cposition) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<
+            ::PROTOBUF_NAMESPACE_ID::MessageLite>::GetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(cposition));
+    if (message_arena != submessage_arena) {
+      cposition = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, cposition, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  cposition_ = cposition;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.GameServerMoveMonster.cposition)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

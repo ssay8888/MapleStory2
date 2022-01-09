@@ -1,6 +1,8 @@
 #pragma once
 #include <tbb/concurrent_queue.h>
 
+class MapInstance;
+
 class GameTick : public std::enable_shared_from_this<GameTick>
 {
 
@@ -15,6 +17,12 @@ public:
 
 	template<typename T, typename Ret, typename... Args>
 	auto DoAsync(Ret(T::* memFunc)(Args...), Args... args) -> void;
+
+public:
+	auto AddCharcter(std::shared_ptr<MapInstance> mapInstance, GameSessionRef gameSession)->void;
+	auto BroadCastAddCharacter(std::shared_ptr<MapInstance> mapInstance, GameSessionRef gameSession)->void;
+	auto RemoveCharacter(std::shared_ptr<MapInstance> mapInstance, int64_t characterId)->void;
+
 private:
 	std::atomic<bool> _exit_loop;
 	

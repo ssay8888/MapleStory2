@@ -79,29 +79,32 @@ auto MapManager::MapPasing(const std::wstring& name) -> std::vector<MapEntity>
 			map.name = entity.node().attribute("name").value();
 			map.iterations = entity.node().attribute("iterations").value();
 
-			for (auto& property : entity.node())
+			if (map.name.find("]") != std::string::npos)
 			{
-				if (!strcmp(property.attribute("name").value(), "Position") ||
-					!strcmp(property.attribute("name").value(), "Rotation"))
+				for (auto& property : entity.node())
 				{
-					for (auto& value : property)
+					if (!strcmp(property.attribute("name").value(), "Position") ||
+						!strcmp(property.attribute("name").value(), "Rotation"))
 					{
-						std::string posValue = value.attribute("value").value();
-						std::istringstream ss(posValue);
-						std::string temp;
-						std::vector<float> values;
-						while (std::getline(ss, temp, ','))
+						for (auto& value : property)
 						{
-							values.push_back(std::stof(temp));
-						}
-						if (values.size() >= 3)
-						{
-							map.propertise.emplace(property.attribute("name").value(), _float3(values[0] / 150.f * 0.58f, values[2] / 150.f * 0.58f, values[1] / 150.f * 0.58f));
+							std::string posValue = value.attribute("value").value();
+							std::istringstream ss(posValue);
+							std::string temp;
+							std::vector<float> values;
+							while (std::getline(ss, temp, ','))
+							{
+								values.push_back(std::stof(temp));
+							}
+							if (values.size() >= 3)
+							{
+								map.propertise.emplace(property.attribute("name").value(), _float3(values[0], values[2], values[1]));
+							}
 						}
 					}
 				}
+				entities.push_back(map);
 			}
-			entities.push_back(map);
 		}
 	}
 	return entities;

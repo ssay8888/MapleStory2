@@ -9,6 +9,7 @@ public:
 	~MonsterStats() = default;
 
 private:
+
 	std::shared_ptr<DataReaderManager::MonsterInfo> _monster_info;
 	int32_t _hp;
 

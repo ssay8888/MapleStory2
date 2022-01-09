@@ -20,6 +20,7 @@ public:
 	auto AddUser(PacketSessionRef session, Protocol::GameServerRespawnPlayer pkt)->void;
 	auto MovePlayer(PacketSessionRef session, Protocol::GameServerMovePlayer pkt)->void;
 	auto RespawnMonster(PacketSessionRef session, Protocol::GameServerRespawnMonster pkt)->void;
+	auto MoveMonster(PacketSessionRef session, Protocol::GameServerMoveMonster pkt)->void;
 
 private:
 	Protocol::GameServerLoadCharacter _character_info;

@@ -106,6 +106,21 @@
     <ClCompile Include="game_tick\game_tick.cpp">
       <Filter>game_tick</Filter>
     </ClCompile>
+    <ClCompile Include="game\entitiy\monster\states\monster_state.cpp">
+      <Filter>game\entity\monster\states</Filter>
+    </ClCompile>
+    <ClCompile Include="game\entitiy\monster\states\monster_idle_state\monster_idle_state.cpp">
+      <Filter>game\entity\monster\states\monster_idle_state</Filter>
+    </ClCompile>
+    <ClCompile Include="game\entitiy\monster\states\monster_walk_state\monster_walk_state.cpp">
+      <Filter>game\entity\monster\states\monster_walk_state</Filter>
+    </ClCompile>
+    <ClCompile Include="game\entitiy\monster\states\monster_bore_state\monster_bore_state.cpp">
+      <Filter>game\entity\monster\states\monster_bore_state</Filter>
+    </ClCompile>
+    <ClCompile Include="game\entitiy\monster\stat\monster_stat.cpp">
+      <Filter>game\entity\monster\stat</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -179,6 +194,18 @@
     </Filter>
     <Filter Include="game\entity\monster\states">
       <UniqueIdentifier>{a83e5345-ceb1-47ff-9304-1f05524ec9da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\monster\states\monster_idle_state">
+      <UniqueIdentifier>{6a87d425-ce68-4e92-9f0d-30e6b1b81b93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\monster\states\monster_walk_state">
+      <UniqueIdentifier>{a42156c5-8c85-4aaf-9256-181c3bf17c65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\monster\states\monster_bore_state">
+      <UniqueIdentifier>{8c5f357b-afc0-4156-bf34-45053741cd54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\monster\stat">
+      <UniqueIdentifier>{f7584287-1763-4390-bd13-3f5a757a7c23}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -286,6 +313,21 @@
     </ClInclude>
     <ClInclude Include="game_tick\game_tick.h">
       <Filter>game_tick</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\monster\states\monster_state.h">
+      <Filter>game\entity\monster\states</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\monster\states\monster_idle_state\monster_idle_state.h">
+      <Filter>game\entity\monster\states\monster_idle_state</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\monster\states\monster_walk_state\monster_walk_state.h">
+      <Filter>game\entity\monster\states\monster_walk_state</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\monster\states\monster_bore_state\monster_bore_state.h">
+      <Filter>game\entity\monster\states\monster_bore_state</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\monster\stat\monster_stat.h">
+      <Filter>game\entity\monster\stat</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

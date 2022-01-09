@@ -26,6 +26,16 @@ auto MapXblock::LateTick() -> void
 {
 }
 
+auto MapXblock::GetCollider() const -> std::shared_ptr<Collider>
+{
+	return _aabb_com;
+}
+
+auto MapXblock::GetTransform() const -> std::shared_ptr<Transform>
+{
+	return _transform_com;
+}
+
 auto MapXblock::NativeConstruct(MapManager::MapEntity& entity) -> HRESULT
 {
 	_transform_com = Transform::Create(nullptr);
@@ -62,6 +72,7 @@ auto MapXblock::NativeConstruct(MapManager::MapEntity& entity) -> HRESULT
 			}
 		}
 	}
+	_transform_com->SetScale((_scale * 0.01f), (_scale * 0.01f), (_scale * 0.01f));
 
 
 	Collider::TagColliderDesc		ColliderDesc;
@@ -88,12 +99,14 @@ auto MapXblock::NativeConstruct(MapManager::MapEntity& entity) -> HRESULT
 			}
 		}
 	}
-	const auto& componentManager = ComponentManager::GetInstance();
-	auto component = componentManager.CloneComponent(0, TEXT("Prototype_Collider_AABB"), &ColliderDesc);
-	_aabb_com = std::static_pointer_cast<Collider>(component);
-	_aabb_com->NativeConstruct(&ColliderDesc);
-
-	_transform_com->SetScale((_scale * 0.01f), (_scale * 0.01f), (_scale * 0.01f));
+	if (entity.modelName.find("_fi_") == std::string::npos)
+	{
+		const auto& componentManager = ComponentManager::GetInstance();
+		auto component = componentManager.CloneComponent(0, TEXT("Prototype_Collider_AABB"), &ColliderDesc);
+		_aabb_com = std::static_pointer_cast<Collider>(component);
+		_aabb_com->NativeConstruct(&ColliderDesc);
+		_aabb_com->UpdateCollider();
+	}
 
 	return S_OK;
 }

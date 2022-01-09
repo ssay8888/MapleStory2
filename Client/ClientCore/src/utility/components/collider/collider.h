@@ -42,6 +42,8 @@ public:
 	auto GetMax()->_float3;
 	auto GetMin()->_float3;
 
+	auto GetTransform()const->std::shared_ptr<Transform>;
+
 
 private:
 	Obbdesc ComputeObbDesc(const _float3* points);

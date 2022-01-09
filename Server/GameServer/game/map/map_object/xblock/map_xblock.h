@@ -12,6 +12,10 @@ public:
 	virtual	auto Tick()->void;
 	virtual	auto LateTick()->void;
 
+public:
+	auto GetCollider()const->std::shared_ptr<Collider>;
+	auto GetTransform()const->std::shared_ptr<Transform>;
+
 private:
 	auto NativeConstruct(MapManager::MapEntity& entity)->HRESULT;
 

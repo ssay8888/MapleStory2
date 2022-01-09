@@ -1,12 +1,14 @@
 #pragma once
 #include "map_manager.h"
 #include "game_session/game_client_packet_handler.h"
+#include "src/utility/components/collider/collider.h"
+class GameEntity;
 class MapXblock;
 class GameMonster;
 class MapObject;
 class GameCharacter;
 
-class MapInstance : public JobQueue
+class MapInstance : public std::enable_shared_from_this<MapInstance>
 {
 public:
 	explicit MapInstance(int32_t mapId);
@@ -22,6 +24,7 @@ public:
 	auto BroadCastMessage(T sendPkt, std::shared_ptr<GameSession> gameSession)->void;
 
 	auto BroadCastAddCharacter(std::shared_ptr<GameSession> session)->void;
+	auto RespawnAllMonster(std::shared_ptr<GameSession> session)->void;
 
 public:
 	auto Respawn()->void;
@@ -38,15 +41,20 @@ public:
 	auto AddObjects(std::vector<MapManager::MapEntity> objects)->void;
 	auto GetObjects()const->std::vector<std::shared_ptr<MapXblock>>;
 
+	auto GetMonsters()->std::map<std::shared_ptr<SpawnPoint>, std::shared_ptr<GameMonster>>&;
+	auto FindRangeCellObject(
+		const std::shared_ptr<Collider>& targetCollider) -> std::vector<std::shared_ptr<MapXblock>>;
+
 
 private:
-	const int32_t														_map_id;
+	const int32_t															_map_id;
 
 	std::vector<_float3>													_spawn_points;
 	std::vector<std::shared_ptr<SpawnPoint>>								_region_points;
 	std::vector<std::shared_ptr<MapXblock>>									_objects;
 	std::map<int64_t, std::shared_ptr<GameSession>>							_characters;
 	std::map<std::shared_ptr<SpawnPoint>, std::shared_ptr<GameMonster>>		_monsters;
+	std::map<int64_t, std::shared_ptr<GameEntity>>							_entities;
 };
 
 template <typename T>

@@ -166,6 +166,11 @@
     <ClCompile Include="game\entitiy\game_entity.cpp" />
     <ClCompile Include="game\entitiy\monster\game_monster.cpp" />
     <ClCompile Include="game\entitiy\monster\spawn_point\spawn_point.cpp" />
+    <ClCompile Include="game\entitiy\monster\states\monster_bore_state\monster_bore_state.cpp" />
+    <ClCompile Include="game\entitiy\monster\states\monster_idle_state\monster_idle_state.cpp" />
+    <ClCompile Include="game\entitiy\monster\states\monster_state.cpp" />
+    <ClCompile Include="game\entitiy\monster\states\monster_walk_state\monster_walk_state.cpp" />
+    <ClCompile Include="game\entitiy\monster\stat\monster_stat.cpp" />
     <ClCompile Include="game\loader\loader.cpp" />
     <ClCompile Include="game\map\map_instance.cpp" />
     <ClCompile Include="game\map\map_manager.cpp" />
@@ -235,6 +240,11 @@
     <ClInclude Include="game\entitiy\game_entity.h" />
     <ClInclude Include="game\entitiy\monster\game_monster.h" />
     <ClInclude Include="game\entitiy\monster\spawn_point\spawn_point.h" />
+    <ClInclude Include="game\entitiy\monster\states\monster_bore_state\monster_bore_state.h" />
+    <ClInclude Include="game\entitiy\monster\states\monster_idle_state\monster_idle_state.h" />
+    <ClInclude Include="game\entitiy\monster\states\monster_state.h" />
+    <ClInclude Include="game\entitiy\monster\states\monster_walk_state\monster_walk_state.h" />
+    <ClInclude Include="game\entitiy\monster\stat\monster_stat.h" />
     <ClInclude Include="game\loader\loader.h" />
     <ClInclude Include="game\map\map_instance.h" />
     <ClInclude Include="game\map\map_manager.h" />

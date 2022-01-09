@@ -5,12 +5,14 @@
 #include "game/entitiy/character/information_collection/inventorys/inventorys.h"
 #include "game/entitiy/monster/game_monster.h"
 #include "game/entitiy/monster/spawn_point/spawn_point.h"
+#include "game/entitiy/monster/stat/monster_stat.h"
 #include "game_session/game_client_packet_handler.h"
 #include "managers/character_info_manager/character_info_storage_manager.h"
 #include "src/utility/components/transform/transform.h"
 #include "string_utils/string_utils.h"
 #include "game/map/map_object/map_object.h"
 #include "map_object/xblock/map_xblock.h"
+#include "src/utility/components/collider/collider.h"
 
 MapInstance::MapInstance(const int32_t mapId):
 	_map_id(mapId)
@@ -20,12 +22,24 @@ MapInstance::MapInstance(const int32_t mapId):
 auto MapInstance::AddCharacter(std::shared_ptr<GameSession> session) -> bool
 {
 	const auto result = _characters.emplace(session->GetPlayer()->GetCharacterId(), session);
+	if (result.second)
+	{
+		_entities.emplace(session->GetPlayer()->GetObjectId(), session->GetPlayer());
+	}
 	return result.second;
 }
 
 auto MapInstance::RemoveCharacter(const int64_t characterId) -> bool
 {
+	const auto gameSession = FindCharacter(characterId);
 	const auto result = _characters.erase(characterId);
+	if (result)
+	{
+		if (gameSession)
+		{
+			_entities.erase(gameSession->GetPlayer()->GetObjectId());
+		}
+	}
 	return result;
 }
 
@@ -96,6 +110,47 @@ auto MapInstance::BroadCastAddCharacter(std::shared_ptr<GameSession> session) ->
 	}
 }
 
+auto MapInstance::RespawnAllMonster(std::shared_ptr<GameSession> session)->void
+{
+	for (const auto& pair : _monsters)
+	{
+		auto monster = pair.second;
+		Protocol::GameServerRespawnMonster sendPkt;
+		const auto transform = monster->GetTransform();
+		sendPkt.set_object_id(monster->GetObjectId());
+		sendPkt.set_monster_id(monster->GetSpawnPoint()->GetSpawnNpcId());
+		sendPkt.set_hp(monster->GetStat()->GetHp());
+		sendPkt.set_is_spawn(false);
+
+		const auto right = transform->GetState(Transform::kState::kStateRight);
+		const auto sendRight = sendPkt.mutable_right();
+		sendRight->set_x(right.x);
+		sendRight->set_y(right.y);
+		sendRight->set_z(right.z);
+
+		const auto up = transform->GetState(Transform::kState::kStateUp);
+		const auto sendUp = sendPkt.mutable_up();
+		sendUp->set_x(up.x);
+		sendUp->set_y(up.y);
+		sendUp->set_z(up.z);
+
+		const auto look = transform->GetState(Transform::kState::kStateLook);
+		const auto sendLook = sendPkt.mutable_look();
+		sendLook->set_x(look.x);
+		sendLook->set_y(look.y);
+		sendLook->set_z(look.z);
+
+		const auto position = transform->GetState(Transform::kState::kStatePosition);
+		const auto sendPosition = sendPkt.mutable_position();
+		sendPosition->set_x(position.x);
+		sendPosition->set_y(position.y);
+		sendPosition->set_z(position.z);
+
+		const auto sendBuf = GameClientPacketHandler::MakeSendBuffer(sendPkt);
+		session->Send(sendBuf);
+	}
+}
+
 auto MapInstance::Respawn() -> void
 {
 	if (_characters.empty())
@@ -109,14 +164,15 @@ auto MapInstance::Respawn() -> void
 
 		if (iterator == _monsters.end())
 		{
-			auto monster = GameMonster::Create(regionPoint);
+			auto monster = GameMonster::Create(regionPoint, std::static_pointer_cast<MapInstance>(shared_from_this()));
 			_monsters.emplace(regionPoint, monster);
+			_entities.emplace(monster->GetObjectId(), monster);
 
 			Protocol::GameServerRespawnMonster sendPkt;
 			const auto transform = monster->GetTransform();
 			sendPkt.set_object_id(monster->GetObjectId());
 			sendPkt.set_monster_id(regionPoint->GetSpawnNpcId());
-			sendPkt.set_hp(50);
+			sendPkt.set_hp(monster->GetStat()->GetMaxHp());
 			sendPkt.set_is_spawn(true);
 
 			const auto right = transform->GetState(Transform::kState::kStateRight);
@@ -197,4 +253,25 @@ auto MapInstance::AddObjects(std::vector<MapManager::MapEntity> objects) -> void
 auto MapInstance::GetObjects() const -> std::vector<std::shared_ptr<MapXblock>>
 {
 	return _objects;
+}
+
+auto MapInstance::GetMonsters() -> std::map<std::shared_ptr<SpawnPoint>, std::shared_ptr<GameMonster>>&
+{
+	return _monsters;
+}
+
+auto MapInstance::FindRangeCellObject(const std::shared_ptr<Collider>& targetCollider)->std::vector<std::shared_ptr<MapXblock>>
+{
+	std::vector<std::shared_ptr<MapXblock>> objects;
+	for (auto& object : _objects)
+	{
+		if (object->GetCollider())
+		{
+			if (object->GetCollider()->CollisionAabb(targetCollider))
+			{
+				objects.push_back(object);
+			}
+		}
+	}
+	return objects;
 }

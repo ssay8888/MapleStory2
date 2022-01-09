@@ -83,4 +83,20 @@ message GameServerRespawnMonster
 	float3 look = 6;
 	float3 position = 7;
 	bool is_spawn = 8;
+
+}
+
+message GameServerMoveMonster
+{
+	int64 object_id = 1;
+	kMonsterState state = 2;
+	float3 right = 3;
+	float3 up = 4;
+	float3 look = 5;
+	float3 position = 6;
+	
+	float3 cright = 7;
+	float3 cup = 8;
+	float3 clook = 9;
+	float3 cposition = 10;
 }

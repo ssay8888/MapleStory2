@@ -28,6 +28,14 @@ auto GameCharacter::Create(int64_t characterId) -> std::shared_ptr<GameCharacter
 	return instance;
 }
 
+auto GameCharacter::Tick(double timeDelta) -> void
+{
+}
+
+auto GameCharacter::LateTick(double timeDelta) -> void
+{
+}
+
 auto GameCharacter::GetCharacterId() const -> int64_t
 {
 	return _character_id;

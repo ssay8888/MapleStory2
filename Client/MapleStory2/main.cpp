@@ -60,8 +60,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	const HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MAPLESTORY2));
 
 	MSG msg;
-
-	auto& graphicDevice = GraphicDevice::GetInstance();
+	
 	auto& timerManager = TimerManager::GetInstance();
 	g_mainApp = new MainApp;
 	if (FAILED(timerManager.AddTimers(TEXT("Timer_Default"))))

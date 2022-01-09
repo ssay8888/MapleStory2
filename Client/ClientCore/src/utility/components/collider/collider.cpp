@@ -228,6 +228,11 @@ auto Collider::GetMin() -> _float3
 	return vSourMin;
 }
 
+auto Collider::GetTransform() const -> std::shared_ptr<Transform>
+{
+	return _transform;
+}
+
 Collider::Obbdesc Collider::ComputeObbDesc(const _float3* points)
 {
 	Obbdesc			OBBDesc;

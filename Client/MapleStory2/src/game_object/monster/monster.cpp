@@ -101,13 +101,13 @@ HRESULT Monster::Render()
 	std::wstring str;
 
 #ifdef _DEBUG
-	_obb_com->RenderDebug();
-	_aabb_com->RenderDebug();
+	//_obb_com->RenderDebug();
+	//_aabb_com->RenderDebug();
 	//_block_range_aabb_com->RenderDebug();
-	for (const auto& reaload : _reload_range_aabb_com)
-	{
+	//for (const auto& reaload : _reload_range_aabb_com)
+	//{
 	//	reaload->RenderDebug();
-	}
+	//}
 #endif
 	return S_OK;
 }
@@ -162,7 +162,7 @@ auto Monster::GetMonsterInfo() const -> Protocol::GameServerRespawnMonster
 	return _monster_info;
 }
 
-auto Monster::GetAnimationPeriod(const kMonsterState type) -> double
+auto Monster::GetAnimationPeriod(const Protocol::kMonsterState type) -> double
 {
 	LPD3DXANIMATIONSET		pAS = nullptr;
 	_mesh_list.begin()->second->GetAnimation()->GetAnimationController()->GetAnimationSet(_state_index[type], &pAS);
@@ -175,9 +175,25 @@ auto Monster::GetAnimationTimeAcc() -> double
 	return _mesh_list.begin()->second->GetAnimation()->GetTimeAcc();
 }
 
-auto Monster::GetStateIndex(kMonsterState state) -> int32_t
+auto Monster::GetStateIndex(Protocol::kMonsterState state) -> int32_t
 {
 	return _state_index[state];
+}
+
+auto Monster::GetMonsterState(Protocol::kMonsterState state) -> std::shared_ptr<MonsterState>
+{
+	const auto iterator = _state_index.find(state);
+
+	if (iterator != _state_index.end())
+	{
+		return _monster_states[iterator->second];
+	}
+	return nullptr;
+}
+
+auto Monster::GetCurrentState() const -> std::shared_ptr<MonsterState>
+{
+	return _current_monster_state;
 }
 
 auto Monster::PlayAnimation(const double timeDelta) -> void
@@ -185,22 +201,28 @@ auto Monster::PlayAnimation(const double timeDelta) -> void
 	_mesh_list.begin()->second->PlayAnimation(timeDelta);
 }
 
-auto Monster::ChangeAnimation(const kMonsterState type) -> void
+auto Monster::ChangeAnimation(const Protocol::kMonsterState type) -> void
 {
-	auto iterator = _animaion_index.find(type);
-	auto iteratorState = _state_index.find(type);
+	const auto iterator = _animaion_index.find(type);
+	const auto iteratorState = _state_index.find(type);
 	if (iterator != _animaion_index.end() && iteratorState != _state_index.end())
 	{
-		auto result = _mesh_list.begin()->second->SetAnimationIndex(iterator->second);
-		ChangeMonsterState(iteratorState->second);
+		if (ChangeMonsterState(iteratorState->second))
+		{
+			auto result = _mesh_list.begin()->second->SetAnimationIndex(iterator->second);
+		}
 	}
 }
 
-auto Monster::ChangeMonsterState(const int32_t index) -> void
+auto Monster::ChangeMonsterState(const int32_t index) -> bool
 {
-
-	_current_monster_state = _monster_states[index];
-	_current_monster_state->Enter(GetMonster());
+	if (_current_monster_state != _monster_states[index])
+	{
+		_current_monster_state = _monster_states[index];
+		_current_monster_state->Enter(GetMonster());
+		return true;
+	}
+	return false;
 }
 
 auto Monster::AddComponents() -> HRESULT
@@ -241,6 +263,12 @@ auto Monster::AddComponents() -> HRESULT
 		return E_FAIL;
 	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Shose_AABB"), reinterpret_cast<std::shared_ptr<Component>*>(&_aabb_com), &ColliderDesc)))
 		return E_FAIL;
+
+	_aabb_com->GetTransform()->SetState(Transform::kState::kStateRight, _float3(right.x(), right.y(), right.z()));
+	_aabb_com->GetTransform()->SetState(Transform::kState::kStateUp, _float3(up.x(), up.y(), up.z()));
+	_aabb_com->GetTransform()->SetState(Transform::kState::kStateLook, _float3(look.x(), look.y(), look.z()));
+	_aabb_com->GetTransform()->SetState(Transform::kState::kStatePosition, _float3(position.x(), position.y(), position.z()));
+
 
 	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
 	ColliderDesc.scale = _float3(2.5f, 2.5f, 2.5f);
@@ -298,7 +326,7 @@ auto Monster::AddComponents() -> HRESULT
 		}
 		pAS->Release();
 	}
-	ChangeAnimation(kMonsterState::kIdleA);
+	ChangeAnimation(Protocol::kMonsterState::kIdleA);
 
 	
 	return S_OK;
@@ -335,23 +363,23 @@ auto Monster::AnimationLoad() -> int32_t
 			_current_monster_state = MakeShared<MonsterIdleState>();
 			_current_monster_state->Enter(GetMonster());
 			_monster_states.emplace(animation.first, _current_monster_state);
-			_state_index.emplace(kMonsterState::kIdleA, animation.first);
-			_animaion_index.emplace(kMonsterState::kIdleA, index++);
+			_state_index.emplace(Protocol::kMonsterState::kIdleA, animation.first);
+			_animaion_index.emplace(Protocol::kMonsterState::kIdleA, index++);
 			idleIndex = animation.first;
 			_mesh_list.emplace(animation.first, mesh);
 		}
 		else if (Seq->name.find(L"Walk_A") != std::wstring::npos)
 		{
 			_monster_states.emplace(animation.first, MakeShared<MonsterWalkState>());
-			_state_index.emplace(kMonsterState::kWalkA, animation.first);
-			_animaion_index.emplace(kMonsterState::kWalkA, index++);
+			_state_index.emplace(Protocol::kMonsterState::kWalkA, animation.first);
+			_animaion_index.emplace(Protocol::kMonsterState::kWalkA, index++);
 			_mesh_list.emplace(animation.first, mesh);
 		}
 		else if (Seq->name.find(L"Bore_A") != std::wstring::npos)
 		{
 			_monster_states.emplace(animation.first, MakeShared<MonsterBoreState>());
-			_state_index.emplace(kMonsterState::kBoreA, animation.first);
-			_animaion_index.emplace(kMonsterState::kBoreA, index++);
+			_state_index.emplace(Protocol::kMonsterState::kBoreA, animation.first);
+			_animaion_index.emplace(Protocol::kMonsterState::kBoreA, index++);
 			_mesh_list.emplace(animation.first, mesh);
 		}
 	}

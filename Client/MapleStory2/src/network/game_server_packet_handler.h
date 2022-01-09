@@ -13,6 +13,7 @@ enum : uint16_t
 	kPktGameClientMovePlayer = 2005,
 	kPktGameServerMovePlayer = 2006,
 	kPktGameServerRespawnMonster = 2007,
+	kPktGameServerMoveMonster = 2008,
 };
 
 
@@ -27,6 +28,7 @@ public:
 	static auto HandleGameServerRespawnPlayer(PacketSessionRef& session, Protocol::GameServerRespawnPlayer& pkt)->bool;
 	static auto HandleGameServerMovePlayer(PacketSessionRef& session, Protocol::GameServerMovePlayer& pkt)->bool;
 	static auto HandleGameServerRespawnMonster(PacketSessionRef& session, Protocol::GameServerRespawnMonster& pkt)->bool;
+	static auto HandleGameServerMoveMonster(PacketSessionRef& session, Protocol::GameServerMoveMonster& pkt)->bool;
 	static void Init()
 	{
 		for (auto& handler : _packet_handler)
@@ -38,6 +40,7 @@ public:
 		_packet_handler[kPktGameServerRespawnPlayer] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerRespawnPlayer>(HandleGameServerRespawnPlayer, session, buffer, len); };
 		_packet_handler[kPktGameServerMovePlayer] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerMovePlayer>(HandleGameServerMovePlayer, session, buffer, len); };
 		_packet_handler[kPktGameServerRespawnMonster] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerRespawnMonster>(HandleGameServerRespawnMonster, session, buffer, len); };
+		_packet_handler[kPktGameServerMoveMonster] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerMoveMonster>(HandleGameServerMoveMonster, session, buffer, len); };
 	}
 
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32_t len)

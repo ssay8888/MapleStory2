@@ -86,7 +86,7 @@ auto MapParser::MapParsing(const std::string name)->std::vector<MapEntity>
 
 			for (auto& property : entity.node())
 			{
-				if (!strcmp(property.attribute("name").value(), "Position") || 
+				if (!strcmp(property.attribute("name").value(), "Position") ||
 					!strcmp(property.attribute("name").value(), "Rotation"))
 				{
 					for (auto& value : property)
