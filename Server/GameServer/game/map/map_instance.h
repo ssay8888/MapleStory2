@@ -19,6 +19,7 @@ public:
 	auto AddCharacter(std::shared_ptr<GameSession> session)->bool;
 	auto RemoveCharacter(int64_t characterId)->bool;
 	auto FindCharacter(int64_t characterId)->std::shared_ptr<GameSession>;
+	auto FindCharacter(_float3 pos, float distance)->std::shared_ptr<GameCharacter>;
 
 	template<typename T>
 	auto BroadCastMessage(T sendPkt, std::shared_ptr<GameSession> gameSession)->void;

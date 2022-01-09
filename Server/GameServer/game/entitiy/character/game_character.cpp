@@ -71,7 +71,7 @@ auto GameCharacter::GetSpawnPoint() const -> int32_t
 	return _spawn_point;
 }
 
-auto GameCharacter::GetTransForm() const -> std::shared_ptr<Transform>
+auto GameCharacter::GetTransform() const -> std::shared_ptr<Transform>
 {
 	return _transform;
 }

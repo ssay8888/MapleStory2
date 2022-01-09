@@ -265,8 +265,8 @@ auto Transform::LookAtTarget(const _float3 targetPos) -> void
 	D3DXVec3Normalize(&right, &right);
 	right = right * GetScale().x;
 
-	SetState(kState::kStateLook, look);
-	SetState(kState::kStateRight, right);
+	SetState(kState::kStateLook, -look);
+	SetState(kState::kStateRight, -right);
 }
 
 auto Transform::StandOnTerrain(std::shared_ptr<ViBufferTerrain> viBuffer, const _matrix* pTerrainWorldMatrix) -> void

@@ -1,6 +1,7 @@
 #include "game_server_pch.h"
 #include "monster_state.h"
 
+#include "game/entitiy/character/game_character.h"
 #include "game/entitiy/monster/game_monster.h"
 #include "game/map/map_instance.h"
 #include "game/map/map_object/xblock/map_xblock.h"
@@ -134,6 +135,38 @@ auto MonsterState::LoadLastTile(std::shared_ptr<GameMonster> monster) -> std::sh
 		}
 	}
 	return nullptr;
+}
+
+auto MonsterState::FindTargetCharacter(std::shared_ptr<GameMonster> monster) -> std::shared_ptr<GameCharacter>
+{
+	if (monster->GetMapInstance() == nullptr)
+	{
+		return nullptr;
+	}
+
+	auto character = monster->GetMapInstance()->FindCharacter(monster->GetTransform()->GetState(Transform::kState::kStatePosition), 2.0f);
+	if (character == nullptr)
+	{
+		return nullptr;
+	}
+	return character;
+}
+
+auto MonsterState::CheckTargetCharacterDistance(std::shared_ptr<GameMonster> monster, float distance) -> bool
+{
+	if (monster->GetTargetCharacter() == nullptr)
+	{
+		return false;
+	}
+
+	const auto dir = monster->GetTargetCharacter()->GetTransform()->GetState(Transform::kState::kStatePosition) - monster->GetTransform()->GetState(Transform::kState::kStatePosition);
+	const auto length = D3DXVec3Length(&dir);
+
+	if (length < distance)
+	{
+		return true;
+	}
+	return false;
 }
 
 auto MonsterState::ReloadMapObject(std::shared_ptr<GameMonster> monster, bool check) -> void

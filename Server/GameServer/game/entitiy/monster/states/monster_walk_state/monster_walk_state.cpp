@@ -14,6 +14,7 @@
 auto MonsterWalkState::Enter(std::shared_ptr<GameMonster> monster) -> void
 {
 	_animation_acc = 0;
+	monster->ChangeTargetCharacter(nullptr);
 	int64_t degree = Randomizer::Rand(static_cast<int64_t>(0), 360);
 	_radian = D3DXToRadian(degree);
 	_is_move = true;
@@ -31,6 +32,21 @@ auto MonsterWalkState::Enter(std::shared_ptr<GameMonster> monster) -> void
 auto MonsterWalkState::Tick(const double timeDelta, std::shared_ptr<GameMonster> monster) -> void
 {
 	_animation_acc += timeDelta;
+	if (monster->GetTargetCharacter() != nullptr) // 이미 타겟이 있다면
+	{
+		if (!CheckTargetCharacterDistance(monster, 2.0f)) //거리가 멀어졌다면 더이상 쫒아가지않아..
+		{
+			monster->ChangeTargetCharacter(nullptr);
+		}
+	}
+
+	auto character = FindTargetCharacter(monster);
+	if (character != nullptr)
+	{
+		monster->ChangeTargetCharacter(character);
+		return;
+	}
+
 	auto transform = monster->GetTransform();
 	if (_is_move)
 	{
@@ -119,6 +135,14 @@ auto MonsterWalkState::Tick(const double timeDelta, std::shared_ptr<GameMonster>
 
 auto MonsterWalkState::LateTick(const double timeDelta, std::shared_ptr<GameMonster> monster) -> void
 {
+
+	if (monster->GetTargetCharacter() != nullptr)
+	{
+		monster->ChangeState(Protocol::kMonsterState::kRunA);
+		return;
+	}
+
+
 	const auto kfm = DataReaderManager::GetInstance().FindAnyKey(monster->GetSpawnPoint()->GetSpawnNpcId());
 
 	auto index = monster->GetStateIndex(Protocol::kMonsterState::kWalkA);
@@ -128,7 +152,7 @@ auto MonsterWalkState::LateTick(const double timeDelta, std::shared_ptr<GameMons
 	{
 		if (Randomizer::IsSuccess(50))
 		{
-			//monster->ChangeState(Protocol::kMonsterState::kBoreA);
+			monster->ChangeState(Protocol::kMonsterState::kBoreA);
 		}
 		else
 		{

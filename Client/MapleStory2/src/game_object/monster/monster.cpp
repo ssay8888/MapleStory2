@@ -15,6 +15,7 @@
 #include "src/utility/pipe_line/pipe_line.h"
 #include "states/bore_state/monster_bore_state.h"
 #include "states/idle_state/monster_idle_state.h"
+#include "states/run_state/monster_run_state.h"
 #include "states/walk_state/monster_walk_state.h"
 #include "stats/monster_stats.h"
 #include "string_utils/string_utils.h"
@@ -55,6 +56,7 @@ HRESULT Monster::NativeConstruct(void* arg)
 
 int32_t Monster::Tick(const double timeDelta)
 {
+	_aabb_com->UpdateCollider();
 	_current_monster_state->Tick(timeDelta, GetMonster());
 	return GameObject::Tick(timeDelta);
 }
@@ -101,8 +103,8 @@ HRESULT Monster::Render()
 	std::wstring str;
 
 #ifdef _DEBUG
-	//_obb_com->RenderDebug();
-	//_aabb_com->RenderDebug();
+	_obb_com->RenderDebug();
+	_aabb_com->RenderDebug();
 	//_block_range_aabb_com->RenderDebug();
 	//for (const auto& reaload : _reload_range_aabb_com)
 	//{
@@ -254,10 +256,10 @@ auto Monster::AddComponents() -> HRESULT
 	Collider::TagColliderDesc		ColliderDesc;
 	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
 	ColliderDesc.scale = _float3(
-		monsterInfo->collision.width / 2 / 100.f,
-		monsterInfo->collision.height / 2 / 100.f,
-		monsterInfo->collision.depth / 2 / 100.f);
-	ColliderDesc.init_pos = _float3(0.f, (monsterInfo->collision.height / 2 / 100.f) * 0.5f, 0.f);
+		monsterInfo->collision.width ,
+		monsterInfo->collision.height,
+		monsterInfo->collision.depth);
+	ColliderDesc.init_pos = _float3(0.f, (monsterInfo->collision.height) * 0.5f, 0.f);
 
 	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_OBB"), TEXT("Com_Shose_Obb"), reinterpret_cast<std::shared_ptr<Component>*>(&_obb_com), &ColliderDesc)))
 		return E_FAIL;
@@ -380,6 +382,13 @@ auto Monster::AnimationLoad() -> int32_t
 			_monster_states.emplace(animation.first, MakeShared<MonsterBoreState>());
 			_state_index.emplace(Protocol::kMonsterState::kBoreA, animation.first);
 			_animaion_index.emplace(Protocol::kMonsterState::kBoreA, index++);
+			_mesh_list.emplace(animation.first, mesh);
+		}
+		else if (Seq->name.find(L"Run_A") != std::wstring::npos)
+		{
+			_monster_states.emplace(animation.first, MakeShared<MonsterRunState>());
+			_state_index.emplace(Protocol::kMonsterState::kRunA, animation.first);
+			_animaion_index.emplace(Protocol::kMonsterState::kRunA, index++);
 			_mesh_list.emplace(animation.first, mesh);
 		}
 	}

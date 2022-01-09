@@ -47,6 +47,9 @@ public:
 
 	auto ChangeState(Protocol::kMonsterState state)->void;
 
+	auto ChangeTargetCharacter(std::shared_ptr<GameCharacter> character)->void;
+	auto GetTargetCharacter()const->std::shared_ptr<GameCharacter>;
+
 private:
 	auto NativeContruct()->HRESULT;
 	auto AnimationLoad()->HRESULT;
@@ -59,8 +62,9 @@ private:
 	std::shared_ptr<Collider>											_block_range_aabb_com = nullptr; // 블록가져올 범위
 	std::vector<std::shared_ptr<Collider>>								_reload_range_aabb_com;
 
-	std::shared_ptr<MonsterStat>	_monster_stat;
+	std::shared_ptr<GameCharacter>	_target_character;
 
+	std::shared_ptr<MonsterStat>	_monster_stat;
 
 	std::map<int32_t, std::shared_ptr<MonsterState>>					_monster_states;
 	std::map<Protocol::kMonsterState, int32_t>							_state_index;

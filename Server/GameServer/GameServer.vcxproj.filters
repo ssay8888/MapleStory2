@@ -121,6 +121,9 @@
     <ClCompile Include="game\entitiy\monster\stat\monster_stat.cpp">
       <Filter>game\entity\monster\stat</Filter>
     </ClCompile>
+    <ClCompile Include="game\entitiy\monster\states\monster_run_state\monster_run_state.cpp">
+      <Filter>game\entity\monster\states\monster_run_state</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -206,6 +209,9 @@
     </Filter>
     <Filter Include="game\entity\monster\stat">
       <UniqueIdentifier>{f7584287-1763-4390-bd13-3f5a757a7c23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\monster\states\monster_run_state">
+      <UniqueIdentifier>{d43699d0-7cb5-46f4-b81f-cf74929f9872}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +334,9 @@
     </ClInclude>
     <ClInclude Include="game\entitiy\monster\stat\monster_stat.h">
       <Filter>game\entity\monster\stat</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\monster\states\monster_run_state\monster_run_state.h">
+      <Filter>game\entity\monster\states\monster_run_state</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

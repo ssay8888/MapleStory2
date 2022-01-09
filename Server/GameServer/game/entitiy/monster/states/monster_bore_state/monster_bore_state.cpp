@@ -13,6 +13,7 @@
 auto MonsterBoreState::Enter(std::shared_ptr<GameMonster> monster) -> void
 {
 	_animation_acc = 0.f;
+	monster->ChangeTargetCharacter(nullptr);
 	Protocol::GameServerMoveMonster sendPkt;
 	sendPkt.set_object_id(monster->GetObjectId());
 	sendPkt.set_state(Protocol::kBoreA);
@@ -49,10 +50,30 @@ auto MonsterBoreState::Enter(std::shared_ptr<GameMonster> monster) -> void
 auto MonsterBoreState::Tick(const double timeDelta, std::shared_ptr<GameMonster> monster) -> void
 {
 	_animation_acc += timeDelta;
+
+	if (monster->GetTargetCharacter() != nullptr) // 이미 타겟이 있다면
+	{
+		if (!CheckTargetCharacterDistance(monster, 2.0f)) //거리가 멀어졌다면 더이상 쫒아가지않아..
+		{
+			monster->ChangeTargetCharacter(nullptr);
+		}
+	}
+
+	auto character = FindTargetCharacter(monster);
+	if (character != nullptr)
+	{
+		monster->ChangeTargetCharacter(character);
+	}
 }
 
 auto MonsterBoreState::LateTick(const double timeDelta, std::shared_ptr<GameMonster> monster) -> void
 {
+	if (monster->GetTargetCharacter() != nullptr)
+	{
+		monster->ChangeState(Protocol::kMonsterState::kRunA);
+		return;
+	}
+
 	const auto kfm = DataReaderManager::GetInstance().FindAnyKey(monster->GetSpawnPoint()->GetSpawnNpcId());
 
 	auto index = monster->GetStateIndex(Protocol::kMonsterState::kBoreA);

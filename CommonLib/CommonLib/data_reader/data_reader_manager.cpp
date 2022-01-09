@@ -399,9 +399,9 @@ auto DataReaderManager::LoadMonsterInfo() -> void
 						}
 						else if (nodeName == "collision")
 						{
-							monsterInfo->collision.width = std::stoi(node.attribute("width").value());
-							monsterInfo->collision.height = std::stoi(node.attribute("height").value());
-							monsterInfo->collision.depth = std::stoi(node.attribute("depth").value());
+							monsterInfo->collision.width = std::stof(node.attribute("width").value()) / 150.f * 0.4f;
+							monsterInfo->collision.height = std::stof(node.attribute("height").value()) / 150.f * 0.4f;
+							monsterInfo->collision.depth = std::stof(node.attribute("depth").value()) / 150.f * 0.4f;
 						}
 					}
 				}

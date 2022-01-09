@@ -11,6 +11,7 @@
 #include "stat/monster_stat.h"
 #include "states/monster_bore_state/monster_bore_state.h"
 #include "states/monster_idle_state/monster_idle_state.h"
+#include "states/monster_run_state/monster_run_state.h"
 #include "states/monster_walk_state/monster_walk_state.h"
 #include "string_utils/string_utils.h"
 
@@ -98,6 +99,16 @@ auto GameMonster::ChangeState(Protocol::kMonsterState state) -> void
 	}
 }
 
+auto GameMonster::ChangeTargetCharacter(std::shared_ptr<GameCharacter> character) -> void
+{
+	_target_character = character;
+}
+
+auto GameMonster::GetTargetCharacter() const -> std::shared_ptr<GameCharacter>
+{
+	return _target_character;
+}
+
 auto GameMonster::NativeContruct() -> HRESULT
 {
 	auto monsterInfo = DataReaderManager::GetInstance().FindMonsterInfo(_spawn_point->GetSpawnNpcId());
@@ -113,10 +124,10 @@ auto GameMonster::NativeContruct() -> HRESULT
 	Collider::TagColliderDesc		ColliderDesc;
 	ColliderDesc.parent_matrix = &_transform->GetWorldMatrix();
 	ColliderDesc.scale = _float3(
-		monsterInfo->collision.width / 2.f / 100.f,
-		monsterInfo->collision.height / 2.f / 100.f,
-		monsterInfo->collision.depth / 2.f / 100.f);
-	ColliderDesc.init_pos = _float3(0.f, (monsterInfo->collision.height / 2.f / 100.f) * 0.5f, 0.f);
+		monsterInfo->collision.width,
+		monsterInfo->collision.height,
+		monsterInfo->collision.depth);
+	ColliderDesc.init_pos = _float3(0.f, monsterInfo->collision.height * 0.5f, 0.f);
 
 	const auto& componentManager = ComponentManager::GetInstance();
 	auto component = componentManager.CloneComponent(0, TEXT("Prototype_Collider_AABB"), &ColliderDesc);
@@ -218,6 +229,11 @@ auto GameMonster::AnimationLoad() -> HRESULT
 		{
 			_monster_states.emplace(animation.first, MakeShared<MonsterBoreState>());
 			_state_index.emplace(Protocol::kMonsterState::kBoreA, animation.first);
+		}
+		else if (Seq->name.find(L"Run_A") != std::wstring::npos)
+		{
+			_monster_states.emplace(animation.first, MakeShared<MonsterRunState>());
+			_state_index.emplace(Protocol::kMonsterState::kRunA, animation.first);
 		}
 	}
 	return S_OK;

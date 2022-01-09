@@ -23,7 +23,7 @@ public:
 	auto GetName()const->std::wstring;
 	auto GetMapId()const->int32_t;
 	auto GetSpawnPoint()const->int32_t;
-	auto GetTransForm()const->std::shared_ptr<Transform>;
+	auto GetTransform()const->std::shared_ptr<Transform>;
 
 private:
 	auto NativeConstruct()->HRESULT;

@@ -56,6 +56,7 @@ auto GameTick::GameLoopInit() -> void
 					}
 				}
 			}
+			int a = 0;;
 		});
 }
 

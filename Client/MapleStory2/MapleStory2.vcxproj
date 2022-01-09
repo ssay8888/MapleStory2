@@ -192,6 +192,7 @@
     <ClInclude Include="src\game_object\monster\states\bore_state\monster_bore_state.h" />
     <ClInclude Include="src\game_object\monster\states\idle_state\monster_idle_state.h" />
     <ClInclude Include="src\game_object\monster\states\monster_state.h" />
+    <ClInclude Include="src\game_object\monster\states\run_state\monster_run_state.h" />
     <ClInclude Include="src\game_object\monster\states\walk_state\monster_walk_state.h" />
     <ClInclude Include="src\game_object\monster\stats\monster_stats.h" />
     <ClInclude Include="src\game_object\pants\pants.h" />
@@ -292,6 +293,7 @@
     <ClCompile Include="src\game_object\monster\states\bore_state\monster_bore_state.cpp" />
     <ClCompile Include="src\game_object\monster\states\idle_state\monster_idle_state.cpp" />
     <ClCompile Include="src\game_object\monster\states\monster_state.cpp" />
+    <ClCompile Include="src\game_object\monster\states\run_state\monster_run_state.cpp" />
     <ClCompile Include="src\game_object\monster\states\walk_state\monster_walk_state.cpp" />
     <ClCompile Include="src\game_object\monster\stats\monster_stats.cpp" />
     <ClCompile Include="src\game_object\pants\pants.cpp" />

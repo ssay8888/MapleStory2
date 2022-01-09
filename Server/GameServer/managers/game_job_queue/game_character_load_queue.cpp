@@ -68,7 +68,7 @@ auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServer
 		sendPkt.set_dex(statInfo->GetDex());
 		sendPkt.set_int_(statInfo->GetInt());
 		sendPkt.set_luk(statInfo->GetLuk());
-		const auto position = player->GetTransForm()->GetState(Transform::kState::kStatePosition);
+		const auto position = player->GetTransform()->GetState(Transform::kState::kStatePosition);
 		sendPkt.set_pos_x(position.x);
 		sendPkt.set_pos_y(position.y);
 		sendPkt.set_pos_z(position.z);

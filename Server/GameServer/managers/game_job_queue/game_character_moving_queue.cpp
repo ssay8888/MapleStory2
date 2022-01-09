@@ -11,7 +11,7 @@ auto GameCharacterMovingQueue::MovePlayer(PacketSessionRef session, Protocol::Ga
 	const auto gameSession = std::static_pointer_cast<GameSession>(session);
 	const auto mapInstance = MapManager::GetInstance().FindMapInstance(gameSession->GetPlayer()->GetMapId());
 
-	const auto transForm = gameSession->GetPlayer()->GetTransForm();
+	const auto transForm = gameSession->GetPlayer()->GetTransform();
 	transForm->SetUpRotation(_float3(0.f, 1.f, 0.f), pkt.radian());
 	const auto pos = _float3(pkt.position().x(), pkt.position().y(), pkt.position().z());
 	transForm->SetState(Transform::kState::kStatePosition, pos);

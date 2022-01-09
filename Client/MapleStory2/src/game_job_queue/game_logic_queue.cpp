@@ -106,7 +106,16 @@ auto GameLogicQueue::MoveMonster(PacketSessionRef session, Protocol::GameServerM
 		}
 		break;
 		case Protocol::kRegenA: break;
-		case Protocol::kRunA: break;
+		case Protocol::kRunA:
+		{
+			auto transform = std::static_pointer_cast<Transform>(monsterObject->GetComponentPtr(L"Com_Transform"));
+			transform->SetState(Transform::kState::kStateRight, _float3(pkt.right().x(), pkt.right().y(), pkt.right().z()));
+			transform->SetState(Transform::kState::kStateUp, _float3(pkt.up().x(), pkt.up().y(), pkt.up().z()));
+			transform->SetState(Transform::kState::kStateLook, _float3(pkt.look().x(), pkt.look().y(), pkt.look().z()));
+			transform->SetState(Transform::kState::kStatePosition, _float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
+			monsterObject->ChangeAnimation(pkt.state());
+		}
+		break;
 		case Protocol::kDeadA: break;
 		case Protocol::kDeadB: break;
 		case Protocol::kAttackA: break;

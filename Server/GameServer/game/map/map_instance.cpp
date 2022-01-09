@@ -53,6 +53,25 @@ auto MapInstance::FindCharacter(const int64_t characterId) -> std::shared_ptr<Ga
 	return nullptr;
 }
 
+auto MapInstance::FindCharacter(_float3 pos, float distance)->std::shared_ptr<GameCharacter>
+{
+	for (auto character : _characters)
+	{
+		if (character.second->GetPlayer() == nullptr || character.second->GetPlayer()->GetTransform() == nullptr)
+		{
+			continue;
+		}
+		auto targetPos = character.second->GetPlayer()->GetTransform()->GetState(Transform::kState::kStatePosition);
+		auto dir = targetPos - pos;
+		auto length = D3DXVec3Length(&dir);
+		if (length < distance)
+		{
+			return character.second->GetPlayer();
+		}
+	}
+	return nullptr;
+}
+
 auto MapInstance::BroadCastAddCharacter(std::shared_ptr<GameSession> session) -> void
 {
 	Protocol::GameServerRespawnPlayer respawnPlayerPkt;
@@ -61,7 +80,7 @@ auto MapInstance::BroadCastAddCharacter(std::shared_ptr<GameSession> session) ->
 	respawnPlayerPkt.set_name(StringUtils::ConvertWtoC(player->GetName().c_str()).c_str());
 	respawnPlayerPkt.set_gender(player->GetGender());
 	respawnPlayerPkt.set_face_id(player->GetFaceId());
-	auto pos = player->GetTransForm()->GetState(Transform::kState::kStatePosition);
+	auto pos = player->GetTransform()->GetState(Transform::kState::kStatePosition);
 	respawnPlayerPkt.set_pos_x(pos.x);
 	respawnPlayerPkt.set_pos_y(pos.y);
 	respawnPlayerPkt.set_pos_z(pos.z);
@@ -89,7 +108,7 @@ auto MapInstance::BroadCastAddCharacter(std::shared_ptr<GameSession> session) ->
 			respawnTargetPlayerPkt.set_name(StringUtils::ConvertWtoC(player->GetName().c_str()).c_str());
 			respawnTargetPlayerPkt.set_gender(player->GetGender());
 			respawnTargetPlayerPkt.set_face_id(player->GetFaceId());
-			pos = player->GetTransForm()->GetState(Transform::kState::kStatePosition);
+			pos = player->GetTransform()->GetState(Transform::kState::kStatePosition);
 			respawnTargetPlayerPkt.set_pos_x(pos.x);
 			respawnTargetPlayerPkt.set_pos_y(pos.y);
 			respawnTargetPlayerPkt.set_pos_z(pos.z);

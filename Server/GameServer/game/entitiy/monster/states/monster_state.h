@@ -17,6 +17,9 @@ public:
 	auto StraightCheck(std::shared_ptr<GameMonster> monster)->bool;
 	auto LoadLastTile(std::shared_ptr<GameMonster> monster)->std::shared_ptr<MapXblock>;
 
+	auto FindTargetCharacter(std::shared_ptr<GameMonster> monster)->std::shared_ptr<GameCharacter>;
+	auto CheckTargetCharacterDistance(std::shared_ptr<GameMonster> monster, float distance)->bool;
+
 protected:
 	auto ReloadMapObject(std::shared_ptr<GameMonster> monster, bool check = false)->void;
 
