@@ -5,6 +5,7 @@
 #include "game/entitiy/character/game_character.h"
 #include "game/entitiy/monster/game_monster.h"
 #include "game/entitiy/monster/spawn_point/spawn_point.h"
+#include "game/entitiy/monster/stat/monster_stat.h"
 #include "game/map/map_instance.h"
 #include "protocol/game_enum.pb.h"
 #include "protocol/game_protocol.pb.h"
@@ -32,8 +33,9 @@ auto MonsterRunState::Tick(const double timeDelta, std::shared_ptr<GameMonster> 
 	}
 
 	_animation_acc += timeDelta;
-	auto transform = monster->GetTransform();
-	if (!CheckTargetCharacterDistance(monster, 0.2f)) //공격범위안에있는지체크해야할곳.
+	const auto transform = monster->GetTransform();
+	const auto skill = monster->GetStat()->SkillToUse(GetTargetDistance(monster));
+	if (skill == nullptr /*|| !CheckTargetCharacterDistance(monster, 0.2f)*/) //공격범위안에있는지체크해야할곳.
 	{
 		transform->LookAtTarget(monster->GetTargetCharacter()->GetTransform()->GetState(Transform::kState::kStatePosition));
 
@@ -57,28 +59,28 @@ auto MonsterRunState::Tick(const double timeDelta, std::shared_ptr<GameMonster> 
 			sendPkt.set_object_id(monster->GetObjectId());
 			sendPkt.set_state(Protocol::kWalkA);
 
-			auto sendRight = sendPkt.mutable_right();
-			auto right = monster->GetTransform()->GetState(Transform::kState::kStateRight);
+			const auto sendRight = sendPkt.mutable_right();
+			const auto right = monster->GetTransform()->GetState(Transform::kState::kStateRight);
 			sendRight->set_x(right.x);
 			sendRight->set_y(right.y);
 			sendRight->set_z(right.z);
 
-			auto sendUp = sendPkt.mutable_up();
-			auto up = monster->GetTransform()->GetState(Transform::kState::kStateUp);
+			const auto sendUp = sendPkt.mutable_up();
+			const auto up = monster->GetTransform()->GetState(Transform::kState::kStateUp);
 			sendUp->set_x(up.x);
 			sendUp->set_y(up.y);
 			sendUp->set_z(up.z);
 
 
-			auto sendLook = sendPkt.mutable_look();
-			auto look = monster->GetTransform()->GetState(Transform::kState::kStateLook);
+			const auto sendLook = sendPkt.mutable_look();
+			const auto look = monster->GetTransform()->GetState(Transform::kState::kStateLook);
 			sendLook->set_x(look.x);
 			sendLook->set_y(look.y);
 			sendLook->set_z(look.z);
 
 
-			auto sendPos = sendPkt.mutable_position();
-			auto pos = monster->GetTransform()->GetState(Transform::kState::kStatePosition);
+			const auto sendPos = sendPkt.mutable_position();
+			const auto pos = monster->GetTransform()->GetState(Transform::kState::kStatePosition);
 			sendPos->set_x(pos.x);
 			sendPos->set_y(pos.y);
 			sendPos->set_z(pos.z);
@@ -95,6 +97,30 @@ auto MonsterRunState::Tick(const double timeDelta, std::shared_ptr<GameMonster> 
 
 auto MonsterRunState::LateTick(const double timeDelta, std::shared_ptr<GameMonster> monster) -> void
 {
+	const auto skill = monster->GetStat()->SkillToUse(GetTargetDistance(monster));
+	if (skill != nullptr && !skill->motions.empty())
+	{
+		if (skill->motions[0]->sequence_name.find(L"_a") != std::wstring::npos)
+		{
+			monster->ChangeUseSkill(skill);
+			monster->ChangeState(Protocol::kMonsterState::kAttack1A);
+		}
+		else if (skill->motions[0]->sequence_name.find(L"_b") != std::wstring::npos)
+		{
+			monster->ChangeUseSkill(skill);
+			monster->ChangeState(Protocol::kMonsterState::kAttack1B);
+		}
+		else if (skill->motions[0]->sequence_name.find(L"_c") != std::wstring::npos)
+		{
+			monster->ChangeUseSkill(skill);
+			monster->ChangeState(Protocol::kMonsterState::kAttack1C);
+		}
+		else
+		{
+			std::cout << "알 수 없는 모션" << std::endl;
+		}
+		return;
+	}
 	if (!CheckTargetCharacterDistance(monster, 2.f))
 	{
 		monster->ChangeState(Protocol::kMonsterState::kIdleA);

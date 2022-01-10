@@ -74,7 +74,7 @@ auto MonsterBoreState::LateTick(const double timeDelta, std::shared_ptr<GameMons
 		return;
 	}
 
-	const auto kfm = DataReaderManager::GetInstance().FindAnyKey(monster->GetSpawnPoint()->GetSpawnNpcId());
+	const auto kfm = DataReaderManager::GetInstance().FindAniKey(monster->GetSpawnPoint()->GetSpawnNpcId());
 
 	auto index = monster->GetStateIndex(Protocol::kMonsterState::kBoreA);
 	auto seq = kfm->seqs[index];

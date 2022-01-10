@@ -58,33 +58,6 @@ auto MonsterIdleState::Enter(std::shared_ptr<GameMonster> monster) -> void
 	sendPos->set_y(pos.y);
 	sendPos->set_z(pos.z);
 
-
-	sendRight = sendPkt.mutable_cright();
-	right = monster->GetMonsterColliderAabb()->GetTransform()->GetState(Transform::kState::kStateRight);
-	sendRight->set_x(right.x);
-	sendRight->set_y(right.y);
-	sendRight->set_z(right.z);
-
-	sendUp = sendPkt.mutable_cup();
-	up = monster->GetMonsterColliderAabb()->GetTransform()->GetState(Transform::kState::kStateUp);
-	sendUp->set_x(up.x);
-	sendUp->set_y(up.y);
-	sendUp->set_z(up.z);
-
-
-	sendLook = sendPkt.mutable_clook();
-	look = monster->GetMonsterColliderAabb()->GetTransform()->GetState(Transform::kState::kStateLook);
-	sendLook->set_x(look.x);
-	sendLook->set_y(look.y);
-	sendLook->set_z(look.z);
-
-
-	sendPos = sendPkt.mutable_cposition();
-	pos = monster->GetMonsterColliderAabb()->GetTransform()->GetState(Transform::kState::kStatePosition);
-	sendPos->set_x(pos.x);
-	sendPos->set_y(pos.y);
-	sendPos->set_z(pos.z);
-
 	monster->GetMapInstance()->BroadCastMessage(sendPkt, nullptr);
 }
 
@@ -116,7 +89,7 @@ auto MonsterIdleState::LateTick(const double timeDelta, std::shared_ptr<GameMons
 		return;
 	}
 
-	const auto kfm = DataReaderManager::GetInstance().FindAnyKey(monster->GetSpawnPoint()->GetSpawnNpcId());
+	const auto kfm = DataReaderManager::GetInstance().FindAniKey(monster->GetSpawnPoint()->GetSpawnNpcId());
 
 	auto index = monster->GetStateIndex(Protocol::kMonsterState::kIdleA);
 	auto seq = kfm->seqs[index];

@@ -144,6 +144,7 @@ public:
 		StatAtt stat;
 		Distance distance;
 		Collision collision;
+		std::vector<std::pair<int32_t, int32_t>> skills;
 	};
 	auto LoadMonsterInfo()->void;
 	auto AllMonsterInfo()->std::vector<std::shared_ptr<MonsterInfo>>;
@@ -162,7 +163,46 @@ public:
 	};
 
 	auto LoadAniKeyText()->void;
-	auto FindAnyKey(int32_t npcId)->std::shared_ptr<Kfm>;
+	auto FindAniKey(int32_t npcId)->std::shared_ptr<Kfm>;
+#pragma endregion
+
+#pragma region SkillData
+	struct DetectProperty
+	{
+		float distance;
+	};
+	struct Motion
+	{
+		std::wstring sequence_name;
+		std::wstring motion_effect;
+		float movedistance;
+		struct Attack
+		{
+			int32_t target_count;
+			struct Range
+			{
+				float distance;
+				float height;
+				float width;
+			} range;
+			struct Damage
+			{
+				int32_t count;
+				float rate;
+			} damage;
+		} attack;
+	};
+	struct Skill
+	{
+		int32_t id;
+		std::string comment;
+		DetectProperty detect;
+		std::vector<std::shared_ptr<Motion>> motions;
+	};
+
+
+	auto LoadSkillData()->void;
+	auto FindSkillData(int32_t skillId)->std::shared_ptr<Skill>;
 #pragma endregion
 	
 private:
@@ -173,5 +213,6 @@ private:
 	std::map<int32_t, std::shared_ptr<FieldData>>			_field_data;
 	std::map<int32_t, std::shared_ptr<MonsterInfo>>			_monster_info;
 	std::unordered_map<int32_t, std::shared_ptr<Kfm>>		_ani_key;
+	std::map<int32_t, std::shared_ptr<Skill>>				_skills;
 };
 

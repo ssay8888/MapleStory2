@@ -18,7 +18,7 @@ auto MonsterBoreState::Tick(const double timeDelta, std::shared_ptr<Monster> mon
 auto MonsterBoreState::LateTick(const double timeDelta, std::shared_ptr<Monster> monster) -> void
 {
 	monster->PlayAnimation(timeDelta);
-	//auto kfm = DataReaderManager::GetInstance().FindAnyKey(monster->GetMonsterInfo().monster_id());
+	//auto kfm = DataReaderManager::GetInstance().FindAniKey(monster->GetMonsterInfo().monster_id());
 
 	//auto index = monster->GetStateIndex(Monster::kMonsterState::kBoreA);
 	//auto seq = kfm->seqs[index];

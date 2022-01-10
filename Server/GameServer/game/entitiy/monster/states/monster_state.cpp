@@ -169,6 +169,18 @@ auto MonsterState::CheckTargetCharacterDistance(std::shared_ptr<GameMonster> mon
 	return false;
 }
 
+auto MonsterState::GetTargetDistance(std::shared_ptr<GameMonster> monster) -> float
+{
+	if (monster->GetTargetCharacter() == nullptr)
+	{
+		return -1.f;
+	}
+
+	const auto dir = monster->GetTargetCharacter()->GetTransform()->GetState(Transform::kState::kStatePosition) - monster->GetTransform()->GetState(Transform::kState::kStatePosition);
+	const auto length = D3DXVec3Length(&dir);
+	return length;
+}
+
 auto MonsterState::ReloadMapObject(std::shared_ptr<GameMonster> monster, bool check) -> void
 {
 	auto range = monster->GetReloadRangeAabb();

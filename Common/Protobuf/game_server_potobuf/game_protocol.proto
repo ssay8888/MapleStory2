@@ -95,8 +95,5 @@ message GameServerMoveMonster
 	float3 look = 5;
 	float3 position = 6;
 	
-	float3 cright = 7;
-	float3 cup = 8;
-	float3 clook = 9;
-	float3 cposition = 10;
+	int32 skillId = 7;
 }

@@ -43,7 +43,7 @@ auto MonsterIdleState::Tick(const double timeDelta, std::shared_ptr<Monster> mon
 auto MonsterIdleState::LateTick(const double timeDelta, std::shared_ptr<Monster> monster) -> void
 {
 	monster->PlayAnimation(timeDelta);
-	//auto kfm = DataReaderManager::GetInstance().FindAnyKey(monster->GetMonsterInfo().monster_id());
+	//auto kfm = DataReaderManager::GetInstance().FindAniKey(monster->GetMonsterInfo().monster_id());
 
 	//auto index = monster->GetStateIndex(Monster::kMonsterState::kIdleA);
 	//auto seq = kfm->seqs[index];

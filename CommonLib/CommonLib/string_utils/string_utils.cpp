@@ -2,6 +2,7 @@
 #include "string_utils.h"
 
 #include <algorithm>
+#include <sstream>
 #include <winstring.h>
 
 auto StringUtils::ConvertWtoC(const wchar_t* str) -> std::string
@@ -29,4 +30,30 @@ auto StringUtils::ToLower(std::wstring& str) -> void
 auto StringUtils::ToUpper(std::wstring& str) -> void
 {
 	std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+}
+
+auto StringUtils::Split(const std::string& str, const char delimiter) -> std::vector<std::string>
+{
+	std::vector<std::string> answer;
+	std::stringstream ss(str);
+	std::string temp;
+
+	while (getline(ss, temp, delimiter)) {
+		answer.push_back(temp);
+	}
+
+	return answer;
+}
+
+auto StringUtils::Split(const std::wstring& str, const wchar_t delimiter) -> std::vector<std::wstring>
+{
+	std::vector<std::wstring> answer;
+	std::wstringstream ss(str);
+	std::wstring temp;
+
+	while (getline(ss, temp, delimiter)) {
+		answer.push_back(temp);
+	}
+
+	return answer;
 }

@@ -95,6 +95,17 @@ auto Transform::BackStraight(const double timeDelta) -> void
 	SetState(kState::kStatePosition, pos);
 }
 
+auto Transform::BackStraight(const double timeDelta, const double perSec) -> void
+{
+	_float3 look = GetState(kState::kStateLook);
+	D3DXVec3Normalize(&look, &look);
+
+	_float3 pos = GetState(kState::kStatePosition);
+	pos -= look * static_cast<float>(perSec * timeDelta);
+
+	SetState(kState::kStatePosition, pos);
+}
+
 auto Transform::WalkLeft(const double timeDelta) -> void
 {
 	_float3	right = GetState(kState::kStateRight);

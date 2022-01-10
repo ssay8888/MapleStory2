@@ -6,6 +6,7 @@
 #include <d3dx9tex.h>
 #include <iostream>
 #include <pugixml.hpp>
+#include <sstream>
 #include <boost/filesystem/path.hpp>
 #include <wrl/client.h>
 
@@ -26,6 +27,7 @@ auto DataReaderManager::Init(const Microsoft::WRL::ComPtr<IDirect3DDevice9> devi
 	LoadFieldData();
 	LoadMonsterInfo();
 	LoadAniKeyText();
+	LoadSkillData();
 	if (device)
 	{
 		FaceLoader(device);
@@ -403,6 +405,29 @@ auto DataReaderManager::LoadMonsterInfo() -> void
 							monsterInfo->collision.height = std::stof(node.attribute("height").value()) / 150.f * 0.4f;
 							monsterInfo->collision.depth = std::stof(node.attribute("depth").value()) / 150.f * 0.4f;
 						}
+						else if (nodeName == "skill")
+						{
+							auto skills = std::string(node.attribute("ids").value());
+							std::istringstream ss(skills);
+							std::string temp;
+							std::vector<int32_t> values;
+							while (std::getline(ss, temp, ','))
+							{
+								values.push_back(std::stoi(temp));
+							}
+							auto probs = std::string(node.attribute("probs").value());
+							std::istringstream ss2(skills);
+							std::vector<int32_t> values2;
+							while (std::getline(ss2, temp, ','))
+							{
+								values2.push_back(std::stoi(temp));
+							}
+
+							for (auto i = 0; i < values.size(); ++i)  
+							{
+								monsterInfo->skills.emplace_back(values[i], values.empty() ? 100 : values[i]);
+							}
+						}
 					}
 				}
 				_monster_info.emplace(monsterInfo->id, monsterInfo);
@@ -470,7 +495,7 @@ auto DataReaderManager::LoadAniKeyText() -> void
 	}
 }
 
-auto DataReaderManager::FindAnyKey(const int32_t npcId) -> std::shared_ptr<Kfm>
+auto DataReaderManager::FindAniKey(const int32_t npcId) -> std::shared_ptr<Kfm>
 {
 	const auto iterator = _ani_key.find(npcId);
 	if (iterator != _ani_key.end())
@@ -480,4 +505,86 @@ auto DataReaderManager::FindAnyKey(const int32_t npcId) -> std::shared_ptr<Kfm>
 	return nullptr;
 }
 
+#pragma endregion
+
+
+#pragma region SkillData
+
+
+auto DataReaderManager::LoadSkillData() -> void
+{
+	auto files = FileManager::GetDirFileName(L"../../Binary/Resources/Xml/skilldata/");
+
+	for (auto file : files)
+	{
+		xml_document doc;
+		const auto err = doc.load_file(StringUtils::ConvertWtoC(file.c_str()).c_str());
+		if (err.status == status_ok)
+		{
+			const auto skillNodes = doc.select_nodes("ms2/skill");
+			for (auto skillNode : skillNodes)
+			{
+				auto skill = std::make_shared<Skill>();
+				skill->id = std::stoi(skillNode.node().attribute("id").value());
+				skill->comment = skillNode.node().attribute("comment").value();
+
+				for (auto elementNode : skillNode.node())
+				{
+					if (std::string(elementNode.name()) == "level")
+					{
+						for (auto infoNodes : elementNode)
+						{
+							if (std::string(infoNodes.name()) == "detectProperty")
+							{
+								skill->detect.distance = std::stof(infoNodes.attribute("distance").value());
+							}
+							else if (std::string(infoNodes.name()) == "motion")
+							{
+								auto motion = std::make_shared<Motion>();
+								motion->sequence_name = StringUtils::ConvertCtoW(infoNodes.attribute("sequenceName").value());
+								StringUtils::ToLower(motion->sequence_name);
+								motion->motion_effect = StringUtils::ConvertCtoW(infoNodes.attribute("motionEffect").value());
+								StringUtils::ToLower(motion->motion_effect);
+								motion->movedistance = infoNodes.attribute("movedistance").empty() ? 0 : std::stof(infoNodes.attribute("movedistance").value()) / 150.f * 0.58f;
+								for (auto attackNode : infoNodes)
+								{
+									if (std::string(attackNode.name()) == "attack")
+									{
+										motion->attack.target_count = attackNode.attribute("targetCount").empty() ? 0 : std::stoi(attackNode.attribute("targetCount").value());
+										for (auto attackElement : attackNode)
+										{
+											if (std::string(attackElement.name()) == "range")
+											{
+												motion->attack.range.distance = attackElement.attribute("distance").empty() ? 0 : std::stof(attackElement.attribute("distance").value()) / 150.f * 0.58f;
+												motion->attack.range.height = attackElement.attribute("height").empty() ? 0 : std::stof(attackElement.attribute("height").value());
+												motion->attack.range.width = attackElement.attribute("width").empty() ? 0 : std::stof(attackElement.attribute("width").value());
+											}
+											else if (std::string(attackElement.name()) == "damage")
+											{
+												motion->attack.damage.count = attackElement.attribute("count").empty() ? 0 : std::stoi(attackElement.attribute("count").value());
+												motion->attack.damage.rate = attackElement.attribute("rate").empty() ? 0 : std::stof(attackElement.attribute("rate").value());
+											}
+										}
+									}
+								}
+								skill->motions.push_back(motion);
+							}
+						}
+					}
+				}
+				_skills.emplace(skill->id, skill);
+			}
+		}
+	}
+}
+
+auto DataReaderManager::FindSkillData(const int32_t skillId) -> std::shared_ptr<Skill>
+{
+	const auto iterator = _skills.find(skillId);
+	if (iterator != _skills.end())
+	{
+		return iterator->second;
+	}
+	return nullptr;
+}
 #pragma endregion

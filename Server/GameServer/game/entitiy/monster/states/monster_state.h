@@ -19,6 +19,7 @@ public:
 
 	auto FindTargetCharacter(std::shared_ptr<GameMonster> monster)->std::shared_ptr<GameCharacter>;
 	auto CheckTargetCharacterDistance(std::shared_ptr<GameMonster> monster, float distance)->bool;
+	auto GetTargetDistance(std::shared_ptr<GameMonster> monster)->float;
 
 protected:
 	auto ReloadMapObject(std::shared_ptr<GameMonster> monster, bool check = false)->void;

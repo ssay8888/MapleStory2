@@ -13,12 +13,15 @@
 #include "src/utility/components/transform/transform.h"
 #include "src/utility/light/light_manager.h"
 #include "src/utility/pipe_line/pipe_line.h"
+#include "states/attack_a_state/monster_attack_a_state.h"
+#include "states/attack_b_state/monster_attack_b_state.h"
 #include "states/bore_state/monster_bore_state.h"
 #include "states/idle_state/monster_idle_state.h"
 #include "states/run_state/monster_run_state.h"
 #include "states/walk_state/monster_walk_state.h"
 #include "stats/monster_stats.h"
 #include "string_utils/string_utils.h"
+#include <src/game_object/monster/states/attack_c_state/monster_attack_c_state.h>
 
 Monster::Monster(const ComPtr<IDirect3DDevice9>& device):
 	GameObject(device)
@@ -227,6 +230,16 @@ auto Monster::ChangeMonsterState(const int32_t index) -> bool
 	return false;
 }
 
+auto Monster::ChangeSkillId(int32_t id) -> void
+{
+	_skill_id = id;
+}
+
+auto Monster::GetSkillId() const -> int32_t
+{
+	return _skill_id;
+}
+
 auto Monster::AddComponents() -> HRESULT
 {
 
@@ -337,7 +350,7 @@ auto Monster::AddComponents() -> HRESULT
 auto Monster::AnimationLoad() -> int32_t
 {
 	auto monsterInfo = DataReaderManager::GetInstance().FindMonsterInfo(_monster_info.monster_id());
-	const auto animationNames = DataReaderManager::GetInstance().FindAnyKey(monsterInfo->id);
+	const auto animationNames = DataReaderManager::GetInstance().FindAniKey(monsterInfo->id);
 
 	if (animationNames == nullptr)
 	{
@@ -390,6 +403,108 @@ auto Monster::AnimationLoad() -> int32_t
 			_state_index.emplace(Protocol::kMonsterState::kRunA, animation.first);
 			_animaion_index.emplace(Protocol::kMonsterState::kRunA, index++);
 			_mesh_list.emplace(animation.first, mesh);
+		}
+		else if (Seq->name.find(L"Attack_Idle_A") != std::wstring::npos)
+		{
+			
+		}
+		else if (Seq->name.find(L"Attack_") != std::wstring::npos)
+		{
+			auto splits = StringUtils::Split(Seq->name, L'_');
+			if (splits.empty() || splits.size() < 2)
+			{
+				continue;
+			}
+
+			if (splits[2] == L"A")
+			{
+				auto iterator = _state_index.end();
+				Protocol::kMonsterState type = Protocol::kMonsterState::kAttack1A;
+				if (splits[1] == L"01")
+				{
+					iterator = _state_index.find(type);
+				}
+				else if (splits[1] == L"02")
+				{
+					type = Protocol::kMonsterState::kAttack2A;
+					iterator = _state_index.find(type);
+				}
+				else if (splits[1] == L"03")
+				{
+					type = Protocol::kMonsterState::kAttack3A;
+					iterator = _state_index.find(type);
+				}
+				else
+				{
+					int a = 0;
+				}
+
+				if (iterator == _state_index.end())
+				{
+					_monster_states.emplace(animation.first, MakeShared<MonsterAttackAState>(type));
+					_state_index.emplace(type, animation.first);
+					_animaion_index.emplace(type, index++);
+					_mesh_list.emplace(animation.first, mesh);
+				}
+			}
+			else if (splits[2] == L"B")
+			{
+				auto iterator = _state_index.end();
+				Protocol::kMonsterState type = Protocol::kMonsterState::kAttack1B;
+				if (splits[1] == L"01")
+				{
+					iterator = _state_index.find(type);
+				}
+				else if (splits[1] == L"02")
+				{
+					type = Protocol::kMonsterState::kAttack2B;
+					iterator = _state_index.find(type);
+				}
+				else if (splits[1] == L"03")
+				{
+					type = Protocol::kMonsterState::kAttack3B;
+					iterator = _state_index.find(type);
+				}
+
+
+				if (iterator == _state_index.end())
+				{
+					_monster_states.emplace(animation.first, MakeShared<MonsterAttackAState>(type));
+					_state_index.emplace(type, animation.first);
+					_animaion_index.emplace(type, index++);
+					_mesh_list.emplace(animation.first, mesh);
+				}
+			}
+			else if (splits[2] == L"C")
+			{
+
+				auto iterator = _state_index.end();
+				Protocol::kMonsterState type = Protocol::kMonsterState::kAttack1C;
+				if (splits[1] == L"01")
+				{
+					iterator = _state_index.find(type);
+				}
+				else if (splits[1] == L"02")
+				{
+					type = Protocol::kMonsterState::kAttack2C;
+					iterator = _state_index.find(type);
+				}
+				else if (splits[1] == L"03")
+				{
+					type = Protocol::kMonsterState::kAttack3C;
+					iterator = _state_index.find(type);
+				}
+
+
+				if (iterator == _state_index.end())
+				{
+					_monster_states.emplace(animation.first, MakeShared<MonsterAttackAState>(type));
+					_state_index.emplace(type, animation.first);
+					_animaion_index.emplace(type, index++);
+					_mesh_list.emplace(animation.first, mesh);
+				}
+			}
+
 		}
 	}
 	return idleIndex;

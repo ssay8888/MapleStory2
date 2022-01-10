@@ -41,6 +41,7 @@ public:
 public:
 	auto GoStraight(const double timeDelta)->void;
 	auto BackStraight(const double timeDelta)->void;
+	auto BackStraight(const double timeDelta, const double perSec)->void;
 	auto WalkLeft(const double timeDelta)->void;
 	auto WalkRight(const double timeDelta)->void;
 	auto RotationAxis(_float3 axis, double timeDelta)->void;

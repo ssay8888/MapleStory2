@@ -29,16 +29,18 @@ const char descriptor_table_protodef_game_5fenum_2eproto[] PROTOBUF_SECTION_VARI
   "yType\022\026\n\022kInventoryEquipped\020\000\022\021\n\rkInvent"
   "oryEqp\020\001\022\021\n\rkInventoryEtc\020\002\022\021\n\rkInventor"
   "yEnd\020\003*/\n\nkLoadState\022\020\n\014kLoadSuccess\020\000\022\017"
-  "\n\013kLoadFailed\020\001*\261\001\n\rkMonsterState\022\n\n\006kId"
+  "\n\013kLoadFailed\020\001*\216\002\n\rkMonsterState\022\n\n\006kId"
   "leA\020\000\022\n\n\006kWalkA\020\001\022\n\n\006kBoreA\020\002\022\013\n\007kRegenA"
-  "\020\003\022\t\n\005kRunA\020\004\022\n\n\006kDeadA\020\005\022\n\n\006kDeadB\020\006\022\014\n"
-  "\010kAttackA\020\007\022\014\n\010kAttackB\020\010\022\014\n\010kAttackC\020\t\022"
-  "\n\n\006kDamgA\020\n\022\n\n\006kDamgB\020\013\022\n\n\006kDamgC\020\014b\006pro"
-  "to3"
+  "\020\003\022\t\n\005kRunA\020\004\022\n\n\006kDeadA\020\005\022\n\n\006kDeadB\020\006\022\r\n"
+  "\tkAttack1A\020\007\022\r\n\tkAttack2A\020\010\022\r\n\tkAttack3A"
+  "\020\t\022\r\n\tkAttack1B\020\n\022\r\n\tkAttack2B\020\013\022\r\n\tkAtt"
+  "ack3B\020\014\022\r\n\tkAttack1C\020\r\022\r\n\tkAttack2C\020\016\022\r\n"
+  "\tkAttack3C\020\017\022\n\n\006kDamgA\020\020\022\n\n\006kDamgB\020\021\022\n\n\006"
+  "kDamgC\020\022b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fenum_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fenum_2eproto = {
-  false, false, 363, descriptor_table_protodef_game_5fenum_2eproto, "game_enum.proto", 
+  false, false, 456, descriptor_table_protodef_game_5fenum_2eproto, "game_enum.proto", 
   &descriptor_table_game_5fenum_2eproto_once, nullptr, 0, 0,
   schemas, file_default_instances, TableStruct_game_5fenum_2eproto::offsets,
   nullptr, file_level_enum_descriptors_game_5fenum_2eproto, file_level_service_descriptors_game_5fenum_2eproto,
@@ -99,6 +101,12 @@ bool kMonsterState_IsValid(int value) {
     case 10:
     case 11:
     case 12:
+    case 13:
+    case 14:
+    case 15:
+    case 16:
+    case 17:
+    case 18:
       return true;
     default:
       return false;

@@ -124,6 +124,15 @@
     <ClCompile Include="game\entitiy\monster\states\monster_run_state\monster_run_state.cpp">
       <Filter>game\entity\monster\states\monster_run_state</Filter>
     </ClCompile>
+    <ClCompile Include="game\entitiy\monster\states\monster_attack_a_state\monster_attack_a_state.cpp">
+      <Filter>game\entity\monster\states\monster_attack_a_state</Filter>
+    </ClCompile>
+    <ClCompile Include="game\entitiy\monster\states\monster_attack_b_state\monster_attack_b_state.cpp">
+      <Filter>game\entity\monster\states\monster_attack_b_state</Filter>
+    </ClCompile>
+    <ClCompile Include="game\entitiy\monster\states\monster_attack_c_state\monster_attack_c_state.cpp">
+      <Filter>game\entity\monster\states\monster_attack_c_state</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -212,6 +221,15 @@
     </Filter>
     <Filter Include="game\entity\monster\states\monster_run_state">
       <UniqueIdentifier>{d43699d0-7cb5-46f4-b81f-cf74929f9872}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\monster\states\monster_attack_a_state">
+      <UniqueIdentifier>{786b7b73-b1ae-465a-af05-191872ef0800}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\monster\states\monster_attack_b_state">
+      <UniqueIdentifier>{49b10dc9-3eb7-44ba-b1fd-26547f7e7150}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\monster\states\monster_attack_c_state">
+      <UniqueIdentifier>{f7d56b0e-57ca-4e43-a5ff-bfaafa8f5175}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -337,6 +355,15 @@
     </ClInclude>
     <ClInclude Include="game\entitiy\monster\states\monster_run_state\monster_run_state.h">
       <Filter>game\entity\monster\states\monster_run_state</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\monster\states\monster_attack_a_state\monster_attack_a_state.h">
+      <Filter>game\entity\monster\states\monster_attack_a_state</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\monster\states\monster_attack_b_state\monster_attack_b_state.h">
+      <Filter>game\entity\monster\states\monster_attack_b_state</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\monster\states\monster_attack_c_state\monster_attack_c_state.h">
+      <Filter>game\entity\monster\states\monster_attack_c_state</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

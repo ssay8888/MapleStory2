@@ -57,7 +57,7 @@ auto MonsterWalkState::LateTick(const double timeDelta, std::shared_ptr<Monster>
 		transform->SetState(Transform::kState::kStatePosition, _targetPos);
 		monster->ChangeAnimation(_next_state.state());
 	}
-	//auto kfm = DataReaderManager::GetInstance().FindAnyKey(monster->GetMonsterInfo().monster_id());
+	//auto kfm = DataReaderManager::GetInstance().FindAniKey(monster->GetMonsterInfo().monster_id());
 
 	//auto index = monster->GetStateIndex(Monster::kMonsterState::kIdleA);
 	//auto seq = kfm->seqs[index];

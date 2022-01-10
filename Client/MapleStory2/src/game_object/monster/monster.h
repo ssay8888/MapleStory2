@@ -44,6 +44,8 @@ public:
 
 	auto ChangeAnimation(Protocol::kMonsterState index)->void;
 	auto ChangeMonsterState(int32_t index)->bool;
+	auto ChangeSkillId(int32_t id)->void;
+	auto GetSkillId()const->int32_t;
 
 private:
 	auto AddComponents()->HRESULT;
@@ -68,6 +70,7 @@ private:
 	std::map<Protocol::kMonsterState, int32_t>							_state_index;
 	std::map<Protocol::kMonsterState, int32_t>							_animaion_index;
 	std::shared_ptr<MonsterState>										_current_monster_state;
+	int32_t	_skill_id;
 
 
 };

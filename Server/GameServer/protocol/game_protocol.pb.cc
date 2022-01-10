@@ -161,13 +161,10 @@ constexpr GameServerMoveMonster::GameServerMoveMonster(
   , up_(nullptr)
   , look_(nullptr)
   , position_(nullptr)
-  , cright_(nullptr)
-  , cup_(nullptr)
-  , clook_(nullptr)
-  , cposition_(nullptr)
   , object_id_(int64_t{0})
   , state_(0)
-{}
+
+  , skillid_(0){}
 struct GameServerMoveMonsterDefaultTypeInternal {
   constexpr GameServerMoveMonsterDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -282,10 +279,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fprotocol_2eproto::offse
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerMoveMonster, up_),
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerMoveMonster, look_),
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerMoveMonster, position_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerMoveMonster, cright_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerMoveMonster, cup_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerMoveMonster, clook_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerMoveMonster, cposition_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerMoveMonster, skillid_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::Protocol::GameClientLogin)},
@@ -341,16 +335,13 @@ const char descriptor_table_protodef_game_5fprotocol_2eproto[] PROTOBUF_SECTION_
   "\001(\005\022\037\n\005right\030\004 \001(\0132\020.Protocol.float3\022\034\n\002"
   "up\030\005 \001(\0132\020.Protocol.float3\022\036\n\004look\030\006 \001(\013"
   "2\020.Protocol.float3\022\"\n\010position\030\007 \001(\0132\020.P"
-  "rotocol.float3\022\020\n\010is_spawn\030\010 \001(\010\"\334\002\n\025Gam"
+  "rotocol.float3\022\020\n\010is_spawn\030\010 \001(\010\"\346\001\n\025Gam"
   "eServerMoveMonster\022\021\n\tobject_id\030\001 \001(\003\022&\n"
   "\005state\030\002 \001(\0162\027.Protocol.kMonsterState\022\037\n"
   "\005right\030\003 \001(\0132\020.Protocol.float3\022\034\n\002up\030\004 \001"
   "(\0132\020.Protocol.float3\022\036\n\004look\030\005 \001(\0132\020.Pro"
   "tocol.float3\022\"\n\010position\030\006 \001(\0132\020.Protoco"
-  "l.float3\022 \n\006cright\030\007 \001(\0132\020.Protocol.floa"
-  "t3\022\035\n\003cup\030\010 \001(\0132\020.Protocol.float3\022\037\n\005clo"
-  "ok\030\t \001(\0132\020.Protocol.float3\022#\n\tcposition\030"
-  "\n \001(\0132\020.Protocol.float3b\006proto3"
+  "l.float3\022\017\n\007skillId\030\007 \001(\005b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_game_5fprotocol_2eproto_deps[2] = {
   &::descriptor_table_game_5fenum_2eproto,
@@ -358,7 +349,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fprotocol_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fprotocol_2eproto = {
-  false, false, 1551, descriptor_table_protodef_game_5fprotocol_2eproto, "game_protocol.proto", 
+  false, false, 1433, descriptor_table_protodef_game_5fprotocol_2eproto, "game_protocol.proto", 
   &descriptor_table_game_5fprotocol_2eproto_once, descriptor_table_game_5fprotocol_2eproto_deps, 2, 9,
   schemas, file_default_instances, TableStruct_game_5fprotocol_2eproto::offsets,
   file_level_metadata_game_5fprotocol_2eproto, file_level_enum_descriptors_game_5fprotocol_2eproto, file_level_service_descriptors_game_5fprotocol_2eproto,
@@ -3061,10 +3052,6 @@ class GameServerMoveMonster::_Internal {
   static const ::Protocol::float3& up(const GameServerMoveMonster* msg);
   static const ::Protocol::float3& look(const GameServerMoveMonster* msg);
   static const ::Protocol::float3& position(const GameServerMoveMonster* msg);
-  static const ::Protocol::float3& cright(const GameServerMoveMonster* msg);
-  static const ::Protocol::float3& cup(const GameServerMoveMonster* msg);
-  static const ::Protocol::float3& clook(const GameServerMoveMonster* msg);
-  static const ::Protocol::float3& cposition(const GameServerMoveMonster* msg);
 };
 
 const ::Protocol::float3&
@@ -3082,22 +3069,6 @@ GameServerMoveMonster::_Internal::look(const GameServerMoveMonster* msg) {
 const ::Protocol::float3&
 GameServerMoveMonster::_Internal::position(const GameServerMoveMonster* msg) {
   return *msg->position_;
-}
-const ::Protocol::float3&
-GameServerMoveMonster::_Internal::cright(const GameServerMoveMonster* msg) {
-  return *msg->cright_;
-}
-const ::Protocol::float3&
-GameServerMoveMonster::_Internal::cup(const GameServerMoveMonster* msg) {
-  return *msg->cup_;
-}
-const ::Protocol::float3&
-GameServerMoveMonster::_Internal::clook(const GameServerMoveMonster* msg) {
-  return *msg->clook_;
-}
-const ::Protocol::float3&
-GameServerMoveMonster::_Internal::cposition(const GameServerMoveMonster* msg) {
-  return *msg->cposition_;
 }
 void GameServerMoveMonster::clear_right() {
   if (GetArenaForAllocation() == nullptr && right_ != nullptr) {
@@ -3122,30 +3093,6 @@ void GameServerMoveMonster::clear_position() {
     delete position_;
   }
   position_ = nullptr;
-}
-void GameServerMoveMonster::clear_cright() {
-  if (GetArenaForAllocation() == nullptr && cright_ != nullptr) {
-    delete cright_;
-  }
-  cright_ = nullptr;
-}
-void GameServerMoveMonster::clear_cup() {
-  if (GetArenaForAllocation() == nullptr && cup_ != nullptr) {
-    delete cup_;
-  }
-  cup_ = nullptr;
-}
-void GameServerMoveMonster::clear_clook() {
-  if (GetArenaForAllocation() == nullptr && clook_ != nullptr) {
-    delete clook_;
-  }
-  clook_ = nullptr;
-}
-void GameServerMoveMonster::clear_cposition() {
-  if (GetArenaForAllocation() == nullptr && cposition_ != nullptr) {
-    delete cposition_;
-  }
-  cposition_ = nullptr;
 }
 GameServerMoveMonster::GameServerMoveMonster(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
@@ -3176,37 +3123,17 @@ GameServerMoveMonster::GameServerMoveMonster(const GameServerMoveMonster& from)
   } else {
     position_ = nullptr;
   }
-  if (from._internal_has_cright()) {
-    cright_ = new ::Protocol::float3(*from.cright_);
-  } else {
-    cright_ = nullptr;
-  }
-  if (from._internal_has_cup()) {
-    cup_ = new ::Protocol::float3(*from.cup_);
-  } else {
-    cup_ = nullptr;
-  }
-  if (from._internal_has_clook()) {
-    clook_ = new ::Protocol::float3(*from.clook_);
-  } else {
-    clook_ = nullptr;
-  }
-  if (from._internal_has_cposition()) {
-    cposition_ = new ::Protocol::float3(*from.cposition_);
-  } else {
-    cposition_ = nullptr;
-  }
   ::memcpy(&object_id_, &from.object_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&state_) -
-    reinterpret_cast<char*>(&object_id_)) + sizeof(state_));
+    static_cast<size_t>(reinterpret_cast<char*>(&skillid_) -
+    reinterpret_cast<char*>(&object_id_)) + sizeof(skillid_));
   // @@protoc_insertion_point(copy_constructor:Protocol.GameServerMoveMonster)
 }
 
 void GameServerMoveMonster::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&right_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&state_) -
-    reinterpret_cast<char*>(&right_)) + sizeof(state_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&skillid_) -
+    reinterpret_cast<char*>(&right_)) + sizeof(skillid_));
 }
 
 GameServerMoveMonster::~GameServerMoveMonster() {
@@ -3221,10 +3148,6 @@ void GameServerMoveMonster::SharedDtor() {
   if (this != internal_default_instance()) delete up_;
   if (this != internal_default_instance()) delete look_;
   if (this != internal_default_instance()) delete position_;
-  if (this != internal_default_instance()) delete cright_;
-  if (this != internal_default_instance()) delete cup_;
-  if (this != internal_default_instance()) delete clook_;
-  if (this != internal_default_instance()) delete cposition_;
 }
 
 void GameServerMoveMonster::ArenaDtor(void* object) {
@@ -3259,25 +3182,9 @@ void GameServerMoveMonster::Clear() {
     delete position_;
   }
   position_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && cright_ != nullptr) {
-    delete cright_;
-  }
-  cright_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && cup_ != nullptr) {
-    delete cup_;
-  }
-  cup_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && clook_ != nullptr) {
-    delete clook_;
-  }
-  clook_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && cposition_ != nullptr) {
-    delete cposition_;
-  }
-  cposition_ = nullptr;
   ::memset(&object_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&state_) -
-      reinterpret_cast<char*>(&object_id_)) + sizeof(state_));
+      reinterpret_cast<char*>(&skillid_) -
+      reinterpret_cast<char*>(&object_id_)) + sizeof(skillid_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -3330,31 +3237,10 @@ const char* GameServerMoveMonster::_InternalParse(const char* ptr, ::PROTOBUF_NA
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .Protocol.float3 cright = 7;
+      // int32 skillId = 7;
       case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
-          ptr = ctx->ParseMessage(_internal_mutable_cright(), ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // .Protocol.float3 cup = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
-          ptr = ctx->ParseMessage(_internal_mutable_cup(), ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // .Protocol.float3 clook = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74)) {
-          ptr = ctx->ParseMessage(_internal_mutable_clook(), ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // .Protocol.float3 cposition = 10;
-      case 10:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 82)) {
-          ptr = ctx->ParseMessage(_internal_mutable_cposition(), ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
+          skillid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -3432,36 +3318,10 @@ failure:
         6, _Internal::position(this), target, stream);
   }
 
-  // .Protocol.float3 cright = 7;
-  if (this->has_cright()) {
+  // int32 skillId = 7;
+  if (this->skillid() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        7, _Internal::cright(this), target, stream);
-  }
-
-  // .Protocol.float3 cup = 8;
-  if (this->has_cup()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        8, _Internal::cup(this), target, stream);
-  }
-
-  // .Protocol.float3 clook = 9;
-  if (this->has_clook()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        9, _Internal::clook(this), target, stream);
-  }
-
-  // .Protocol.float3 cposition = 10;
-  if (this->has_cposition()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        10, _Internal::cposition(this), target, stream);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(7, this->_internal_skillid(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3508,34 +3368,6 @@ size_t GameServerMoveMonster::ByteSizeLong() const {
         *position_);
   }
 
-  // .Protocol.float3 cright = 7;
-  if (this->has_cright()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *cright_);
-  }
-
-  // .Protocol.float3 cup = 8;
-  if (this->has_cup()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *cup_);
-  }
-
-  // .Protocol.float3 clook = 9;
-  if (this->has_clook()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *clook_);
-  }
-
-  // .Protocol.float3 cposition = 10;
-  if (this->has_cposition()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *cposition_);
-  }
-
   // int64 object_id = 1;
   if (this->object_id() != 0) {
     total_size += 1 +
@@ -3547,6 +3379,13 @@ size_t GameServerMoveMonster::ByteSizeLong() const {
   if (this->state() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_state());
+  }
+
+  // int32 skillId = 7;
+  if (this->skillid() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_skillid());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3592,23 +3431,14 @@ void GameServerMoveMonster::MergeFrom(const GameServerMoveMonster& from) {
   if (from.has_position()) {
     _internal_mutable_position()->::Protocol::float3::MergeFrom(from._internal_position());
   }
-  if (from.has_cright()) {
-    _internal_mutable_cright()->::Protocol::float3::MergeFrom(from._internal_cright());
-  }
-  if (from.has_cup()) {
-    _internal_mutable_cup()->::Protocol::float3::MergeFrom(from._internal_cup());
-  }
-  if (from.has_clook()) {
-    _internal_mutable_clook()->::Protocol::float3::MergeFrom(from._internal_clook());
-  }
-  if (from.has_cposition()) {
-    _internal_mutable_cposition()->::Protocol::float3::MergeFrom(from._internal_cposition());
-  }
   if (from.object_id() != 0) {
     _internal_set_object_id(from._internal_object_id());
   }
   if (from.state() != 0) {
     _internal_set_state(from._internal_state());
+  }
+  if (from.skillid() != 0) {
+    _internal_set_skillid(from._internal_skillid());
   }
 }
 
@@ -3634,8 +3464,8 @@ void GameServerMoveMonster::InternalSwap(GameServerMoveMonster* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(GameServerMoveMonster, state_)
-      + sizeof(GameServerMoveMonster::state_)
+      PROTOBUF_FIELD_OFFSET(GameServerMoveMonster, skillid_)
+      + sizeof(GameServerMoveMonster::skillid_)
       - PROTOBUF_FIELD_OFFSET(GameServerMoveMonster, right_)>(
           reinterpret_cast<char*>(&right_),
           reinterpret_cast<char*>(&other->right_));

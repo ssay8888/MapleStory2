@@ -1,4 +1,5 @@
 #pragma once
+#include "data_reader/data_reader_manager.h"
 #include "game/entitiy/game_entity.h"
 #include "protocol/game_enum.pb.h"
 
@@ -50,6 +51,9 @@ public:
 	auto ChangeTargetCharacter(std::shared_ptr<GameCharacter> character)->void;
 	auto GetTargetCharacter()const->std::shared_ptr<GameCharacter>;
 
+	auto ChangeUseSkill(std::shared_ptr<DataReaderManager::Skill> skill)->void;
+	auto GetUseSkill()const->std::shared_ptr<DataReaderManager::Skill>;
+
 private:
 	auto NativeContruct()->HRESULT;
 	auto AnimationLoad()->HRESULT;
@@ -69,5 +73,7 @@ private:
 	std::map<int32_t, std::shared_ptr<MonsterState>>					_monster_states;
 	std::map<Protocol::kMonsterState, int32_t>							_state_index;
 	std::shared_ptr<MonsterState>										_current_monster_state;
+
+	std::shared_ptr<DataReaderManager::Skill>					_use_skill;
 };
 

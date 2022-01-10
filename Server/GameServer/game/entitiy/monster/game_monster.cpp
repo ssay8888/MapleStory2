@@ -9,6 +9,9 @@
 #include "src/utility/components/manager/component_manager.h"
 #include "src/utility/components/transform/transform.h"
 #include "stat/monster_stat.h"
+#include "states/monster_attack_a_state/monster_attack_a_state.h"
+#include "states/monster_attack_b_state/monster_attack_b_state.h"
+#include "states/monster_attack_c_state/monster_attack_c_state.h"
 #include "states/monster_bore_state/monster_bore_state.h"
 #include "states/monster_idle_state/monster_idle_state.h"
 #include "states/monster_run_state/monster_run_state.h"
@@ -109,6 +112,16 @@ auto GameMonster::GetTargetCharacter() const -> std::shared_ptr<GameCharacter>
 	return _target_character;
 }
 
+auto GameMonster::ChangeUseSkill(std::shared_ptr<DataReaderManager::Skill> skill) -> void
+{
+	_use_skill = skill;
+}
+
+auto GameMonster::GetUseSkill() const -> std::shared_ptr<DataReaderManager::Skill>
+{
+	return _use_skill;
+}
+
 auto GameMonster::NativeContruct() -> HRESULT
 {
 	auto monsterInfo = DataReaderManager::GetInstance().FindMonsterInfo(_spawn_point->GetSpawnNpcId());
@@ -197,7 +210,7 @@ auto GameMonster::NativeContruct() -> HRESULT
 auto GameMonster::AnimationLoad() -> HRESULT
 {
 	auto monsterInfo = DataReaderManager::GetInstance().FindMonsterInfo(_spawn_point->GetSpawnNpcId());
-	const auto animationNames = DataReaderManager::GetInstance().FindAnyKey(monsterInfo->id);
+	const auto animationNames = DataReaderManager::GetInstance().FindAniKey(monsterInfo->id);
 
 	if (animationNames == nullptr)
 	{
@@ -234,6 +247,98 @@ auto GameMonster::AnimationLoad() -> HRESULT
 		{
 			_monster_states.emplace(animation.first, MakeShared<MonsterRunState>());
 			_state_index.emplace(Protocol::kMonsterState::kRunA, animation.first);
+		}
+		else if (Seq->name.find(L"Attack_Idle_A") != std::wstring::npos)
+		{
+			
+		}
+		else if (Seq->name.find(L"Attack_") != std::wstring::npos)
+		{
+			auto splits = StringUtils::Split(Seq->name, L'_');
+			if (splits.empty() || splits.size() < 2)
+			{
+				continue;
+			}
+			
+			if (splits[2] == L"A")
+			{
+				auto iterator = _state_index.end();
+				Protocol::kMonsterState type = Protocol::kMonsterState::kAttack1A;
+				if (splits[1] == L"01")
+				{
+					iterator = _state_index.find(Protocol::kMonsterState::kAttack1A);
+				}
+				else if (splits[1] == L"02")
+				{
+					type = Protocol::kMonsterState::kAttack2A;
+					iterator = _state_index.find(type);
+				}
+				else if (splits[1] == L"03")
+				{
+					type = Protocol::kMonsterState::kAttack3A;
+					iterator = _state_index.find(type);
+				}
+
+
+				if (iterator == _state_index.end())
+				{
+					_monster_states.emplace(animation.first, MakeShared<MonsterAttackAState>(type));
+					_state_index.emplace(type, animation.first);
+				}
+			}
+			else if (splits[2] == L"B")
+			{
+				auto iterator = _state_index.end();
+				Protocol::kMonsterState type = Protocol::kMonsterState::kAttack1B;
+				if (splits[1] == L"01")
+				{
+					iterator = _state_index.find(type);
+				}
+				else if (splits[1] == L"02")
+				{
+					type = Protocol::kMonsterState::kAttack2B;
+					iterator = _state_index.find(type);
+				}
+				else if (splits[1] == L"03")
+				{
+					type = Protocol::kMonsterState::kAttack3B;
+					iterator = _state_index.find(type);
+				}
+
+
+				if (iterator == _state_index.end())
+				{
+					_monster_states.emplace(animation.first, MakeShared<MonsterAttackAState>(type));
+					_state_index.emplace(type, animation.first);
+				}
+			}
+			else if (splits[2] == L"C")
+			{
+				auto iterator = _state_index.end();
+				Protocol::kMonsterState type = Protocol::kMonsterState::kAttack1C;
+				if (splits[1] == L"01")
+				{
+					iterator = _state_index.find(type);
+				}
+				else if (splits[1] == L"02")
+				{
+					type = Protocol::kMonsterState::kAttack2C;
+					iterator = _state_index.find(type);
+				}
+				else if (splits[1] == L"03")
+				{
+					type = Protocol::kMonsterState::kAttack3C;
+					iterator = _state_index.find(type);
+				}
+
+
+				if (iterator == _state_index.end())
+				{
+					_monster_states.emplace(animation.first, MakeShared<MonsterAttackAState>(type));
+					_state_index.emplace(type, animation.first);
+				}
+			}
+
 		}
 	}
 	return S_OK;

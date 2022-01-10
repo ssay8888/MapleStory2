@@ -12,7 +12,7 @@ using namespace boost::random;
 
 auto Randomizer::Rand(const int64_t max)->int64_t
 {
-	static mt19937 engine((unsigned int)time(NULL));
+	static mt19937 engine(static_cast<unsigned>(time(nullptr)));
 	static uniform_int_distribution<int64_t> distribution(0, max); 
 	static auto generator = []
 	{
@@ -23,7 +23,7 @@ auto Randomizer::Rand(const int64_t max)->int64_t
 
 auto Randomizer::Rand(const int64_t min, const int64_t max)->int64_t
 {
-	static mt19937 engine((unsigned int)time(NULL));
+	static mt19937 engine(static_cast<unsigned>(time(nullptr)));
 	static uniform_int_distribution<int64_t> distribution(min, max);
 	static auto generator = []
 	{

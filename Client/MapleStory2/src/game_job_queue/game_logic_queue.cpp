@@ -118,9 +118,25 @@ auto GameLogicQueue::MoveMonster(PacketSessionRef session, Protocol::GameServerM
 		break;
 		case Protocol::kDeadA: break;
 		case Protocol::kDeadB: break;
-		case Protocol::kAttackA: break;
-		case Protocol::kAttackB: break;
-		case Protocol::kAttackC: break;
+		case Protocol::kAttack1A:
+		case Protocol::kAttack2A:
+		case Protocol::kAttack3A:
+		case Protocol::kAttack1B:
+		case Protocol::kAttack2B:
+		case Protocol::kAttack3B:
+		case Protocol::kAttack1C:
+		case Protocol::kAttack2C:
+		case Protocol::kAttack3C:
+		{
+			auto transform = std::static_pointer_cast<Transform>(monsterObject->GetComponentPtr(L"Com_Transform"));
+			transform->SetState(Transform::kState::kStateRight, _float3(pkt.right().x(), pkt.right().y(), pkt.right().z()));
+			transform->SetState(Transform::kState::kStateUp, _float3(pkt.up().x(), pkt.up().y(), pkt.up().z()));
+			transform->SetState(Transform::kState::kStateLook, _float3(pkt.look().x(), pkt.look().y(), pkt.look().z()));
+			transform->SetState(Transform::kState::kStatePosition, _float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
+			monsterObject->ChangeSkillId(pkt.skillid());
+  			monsterObject->ChangeAnimation(pkt.state());
+		}
+		break;
 		case Protocol::kDamgA: break;
 		case Protocol::kDamgB: break;
 		case Protocol::kDamgC: break;

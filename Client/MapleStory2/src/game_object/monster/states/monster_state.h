@@ -1,4 +1,5 @@
 #pragma once
+#include "protocol/game_enum.pb.h"
 class MapObject;
 class Monster;
 

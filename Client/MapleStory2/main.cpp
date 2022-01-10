@@ -91,7 +91,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		if (fTimeAcc > 1.0f / 144.0f)
 		{
-			const double timeDelta60 = timerManager.ComputeTimeDelta(TEXT("Timer_60"));
+			double timeDelta60 = timerManager.ComputeTimeDelta(TEXT("Timer_60"));
+
+			if (timeDelta60 > 0.5)
+			{
+				timeDelta60 = 0.1;
+			}
 
 			if (0x80000000 & g_mainApp->Tick(timeDelta60))
 			{
