@@ -167,8 +167,6 @@
     <ClCompile Include="game\entitiy\monster\game_monster.cpp" />
     <ClCompile Include="game\entitiy\monster\spawn_point\spawn_point.cpp" />
     <ClCompile Include="game\entitiy\monster\states\monster_attack_a_state\monster_attack_a_state.cpp" />
-    <ClCompile Include="game\entitiy\monster\states\monster_attack_b_state\monster_attack_b_state.cpp" />
-    <ClCompile Include="game\entitiy\monster\states\monster_attack_c_state\monster_attack_c_state.cpp" />
     <ClCompile Include="game\entitiy\monster\states\monster_bore_state\monster_bore_state.cpp" />
     <ClCompile Include="game\entitiy\monster\states\monster_idle_state\monster_idle_state.cpp" />
     <ClCompile Include="game\entitiy\monster\states\monster_run_state\monster_run_state.cpp" />
@@ -245,8 +243,6 @@
     <ClInclude Include="game\entitiy\monster\game_monster.h" />
     <ClInclude Include="game\entitiy\monster\spawn_point\spawn_point.h" />
     <ClInclude Include="game\entitiy\monster\states\monster_attack_a_state\monster_attack_a_state.h" />
-    <ClInclude Include="game\entitiy\monster\states\monster_attack_b_state\monster_attack_b_state.h" />
-    <ClInclude Include="game\entitiy\monster\states\monster_attack_c_state\monster_attack_c_state.h" />
     <ClInclude Include="game\entitiy\monster\states\monster_bore_state\monster_bore_state.h" />
     <ClInclude Include="game\entitiy\monster\states\monster_idle_state\monster_idle_state.h" />
     <ClInclude Include="game\entitiy\monster\states\monster_run_state\monster_run_state.h" />

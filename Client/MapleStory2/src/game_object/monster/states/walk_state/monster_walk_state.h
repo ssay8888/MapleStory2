@@ -15,7 +15,7 @@ public:
 
 public:
 	auto GetTargetPos()const->_float3;
-	auto SetTargeetPos(_float3 pos)->void;
+	auto SetTargetPos(_float3 pos)->void;
 	auto GetNextState()const->Protocol::GameServerMoveMonster;
 	auto SetNextState(Protocol::GameServerMoveMonster state)->void;
 

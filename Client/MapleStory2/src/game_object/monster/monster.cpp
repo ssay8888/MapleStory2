@@ -14,14 +14,12 @@
 #include "src/utility/light/light_manager.h"
 #include "src/utility/pipe_line/pipe_line.h"
 #include "states/attack_a_state/monster_attack_a_state.h"
-#include "states/attack_b_state/monster_attack_b_state.h"
 #include "states/bore_state/monster_bore_state.h"
 #include "states/idle_state/monster_idle_state.h"
 #include "states/run_state/monster_run_state.h"
 #include "states/walk_state/monster_walk_state.h"
 #include "stats/monster_stats.h"
 #include "string_utils/string_utils.h"
-#include <src/game_object/monster/states/attack_c_state/monster_attack_c_state.h>
 
 Monster::Monster(const ComPtr<IDirect3DDevice9>& device):
 	GameObject(device)
@@ -247,7 +245,7 @@ auto Monster::AddComponents() -> HRESULT
 	auto monsterInfo = DataReaderManager::GetInstance().FindMonsterInfo(_monster_info.monster_id());
 	/* Com_Transform */
 	Transform::TransformDesc		transformDesc;
-	transformDesc.speed_per_sec = monsterInfo->model.walk_speed / 150.f;
+	transformDesc.speed_per_sec = monsterInfo->model.walk_speed;
 	transformDesc.rotation_per_sec = D3DXToRadian(90.0);
 
 	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))

@@ -314,15 +314,15 @@ auto DataReaderManager::LoadMonsterInfo() -> void
 							monsterInfo->model.kfm = StringUtils::ConvertCtoW(node.attribute("kfm").value());
 							if (strcmp(node.attribute("walkSpeed").value(), ""))
 							{
-								monsterInfo->model.walk_speed = std::stoi(node.attribute("walkSpeed").value());
+								monsterInfo->model.walk_speed = std::stoi(node.attribute("walkSpeed").value()) / 150.f * 0.58f;
 							}
 							if (strcmp(node.attribute("runSpeed").value(), ""))
 							{
-								monsterInfo->model.run_speed = std::stoi(node.attribute("runSpeed").value());
+								monsterInfo->model.run_speed = std::stoi(node.attribute("runSpeed").value()) / 150.f * 0.58f;
 							}
 							if (strcmp(node.attribute("scale").value(), ""))
 							{
-								monsterInfo->model.scale = std::stof(node.attribute("scale").value()) / 100.f;
+								monsterInfo->model.scale = std::stof(node.attribute("scale").value()) / 150;
 							}
 							else
 							{
@@ -388,15 +388,15 @@ auto DataReaderManager::LoadMonsterInfo() -> void
 						{
 							if (strcmp(node.attribute("sight").value(), ""))
 							{
-								monsterInfo->distance.sight = std::stoi(node.attribute("sight").value());
+								monsterInfo->distance.sight = std::stof(node.attribute("sight").value()) / 150.f * 0.58f;
 							}
 							if (strcmp(node.attribute("sightHeightUP").value(), ""))
 							{
-								monsterInfo->distance.sight_height_up = std::stoi(node.attribute("sightHeightUP").value());
+								monsterInfo->distance.sight_height_up = std::stof(node.attribute("sightHeightUP").value()) / 150.f * 0.58f;
 							}
 							if (strcmp(node.attribute("sightHeightDown").value(), ""))
 							{
-								monsterInfo->distance.sight_height_down = std::stoi(node.attribute("sightHeightDown").value());
+								monsterInfo->distance.sight_height_down = std::stof(node.attribute("sightHeightDown").value()) / 150.f * 0.58f;
 							}
 						}
 						else if (nodeName == "collision")
@@ -416,7 +416,7 @@ auto DataReaderManager::LoadMonsterInfo() -> void
 								values.push_back(std::stoi(temp));
 							}
 							auto probs = std::string(node.attribute("probs").value());
-							std::istringstream ss2(skills);
+							std::istringstream ss2(probs);
 							std::vector<int32_t> values2;
 							while (std::getline(ss2, temp, ','))
 							{
@@ -425,7 +425,7 @@ auto DataReaderManager::LoadMonsterInfo() -> void
 
 							for (auto i = 0; i < values.size(); ++i)  
 							{
-								monsterInfo->skills.emplace_back(values[i], values.empty() ? 100 : values[i]);
+								monsterInfo->skills.emplace_back(values[i], values2.empty() ? 100 : values2[i]);
 							}
 						}
 					}
@@ -536,7 +536,7 @@ auto DataReaderManager::LoadSkillData() -> void
 						{
 							if (std::string(infoNodes.name()) == "detectProperty")
 							{
-								skill->detect.distance = std::stof(infoNodes.attribute("distance").value());
+								skill->detect.distance = std::stof(infoNodes.attribute("distance").value()) / 150.f * 0.58f;
 							}
 							else if (std::string(infoNodes.name()) == "motion")
 							{
@@ -556,12 +556,12 @@ auto DataReaderManager::LoadSkillData() -> void
 											if (std::string(attackElement.name()) == "range")
 											{
 												motion->attack.range.distance = attackElement.attribute("distance").empty() ? 0 : std::stof(attackElement.attribute("distance").value()) / 150.f * 0.58f;
-												motion->attack.range.height = attackElement.attribute("height").empty() ? 0 : std::stof(attackElement.attribute("height").value());
-												motion->attack.range.width = attackElement.attribute("width").empty() ? 0 : std::stof(attackElement.attribute("width").value());
+												motion->attack.range.height = attackElement.attribute("height").empty() ? 0 : std::stof(attackElement.attribute("height").value()) / 150.f * 0.58f;
+												motion->attack.range.width = attackElement.attribute("width").empty() ? 0 : std::stof(attackElement.attribute("width").value()) / 150.f * 0.58f;
 											}
 											else if (std::string(attackElement.name()) == "damage")
 											{
-												motion->attack.damage.count = attackElement.attribute("count").empty() ? 0 : std::stoi(attackElement.attribute("count").value());
+												motion->attack.damage.count = attackElement.attribute("count").empty() ? 1 : std::stoi(attackElement.attribute("count").value());
 												motion->attack.damage.rate = attackElement.attribute("rate").empty() ? 0 : std::stof(attackElement.attribute("rate").value());
 											}
 										}

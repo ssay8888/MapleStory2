@@ -13,8 +13,8 @@ using namespace boost::random;
 auto Randomizer::Rand(const int64_t max)->int64_t
 {
 	static mt19937 engine(static_cast<unsigned>(time(nullptr)));
-	static uniform_int_distribution<int64_t> distribution(0, max); 
-	static auto generator = []
+	uniform_int_distribution<int64_t> distribution(0, max); 
+	auto generator = [&]
 	{
 		return distribution(engine);
 	};
@@ -24,8 +24,8 @@ auto Randomizer::Rand(const int64_t max)->int64_t
 auto Randomizer::Rand(const int64_t min, const int64_t max)->int64_t
 {
 	static mt19937 engine(static_cast<unsigned>(time(nullptr)));
-	static uniform_int_distribution<int64_t> distribution(min, max);
-	static auto generator = []
+	uniform_int_distribution<int64_t> distribution(min, max);
+	auto generator = [&]
 	{
 		return distribution(engine);
 	};
@@ -51,8 +51,8 @@ auto Randomizer::Rand(const double min, const double max) -> double
 auto Randomizer::IsSuccess(int32_t rate) -> bool
 {
 	static mt19937 engine((unsigned int)time(NULL));                    // MT19937 난수 엔진
-	static uniform_int_distribution<int64_t> distribution(0, 99);          // 생성 범위
-	static auto generator = []
+	uniform_int_distribution<int64_t> distribution(0, 99);          // 생성 범위
+	auto generator = [&]
 	{
 		return distribution(engine);
 	};

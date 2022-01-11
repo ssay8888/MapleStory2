@@ -5,6 +5,7 @@
 #include "randomizer/randomizer.h"
 #include "src/game_object/monster/monster.h"
 #include "src/utility/components/collider/collider.h"
+#include "src/utility/components/manager/component_manager.h"
 #include "src/utility/components/transform/transform.h"
 
 MonsterAttackAState::MonsterAttackAState(Protocol::kMonsterState state):
@@ -14,7 +15,7 @@ MonsterAttackAState::MonsterAttackAState(Protocol::kMonsterState state):
 
 auto MonsterAttackAState::Enter(std::shared_ptr<Monster> monster) -> void
 {
-	ReloadMapObject(monster);
+	_min_distance = -1;
 	if (_skills.empty())
 	{
 		/*
@@ -32,22 +33,33 @@ auto MonsterAttackAState::Enter(std::shared_ptr<Monster> monster) -> void
 		{
 			if ((skill->sequence_name == L"attack_01_a" && _state == Protocol::kAttack1A) ||
 				(skill->sequence_name == L"attack_02_a" && _state == Protocol::kAttack2A) ||
-				(skill->sequence_name == L"attack_03_a" && _state == Protocol::kAttack3A))
-			{
-				_use_skill = skill;
-			}
-			else if ((skill->sequence_name == L"attack_01_b" && _state == Protocol::kAttack1B) ||
+				(skill->sequence_name == L"attack_03_a" && _state == Protocol::kAttack3A) ||
+				(skill->sequence_name == L"attack_01_b" && _state == Protocol::kAttack1B) ||
 				(skill->sequence_name == L"attack_02_b" && _state == Protocol::kAttack2B) ||
-				(skill->sequence_name == L"attack_03_b" && _state == Protocol::kAttack3B))
-			{
-				_use_skill = skill;
-			}
-			else if ((skill->sequence_name == L"attack_01_c" && _state == Protocol::kAttack1C) ||
+				(skill->sequence_name == L"attack_03_b" && _state == Protocol::kAttack3B) ||
+				(skill->sequence_name == L"attack_01_c" && _state == Protocol::kAttack1C) ||
 				(skill->sequence_name == L"attack_02_c" && _state == Protocol::kAttack2C) ||
 				(skill->sequence_name == L"attack_03_c" && _state == Protocol::kAttack3C))
 			{
 				_use_skill = skill;
 			}
+		}
+		if (_obb_com == nullptr)
+		{
+			auto transform = monster->GetTransform();
+			Collider::TagColliderDesc		ColliderDesc;
+			ColliderDesc.parent_matrix = &transform->GetWorldMatrix();
+			ColliderDesc.scale = _float3(
+				(_use_skill->attack.range.width == 0 ? _use_skill->attack.range.distance : _use_skill->attack.range.width),
+				_use_skill->attack.range.distance,
+				_use_skill->attack.range.height);
+			ColliderDesc.init_pos = _float3(0.f, (_use_skill->attack.range.distance) * 0.5f, 0.f);
+
+			const auto& componentManager = ComponentManager::GetInstance();
+			auto component = componentManager.CloneComponent(0, TEXT("Prototype_Collider_OBB"), &ColliderDesc);
+			_obb_com = std::static_pointer_cast<Collider>(component);
+			_obb_com->NativeConstruct(&ColliderDesc);
+			_obb_com->UpdateCollider();
 		}
 	}
 }
@@ -64,32 +76,62 @@ auto MonsterAttackAState::Tick(const double timeDelta, std::shared_ptr<Monster> 
 		{
 
 			auto transform = monster->GetTransform();
+
+			auto kfm = DataReaderManager::GetInstance().FindAniKey(monster->GetMonsterInfo().monster_id());
+
+			auto index = monster->GetStateIndex(_state);
+			auto seq = kfm->seqs[index];
+			auto endTime = seq->key[L"end"];
+			transform->BackStraight(timeDelta + timeDelta * endTime, _use_skill->movedistance);
+
+			monster->GetMonsterColliderAabb()->UpdateCollider();
+			auto range = monster->GetReloadRangeAabb();
+			for (const auto& reload : range)
 			{
-				auto kfm = DataReaderManager::GetInstance().FindAniKey(monster->GetMonsterInfo().monster_id());
-
-				auto index = monster->GetStateIndex(_state);
-				auto seq = kfm->seqs[index];
-				auto endTime = seq->key[L"end"];
-				transform->BackStraight(timeDelta * endTime, _use_skill->movedistance);
-
-				monster->GetMonsterColliderAabb()->UpdateCollider();
-				auto range = monster->GetReloadRangeAabb();
-				for (const auto& reload : range)
-				{
-					reload->UpdateCollider();
-				}
-				_last_tile_map_object = LoadLastTile(monster);
-				if (StraightCheck(monster) || !BlockUpCheck(monster))
-				{
-					transform->BackStraight(timeDelta * endTime, _use_skill->movedistance);
-				}
+				reload->UpdateCollider();
 			}
+			_last_tile_map_object = LoadLastTile(monster);
+			if (StraightCheck(monster) || !BlockUpCheck(monster))
+			{
+				transform->BackStraight(timeDelta + timeDelta * endTime, _use_skill->movedistance);
+			}
+
+			_float3 position = transform->GetState(Transform::kState::kStatePosition);
+			_float3	dir = _targetPos - position;
+			const float	distance = D3DXVec3Length(&dir);
+			D3DXVec3Normalize(&dir, &dir);
+
+
+			if (_min_distance == -1) // 첫 거리구해옴
+			{
+				_min_distance = distance;
+			}
+
+			if (_min_distance >= distance) // 거리가좁아졌다면 갱신
+			{
+				_min_distance = distance;
+			}
+			else // 거리가 더멀어져..?
+			{
+				transform->SetState(Transform::kState::kStatePosition, _targetPos);
+			}
+
+			if (distance >= _use_skill->movedistance)
+			{
+				transform->SetState(Transform::kState::kStatePosition, _targetPos);
+			}
+		}
+		if (_use_skill->attack.damage.count > 0)
+		{
+			_obb_com->UpdateCollider();
 		}
 	}
 }
 
 auto MonsterAttackAState::LateTick(const double timeDelta, std::shared_ptr<Monster> monster) -> void
 {
+
+
 	monster->PlayAnimation(timeDelta);
 	auto kfm = DataReaderManager::GetInstance().FindAniKey(monster->GetMonsterInfo().monster_id());
 
@@ -182,4 +224,15 @@ auto MonsterAttackAState::LateTick(const double timeDelta, std::shared_ptr<Monst
 
 auto MonsterAttackAState::Render(std::shared_ptr<Monster> monster) -> void
 {
+	_obb_com->RenderDebug();
+}
+
+auto MonsterAttackAState::GetTargetPos() const -> _float3
+{
+	return _targetPos;
+}
+
+auto MonsterAttackAState::SetTargetPos(const _float3 pos) -> void
+{
+	_targetPos = pos;
 }

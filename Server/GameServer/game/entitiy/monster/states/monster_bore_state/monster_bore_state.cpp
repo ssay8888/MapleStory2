@@ -16,6 +16,7 @@ auto MonsterBoreState::Enter(std::shared_ptr<GameMonster> monster) -> void
 	monster->ChangeTargetCharacter(nullptr);
 	Protocol::GameServerMoveMonster sendPkt;
 	sendPkt.set_object_id(monster->GetObjectId());
+	std::cout << "bore " << monster->GetObjectId() << std::endl;
 	sendPkt.set_state(Protocol::kBoreA);
 
 	const auto sendRight = sendPkt.mutable_right();

@@ -30,6 +30,7 @@ auto MonsterIdleState::Enter(std::shared_ptr<GameMonster> monster) -> void
 	}
 	Protocol::GameServerMoveMonster sendPkt;
 	sendPkt.set_object_id(monster->GetObjectId());
+	std::cout << "kIdleA " << monster->GetObjectId() << std::endl;
 	sendPkt.set_state(Protocol::kIdleA);
 
 	auto sendRight = sendPkt.mutable_right();

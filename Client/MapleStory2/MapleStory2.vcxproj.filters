@@ -220,12 +220,6 @@
     <ClInclude Include="src\game_object\monster\states\attack_a_state\monster_attack_a_state.h">
       <Filter>game_object\monster\states\attack_a_state</Filter>
     </ClInclude>
-    <ClInclude Include="src\game_object\monster\states\attack_b_state\monster_attack_b_state.h">
-      <Filter>game_object\monster\states\attack_b_state</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game_object\monster\states\attack_c_state\monster_attack_c_state.h">
-      <Filter>game_object\monster\states\attack_c_state</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -441,12 +435,6 @@
     <ClCompile Include="src\game_object\monster\states\attack_a_state\monster_attack_a_state.cpp">
       <Filter>game_object\monster\states\attack_a_state</Filter>
     </ClCompile>
-    <ClCompile Include="src\game_object\monster\states\attack_b_state\monster_attack_b_state.cpp">
-      <Filter>game_object\monster\states\attack_b_state</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game_object\monster\states\attack_c_state\monster_attack_c_state.cpp">
-      <Filter>game_object\monster\states\attack_c_state</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -615,12 +603,6 @@
     </Filter>
     <Filter Include="game_object\monster\states\attack_a_state">
       <UniqueIdentifier>{a6370cf2-7b84-45fa-b2a7-3556789e3ab6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game_object\monster\states\attack_b_state">
-      <UniqueIdentifier>{675d4600-cc88-49e9-a7f1-806caed28141}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game_object\monster\states\attack_c_state">
-      <UniqueIdentifier>{788c079b-c2f3-4054-b7ad-3d489e90a965}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

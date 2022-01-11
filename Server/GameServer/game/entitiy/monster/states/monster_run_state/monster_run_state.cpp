@@ -14,15 +14,13 @@
 
 auto MonsterRunState::Enter(std::shared_ptr<GameMonster> monster) -> void
 {
-	auto block = monster->GetBlockRangeAabb();
-	block->UpdateCollider();
 	auto range = monster->GetReloadRangeAabb();
 	for (const auto& reload : range)
 	{
 		reload->UpdateCollider();
 	}
 	monster->GetMonsterColliderAabb()->UpdateCollider();
-	ReloadMapObject(monster, _map_objects.empty());
+	ReloadMapObject(monster, true);
 }
 
 auto MonsterRunState::Tick(const double timeDelta, std::shared_ptr<GameMonster> monster) -> void
@@ -35,11 +33,15 @@ auto MonsterRunState::Tick(const double timeDelta, std::shared_ptr<GameMonster> 
 	_animation_acc += timeDelta;
 	const auto transform = monster->GetTransform();
 	const auto skill = monster->GetStat()->SkillToUse(GetTargetDistance(monster));
-	if (skill == nullptr /*|| !CheckTargetCharacterDistance(monster, 0.2f)*/) //공격범위안에있는지체크해야할곳.
+
+	auto distance = GetTargetDistance(monster);
+	
+	if (0.3 <= distance || skill == nullptr /*|| !CheckTargetCharacterDistance(monster, 0.2f)*/) //공격범위안에있는지체크해야할곳.
 	{
+		auto monsterInfo = DataReaderManager::GetInstance().FindMonsterInfo(monster->GetSpawnPoint()->GetSpawnNpcId());
 		transform->LookAtTarget(monster->GetTargetCharacter()->GetTransform()->GetState(Transform::kState::kStatePosition));
 
-		transform->BackStraight(timeDelta);
+		transform->BackStraight(timeDelta, monsterInfo->model.run_speed);
 
 		monster->GetMonsterColliderAabb()->UpdateCollider();
 		auto range = monster->GetReloadRangeAabb();
@@ -51,13 +53,14 @@ auto MonsterRunState::Tick(const double timeDelta, std::shared_ptr<GameMonster> 
 		_last_tile_map_object = LoadLastTile(monster);
 		if (StraightCheck(monster) || !BlockUpCheck(monster))
 		{
-			transform->BackStraight(-timeDelta);
+			transform->BackStraight(-timeDelta, monsterInfo->model.run_speed);
 		}
 		else
 		{
 			Protocol::GameServerMoveMonster sendPkt;
 			sendPkt.set_object_id(monster->GetObjectId());
-			sendPkt.set_state(Protocol::kWalkA);
+			std::cout << "kRunA " << monster->GetObjectId() << std::endl;
+			sendPkt.set_state(Protocol::kRunA);
 
 			const auto sendRight = sendPkt.mutable_right();
 			const auto right = monster->GetTransform()->GetState(Transform::kState::kStateRight);
@@ -97,30 +100,38 @@ auto MonsterRunState::Tick(const double timeDelta, std::shared_ptr<GameMonster> 
 
 auto MonsterRunState::LateTick(const double timeDelta, std::shared_ptr<GameMonster> monster) -> void
 {
-	const auto skill = monster->GetStat()->SkillToUse(GetTargetDistance(monster));
-	if (skill != nullptr && !skill->motions.empty())
+	auto monsterInfo = DataReaderManager::GetInstance().FindMonsterInfo(monster->GetSpawnPoint()->GetSpawnNpcId());
+
+	auto distance = GetTargetDistance(monster);
+
+	if (monsterInfo != nullptr && 0.3 >= distance)
 	{
-		if (skill->motions[0]->sequence_name.find(L"_a") != std::wstring::npos)
+		const auto skill = monster->GetStat()->SkillToUse(distance);
+		if (skill != nullptr && !skill->motions.empty())
 		{
-			monster->ChangeUseSkill(skill);
-			monster->ChangeState(Protocol::kMonsterState::kAttack1A);
+			if (skill->motions[0]->sequence_name.find(L"_a") != std::wstring::npos)
+			{
+				monster->ChangeUseSkill(skill);
+				monster->ChangeState(Protocol::kMonsterState::kAttack1A);
+			}
+			else if (skill->motions[0]->sequence_name.find(L"_b") != std::wstring::npos)
+			{
+				monster->ChangeUseSkill(skill);
+				monster->ChangeState(Protocol::kMonsterState::kAttack1B);
+			}
+			else if (skill->motions[0]->sequence_name.find(L"_c") != std::wstring::npos)
+			{
+				monster->ChangeUseSkill(skill);
+				monster->ChangeState(Protocol::kMonsterState::kAttack1C);
+			}
+			else
+			{
+				std::cout << "알 수 없는 모션" << std::endl;
+			}
+			return;
 		}
-		else if (skill->motions[0]->sequence_name.find(L"_b") != std::wstring::npos)
-		{
-			monster->ChangeUseSkill(skill);
-			monster->ChangeState(Protocol::kMonsterState::kAttack1B);
-		}
-		else if (skill->motions[0]->sequence_name.find(L"_c") != std::wstring::npos)
-		{
-			monster->ChangeUseSkill(skill);
-			monster->ChangeState(Protocol::kMonsterState::kAttack1C);
-		}
-		else
-		{
-			std::cout << "알 수 없는 모션" << std::endl;
-		}
-		return;
 	}
+
 	if (!CheckTargetCharacterDistance(monster, 2.f))
 	{
 		monster->ChangeState(Protocol::kMonsterState::kIdleA);

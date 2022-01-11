@@ -2,6 +2,8 @@
 #include "game_logic_queue.h"
 
 #include "src/game_object/monster/monster.h"
+#include "src/game_object/monster/states/attack_a_state/monster_attack_a_state.h"
+#include "src/game_object/monster/states/run_state/monster_run_state.h"
 #include "src/game_object/monster/states/walk_state/monster_walk_state.h"
 #include "src/game_object/user/user.h"
 #include "src/scene/loading/scene_loading.h"
@@ -77,8 +79,19 @@ auto GameLogicQueue::MoveMonster(PacketSessionRef session, Protocol::GameServerM
 			auto transform = std::static_pointer_cast<Transform>(monsterObject->GetComponentPtr(L"Com_Transform"));
 			if (monsterObject->GetCurrentState() == monsterObject->GetMonsterState(Protocol::kWalkA))
 			{
-				const auto monsterState = std::static_pointer_cast<MonsterWalkState>(monsterObject->GetMonsterState(Protocol::kWalkA));
-				monsterState->SetNextState(pkt);
+				
+				if (const auto monsterWalkState = std::static_pointer_cast<MonsterWalkState>(monsterObject->GetMonsterState(Protocol::kWalkA)))
+				{
+					monsterWalkState->SetNextState(pkt);
+				}
+				
+			}
+			else if (monsterObject->GetCurrentState() == monsterObject->GetMonsterState(Protocol::kRunA))
+			{
+				if (const auto monsterRunState = std::static_pointer_cast<MonsterRunState>(monsterObject->GetMonsterState(Protocol::kRunA)))
+				{
+					monsterRunState->SetNextState(pkt);
+				}
 			}
 			else
 			{
@@ -100,7 +113,7 @@ auto GameLogicQueue::MoveMonster(PacketSessionRef session, Protocol::GameServerM
 				transform->SetState(Transform::kState::kStateRight, _float3(pkt.right().x(), pkt.right().y(), pkt.right().z()));
 				transform->SetState(Transform::kState::kStateUp, _float3(pkt.up().x(), pkt.up().y(), pkt.up().z()));
 				transform->SetState(Transform::kState::kStateLook, _float3(pkt.look().x(), pkt.look().y(), pkt.look().z()));
-				monsterState->SetTargeetPos(_float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
+				monsterState->SetTargetPos(_float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
 				monsterObject->ChangeAnimation(pkt.state());
 			}
 		}
@@ -108,12 +121,16 @@ auto GameLogicQueue::MoveMonster(PacketSessionRef session, Protocol::GameServerM
 		case Protocol::kRegenA: break;
 		case Protocol::kRunA:
 		{
+			const auto monsterState = std::static_pointer_cast<MonsterRunState>(monsterObject->GetMonsterState(Protocol::kRunA));
 			auto transform = std::static_pointer_cast<Transform>(monsterObject->GetComponentPtr(L"Com_Transform"));
 			transform->SetState(Transform::kState::kStateRight, _float3(pkt.right().x(), pkt.right().y(), pkt.right().z()));
 			transform->SetState(Transform::kState::kStateUp, _float3(pkt.up().x(), pkt.up().y(), pkt.up().z()));
 			transform->SetState(Transform::kState::kStateLook, _float3(pkt.look().x(), pkt.look().y(), pkt.look().z()));
-			transform->SetState(Transform::kState::kStatePosition, _float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
-			monsterObject->ChangeAnimation(pkt.state());
+			monsterState->SetTargetPos(_float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
+			if (monsterObject->GetCurrentState() != monsterState)
+			{
+				monsterObject->ChangeAnimation(pkt.state());
+			}
 		}
 		break;
 		case Protocol::kDeadA: break;
@@ -128,13 +145,20 @@ auto GameLogicQueue::MoveMonster(PacketSessionRef session, Protocol::GameServerM
 		case Protocol::kAttack2C:
 		case Protocol::kAttack3C:
 		{
-			auto transform = std::static_pointer_cast<Transform>(monsterObject->GetComponentPtr(L"Com_Transform"));
+			const auto transform = std::static_pointer_cast<Transform>(monsterObject->GetComponentPtr(L"Com_Transform"));
 			transform->SetState(Transform::kState::kStateRight, _float3(pkt.right().x(), pkt.right().y(), pkt.right().z()));
 			transform->SetState(Transform::kState::kStateUp, _float3(pkt.up().x(), pkt.up().y(), pkt.up().z()));
 			transform->SetState(Transform::kState::kStateLook, _float3(pkt.look().x(), pkt.look().y(), pkt.look().z()));
-			transform->SetState(Transform::kState::kStatePosition, _float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
 			monsterObject->ChangeSkillId(pkt.skillid());
-  			monsterObject->ChangeAnimation(pkt.state());
+			monsterObject->ChangeAnimation(pkt.state());
+			for (auto state = static_cast<int32_t>(Protocol::kAttack1A); state <= static_cast<int32_t>(Protocol::kAttack3C); ++state)
+			{
+				const auto monsterState = std::static_pointer_cast<MonsterAttackAState>(monsterObject->GetMonsterState(static_cast<Protocol::kMonsterState>(state)));
+				if (monsterState)
+				{
+					monsterState->SetTargetPos(_float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
+				}
+			}
 		}
 		break;
 		case Protocol::kDamgA: break;

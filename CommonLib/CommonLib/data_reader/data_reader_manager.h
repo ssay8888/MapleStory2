@@ -106,8 +106,8 @@ public:
 	{
 		std::wstring kfm;
 		float scale;
-		int32_t walk_speed;
-		int32_t run_speed;
+		float walk_speed;
+		float run_speed;
 	};
 	struct StatAtt
 	{
@@ -127,9 +127,9 @@ public:
 	};
 	struct Distance
 	{
-		int32_t sight;
-		int32_t sight_height_up;
-		int32_t sight_height_down;
+		float sight;
+		float sight_height_up;
+		float sight_height_down;
 	};
 	struct Collision
 	{

@@ -5287,7 +5287,7 @@
 			<model kfm="21000153_M_TurtleBabyHorn01" shadowScale="150" rotationSpeed="720" walkSpeed="30" runSpeed="100" />
 			<stat hp="7238" asp="100" msp="100" atp="80" evp="82" cap="54" cad="500" car="50" ndd="265" pap="7127" map="7129" par="90" mar="90" />
 			<distance avoid="60" sight="400" sightHeightUP="300" sightHeightDown="0" />
-			<skill ids="40349001" probs="100" />
+			<skill ids="40123001,40349001" probs="80,20" />
 			<additionalEffect codes="90000814" levels="1" />
 			<collision shape="box" width="85" height="100" depth="80" />
 			<capsule radius="32" height="150" />

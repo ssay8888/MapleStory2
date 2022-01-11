@@ -10,8 +10,6 @@
 #include "src/utility/components/transform/transform.h"
 #include "stat/monster_stat.h"
 #include "states/monster_attack_a_state/monster_attack_a_state.h"
-#include "states/monster_attack_b_state/monster_attack_b_state.h"
-#include "states/monster_attack_c_state/monster_attack_c_state.h"
 #include "states/monster_bore_state/monster_bore_state.h"
 #include "states/monster_idle_state/monster_idle_state.h"
 #include "states/monster_run_state/monster_run_state.h"
@@ -126,7 +124,7 @@ auto GameMonster::NativeContruct() -> HRESULT
 {
 	auto monsterInfo = DataReaderManager::GetInstance().FindMonsterInfo(_spawn_point->GetSpawnNpcId());
 	Transform::TransformDesc transformDesc;
-	transformDesc.speed_per_sec = monsterInfo->model.walk_speed / 150.f;
+	transformDesc.speed_per_sec = monsterInfo->model.walk_speed;
 	transformDesc.rotation_per_sec = D3DXToRadian(90.0);
 	_transform = Transform::Create(nullptr);
 	_transform->NativeConstruct(&transformDesc);
@@ -259,26 +257,12 @@ auto GameMonster::AnimationLoad() -> HRESULT
 			{
 				continue;
 			}
-			
-			if (splits[2] == L"A")
-			{
-				auto iterator = _state_index.end();
-				Protocol::kMonsterState type = Protocol::kMonsterState::kAttack1A;
-				if (splits[1] == L"01")
-				{
-					iterator = _state_index.find(Protocol::kMonsterState::kAttack1A);
-				}
-				else if (splits[1] == L"02")
-				{
-					type = Protocol::kMonsterState::kAttack2A;
-					iterator = _state_index.find(type);
-				}
-				else if (splits[1] == L"03")
-				{
-					type = Protocol::kMonsterState::kAttack3A;
-					iterator = _state_index.find(type);
-				}
 
+			auto iterator = _state_index.end();
+			Protocol::kMonsterState type = Protocol::kMonsterState::kAttack1A;
+			if (splits[2] == L"A" && splits[1] == L"01")
+			{
+				iterator = _state_index.find(type);
 
 				if (iterator == _state_index.end())
 				{
@@ -286,25 +270,10 @@ auto GameMonster::AnimationLoad() -> HRESULT
 					_state_index.emplace(type, animation.first);
 				}
 			}
-			else if (splits[2] == L"B")
+			else if (splits[2] == L"B" && splits[1] == L"01")
 			{
-				auto iterator = _state_index.end();
-				Protocol::kMonsterState type = Protocol::kMonsterState::kAttack1B;
-				if (splits[1] == L"01")
-				{
-					iterator = _state_index.find(type);
-				}
-				else if (splits[1] == L"02")
-				{
-					type = Protocol::kMonsterState::kAttack2B;
-					iterator = _state_index.find(type);
-				}
-				else if (splits[1] == L"03")
-				{
-					type = Protocol::kMonsterState::kAttack3B;
-					iterator = _state_index.find(type);
-				}
-
+				type = Protocol::kMonsterState::kAttack1B;
+				iterator = _state_index.find(type);
 
 				if (iterator == _state_index.end())
 				{
@@ -312,25 +281,10 @@ auto GameMonster::AnimationLoad() -> HRESULT
 					_state_index.emplace(type, animation.first);
 				}
 			}
-			else if (splits[2] == L"C")
+			else if (splits[2] == L"C" && splits[1] == L"01")
 			{
-				auto iterator = _state_index.end();
-				Protocol::kMonsterState type = Protocol::kMonsterState::kAttack1C;
-				if (splits[1] == L"01")
-				{
-					iterator = _state_index.find(type);
-				}
-				else if (splits[1] == L"02")
-				{
-					type = Protocol::kMonsterState::kAttack2C;
-					iterator = _state_index.find(type);
-				}
-				else if (splits[1] == L"03")
-				{
-					type = Protocol::kMonsterState::kAttack3C;
-					iterator = _state_index.find(type);
-				}
-
+				type = Protocol::kMonsterState::kAttack1C;
+				iterator = _state_index.find(type);
 
 				if (iterator == _state_index.end())
 				{
@@ -338,7 +292,6 @@ auto GameMonster::AnimationLoad() -> HRESULT
 					_state_index.emplace(type, animation.first);
 				}
 			}
-
 		}
 	}
 	return S_OK;

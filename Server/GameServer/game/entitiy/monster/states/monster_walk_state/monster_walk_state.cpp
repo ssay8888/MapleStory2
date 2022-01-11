@@ -68,6 +68,7 @@ auto MonsterWalkState::Tick(const double timeDelta, std::shared_ptr<GameMonster>
 		{
 			Protocol::GameServerMoveMonster sendPkt;
 			sendPkt.set_object_id(monster->GetObjectId());
+			std::cout << "kWalkA " << monster->GetObjectId() << std::endl;
 			sendPkt.set_state(Protocol::kWalkA);
 
 			auto sendRight = sendPkt.mutable_right();

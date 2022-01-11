@@ -14,7 +14,7 @@ auto MonsterWalkState::Enter(std::shared_ptr<Monster> monster) -> void
 	//_radian = D3DXToRadian(degree);
 	//_is_move = true;
 	//ReloadMapObject(monster, true);
-	_next_state.set_state(Protocol::kWalkA);
+	_next_state.set_state(Protocol::kRunA);
 }
 
 auto MonsterWalkState::HandleInput() -> void
@@ -50,12 +50,18 @@ auto MonsterWalkState::LateTick(const double timeDelta, std::shared_ptr<Monster>
 	if (distance < 0.01f)
 	{
 		transform->SetState(Transform::kState::kStatePosition, _targetPos);
-		monster->ChangeAnimation(_next_state.state());
+		if (_next_state.state() != Protocol::kRunA)
+		{
+			monster->ChangeAnimation(_next_state.state());
+		}
 	}
 	else if (distance >= 0.2)
 	{
 		transform->SetState(Transform::kState::kStatePosition, _targetPos);
-		monster->ChangeAnimation(_next_state.state());
+		if (_next_state.state() != Protocol::kRunA)
+		{
+			monster->ChangeAnimation(_next_state.state());
+		}
 	}
 	//auto kfm = DataReaderManager::GetInstance().FindAniKey(monster->GetMonsterInfo().monster_id());
 
@@ -84,7 +90,7 @@ auto MonsterWalkState::GetTargetPos() const -> _float3
 	return _targetPos;
 }
 
-auto MonsterWalkState::SetTargeetPos(_float3 pos) -> void
+auto MonsterWalkState::SetTargetPos(_float3 pos) -> void
 {
 	_targetPos = pos;
 }
