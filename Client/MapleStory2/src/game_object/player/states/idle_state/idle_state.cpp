@@ -3,6 +3,7 @@
 
 #include "src/game_object/map/cube/map_object.h"
 #include "src/game_object/player/player.h"
+#include "src/game_object/player/states/berserker_breakingskull_state/berserker_breakingskull_state.h"
 #include "src/game_object/player/states/jump_state/jump_state.h"
 #include "src/game_object/player/states/move_state/move_state.h"
 #include "src/network/game_server_packet_handler.h"
@@ -15,6 +16,7 @@ auto IdleState::Enter() -> void
 {
 	// 상태가 바뀌었을때 최초 1회 호출됨.
 	_is_move = false;
+	_is_attack = false;
 	_player->ChangeAnimation(kAnimationType::kIdle);
 	const auto transform = _player->GetTransform();
 	Protocol::GameClientMovePlayer sendPkt;
@@ -50,6 +52,10 @@ auto IdleState::HandleInput() -> void
 	{
 		_is_move = true;
 	}
+	if (InputDevice::GetInstance().GetKeyPressing(DIK_X))
+	{
+		_is_attack = true;
+	}
 	_is_jump = InputDevice::GetInstance().GetKeyPressing(DIK_C);
 }
 
@@ -72,6 +78,11 @@ auto IdleState::LateTick(const double timeDelta) -> void
 		GravityPlayerSendMessage(kAnimationType::kIdle);
 	}
 	_player->PlayAnimation(timeDelta);
+	if (_is_attack)
+	{
+		_player->ChangeCharacterState(BerserkerBreakingSkullState::GetInstance());
+		return;
+	}
 	if (_is_move)
 	{
 		_player->ChangeCharacterState(MoveState::GetInstance());

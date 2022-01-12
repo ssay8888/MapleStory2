@@ -43,6 +43,7 @@ public:
 	auto GetObjects()const->std::vector<std::shared_ptr<MapXblock>>;
 
 	auto GetMonsters()->std::map<std::shared_ptr<SpawnPoint>, std::shared_ptr<GameMonster>>&;
+	auto FindMonster(int64_t objectId)const->std::shared_ptr<GameMonster>;
 	auto FindRangeCellObject(
 		const std::shared_ptr<Collider>& targetCollider) -> std::vector<std::shared_ptr<MapXblock>>;
 
@@ -54,7 +55,7 @@ private:
 	std::vector<std::shared_ptr<SpawnPoint>>								_region_points;
 	std::vector<std::shared_ptr<MapXblock>>									_objects;
 	std::map<int64_t, std::shared_ptr<GameSession>>							_characters;
-	std::map<std::shared_ptr<SpawnPoint>, std::shared_ptr<GameMonster>>		_monsters;
+	std::map<std::shared_ptr<SpawnPoint>, std::shared_ptr<GameMonster>>		_spawn_point_monsters;
 	std::map<int64_t, std::shared_ptr<GameEntity>>							_entities;
 };
 

@@ -187,11 +187,6 @@ auto PlayerInfo::ExpRender() -> HRESULT
 	transformMatrix._41 = (g_WinCX / 2) - (g_WinCX >> 1);
 	transformMatrix._42 = -(713) + (g_WinCY >> 1);
 
-	const auto& statInstance = CharacterStat::GetInstance();
-	const float expPercent =
-		static_cast<float>(statInstance.GetExp()) / static_cast<float>(statInstance.GetMaxMp()) * 100.f;
-	float expWidth = 1.f - expPercent / 100;
-
 	auto result = _shader_gage->SetUpConstantTable("g_WorldMatrix", &transformMatrix, sizeof(_matrix));
 	result = _shader_gage->SetUpTextureConstantTable("g_DiffuseTexture", _texture_exp_frame);
 	constexpr float x = 1.f;
@@ -207,15 +202,6 @@ auto PlayerInfo::ExpRender() -> HRESULT
 auto PlayerInfo::ExpProgressRender() -> HRESULT
 {
 	static float a = 0;
-
-	if (InputDevice::GetInstance().GetKeyDown(DIK_O))
-	{
-		a--;
-	}
-	if (InputDevice::GetInstance().GetKeyDown(DIK_P))
-	{
-		a++;
-	}
 	_matrix			transformMatrix;
 	D3DXMatrixIdentity(&transformMatrix);
 	transformMatrix._11 = 1273;//138
@@ -225,7 +211,7 @@ auto PlayerInfo::ExpProgressRender() -> HRESULT
 
 	const auto& statInstance = CharacterStat::GetInstance();
 	const float expPercent =
-		static_cast<float>(statInstance.GetExp() + 13) / static_cast<float>(statInstance.GetMaxMp()) * 100.f;
+		static_cast<float>(statInstance.GetExp()) / static_cast<float>(statInstance.GetMaxMp()) * 100.f;
 	float expWidth = expPercent / 100;
 
 	auto result = _shader_gage->SetUpConstantTable("g_WorldMatrix", &transformMatrix, sizeof(_matrix));

@@ -8,6 +8,7 @@
 #include "src/game_object/map/cube/map_object.h"
 #include "src/managers/characters_manager/character.h"
 #include "src/managers/character_stat/character_stat.h"
+#include "src/managers/weapon_manager/weapon_manager.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/collider/collider.h"
@@ -143,6 +144,8 @@ int32_t Player::LateTick(const double timeDelta)
 	_character_state->LateTick(timeDelta);
 	//PlayAnimation(timeDelta);
 	//GravityPlayer(timeDelta);
+
+	WeaponManager::GetInstance().LateTick();
 	return GameObject::LateTick(timeDelta);
 }
 
@@ -177,6 +180,7 @@ HRESULT Player::Render()
 	result = _shader_com->EndShader();
 
 	_character_state->Render();
+	WeaponManager::GetInstance().Render();
 
 	std::wstring str;
 
@@ -286,35 +290,38 @@ auto Player::ChangeEqp(const GameContents::kEquipeType type, int32_t itemId)->vo
 		componentTag.append(std::to_wstring(itemId)).append(L"_").append(std::to_wstring(_info.sex));
 		if (auto component = std::static_pointer_cast<MeshDynamic>(CloneComponent(kSceneStatic, prototypeName, componentTag, nullptr)))
 		{
-			switch (type)
+			if (type != GameContents::kEquipeType::kWeapon)
 			{
-			case GameContents::kEquipeType::kPants:
-				_character_mesh_list[0]->ChangeSkinnedMesh(component, "PA_");
-				_eqp_list->AddItem(type, itemId);
-				break;
-			case GameContents::kEquipeType::kCoat:
-				_character_mesh_list[0]->ChangeSkinnedMesh(component, "CL_");
-				_eqp_list->AddItem(type, itemId);
-				break;
-			case GameContents::kEquipeType::kShoes:
-				_character_mesh_list[0]->ChangeSkinnedMesh(component, "SH_");
-				_eqp_list->AddItem(type, itemId);
-				break;
-			case GameContents::kEquipeType::kFace:
-			{
-				auto texture = DataReaderManager::GetInstance().FindFace(itemId);
-				_character_mesh_list[0]->ChangeFaceTexture(texture->diffuse_map[0]);
-				break;
-			}
-			default:
-				return;
-			}
-			_eqp_mesh.emplace(itemId, component);
+				switch (type)
+				{
+				case GameContents::kEquipeType::kPants:
+					_character_mesh_list[0]->ChangeSkinnedMesh(component, "PA_");
+					_eqp_list->AddItem(type, itemId);
+					break;
+				case GameContents::kEquipeType::kCoat:
+					_character_mesh_list[0]->ChangeSkinnedMesh(component, "CL_");
+					_eqp_list->AddItem(type, itemId);
+					break;
+				case GameContents::kEquipeType::kShoes:
+					_character_mesh_list[0]->ChangeSkinnedMesh(component, "SH_");
+					_eqp_list->AddItem(type, itemId);
+					break;
+				case GameContents::kEquipeType::kFace:
+				{
+					auto texture = DataReaderManager::GetInstance().FindFace(itemId);
+					_character_mesh_list[0]->ChangeFaceTexture(texture->diffuse_map[0]);
+					break;
+				}
+				default:
+					return;
+				}
+				_eqp_mesh.emplace(itemId, component);
 
-			const auto playerMesh = this->GetCurrentDynamicMesh();
-			const auto rootFrame = playerMesh.first->GetRootFrame();
-			int32_t index = 0;
-			component->TargetCombinedTransformationMatrices(component, playerMesh.first, component->GetRootFrame(), rootFrame, index);
+				const auto playerMesh = this->GetCurrentDynamicMesh();
+				const auto rootFrame = playerMesh.first->GetRootFrame();
+				int32_t index = 0;
+				component->TargetCombinedTransformationMatrices(component, playerMesh.first, component->GetRootFrame(), rootFrame, index);
+			}
 		}
 
 		switch (type)
@@ -324,6 +331,13 @@ auto Player::ChangeEqp(const GameContents::kEquipeType type, int32_t itemId)->vo
 			auto texture = DataReaderManager::GetInstance().FindFace(itemId);
 			_character_mesh_list[0]->ChangeFaceTexture(texture->diffuse_map[0]);
 			_eqp_list->AddItem(type, itemId);
+			break;
+		}
+		case GameContents::kEquipeType::kWeapon:
+		{
+			auto characterId = GameLogicQueue::GetInstance()->GetCharacterInfo().character_id();
+			WeaponManager::GetInstance().RemoveWeapon(characterId);
+			WeaponManager::GetInstance().AddWeapon(characterId, itemId, _transform_com);
 			break;
 		}
 		default:
@@ -399,7 +413,7 @@ auto Player::AddComponents() -> HRESULT
 	ColliderDesc.init_pos = _float3(0.f, 0.25f, 0.f);
 	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Shose_AABB"), reinterpret_cast<std::shared_ptr<Component>*>(&_character_aabb_com), &ColliderDesc)))
 		return E_FAIL;
-	
+
 	ColliderDesc.parent_matrix = &_transform_com->GetWorldMatrix();
 	ColliderDesc.scale = _float3(2.5f, 2.5f, 2.5f);
 	ColliderDesc.init_pos = _float3(0.f, 0, 0.f);
@@ -412,32 +426,32 @@ auto Player::AddComponents() -> HRESULT
 	_reload_ragne_aabb_com.resize(kReloadEnd);
 	constexpr float initPos = 0.4f;
 	ColliderDesc.init_pos = _float3(0.f, initPos + 0.29f, 0.f);
-	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Up"), 
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Up"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_reload_ragne_aabb_com[kReloadUp]), &ColliderDesc)))
 		return E_FAIL;
 
 	ColliderDesc.init_pos = _float3(0.f, -initPos + 0.29f, 0.f);
-	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Down"), 
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Down"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_reload_ragne_aabb_com[kReloadDown]), &ColliderDesc)))
 		return E_FAIL;
 
 	ColliderDesc.init_pos = _float3(-initPos, 0.29f, 0.f);
-	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Left"), 
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Left"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_reload_ragne_aabb_com[kReloadLeft]), &ColliderDesc)))
 		return E_FAIL;
 
 	ColliderDesc.init_pos = _float3(initPos, 0.29f, 0.f);
-	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Right"), 
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Right"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_reload_ragne_aabb_com[kReloadRight]), &ColliderDesc)))
 		return E_FAIL;
 
 	ColliderDesc.init_pos = _float3(0.f, 0.29f, initPos);
-	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Front"), 
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Front"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_reload_ragne_aabb_com[kReloadFront]), &ColliderDesc)))
 		return E_FAIL;
 
 	ColliderDesc.init_pos = _float3(0.f, 0.29f, -initPos);
-	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Back"), 
+	if (FAILED(AddComponent(kSceneStatic, TEXT("Prototype_Collider_AABB"), TEXT("Com_Reload_AABB_Back"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_reload_ragne_aabb_com[kReloadBack]), &ColliderDesc)))
 		return E_FAIL;
 

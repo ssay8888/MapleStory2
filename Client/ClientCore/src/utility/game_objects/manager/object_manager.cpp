@@ -119,6 +119,28 @@ auto ObjectManager::AddGameObject(uint32_t levelIndex, const std::wstring& layer
 	return S_OK;
 }
 
+auto ObjectManager::CreateGameObject(uint32_t levelIndex,
+	const std::wstring& prototypeTag, void* arg) -> std::shared_ptr<GameObject>
+{
+	if (_num_level <= levelIndex)
+	{
+		return nullptr;
+	}
+
+	const std::shared_ptr<GameObject> prototype = FindPrototype(prototypeTag);
+	if (nullptr == prototype)
+	{
+		return nullptr;
+	}
+
+	const std::shared_ptr<GameObject> gameObject = prototype->Clone(arg);
+	if (gameObject == nullptr)
+	{
+		return nullptr;
+	}
+	return gameObject;
+}
+
 auto ObjectManager::Tick(const double timeDelta) const -> int32_t
 {
 	for (uint32_t i = 0; i < _num_level; ++i)

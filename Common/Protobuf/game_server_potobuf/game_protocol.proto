@@ -97,3 +97,21 @@ message GameServerMoveMonster
 	
 	int32 skillId = 7;
 }
+
+message GameClientTakeDamage
+{
+	int64 character_id = 1;
+	int64 monster_obj_id = 2;
+}
+
+message GameServerTakeDamage
+{
+	int64 character_id = 1;
+	int64 damage = 2;
+}
+
+message GameServerUpdateStat
+{
+	kPlayerStatType type = 1;
+	int32 value = 2;
+}

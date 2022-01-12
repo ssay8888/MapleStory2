@@ -88,7 +88,7 @@
     <ClInclude Include="src\game_object\ui\character_select\character_select_ui.h">
       <Filter>game_object\ui\character_select</Filter>
     </ClInclude>
-    <ClInclude Include="src\game_object\item\item.h">
+    <ClInclude Include="src\game_object\item\Weapon.h">
       <Filter>game_object\item</Filter>
     </ClInclude>
     <ClInclude Include="src\game_object\ui\character_select\character_select_item.h">
@@ -220,6 +220,12 @@
     <ClInclude Include="src\game_object\monster\states\attack_a_state\monster_attack_a_state.h">
       <Filter>game_object\monster\states\attack_a_state</Filter>
     </ClInclude>
+    <ClInclude Include="src\managers\weapon_manager\weapon_manager.h">
+      <Filter>managers\weapon_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\player\states\berserker_breakingskull_state\berserker_breakingskull_state.h">
+      <Filter>game_object\player\states\berserker_breakingskull_state</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -306,7 +312,7 @@
     <ClCompile Include="src\game_object\ui\character_select\character_select_ui.cpp">
       <Filter>game_object\ui\character_select</Filter>
     </ClCompile>
-    <ClCompile Include="src\game_object\item\item.cpp">
+    <ClCompile Include="src\game_object\item\Weapon.cpp">
       <Filter>game_object\item</Filter>
     </ClCompile>
     <ClCompile Include="src\game_object\ui\character_select\character_select_item.cpp">
@@ -434,6 +440,12 @@
     </ClCompile>
     <ClCompile Include="src\game_object\monster\states\attack_a_state\monster_attack_a_state.cpp">
       <Filter>game_object\monster\states\attack_a_state</Filter>
+    </ClCompile>
+    <ClCompile Include="src\managers\weapon_manager\weapon_manager.cpp">
+      <Filter>managers\weapon_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\player\states\berserker_breakingskull_state\berserker_breakingskull_state.cpp">
+      <Filter>game_object\player\states\berserker_breakingskull_state</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -603,6 +615,12 @@
     </Filter>
     <Filter Include="game_object\monster\states\attack_a_state">
       <UniqueIdentifier>{a6370cf2-7b84-45fa-b2a7-3556789e3ab6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="managers\weapon_manager">
+      <UniqueIdentifier>{b74a492c-0860-4b2b-bd3a-ea282e56a8e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\player\states\berserker_breakingskull_state">
+      <UniqueIdentifier>{1c5f397c-b9b6-49d5-b386-b7acb968524f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

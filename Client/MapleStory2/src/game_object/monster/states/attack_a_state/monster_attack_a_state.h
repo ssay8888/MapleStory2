@@ -26,8 +26,9 @@ private:
 	std::vector<std::pair<int32_t, int32_t>> _skills;
 	_float3 _targetPos;
 
-	std::shared_ptr<Collider> _obb_com;
+	std::shared_ptr<Collider> _aabb_com;
 
 	float _min_distance;
+	bool _is_player_attack;
 };
 

@@ -12,6 +12,7 @@ public:
 		kPants = -2,
 		kFace = -3,
 		kShoes = -4,
+		kWeapon = -5
 	};
 	static auto EquipeType(int32_t itemId)->kEquipeType;
 #pragma endregion

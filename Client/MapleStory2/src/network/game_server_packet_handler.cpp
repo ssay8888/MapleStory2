@@ -48,3 +48,18 @@ auto GameServerPacketHandler::HandleGameServerMoveMonster(PacketSessionRef& sess
 	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::MoveMonster, session, pkt);
 	return true;
 }
+
+auto GameServerPacketHandler::HandleGameServerTakeDamage(PacketSessionRef& session,
+	Protocol::GameServerTakeDamage& pkt) -> bool
+{
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::TakeDamage, session, pkt);
+	return true;
+}
+
+auto GameServerPacketHandler::HandleGameServerUpdateStat(PacketSessionRef& session,
+	Protocol::GameServerUpdateStat& pkt) -> bool
+{
+
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::UpdateStat, session, pkt);
+	return true;
+}

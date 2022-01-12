@@ -37,3 +37,10 @@ enum kMonsterState
 	kDamgB = 17;
 	kDamgC = 18;
 };
+
+enum kPlayerStatType
+{
+	kHp = 0;
+	kMp = 1;
+	kExp = 2;
+}

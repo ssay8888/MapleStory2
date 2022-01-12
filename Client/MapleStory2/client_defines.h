@@ -29,7 +29,9 @@ enum class kAnimationType
 	kJumpDown,
 	kJumpFall,
 	kAttackIdle,
-	kBreakingSkull
+	kBreakingSkull1A,
+	kBreakingSkull2A,
+	kBreakingSkull3A,
 };
 
 

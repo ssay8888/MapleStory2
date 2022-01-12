@@ -5,7 +5,9 @@
 #include "src/game_object/monster/states/attack_a_state/monster_attack_a_state.h"
 #include "src/game_object/monster/states/run_state/monster_run_state.h"
 #include "src/game_object/monster/states/walk_state/monster_walk_state.h"
+#include "src/game_object/player/player.h"
 #include "src/game_object/user/user.h"
+#include "src/managers/character_stat/character_stat.h"
 #include "src/scene/loading/scene_loading.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/components/collider/collider.h"
@@ -169,5 +171,26 @@ auto GameLogicQueue::MoveMonster(PacketSessionRef session, Protocol::GameServerM
 		default:;
 		}
 	}
+}
+
+auto GameLogicQueue::UpdateStat(PacketSessionRef session, Protocol::GameServerUpdateStat pkt) -> void
+{
+	switch (pkt.type())
+	{
+	case Protocol::kHp:
+		CharacterStat::GetInstance().SetHp(pkt.value());
+		break;
+	case Protocol::kMp:
+		CharacterStat::GetInstance().SetMp(pkt.value());
+		break;
+	case Protocol::kExp:
+		CharacterStat::GetInstance().SetExp(pkt.value());
+		break;
+	default:;
+	}
+}
+
+auto GameLogicQueue::TakeDamage(PacketSessionRef session, Protocol::GameServerTakeDamage pkt) -> void
+{
 }
 

@@ -21,6 +21,8 @@ public:
 	auto MovePlayer(PacketSessionRef session, Protocol::GameServerMovePlayer pkt)->void;
 	auto RespawnMonster(PacketSessionRef session, Protocol::GameServerRespawnMonster pkt)->void;
 	auto MoveMonster(PacketSessionRef session, Protocol::GameServerMoveMonster pkt)->void;
+	auto UpdateStat(PacketSessionRef session, Protocol::GameServerUpdateStat pkt)->void;
+	auto TakeDamage(PacketSessionRef session, Protocol::GameServerTakeDamage pkt)->void;
 
 private:
 	Protocol::GameServerLoadCharacter _character_info;

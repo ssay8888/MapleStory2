@@ -20,7 +20,7 @@ auto MonsterAttackAState::Enter(std::shared_ptr<GameMonster> monster) -> void
 	wait_skill_delay = 0.f;
 	_animation_acc = 0.f;
 
-	ReloadMapObject(monster, _map_objects.empty());
+	ReloadMapObject(monster, true);
 	monster->GetMonsterColliderAabb()->UpdateCollider();
 	auto range = monster->GetReloadRangeAabb();
 	for (const auto& reload : range)
@@ -69,7 +69,6 @@ auto MonsterAttackAState::Tick(const double timeDelta, std::shared_ptr<GameMonst
 			}
 
 			Protocol::GameServerMoveMonster sendPkt;
-			std::cout << "attack " << _state <<  "/ " << monster->GetObjectId() << std::endl;
 			sendPkt.set_object_id(monster->GetObjectId());
 			sendPkt.set_state(_state);
 

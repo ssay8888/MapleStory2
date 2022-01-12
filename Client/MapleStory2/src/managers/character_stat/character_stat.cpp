@@ -54,6 +54,16 @@ auto CharacterStat::GetHp() const -> int32_t
 	return _hp;
 }
 
+auto CharacterStat::SetHp(const int32_t value) -> void
+{
+	_hp = value;
+}
+
+auto CharacterStat::GainHp(const int32_t value) -> void
+{
+	_hp += value;
+}
+
 auto CharacterStat::GetMaxHp() const -> int32_t
 {
 	return _max_hp;
@@ -62,6 +72,16 @@ auto CharacterStat::GetMaxHp() const -> int32_t
 auto CharacterStat::GetMp() const -> int32_t
 {
 	return _mp;
+}
+
+auto CharacterStat::SetMp(const int32_t value) -> void
+{
+	_mp = value;
+}
+
+auto CharacterStat::GainMp(const int32_t value) -> void
+{
+	_mp += value;
 }
 
 auto CharacterStat::GetMaxMp() const -> int32_t
@@ -77,4 +97,14 @@ auto CharacterStat::GetLevel() const -> int32_t
 auto CharacterStat::GetExp() const -> int32_t
 {
 	return _exp;
+}
+
+auto CharacterStat::SetExp(const int32_t value) -> void
+{
+	_exp = value;
+}
+
+auto CharacterStat::GainExp(const int32_t value) -> void
+{
+	_exp += value;
 }

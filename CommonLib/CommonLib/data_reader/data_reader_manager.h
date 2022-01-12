@@ -7,6 +7,12 @@
 #include <vector>
 #include <wrl/client.h>
 
+ namespace pugi
+ {
+	 class xpath_node;
+	 class xml_node;
+ }
+
 class ItemModel;
 
 class DataReaderManager
@@ -175,6 +181,7 @@ public:
 	{
 		std::wstring sequence_name;
 		std::wstring motion_effect;
+		std::wstring str_tag_effects;
 		float movedistance;
 		struct Attack
 		{
@@ -203,16 +210,47 @@ public:
 
 	auto LoadSkillData()->void;
 	auto FindSkillData(int32_t skillId)->std::shared_ptr<Skill>;
+
+	enum class kEffectType
+	{
+		kNif,
+		kSound,
+		kEnd
+	};
+	struct Effect
+	{
+		kEffectType type;
+
+		//sound타입
+		std::wstring group;
+		std::wstring event;
+
+		//nif타입
+		std::wstring file_path;
+
+
+		float start_delay;
+		float duration;
+
+	};
+	auto LoadMotionEffect()->void;
+	auto LoadTagEffect()->void;
+	auto CreateEffectNode(pugi::xpath_node effectNode)->std::shared_ptr<Effect>;
+
+	auto FindMotionEffect(std::shared_ptr<Motion> key)->std::shared_ptr<Effect>;
+	auto FindStrTagEffect(std::shared_ptr<Motion> key)->std::vector<std::shared_ptr<Effect>>;
 #pragma endregion
 	
 private:
-	std::map<int32_t, std::shared_ptr<FaceInfo>>			_face_info;
-	std::map<int32_t, std::shared_ptr<ItemModel>>			_item_model;
-	std::vector<std::shared_ptr<AnimationInfo>>				_animations_info;
-	std::vector<std::shared_ptr<CreateCharacterItemInfo>>	_create_item_info;
-	std::map<int32_t, std::shared_ptr<FieldData>>			_field_data;
-	std::map<int32_t, std::shared_ptr<MonsterInfo>>			_monster_info;
-	std::unordered_map<int32_t, std::shared_ptr<Kfm>>		_ani_key;
-	std::map<int32_t, std::shared_ptr<Skill>>				_skills;
+	std::map<int32_t, std::shared_ptr<FaceInfo>>								_face_info;
+	std::map<int32_t, std::shared_ptr<ItemModel>>								_item_model;
+	std::vector<std::shared_ptr<AnimationInfo>>									_animations_info;
+	std::vector<std::shared_ptr<CreateCharacterItemInfo>>						_create_item_info;
+	std::map<int32_t, std::shared_ptr<FieldData>>								_field_data;
+	std::map<int32_t, std::shared_ptr<MonsterInfo>>								_monster_info;
+	std::unordered_map<int32_t, std::shared_ptr<Kfm>>							_ani_key;
+	std::map<int32_t, std::shared_ptr<Skill>>									_skills;
+	std::map<std::shared_ptr<Motion>, std::shared_ptr<Effect>>					_motion_effects;
+	std::map<std::shared_ptr<Motion>, std::vector<std::shared_ptr<Effect>>>	_str_tag_effects;
 };
 

@@ -32,6 +32,7 @@ public:
 	auto NativeConstructPrototype(kCollider type)->HRESULT;
 	auto NativeConstruct(void* arg)->HRESULT;
 	auto UpdateCollider()->void;
+	auto ResetCollider()->void;
 
 public:
 	auto CollisionAabb(const std::shared_ptr<Collider>& targetCollider)->bool;

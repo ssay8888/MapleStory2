@@ -1,5 +1,6 @@
 #include "game_server_pch.h"
 #include "game_client_packet_handler.h"
+#include "game_tick/game_tick.h"
 #include "managers/game_job_queue/game_character_load_queue.h"
 #include "managers/game_job_queue/game_character_moving_queue.h"
 
@@ -27,5 +28,13 @@ auto GameClientPacketHandler::HandleGameClientMovePlayer(PacketSessionRef& sessi
                                                          Protocol::GameClientMovePlayer& pkt) -> bool
 {
 	GameCharacterMovingQueue::GetInstance()->DoAsync(&GameCharacterMovingQueue::MovePlayer, session, pkt);
+	return true;
+}
+
+auto GameClientPacketHandler::HandleGameClientTakeDamage(PacketSessionRef& session,
+	Protocol::GameClientTakeDamage& pkt) -> bool
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	GameTick::GetInstance()->DoAsync(&GameTick::TakeDamage, pkt.character_id(), pkt.monster_obj_id(), gameSession);
 	return true;
 }

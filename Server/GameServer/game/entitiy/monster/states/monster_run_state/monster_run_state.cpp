@@ -59,7 +59,6 @@ auto MonsterRunState::Tick(const double timeDelta, std::shared_ptr<GameMonster> 
 		{
 			Protocol::GameServerMoveMonster sendPkt;
 			sendPkt.set_object_id(monster->GetObjectId());
-			std::cout << "kRunA " << monster->GetObjectId() << std::endl;
 			sendPkt.set_state(Protocol::kRunA);
 
 			const auto sendRight = sendPkt.mutable_right();

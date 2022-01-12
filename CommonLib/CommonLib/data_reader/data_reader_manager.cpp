@@ -28,6 +28,8 @@ auto DataReaderManager::Init(const Microsoft::WRL::ComPtr<IDirect3DDevice9> devi
 	LoadMonsterInfo();
 	LoadAniKeyText();
 	LoadSkillData();
+	LoadMotionEffect();
+	LoadTagEffect();
 	if (device)
 	{
 		FaceLoader(device);
@@ -545,6 +547,8 @@ auto DataReaderManager::LoadSkillData() -> void
 								StringUtils::ToLower(motion->sequence_name);
 								motion->motion_effect = StringUtils::ConvertCtoW(infoNodes.attribute("motionEffect").value());
 								StringUtils::ToLower(motion->motion_effect);
+								motion->str_tag_effects = StringUtils::ConvertCtoW(infoNodes.attribute("strTagEffects").value());
+								StringUtils::ToLower(motion->str_tag_effects);
 								motion->movedistance = infoNodes.attribute("movedistance").empty() ? 0 : std::stof(infoNodes.attribute("movedistance").value()) / 150.f * 0.58f;
 								for (auto attackNode : infoNodes)
 								{
@@ -587,4 +591,112 @@ auto DataReaderManager::FindSkillData(const int32_t skillId) -> std::shared_ptr<
 	}
 	return nullptr;
 }
+
+auto DataReaderManager::LoadMotionEffect() -> void
+{
+	xml_document doc;
+	for (const auto& [skillId, skill] : _skills)
+	{
+		for (const auto& motion : skill->motions)
+		{
+			//../../Binary/Resources/Xml/NPC/Skill/TurtleBabyBroccoliGreen/Eff_TurtleBabyBroccoliGreen_Attack_01_A.xml
+			std::wstring motionPath(L"../../Binary/Resources/Xml/");
+			motionPath.append(motion->motion_effect);
+			const auto err = doc.load_file(StringUtils::ConvertWtoC(motionPath.c_str()).c_str());
+			if (err.status == status_ok)
+			{
+				const auto effectNodes = doc.select_nodes("ms2/effect");
+
+				for (const auto& effectNode : effectNodes)
+				{
+					auto effectObject = CreateEffectNode(effectNode);
+					_motion_effects.emplace(motion, effectObject);
+				}
+			}
+		}
+	}
+}
+
+auto DataReaderManager::LoadTagEffect() -> void
+{
+	xml_document doc;
+	for (const auto& [skillId, skill] : _skills)
+	{
+		for (const auto& motion : skill->motions)
+		{
+			//../../Binary/Resources/Xml/NPC/Skill/TurtleBabyBroccoliGreen/Eff_TurtleBabyBroccoliGreen_Attack_01_A.xml
+			auto motionPaths = StringUtils::Split(motion->str_tag_effects, L',');
+			std::vector<std::shared_ptr<Effect>> effects;
+			for (const auto& motionPath : motionPaths)
+			{
+				auto realMotion = StringUtils::Split(motionPath, L'=');
+				if (!realMotion.empty())
+				{
+					std::wstring motionPath(L"../../Binary/Resources/Xml/");
+					motionPath.append(realMotion[1]);
+					const auto err = doc.load_file(StringUtils::ConvertWtoC(motionPath.c_str()).c_str());
+					if (err.status == status_ok)
+					{
+						const auto effectNodes = doc.select_nodes("ms2/effect");
+
+						for (auto effectNode : effectNodes)
+						{
+							auto effectObject = CreateEffectNode(effectNode);
+							effects.push_back(effectObject);
+						}
+					}
+				}
+			}
+			if (!effects.empty())
+			{
+				_str_tag_effects.emplace(motion, effects);
+			}
+		}
+	}
+}
+
+auto DataReaderManager::CreateEffectNode(const pugi::xpath_node effectNode) -> std::shared_ptr<Effect>
+{
+	auto effectObject = std::make_shared<Effect>();
+	auto effect = effectNode.node();
+	const std::string typeName(effect.attribute("type").value());
+	if (typeName == "nif")
+	{
+		effectObject->type = kEffectType::kNif;
+	}
+	else if (typeName == "soundEvent")
+	{
+		effectObject->type = kEffectType::kSound;
+	}
+	else
+	{
+		effectObject->type = kEffectType::kEnd;
+	}
+
+	effectObject->file_path = effect.attribute("filePath").empty() ? L"" : StringUtils::ConvertCtoW(effect.attribute("filePath").value());
+	effectObject->event = effect.attribute("event").empty() ? L"" : StringUtils::ConvertCtoW(effect.attribute("event").value());
+	effectObject->group = effect.attribute("group").empty() ? L"" : StringUtils::ConvertCtoW(effect.attribute("group").value());
+	effectObject->start_delay = effect.attribute("startDelay").empty() ? 0.f : std::stof(effect.attribute("startDelay").value());
+	effectObject->duration = effect.attribute("duration").empty() ? 0.f : std::stof(effect.attribute("duration").value());
+	return effectObject;
+}
+
+auto DataReaderManager::FindMotionEffect(const std::shared_ptr<Motion> key) -> std::shared_ptr<Effect>
+{
+	if (const auto& iterator = _motion_effects.find(key); iterator != _motion_effects.end())
+	{
+		return iterator->second;
+	}
+	return nullptr;
+}
+
+auto DataReaderManager::FindStrTagEffect(const std::shared_ptr<Motion> key) -> std::vector<std::shared_ptr<Effect>>
+{
+	if (const auto& iterator = _str_tag_effects.find(key); iterator != _str_tag_effects.end())
+	{
+		return iterator->second;
+	}
+	return std::vector<std::shared_ptr<Effect>>();
+}
+
 #pragma endregion

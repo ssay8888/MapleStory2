@@ -128,6 +128,11 @@ auto Collider::UpdateCollider() -> void
 		_transform->RemoveRotation();
 }
 
+auto Collider::ResetCollider() -> void
+{
+	_is_collision = false;
+}
+
 auto Collider::CollisionAabb(const std::shared_ptr<Collider>& targetCollider) -> bool
 {
 	_float3		vSourMin, vSourMax;

@@ -29,7 +29,17 @@ auto StringUtils::ToLower(std::wstring& str) -> void
 
 auto StringUtils::ToUpper(std::wstring& str) -> void
 {
+	std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+}
+
+auto StringUtils::ToLower(std::string& str) -> void
+{
 	std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+}
+
+auto StringUtils::ToUpper(std::string& str) -> void
+{
+	std::transform(str.begin(), str.end(), str.begin(), ::toupper);
 }
 
 auto StringUtils::Split(const std::string& str, const char delimiter) -> std::vector<std::string>

@@ -3,10 +3,15 @@
 
 #include "data_reader/data_reader_manager.h"
 #include "randomizer/randomizer.h"
+#include "src/game_job_queue/game_logic_queue.h"
 #include "src/game_object/monster/monster.h"
+#include "src/game_object/player/player.h"
+#include "src/network/game_server_packet_handler.h"
+#include "src/network/send_manager.h"
 #include "src/utility/components/collider/collider.h"
 #include "src/utility/components/manager/component_manager.h"
 #include "src/utility/components/transform/transform.h"
+#include "src/utility/game_objects/manager/object_manager.h"
 
 MonsterAttackAState::MonsterAttackAState(Protocol::kMonsterState state):
 	_state(state)
@@ -16,6 +21,11 @@ MonsterAttackAState::MonsterAttackAState(Protocol::kMonsterState state):
 auto MonsterAttackAState::Enter(std::shared_ptr<Monster> monster) -> void
 {
 	_min_distance = -1;
+	_is_player_attack = false;
+	if (_aabb_com)
+	{
+		_aabb_com->ResetCollider();
+	}
 	if (_skills.empty())
 	{
 		/*
@@ -44,7 +54,7 @@ auto MonsterAttackAState::Enter(std::shared_ptr<Monster> monster) -> void
 				_use_skill = skill;
 			}
 		}
-		if (_obb_com == nullptr)
+		if (_use_skill != nullptr && _aabb_com == nullptr)
 		{
 			auto transform = monster->GetTransform();
 			Collider::TagColliderDesc		ColliderDesc;
@@ -56,10 +66,10 @@ auto MonsterAttackAState::Enter(std::shared_ptr<Monster> monster) -> void
 			ColliderDesc.init_pos = _float3(0.f, (_use_skill->attack.range.distance) * 0.5f, 0.f);
 
 			const auto& componentManager = ComponentManager::GetInstance();
-			auto component = componentManager.CloneComponent(0, TEXT("Prototype_Collider_OBB"), &ColliderDesc);
-			_obb_com = std::static_pointer_cast<Collider>(component);
-			_obb_com->NativeConstruct(&ColliderDesc);
-			_obb_com->UpdateCollider();
+			auto component = componentManager.CloneComponent(0, TEXT("Prototype_Collider_AABB"), &ColliderDesc);
+			_aabb_com = std::static_pointer_cast<Collider>(component);
+			_aabb_com->NativeConstruct(&ColliderDesc);
+			_aabb_com->UpdateCollider();
 		}
 	}
 }
@@ -72,16 +82,36 @@ auto MonsterAttackAState::Tick(const double timeDelta, std::shared_ptr<Monster> 
 {
 	if (_use_skill)
 	{
+
+		auto& dataReaderManager = DataReaderManager::GetInstance();
+
+		const auto transform = monster->GetTransform();
+		const auto kfm = dataReaderManager.FindAniKey(monster->GetMonsterInfo().monster_id());
+		const auto index = monster->GetStateIndex(_state);
+		const auto seq = kfm->seqs[index];
+
+
+		if (kfm)
+		{
+			auto p0 = seq->key[L"p0"];
+			const auto player = std::static_pointer_cast<Player>(ObjectManager::GetInstance().GetGameObjectPtr(kSceneGamePlay0, TEXT("Layer_Character"), 0));
+			if (player)
+			{
+				if (monster->GetAnimationTimeAcc() >= p0 && !_is_player_attack)
+				{
+					_is_player_attack = _aabb_com->CollisionAabb(player->GetCharacterColliderAabb());
+					Protocol::GameClientTakeDamage sendPkt;
+					
+					sendPkt.set_character_id(GameLogicQueue::GetInstance()->GetCharacterInfo().character_id());
+					sendPkt.set_monster_obj_id(monster->GetMonsterInfo().object_id());
+					SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+				}
+			}
+		}
 		if (_use_skill->movedistance > 0)
 		{
+			const auto endTime = seq->key[L"end"];
 
-			auto transform = monster->GetTransform();
-
-			auto kfm = DataReaderManager::GetInstance().FindAniKey(monster->GetMonsterInfo().monster_id());
-
-			auto index = monster->GetStateIndex(_state);
-			auto seq = kfm->seqs[index];
-			auto endTime = seq->key[L"end"];
 			transform->BackStraight(timeDelta + timeDelta * endTime, _use_skill->movedistance);
 
 			monster->GetMonsterColliderAabb()->UpdateCollider();
@@ -121,10 +151,6 @@ auto MonsterAttackAState::Tick(const double timeDelta, std::shared_ptr<Monster> 
 				transform->SetState(Transform::kState::kStatePosition, _targetPos);
 			}
 		}
-		if (_use_skill->attack.damage.count > 0)
-		{
-			_obb_com->UpdateCollider();
-		}
 	}
 }
 
@@ -133,6 +159,10 @@ auto MonsterAttackAState::LateTick(const double timeDelta, std::shared_ptr<Monst
 
 
 	monster->PlayAnimation(timeDelta);
+	if (_use_skill != nullptr)
+	{
+		_aabb_com->UpdateCollider();
+	}
 	auto kfm = DataReaderManager::GetInstance().FindAniKey(monster->GetMonsterInfo().monster_id());
 
 	auto index = monster->GetStateIndex(_state);
@@ -224,7 +254,34 @@ auto MonsterAttackAState::LateTick(const double timeDelta, std::shared_ptr<Monst
 
 auto MonsterAttackAState::Render(std::shared_ptr<Monster> monster) -> void
 {
-	_obb_com->RenderDebug();
+	auto& dataReaderManager = DataReaderManager::GetInstance();
+
+	_aabb_com->RenderDebug();
+
+	//TODO : 이펙트가 출력되는 시간.
+	/*if (const auto& motionEffect = dataReaderManager.FindMotionEffect(_use_skill))
+	{
+		if (motionEffect->type == DataReaderManager::kEffectType::kNif)
+		{
+			if (monster->GetAnimationTimeAcc() <= motionEffect->duration)
+			{
+			}
+		}
+	}
+	const auto& tarEffects = dataReaderManager.FindStrTagEffect(_use_skill);
+	if (!tarEffects.empty())
+	{
+		for (const auto& motion : tarEffects)
+		{
+			if (motion->type == DataReaderManager::kEffectType::kNif)
+			{
+				if (monster->GetAnimationTimeAcc() <= motion->duration)
+				{
+					_aabb_com->RenderDebug();
+				}
+			}
+		}
+	}*/
 }
 
 auto MonsterAttackAState::GetTargetPos() const -> _float3

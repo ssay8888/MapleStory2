@@ -25,6 +25,7 @@ public:
 	auto AddPrototype(const std::wstring& prototypeTag, const std::shared_ptr<GameObject>& prototype)->HRESULT;
 	auto AddGameObject(uint32_t levelIndex, const std::wstring& prototypeTag, const std::wstring& layerTag, void* arg = nullptr)->HRESULT;
 	auto AddGameObject(uint32_t levelIndex, const std::wstring& layerTag, std::shared_ptr<GameObject> gameObject)->HRESULT;
+	auto CreateGameObject(uint32_t levelIndex, const std::wstring& prototypeTag, void* arg = nullptr)->std::shared_ptr<GameObject>;
 
 	auto Tick(double timeDelta) const ->int32_t;
 	auto LateTick(double timeDelta) const ->int32_t;

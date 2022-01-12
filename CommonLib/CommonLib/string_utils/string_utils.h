@@ -10,6 +10,8 @@ public:
 
 	static auto ToLower(std::wstring& str)->void;
 	static auto ToUpper(std::wstring& str)->void;
+	static auto ToLower(std::string& str)->void;
+	static auto ToUpper(std::string& str)->void;
 
 	static auto Split(const std::string& str, const char delimiter)->std::vector<std::string>;
 	static auto Split(const std::wstring& str, const wchar_t delimiter)->std::vector<std::wstring>;

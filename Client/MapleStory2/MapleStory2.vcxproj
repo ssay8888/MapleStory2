@@ -184,7 +184,7 @@
     <ClInclude Include="src\game_object\effect\effect.h" />
     <ClInclude Include="src\game_object\equipped\equipped.h" />
     <ClInclude Include="src\game_object\fittingdoll\fittingdoll.h" />
-    <ClInclude Include="src\game_object\item\item.h" />
+    <ClInclude Include="src\game_object\item\Weapon.h" />
     <ClInclude Include="src\game_object\map\cube\map_object.h" />
     <ClInclude Include="src\game_object\map\map_instance.h" />
     <ClInclude Include="src\game_object\map\map_manager.h" />
@@ -198,6 +198,7 @@
     <ClInclude Include="src\game_object\monster\stats\monster_stats.h" />
     <ClInclude Include="src\game_object\pants\pants.h" />
     <ClInclude Include="src\game_object\player\player.h" />
+    <ClInclude Include="src\game_object\player\states\berserker_breakingskull_state\berserker_breakingskull_state.h" />
     <ClInclude Include="src\game_object\player\states\character_state.h" />
     <ClInclude Include="src\game_object\player\states\idle_state\idle_state.h" />
     <ClInclude Include="src\game_object\player\states\jump_state\jump_state.h" />
@@ -224,6 +225,7 @@
     <ClInclude Include="src\managers\characters_manager\character.h" />
     <ClInclude Include="src\managers\characters_manager\characters_manager.h" />
     <ClInclude Include="src\managers\character_stat\character_stat.h" />
+    <ClInclude Include="src\managers\weapon_manager\weapon_manager.h" />
     <ClInclude Include="src\network\game_server_packet_handler.h" />
     <ClInclude Include="src\network\login_server_packet_handler.h" />
     <ClInclude Include="src\network\send_manager.h" />
@@ -286,7 +288,7 @@
     <ClCompile Include="src\game_object\effect\effect.cpp" />
     <ClCompile Include="src\game_object\equipped\equipped.cpp" />
     <ClCompile Include="src\game_object\fittingdoll\fittingdoll.cpp" />
-    <ClCompile Include="src\game_object\item\item.cpp" />
+    <ClCompile Include="src\game_object\item\Weapon.cpp" />
     <ClCompile Include="src\game_object\map\cube\map_object.cpp" />
     <ClCompile Include="src\game_object\map\map_instance.cpp" />
     <ClCompile Include="src\game_object\map\map_manager.cpp" />
@@ -300,6 +302,7 @@
     <ClCompile Include="src\game_object\monster\stats\monster_stats.cpp" />
     <ClCompile Include="src\game_object\pants\pants.cpp" />
     <ClCompile Include="src\game_object\player\player.cpp" />
+    <ClCompile Include="src\game_object\player\states\berserker_breakingskull_state\berserker_breakingskull_state.cpp" />
     <ClCompile Include="src\game_object\player\states\character_state.cpp" />
     <ClCompile Include="src\game_object\player\states\idle_state\idle_state.cpp" />
     <ClCompile Include="src\game_object\player\states\jump_state\jump_state.cpp" />
@@ -326,6 +329,7 @@
     <ClCompile Include="src\managers\characters_manager\character.cpp" />
     <ClCompile Include="src\managers\characters_manager\characters_manager.cpp" />
     <ClCompile Include="src\managers\character_stat\character_stat.cpp" />
+    <ClCompile Include="src\managers\weapon_manager\weapon_manager.cpp" />
     <ClCompile Include="src\network\game_server_packet_handler.cpp" />
     <ClCompile Include="src\network\send_manager.cpp" />
     <ClCompile Include="src\network\login_server_packet_handler.cpp" />

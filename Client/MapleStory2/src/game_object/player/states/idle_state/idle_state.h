@@ -22,6 +22,7 @@ public:
 
 private:
 	bool	_is_move = false;
+	bool	_is_attack = false;
 	bool	_is_jump = false;
 };
 

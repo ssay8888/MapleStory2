@@ -23,6 +23,8 @@ public:
 	auto BroadCastAddCharacter(std::shared_ptr<MapInstance> mapInstance, GameSessionRef gameSession)->void;
 	auto RemoveCharacter(std::shared_ptr<MapInstance> mapInstance, int64_t characterId)->void;
 
+	auto TakeDamage(int64_t characterId, int64_t monsterObjectId, GameSessionRef gameSession)->void;
+
 private:
 	std::atomic<bool> _exit_loop;
 	

@@ -131,7 +131,7 @@ auto MapInstance::BroadCastAddCharacter(std::shared_ptr<GameSession> session) ->
 
 auto MapInstance::RespawnAllMonster(std::shared_ptr<GameSession> session)->void
 {
-	for (const auto& pair : _monsters)
+	for (const auto& pair : _spawn_point_monsters)
 	{
 		auto monster = pair.second;
 		Protocol::GameServerRespawnMonster sendPkt;
@@ -179,12 +179,12 @@ auto MapInstance::Respawn() -> void
 
 	for (const auto& regionPoint : _region_points)
 	{
-		const auto iterator = _monsters.find(regionPoint);
+		const auto iterator = _spawn_point_monsters.find(regionPoint);
 
-		if (iterator == _monsters.end())
+		if (iterator == _spawn_point_monsters.end())
 		{
 			auto monster = GameMonster::Create(regionPoint, std::static_pointer_cast<MapInstance>(shared_from_this()));
-			_monsters.emplace(regionPoint, monster);
+			_spawn_point_monsters.emplace(regionPoint, monster);
 			_entities.emplace(monster->GetObjectId(), monster);
 
 			Protocol::GameServerRespawnMonster sendPkt;
@@ -276,7 +276,17 @@ auto MapInstance::GetObjects() const -> std::vector<std::shared_ptr<MapXblock>>
 
 auto MapInstance::GetMonsters() -> std::map<std::shared_ptr<SpawnPoint>, std::shared_ptr<GameMonster>>&
 {
-	return _monsters;
+	return _spawn_point_monsters;
+}
+
+auto MapInstance::FindMonster(const int64_t objectId) const -> std::shared_ptr<GameMonster>
+{
+	const auto iterator = _entities.find(objectId);
+	if (iterator != _entities.end())
+	{
+		return std::static_pointer_cast<GameMonster>(iterator->second);
+	}
+	return nullptr;
 }
 
 auto MapInstance::FindRangeCellObject(const std::shared_ptr<Collider>& targetCollider)->std::vector<std::shared_ptr<MapXblock>>

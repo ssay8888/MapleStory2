@@ -4,6 +4,7 @@
 #include "data_reader/data_reader_manager.h"
 #include "src/game_job_queue/game_logic_queue.h"
 #include "src/game_object/equipped/equipped.h"
+#include "src/managers/weapon_manager/weapon_manager.h"
 #include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
 #include "src/utility/components/meshes/dynamic/animation/animation.h"
 #include "src/utility/components/renderer/renderer.h"
@@ -123,35 +124,38 @@ auto User::ChangeEqp(GameContents::kEquipeType type, int32_t itemId) -> void
 		componentTag.append(std::to_wstring(itemId)).append(L"_").append(std::to_wstring(_info.gender()));
 		if (auto component = std::static_pointer_cast<MeshDynamic>(CloneComponent(kSceneStatic, prototypeName, componentTag, nullptr)))
 		{
-			switch (type)
+			if (type != GameContents::kEquipeType::kWeapon)
 			{
-			case GameContents::kEquipeType::kPants:
-				_character_mesh_list[0]->ChangeSkinnedMesh(component, "PA_");
-				_eqp_list->AddItem(type, itemId);
-				break;
-			case GameContents::kEquipeType::kCoat:
-				_character_mesh_list[0]->ChangeSkinnedMesh(component, "CL_");
-				_eqp_list->AddItem(type, itemId);
-				break;
-			case GameContents::kEquipeType::kShoes:
-				_character_mesh_list[0]->ChangeSkinnedMesh(component, "SH_");
-				_eqp_list->AddItem(type, itemId);
-				break;
-			case GameContents::kEquipeType::kFace:
-			{
-				auto texture = DataReaderManager::GetInstance().FindFace(itemId);
-				_character_mesh_list[0]->ChangeFaceTexture(texture->diffuse_map[0]);
-				break;
-			}
-			default:
-				return;
-			}
-			_eqp_mesh.emplace(itemId, component);
+				switch (type)
+				{
+				case GameContents::kEquipeType::kPants:
+					_character_mesh_list[0]->ChangeSkinnedMesh(component, "PA_");
+					_eqp_list->AddItem(type, itemId);
+					break;
+				case GameContents::kEquipeType::kCoat:
+					_character_mesh_list[0]->ChangeSkinnedMesh(component, "CL_");
+					_eqp_list->AddItem(type, itemId);
+					break;
+				case GameContents::kEquipeType::kShoes:
+					_character_mesh_list[0]->ChangeSkinnedMesh(component, "SH_");
+					_eqp_list->AddItem(type, itemId);
+					break;
+				case GameContents::kEquipeType::kFace:
+				{
+					auto texture = DataReaderManager::GetInstance().FindFace(itemId);
+					_character_mesh_list[0]->ChangeFaceTexture(texture->diffuse_map[0]);
+					break;
+				}
+				default:
+					return;
+				}
+				_eqp_mesh.emplace(itemId, component);
 
-			const auto playerMesh = this->GetCurrentDynamicMesh();
-			const auto rootFrame = playerMesh.first->GetRootFrame();
-			int32_t index = 0;
-			component->TargetCombinedTransformationMatrices(component, playerMesh.first, component->GetRootFrame(), rootFrame, index);
+				const auto playerMesh = this->GetCurrentDynamicMesh();
+				const auto rootFrame = playerMesh.first->GetRootFrame();
+				int32_t index = 0;
+				component->TargetCombinedTransformationMatrices(component, playerMesh.first, component->GetRootFrame(), rootFrame, index);
+			}
 		}
 
 		switch (type)
@@ -161,6 +165,12 @@ auto User::ChangeEqp(GameContents::kEquipeType type, int32_t itemId) -> void
 			auto texture = DataReaderManager::GetInstance().FindFace(itemId);
 			_character_mesh_list[0]->ChangeFaceTexture(texture->diffuse_map[0]);
 			_eqp_list->AddItem(type, itemId);
+			break;
+		}
+		case GameContents::kEquipeType::kWeapon:
+		{
+			WeaponManager::GetInstance().RemoveWeapon(_info.character_id());
+			WeaponManager::GetInstance().AddWeapon(_info.character_id(), itemId, _transform_com);
 			break;
 		}
 		default:

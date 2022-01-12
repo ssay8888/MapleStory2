@@ -30,7 +30,6 @@ auto MonsterIdleState::Enter(std::shared_ptr<GameMonster> monster) -> void
 	}
 	Protocol::GameServerMoveMonster sendPkt;
 	sendPkt.set_object_id(monster->GetObjectId());
-	std::cout << "kIdleA " << monster->GetObjectId() << std::endl;
 	sendPkt.set_state(Protocol::kIdleA);
 
 	auto sendRight = sendPkt.mutable_right();
@@ -76,7 +75,7 @@ auto MonsterIdleState::Tick(const double timeDelta, std::shared_ptr<GameMonster>
 	}
 	
 	auto character = FindTargetCharacter(monster);
-	if (character != nullptr)
+	if (character != nullptr && monster->GetTargetCharacter() == nullptr)
 	{
 		monster->ChangeTargetCharacter(character);
 	}

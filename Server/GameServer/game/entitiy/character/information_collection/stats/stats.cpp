@@ -58,6 +58,11 @@ auto Stats::SetHp(const int32_t hp) -> void
 	_hp = hp;
 }
 
+auto Stats::GainHp(int32_t hp) -> void
+{
+	_hp += hp;
+}
+
 auto Stats::GetMaxHp() const -> int32_t
 {
 	return _max_hp;

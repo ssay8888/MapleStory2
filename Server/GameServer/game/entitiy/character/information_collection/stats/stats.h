@@ -21,6 +21,7 @@ public:
 
 	auto GetHp()const->int32_t;
 	auto SetHp(int32_t hp)->void;
+	auto GainHp(int32_t hp)->void;
 
 	auto GetMaxHp()const->int32_t;
 	auto SetMaxHp(int32_t maxHp)->void;

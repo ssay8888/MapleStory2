@@ -19,6 +19,10 @@ auto GameContents::EquipeType(const int32_t itemId) -> kEquipeType
 	{
 		return kEquipeType::kShoes;
 	}
+	else if (itemId >= 15000000 && itemId <= 15000999)
+	{
+		return kEquipeType::kWeapon;
+	}
 
 	return kEquipeType::kNull;
 }

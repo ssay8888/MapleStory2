@@ -9,7 +9,7 @@
 #include "src/common/xml/map_parser.h"
 #include "src/game_object/fittingdoll/fittingdoll.h"
 #include "src/game_object/coat/coat.h"
-#include "src/game_object/item/item.h"
+#include "src/game_object/item/Weapon.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
 #include "src/game_object/monster/monster.h"
@@ -104,7 +104,7 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Fittingdool"), Fittingdoll::Create(_graphic_device))))
 		return E_FAIL;
 
-	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Weapon"), Item::Create(_graphic_device))))
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Weapon"), Weapon::Create(_graphic_device))))
 		return E_FAIL;
 
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Coat"), Coat::Create(_graphic_device))))
@@ -195,7 +195,7 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 							std::wstring iconPath(TEXT("../../Binary/Resources/Image/item/icon/"));
 							iconPath.append(std::to_wstring(model.first)).append(L".png");
 
-							if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, iconPrototypeName, Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, iconPath))))
+							if (FAILED(componentManager.AddPrototype(kSceneStatic, iconPrototypeName, Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, iconPath))))
 							{
 								std::cout << "icon 이미지를 불러오기에 실패했습니다. item code : " << model.first << std::endl;
 							}
@@ -216,7 +216,7 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 							std::wstring iconPath(TEXT("../../Binary/Resources/Image/item/icon/"));
 							iconPath.append(std::to_wstring(model.first)).append(L".png");
 
-							if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, iconPrototypeName, Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, iconPath))))
+							if (FAILED(componentManager.AddPrototype(kSceneStatic, iconPrototypeName, Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, iconPath))))
 							{
 								std::cout << "icon 이미지를 불러오기에 실패했습니다. item code : " << model.first << std::endl;
 							}
@@ -336,8 +336,8 @@ auto Loading::LoadCharacterBeautyUi() -> HRESULT
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_BeautyList"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/ItemList.png")))))
 		return E_FAIL;
 
-	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Model/Item/1/14/"), TEXT("11400001_f_viking.x")))))
-		return E_FAIL;
+	//if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Mesh_Coat"), MeshDynamic::Create(_graphic_device, TEXT("../../Binary/Resources/Model/Weapon/1/14/"), TEXT("11400001_f_viking.x")))))
+	//	return E_FAIL;
 
 	//네임생성버튼
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_CreateName"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/CharacterSelectUi/BeautyUi/NameCreate.png")))))
