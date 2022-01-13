@@ -247,6 +247,30 @@ auto Player::GetBlockRangeAabb() const -> std::shared_ptr<Collider>
 	return _block_ragne_aabb_com;
 }
 
+auto Player::GetStartAttackTime() const -> uint64_t
+{
+	return _start_attack_time;
+}
+
+auto Player::IsStartAttackTime() const -> bool
+{
+	if (_start_attack_time + 5000 < GetTickCount64())
+	{
+		return true;
+	}
+	return false;
+}
+
+auto Player::SettingStartAttackTime() -> void
+{
+	_start_attack_time = GetTickCount64();
+}
+
+auto Player::ResetStartAttackTime() -> void
+{
+	_start_attack_time = 0;
+}
+
 auto Player::GetRadian() const -> float
 {
 	return _radian;
@@ -255,6 +279,16 @@ auto Player::GetRadian() const -> float
 auto Player::SetRadian(const float radian) -> void
 {
 	_radian = radian;
+}
+
+auto Player::GetCurrentAnimationType() const -> kAnimationType
+{
+	return static_cast<kAnimationType>(_current_mesh_num);
+}
+
+auto Player::GetAnimationTimeAcc() -> double
+{
+	return _character_mesh_list[0]->GetAnimation()->GetTimeAcc();
 }
 
 auto Player::ChangeEqp(const GameContents::kEquipeType type, int32_t itemId)->void

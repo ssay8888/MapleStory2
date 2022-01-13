@@ -42,8 +42,9 @@ public:
 	auto AddObjects(std::vector<MapManager::MapEntity> objects)->void;
 	auto GetObjects()const->std::vector<std::shared_ptr<MapXblock>>;
 
-	auto GetMonsters()->std::map<std::shared_ptr<SpawnPoint>, std::shared_ptr<GameMonster>>&;
+	auto GetMonsters() -> std::map<std::shared_ptr<SpawnPoint>, std::shared_ptr<GameMonster>>;
 	auto FindMonster(int64_t objectId)const->std::shared_ptr<GameMonster>;
+	auto RemoveMonster(int64_t objectId) -> void;
 	auto FindRangeCellObject(
 		const std::shared_ptr<Collider>& targetCollider) -> std::vector<std::shared_ptr<MapXblock>>;
 

@@ -39,6 +39,7 @@ public:
 	auto GetStateIndex(Protocol::kMonsterState state)->int32_t;
 	auto GetMonsterState(Protocol::kMonsterState state)->std::shared_ptr<MonsterState>;
 	auto GetCurrentState()const->std::shared_ptr<MonsterState>;
+	auto GetStat()const->std::shared_ptr<MonsterStats>;
 
 	auto PlayAnimation(double timeDelta)->void;
 

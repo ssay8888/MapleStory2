@@ -12,10 +12,11 @@ public:
 	auto GetComponentPtr(const std::wstring& componentTag, const uint32_t index)->std::shared_ptr<Component>;
 
 public:
-	HRESULT AddGameObject(const std::shared_ptr<GameObject>& gameObject);
+	auto AddGameObject(const std::shared_ptr<GameObject>& gameObject) -> HRESULT;
 	auto GetGameObject(uint32_t index)->std::shared_ptr<GameObject>;
-	int32_t Tick(double timeDelta);
-	int32_t LateTick(double timeDelta);
+	auto Tick(double timeDelta) -> int32_t;
+	auto LateTick(double timeDelta) -> int32_t;
+	auto RemoveAllDeadObject()->void;
 	auto Clear()->void;
 
 private:

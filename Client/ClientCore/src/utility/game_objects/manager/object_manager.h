@@ -29,6 +29,7 @@ public:
 
 	auto Tick(double timeDelta) const ->int32_t;
 	auto LateTick(double timeDelta) const ->int32_t;
+	auto DeadAllDeadRemove() ->void;
 	auto LayerClear(uint32_t levelIndex, const std::wstring& layerTag)->void;
 	auto Clear(uint32_t levelIndex) const ->void;
 

@@ -64,7 +64,7 @@
     <ClCompile Include="game\loader\loader.cpp">
       <Filter>game\loader</Filter>
     </ClCompile>
-    <ClCompile Include="game\entitiy\character\information_collection\stats\stats.cpp">
+    <ClCompile Include="game\entitiy\character\information_collection\stats\statistic.cpp">
       <Filter>game\entity\character\information_collection\stats</Filter>
     </ClCompile>
     <ClCompile Include="game\entitiy\character\information_collection\base_info.cpp">
@@ -126,6 +126,9 @@
     </ClCompile>
     <ClCompile Include="game\entitiy\monster\states\monster_attack_a_state\monster_attack_a_state.cpp">
       <Filter>game\entity\monster\states\monster_attack_a_state</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_handling\game_server_player_handler\game_server_player_handler.cpp">
+      <Filter>packet_handling\game_server_player_handler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +222,9 @@
     <Filter Include="game\entity\monster\states\monster_attack_a_state">
       <UniqueIdentifier>{786b7b73-b1ae-465a-af05-191872ef0800}</UniqueIdentifier>
     </Filter>
+    <Filter Include="packet_handling\game_server_player_handler">
+      <UniqueIdentifier>{5e8de27e-5142-41b2-861d-f8cde79feb05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_server_pch.h">
@@ -281,7 +287,7 @@
     <ClInclude Include="game\loader\loader.h">
       <Filter>game\loader</Filter>
     </ClInclude>
-    <ClInclude Include="game\entitiy\character\information_collection\stats\stats.h">
+    <ClInclude Include="game\entitiy\character\information_collection\stats\statistic.h">
       <Filter>game\entity\character\information_collection\stats</Filter>
     </ClInclude>
     <ClInclude Include="game\entitiy\character\information_collection\base_info.h">
@@ -346,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="game\entitiy\monster\states\monster_attack_a_state\monster_attack_a_state.h">
       <Filter>game\entity\monster\states\monster_attack_a_state</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_handling\game_server_player_handler\game_server_player_handler.h">
+      <Filter>packet_handling\game_server_player_handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

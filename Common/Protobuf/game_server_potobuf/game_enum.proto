@@ -44,3 +44,9 @@ enum kPlayerStatType
 	kMp = 1;
 	kExp = 2;
 }
+
+enum kMonsterStatType
+{
+	kMonsterHp = 0;
+	kMonsterMp = 1;
+}

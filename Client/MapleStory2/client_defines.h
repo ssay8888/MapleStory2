@@ -29,9 +29,13 @@ enum class kAnimationType
 	kJumpDown,
 	kJumpFall,
 	kAttackIdle,
-	kBreakingSkull1A,
-	kBreakingSkull2A,
-	kBreakingSkull3A,
+	kLargeSwordAttack1A,
+	kLargeSwordAttack2A,
+	kLargeSwordAttack3A,
+	kLargeSwordAttackIdle,
+	kLargeSwordRun,
+	kLargeSwordJumpUp,
+	kLargeSwordJumpDown
 };
 
 

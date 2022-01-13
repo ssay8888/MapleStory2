@@ -15,6 +15,7 @@
 #include "src/utility/pipe_line/pipe_line.h"
 #include "states/attack_a_state/monster_attack_a_state.h"
 #include "states/bore_state/monster_bore_state.h"
+#include "states/dead_state/monster_dead_state.h"
 #include "states/idle_state/monster_idle_state.h"
 #include "states/run_state/monster_run_state.h"
 #include "states/walk_state/monster_walk_state.h"
@@ -197,6 +198,11 @@ auto Monster::GetMonsterState(Protocol::kMonsterState state) -> std::shared_ptr<
 auto Monster::GetCurrentState() const -> std::shared_ptr<MonsterState>
 {
 	return _current_monster_state;
+}
+
+auto Monster::GetStat() const -> std::shared_ptr<MonsterStats>
+{
+	return _monster_stat;
 }
 
 auto Monster::PlayAnimation(const double timeDelta) -> void
@@ -400,6 +406,13 @@ auto Monster::AnimationLoad() -> int32_t
 			_monster_states.emplace(animation.first, MakeShared<MonsterRunState>());
 			_state_index.emplace(Protocol::kMonsterState::kRunA, animation.first);
 			_animaion_index.emplace(Protocol::kMonsterState::kRunA, index++);
+			_mesh_list.emplace(animation.first, mesh);
+		}
+		else if (Seq->name.find(L"Dead_A") != std::wstring::npos)
+		{
+			_monster_states.emplace(animation.first, MakeShared<MonsterDeadState>());
+			_state_index.emplace(Protocol::kMonsterState::kDeadA, animation.first);
+			_animaion_index.emplace(Protocol::kMonsterState::kDeadA, index++);
 			_mesh_list.emplace(animation.first, mesh);
 		}
 		else if (Seq->name.find(L"Attack_Idle_A") != std::wstring::npos)

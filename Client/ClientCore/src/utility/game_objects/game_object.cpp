@@ -6,7 +6,8 @@
 #include "src/utility/pipe_line/pipe_line.h"
 
 GameObject::GameObject(const ComPtr<IDirect3DDevice9>& device):
-	_graphic_device(device)
+	_graphic_device(device),
+	_is_dead(false)
 {
 }
 
@@ -65,6 +66,16 @@ auto GameObject::LateTick(double timeDelta) -> int32_t
 auto GameObject::Render() -> HRESULT
 {
 	return S_OK;
+}
+
+auto GameObject::IsDead() const -> bool
+{
+	return _is_dead;
+}
+
+auto GameObject::SetDead(const bool dead) -> bool
+{
+	return _is_dead = dead;
 }
 
 void GameObject::ComputeCameraDistance(const std::shared_ptr<Transform>& transform)

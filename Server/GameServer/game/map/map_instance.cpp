@@ -274,7 +274,7 @@ auto MapInstance::GetObjects() const -> std::vector<std::shared_ptr<MapXblock>>
 	return _objects;
 }
 
-auto MapInstance::GetMonsters() -> std::map<std::shared_ptr<SpawnPoint>, std::shared_ptr<GameMonster>>&
+auto MapInstance::GetMonsters() -> std::map<std::shared_ptr<SpawnPoint>, std::shared_ptr<GameMonster>>
 {
 	return _spawn_point_monsters;
 }
@@ -287,6 +287,13 @@ auto MapInstance::FindMonster(const int64_t objectId) const -> std::shared_ptr<G
 		return std::static_pointer_cast<GameMonster>(iterator->second);
 	}
 	return nullptr;
+}
+
+auto MapInstance::RemoveMonster(const int64_t objectId) -> void
+{
+	auto monster = FindMonster(objectId);
+	_spawn_point_monsters.erase(monster->GetSpawnPoint());
+	_entities.erase(objectId);
 }
 
 auto MapInstance::FindRangeCellObject(const std::shared_ptr<Collider>& targetCollider)->std::vector<std::shared_ptr<MapXblock>>

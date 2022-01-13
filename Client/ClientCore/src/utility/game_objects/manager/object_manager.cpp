@@ -165,6 +165,17 @@ auto ObjectManager::LateTick(const double timeDelta) const -> int32_t
 	return S_OK;
 }
 
+auto ObjectManager::DeadAllDeadRemove() -> void
+{
+	for (uint32_t i = 0; i < _num_level; ++i)
+	{
+		for (const auto& [layerTag, objectPtr] : _layers[i])
+		{
+			objectPtr->RemoveAllDeadObject();
+		}
+	}
+}
+
 auto ObjectManager::LayerClear(uint32_t levelIndex, const std::wstring& layerTag)->void
 {
 	auto iter = _layers[levelIndex].find(layerTag);

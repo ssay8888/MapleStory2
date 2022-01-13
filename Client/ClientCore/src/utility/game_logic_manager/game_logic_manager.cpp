@@ -52,3 +52,8 @@ auto GameLogicManager::LateTick(const double timeDelta) -> int32_t
 	const int32_t progress = ObjectManager::GetInstance().LateTick(timeDelta);
 	return progress;
 }
+
+auto GameLogicManager::DeadRemove() -> void
+{
+	ObjectManager::GetInstance().DeadAllDeadRemove();
+}

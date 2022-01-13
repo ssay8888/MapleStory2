@@ -38,3 +38,11 @@ auto GameClientPacketHandler::HandleGameClientTakeDamage(PacketSessionRef& sessi
 	GameTick::GetInstance()->DoAsync(&GameTick::TakeDamage, pkt.character_id(), pkt.monster_obj_id(), gameSession);
 	return true;
 }
+
+auto GameClientPacketHandler::HandleGameClientAttackMonster(PacketSessionRef& session,
+	Protocol::GameClientAttackMonster& pkt) -> bool
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	GameTick::GetInstance()->DoAsync(&GameTick::AttackMonster, pkt, gameSession);
+	return true;
+}

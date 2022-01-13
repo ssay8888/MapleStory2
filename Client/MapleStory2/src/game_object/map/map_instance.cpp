@@ -2,6 +2,7 @@
 #include "map_instance.h"
 
 #include "cube/map_object.h"
+#include "src/game_object/monster/monster.h"
 #include "src/utility/components/collider/collider.h"
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/shader/shader.h"
@@ -92,6 +93,39 @@ auto MapInstance::SetUpConstantTable(const std::shared_ptr<Transform> transformC
 	const auto camPos = _float4(pipeline.GetCamPosition(), 1.f);
 	result = _shader_com->SetUpConstantTable("g_vCamPosition", &camPos, sizeof(_float4));
 	return S_OK;
+}
+
+auto MapInstance::AddMonster(int64_t objectId, std::shared_ptr<Monster> monster) -> void
+{
+	_monsters.emplace(objectId, monster);
+}
+
+auto MapInstance::RemoveMonster(const int64_t objectId) -> void
+{
+	_monsters.erase(objectId);
+}
+
+auto MapInstance::FindMonster(const int64_t objectId) -> std::shared_ptr<Monster>
+{
+	auto iterator = _monsters.find(objectId);
+	if (iterator != _monsters.end())
+	{
+		return iterator->second;
+	}
+	return nullptr;
+}
+
+auto MapInstance::CollisionMonsters(const std::shared_ptr<Collider> collider) -> std::vector<std::shared_ptr<Monster>>
+{
+	std::vector<std::shared_ptr<Monster>> monsters;
+	for (const auto& monster : _monsters)
+	{
+		if (monster.second->GetMonsterColliderAabb()->CollisionAabb(collider))
+		{
+			monsters.push_back(monster.second);
+		}
+	}
+	return monsters;
 }
 
 auto MapInstance::FindRangeCellObject(const std::shared_ptr<Collider>& targetCollider)->std::vector<std::shared_ptr<MapObject>>

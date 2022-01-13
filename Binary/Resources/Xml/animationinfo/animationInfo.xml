@@ -6,7 +6,11 @@
     <model animation_name="jump_up_a" targetnode="Weapon_Back_R_Point" />
     <model animation_name="jump_fall_a" targetnode="Weapon_Back_R_Point" />
     <model animation_name="objectweapon_typea_attack_idle_a" targetnode="Weapon_Hand_R_Point" />
-    <model animation_name="berserker_breakingskull_01_a" targetnode="Weapon_Hand_R_Point" />
-    <model animation_name="berserker_breakingskull_02_a" targetnode="Weapon_Hand_R_Point" />
-    <model animation_name="berserker_breakingskull_03_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="largesword_attack_01_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="largesword_attack_02_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="largesword_attack_03_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="largesword_attack_idle_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="largesword_run_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="sword_jump_up_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="sword_jump_down_a" targetnode="Weapon_Hand_R_Point" />
 </ms2>

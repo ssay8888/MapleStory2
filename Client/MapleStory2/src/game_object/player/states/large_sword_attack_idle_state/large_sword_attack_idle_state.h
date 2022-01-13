@@ -1,20 +1,16 @@
 #pragma once
 #include "src/game_object/player/states/character_state.h"
 
-class MapObject;
-
-class BerserkerBreakingSkullState final : public CharacterState
+class LargeSwordAttackIdleState : public CharacterState
 {
 public:
-	~BerserkerBreakingSkullState() override = default;
-
-	static auto GetInstance()->std::shared_ptr<BerserkerBreakingSkullState>
+	~LargeSwordAttackIdleState() override = default;
+	static auto GetInstance()->std::shared_ptr<LargeSwordAttackIdleState>
 	{
-		static auto instance = std::make_shared<BerserkerBreakingSkullState>();
+		static auto instance = std::make_shared<LargeSwordAttackIdleState>();
 		return instance;
 	}
 
-public:
 	auto Enter() -> void override;
 	auto HandleInput() -> void override;
 	auto Tick(const double timeDelta) -> void override;
@@ -22,6 +18,8 @@ public:
 	auto Render() -> void override;
 
 private:
-
+	bool _is_move = false;
+	bool _is_attack = false;
+	bool _is_jump = false;
 };
 

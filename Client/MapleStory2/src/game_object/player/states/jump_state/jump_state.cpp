@@ -17,8 +17,8 @@ auto JumpState::Enter() -> void
 	timerManager.AddTimers(L"JumpTimerUp");
 	timerManager.ComputeTimeDelta(L"JumpTimerUp");
 	timerManager.ResetTime(TEXT("JumpTimerUp"));
-	_player->ChangeAnimation(kAnimationType::kJumpUp);
-	_is_jump_up = false;
+	_player->ChangeAnimation(_player->IsStartAttackTime() ? kAnimationType::kJumpUp : kAnimationType::kLargeSwordJumpUp);
+	_is_jump_up = true;
 	_is_jump_down = false;
 }
 
@@ -92,7 +92,7 @@ auto JumpState::Tick(const double timeDelta) -> void
 		{
 			_is_jump_up = false;
 			_is_jump_down = true;
-			_player->ChangeAnimation(kAnimationType::kJumpDown);
+			_player->ChangeAnimation(_player->IsStartAttackTime() ? kAnimationType::kJumpDown : kAnimationType::kLargeSwordJumpDown);
 			timerManager.ResetTime(TEXT("JumpTimerUp"));
 		}
 		else
@@ -158,11 +158,11 @@ auto JumpState::LateTick(const double timeDelta) -> void
 		Protocol::GameClientMovePlayer sendPkt;
 		if (_is_jump_up)
 		{
-			sendPkt.set_state(static_cast<int32_t>(kAnimationType::kJumpUp));
+			sendPkt.set_state(static_cast<int32_t>(_player->IsStartAttackTime() ? kAnimationType::kJumpUp : kAnimationType::kLargeSwordJumpUp));
 		}
 		else
 		{
-			sendPkt.set_state(static_cast<int32_t>(kAnimationType::kJumpDown));
+			sendPkt.set_state(static_cast<int32_t>(_player->IsStartAttackTime() ? kAnimationType::kJumpDown : kAnimationType::kLargeSwordJumpDown));
 		}
 		sendPkt.set_radian(_player->GetRadian());
 		const auto playerPos = transform->GetState(Transform::kState::kStatePosition);

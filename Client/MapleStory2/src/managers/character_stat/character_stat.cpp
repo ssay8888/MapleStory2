@@ -12,7 +12,6 @@ auto CharacterStat::NativeConstruct() -> HRESULT
 {
 	const auto gameLogicManager = GameLogicQueue::GetInstance();
 	const auto characterInfo = gameLogicManager->GetCharacterInfo();
-
 	_str = characterInfo.str();
 	_dex = characterInfo.dex();
 	_int = characterInfo.int_();

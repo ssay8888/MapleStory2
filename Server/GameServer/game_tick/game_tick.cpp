@@ -3,13 +3,14 @@
 
 #include "game/entitiy/character/game_character.h"
 #include "game/entitiy/character/information_collection/base_info.h"
-#include "game/entitiy/character/information_collection/stats/stats.h"
+#include "game/entitiy/character/information_collection/stats/Statistic.h"
 #include "game/entitiy/monster/game_monster.h"
 #include "game/map/map_instance.h"
 #include "game/map/map_manager.h"
 #include "game_session/game_session_manager.h"
 #include "managers/character_info_manager/character_info_storage.h"
 #include "managers/character_info_manager/character_info_storage_manager.h"
+#include "packet_handling/game_server_player_handler/game_server_player_handler.h"
 #include "src/thread/thread_manager.h"
 #include "src/utility/timers/timer_manager.h"
 
@@ -83,35 +84,10 @@ auto GameTick::RemoveCharacter(std::shared_ptr<MapInstance> mapInstance, int64_t
 
 auto GameTick::TakeDamage(int64_t characterId, int64_t monsterObjectId, GameSessionRef gameSession)->void
 {
+	GameServerPlayerHandler::TakeDamage(characterId, monsterObjectId, gameSession);
+}
 
-	if (gameSession->GetPlayer() == nullptr || gameSession->GetPlayer()->GetCharacterId() != characterId)
-	{
-		return;
-	}
-	auto player = gameSession->GetPlayer();
-	
-	const auto mapInstance = MapManager::GetInstance().FindMapInstance(player->GetMapId());
-
-	if (mapInstance != nullptr)
-	{
-		const auto monster = mapInstance->FindMonster(monsterObjectId);
-		if (monster)
-		{
-			const auto playerStat = std::static_pointer_cast<Stats>(CharacterInfoStorageManager::GetInstance().FindInfo(CharacterInfoStorage::kInfoTypes::kStats, characterId));
-			if (playerStat)
-			{
-				playerStat->GainHp(-5);
-				Protocol::GameServerTakeDamage sendPkt;
-				sendPkt.set_character_id(characterId);
-				sendPkt.set_damage(5);
-				mapInstance->BroadCastMessage(sendPkt, nullptr);
-
-				Protocol::GameServerUpdateStat sendStatPkt;
-				sendStatPkt.set_type(Protocol::kHp);
-				sendStatPkt.set_value(playerStat->GetHp());
-				gameSession->Send(GameClientPacketHandler::MakeSendBuffer(sendStatPkt));
-			}
-		}
-	}
-
+auto GameTick::AttackMonster(Protocol::GameClientAttackMonster pkt, GameSessionRef gameSession)->void
+{
+	GameServerPlayerHandler::AttackMonster(pkt, gameSession);
 }

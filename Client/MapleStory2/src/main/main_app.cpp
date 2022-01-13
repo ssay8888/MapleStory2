@@ -68,7 +68,7 @@ auto MainApp::Tick(const double timeDelta) -> int32_t
 	Picking::GetInstance().ComputeMouseCursorPosInWorld(g_Wnd);
 
 	GameLogicManager::LateTick(timeDelta);
-
+	GameLogicManager::DeadRemove();
 	LEndTickCount = GetTickCount64() + workerTick;
 	ThreadManager::DoGlobalQueueWork();
 	return int32_t();

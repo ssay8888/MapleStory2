@@ -55,6 +55,19 @@ int32_t Layer::LateTick(const double timeDelta)
 	return S_OK;
 }
 
+auto Layer::RemoveAllDeadObject() -> void
+{
+	for (auto iterator = _objects.begin(); iterator != _objects.end();)
+	{
+		if ((*iterator)->IsDead())
+		{
+			iterator = _objects.erase(iterator);
+			continue;
+		}
+		++iterator;
+	}
+}
+
 auto Layer::Clear() -> void
 {
 	_objects.clear();

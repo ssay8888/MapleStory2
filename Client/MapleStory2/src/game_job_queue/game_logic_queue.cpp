@@ -1,10 +1,13 @@
 #include "c_pch.h"
 #include "game_logic_queue.h"
 
+#include "src/game_object/map/map_instance.h"
+#include "src/game_object/map/map_manager.h"
 #include "src/game_object/monster/monster.h"
 #include "src/game_object/monster/states/attack_a_state/monster_attack_a_state.h"
 #include "src/game_object/monster/states/run_state/monster_run_state.h"
 #include "src/game_object/monster/states/walk_state/monster_walk_state.h"
+#include "src/game_object/monster/stats/monster_stats.h"
 #include "src/game_object/player/player.h"
 #include "src/game_object/user/user.h"
 #include "src/managers/character_stat/character_stat.h"
@@ -62,6 +65,16 @@ auto GameLogicQueue::RespawnMonster(PacketSessionRef session, Protocol::GameServ
 	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_Mesh_Monster"), LayerTag, &pkt)))
 	{
 		GetInstance()->DoAsync(&GameLogicQueue::RespawnMonster, session, pkt);
+	}
+	else
+	{
+		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+		{
+			if (const auto monster = std::static_pointer_cast<Monster>(objectManager.GetGameObjectPtr(kSceneGamePlay0, LayerTag, 0)))
+			{
+				mapInstance->AddMonster(pkt.object_id(), monster);
+			}
+		}
 	}
 }
 
@@ -187,6 +200,34 @@ auto GameLogicQueue::UpdateStat(PacketSessionRef session, Protocol::GameServerUp
 		CharacterStat::GetInstance().SetExp(pkt.value());
 		break;
 	default:;
+	}
+}
+
+auto GameLogicQueue::UpdateMonsterStat(PacketSessionRef session, Protocol::GameServerMonsterStatUpdate pkt) -> void
+{
+	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+	{
+		const auto monster = mapInstance->FindMonster(pkt.monster_obj_id());
+
+		switch (pkt.type())
+		{
+		case Protocol::kMonsterHp:
+			monster->GetStat()->SetHp(pkt.value());
+			break;
+		case Protocol::kMonsterMp:
+			break;
+		default:;
+		}
+	}
+}
+
+auto GameLogicQueue::KillMonster(PacketSessionRef session, Protocol::GameServerKillMonster pkt) -> void
+{
+	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+	{
+		auto monster =	mapInstance->FindMonster(pkt.monster_obj_id());
+		monster->GetStat()->SetHp(0);
+		monster->ChangeAnimation(Protocol::kDeadA);
 	}
 }
 

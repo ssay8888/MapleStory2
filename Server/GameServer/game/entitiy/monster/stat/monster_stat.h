@@ -14,6 +14,8 @@ public:
 
 	auto SkillToUse(float distance)->std::shared_ptr<DataReaderManager::Skill>;
 
+	auto IsDead()const->bool;
+
 public:
 	static auto Create(int32_t monsterId)->std::shared_ptr<MonsterStat>;
 
@@ -27,5 +29,6 @@ private:
 	std::vector<std::pair<int32_t, int32_t>> _skills;
 	std::vector<std::shared_ptr<DataReaderManager::Skill>>	_skill_info;
 
+	bool _is_dead;
 };
 

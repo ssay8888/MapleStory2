@@ -1,6 +1,8 @@
 #pragma once
 #include <tbb/concurrent_queue.h>
 
+#include "protocol/game_protocol.pb.h"
+
 class MapInstance;
 
 class GameTick : public std::enable_shared_from_this<GameTick>
@@ -24,6 +26,7 @@ public:
 	auto RemoveCharacter(std::shared_ptr<MapInstance> mapInstance, int64_t characterId)->void;
 
 	auto TakeDamage(int64_t characterId, int64_t monsterObjectId, GameSessionRef gameSession)->void;
+	auto AttackMonster(Protocol::GameClientAttackMonster pkt, GameSessionRef gameSession)->void;
 
 private:
 	std::atomic<bool> _exit_loop;

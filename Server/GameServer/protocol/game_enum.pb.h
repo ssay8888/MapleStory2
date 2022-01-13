@@ -176,6 +176,31 @@ inline bool kPlayerStatType_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kPlayerStatType>(
     kPlayerStatType_descriptor(), name, value);
 }
+enum kMonsterStatType : int {
+  kMonsterHp = 0,
+  kMonsterMp = 1,
+  kMonsterStatType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  kMonsterStatType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool kMonsterStatType_IsValid(int value);
+constexpr kMonsterStatType kMonsterStatType_MIN = kMonsterHp;
+constexpr kMonsterStatType kMonsterStatType_MAX = kMonsterMp;
+constexpr int kMonsterStatType_ARRAYSIZE = kMonsterStatType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kMonsterStatType_descriptor();
+template<typename T>
+inline const std::string& kMonsterStatType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, kMonsterStatType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function kMonsterStatType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    kMonsterStatType_descriptor(), enum_t_value);
+}
+inline bool kMonsterStatType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, kMonsterStatType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kMonsterStatType>(
+    kMonsterStatType_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -217,6 +242,11 @@ template <> struct is_proto_enum< ::Protocol::kPlayerStatType> : ::std::true_typ
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kPlayerStatType>() {
   return ::Protocol::kPlayerStatType_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::kMonsterStatType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kMonsterStatType>() {
+  return ::Protocol::kMonsterStatType_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

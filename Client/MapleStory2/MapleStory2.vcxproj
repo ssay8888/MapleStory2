@@ -135,6 +135,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LargeAddressAware>true</LargeAddressAware>
     </Link>
     <FxCompile>
       <ShaderType>Effect</ShaderType>
@@ -191,6 +192,7 @@
     <ClInclude Include="src\game_object\monster\monster.h" />
     <ClInclude Include="src\game_object\monster\states\attack_a_state\monster_attack_a_state.h" />
     <ClInclude Include="src\game_object\monster\states\bore_state\monster_bore_state.h" />
+    <ClInclude Include="src\game_object\monster\states\dead_state\monster_dead_state.h" />
     <ClInclude Include="src\game_object\monster\states\idle_state\monster_idle_state.h" />
     <ClInclude Include="src\game_object\monster\states\monster_state.h" />
     <ClInclude Include="src\game_object\monster\states\run_state\monster_run_state.h" />
@@ -198,10 +200,12 @@
     <ClInclude Include="src\game_object\monster\stats\monster_stats.h" />
     <ClInclude Include="src\game_object\pants\pants.h" />
     <ClInclude Include="src\game_object\player\player.h" />
-    <ClInclude Include="src\game_object\player\states\berserker_breakingskull_state\berserker_breakingskull_state.h" />
     <ClInclude Include="src\game_object\player\states\character_state.h" />
     <ClInclude Include="src\game_object\player\states\idle_state\idle_state.h" />
     <ClInclude Include="src\game_object\player\states\jump_state\jump_state.h" />
+    <ClInclude Include="src\game_object\player\states\large_sword_attack_idle_state\large_sword_attack_idle_state.h" />
+    <ClInclude Include="src\game_object\player\states\large_sword_attack_run_state\large_sword_attack_run_state.h" />
+    <ClInclude Include="src\game_object\player\states\large_sword_attack_state\large_sword_attack_state.h" />
     <ClInclude Include="src\game_object\player\states\move_state\move_state.h" />
     <ClInclude Include="src\game_object\sky\sky.h" />
     <ClInclude Include="src\game_object\terrain\terrain.h" />
@@ -295,6 +299,7 @@
     <ClCompile Include="src\game_object\monster\monster.cpp" />
     <ClCompile Include="src\game_object\monster\states\attack_a_state\monster_attack_a_state.cpp" />
     <ClCompile Include="src\game_object\monster\states\bore_state\monster_bore_state.cpp" />
+    <ClCompile Include="src\game_object\monster\states\dead_state\monster_dead_state.cpp" />
     <ClCompile Include="src\game_object\monster\states\idle_state\monster_idle_state.cpp" />
     <ClCompile Include="src\game_object\monster\states\monster_state.cpp" />
     <ClCompile Include="src\game_object\monster\states\run_state\monster_run_state.cpp" />
@@ -302,10 +307,12 @@
     <ClCompile Include="src\game_object\monster\stats\monster_stats.cpp" />
     <ClCompile Include="src\game_object\pants\pants.cpp" />
     <ClCompile Include="src\game_object\player\player.cpp" />
-    <ClCompile Include="src\game_object\player\states\berserker_breakingskull_state\berserker_breakingskull_state.cpp" />
     <ClCompile Include="src\game_object\player\states\character_state.cpp" />
     <ClCompile Include="src\game_object\player\states\idle_state\idle_state.cpp" />
     <ClCompile Include="src\game_object\player\states\jump_state\jump_state.cpp" />
+    <ClCompile Include="src\game_object\player\states\large_sword_attack_idle_state\large_sword_attack_idle_state.cpp" />
+    <ClCompile Include="src\game_object\player\states\large_sword_attack_run_state\large_sword_attack_run_state.cpp" />
+    <ClCompile Include="src\game_object\player\states\large_sword_attack_state\large_sword_attack_state.cpp" />
     <ClCompile Include="src\game_object\player\states\move_state\move_state.cpp" />
     <ClCompile Include="src\game_object\sky\sky.cpp" />
     <ClCompile Include="src\game_object\terrain\terrain.cpp" />

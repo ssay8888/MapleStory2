@@ -27,6 +27,7 @@ auto DataReaderManager::Init(const Microsoft::WRL::ComPtr<IDirect3DDevice9> devi
 	LoadFieldData();
 	LoadMonsterInfo();
 	LoadAniKeyText();
+	LoadAniKeyPlayerText();
 	LoadSkillData();
 	LoadMotionEffect();
 	LoadTagEffect();
@@ -497,10 +498,54 @@ auto DataReaderManager::LoadAniKeyText() -> void
 	}
 }
 
+auto DataReaderManager::LoadAniKeyPlayerText() -> void
+{
+
+	xml_document doc;
+	const auto err = doc.load_file("../../Binary/Resources/xml/anikeytext.xml");
+
+	if (err.status == status_ok)
+	{
+		const auto kfmNode = doc.select_nodes("ms2ani/kfm");
+		for (auto kfm : kfmNode)
+		{
+			auto name = StringUtils::ConvertCtoW(kfm.node().attribute("name").value());
+			if (name == L"male" || name == L"female")
+			{
+				auto kfmObject = std::make_shared<Kfm>();
+				kfmObject->name = StringUtils::ConvertCtoW(kfm.node().attribute("name").value());
+				for (auto seqNode : kfm.node())
+				{
+					int key = std::stoi(seqNode.attribute("id").value());
+					auto seq = std::make_shared<Seq>();
+					seq->name = StringUtils::ConvertCtoW(seqNode.attribute("name").value());
+					kfmObject->seqs.emplace(key, seq);
+					for (auto keyNode : seqNode)
+					{
+						kfmObject->seqs[key]->key.emplace(StringUtils::ConvertCtoW(keyNode.attribute("name").value()),
+							std::stof(keyNode.attribute("time").value()));
+					}
+				}
+				_ani_key_player.emplace(name == L"male" ? 0 : 1, kfmObject);
+			}
+		}
+	}
+}
+
 auto DataReaderManager::FindAniKey(const int32_t npcId) -> std::shared_ptr<Kfm>
 {
 	const auto iterator = _ani_key.find(npcId);
 	if (iterator != _ani_key.end())
+	{
+		return iterator->second;
+	}
+	return nullptr;
+}
+
+auto DataReaderManager::FindPlayerAniKey(const int32_t gender) -> std::shared_ptr<Kfm>
+{
+	const auto iterator = _ani_key_player.find(gender);
+	if (iterator != _ani_key_player.end())
 	{
 		return iterator->second;
 	}

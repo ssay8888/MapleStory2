@@ -4,7 +4,7 @@
 #include "game/map/map_instance.h"
 #include "game/map/map_manager.h"
 #include "information_collection/inventorys/inventorys.h"
-#include "information_collection/stats/stats.h"
+#include "information_collection/stats/Statistic.h"
 #include "managers/character_info_manager/character_info_storage_manager.h"
 #include "src/database/db_connection_pool.h"
 #include "src/database/db_bind.h"
@@ -126,7 +126,7 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 
 		if (bind.Execute())
 		{
-			const std::shared_ptr<Stats> stats = Stats::Create(_character_id);
+			const std::shared_ptr<Statistic> stats = Statistic::Create(_character_id);
 			const std::shared_ptr<Inventorys> inventory = Inventorys::Create(_character_id);
 			do
 			{

@@ -23,6 +23,10 @@ public:
 public:
 	virtual auto Clone(void* arg = nullptr)->std::shared_ptr<GameObject> = 0;
 
+public:
+	auto IsDead()const->bool;
+	auto SetDead(bool dead)->bool;
+
 protected:
 	void ComputeCameraDistance(const std::shared_ptr<Transform>& transform);
 	void ComputeViewZ(const std::shared_ptr<Transform>& transform);
@@ -37,8 +41,8 @@ protected:
 protected:
 	std::map<std::wstring, std::shared_ptr<Component>> _components;
 	typedef std::map<std::wstring, std::shared_ptr<Component>> Components;
-;
 
+	bool _is_dead;
 
 };
 

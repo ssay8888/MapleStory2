@@ -15,6 +15,7 @@
 #include <iostream>
 #include <chrono>
 using namespace std::chrono_literals;
+#include <fmt/xchar.h>
 
 
 #include "engine_pch.h"

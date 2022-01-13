@@ -1,10 +1,10 @@
 #pragma once
 #include "game/entitiy/character/information_collection/base_info.h"
 
-class Stats : public BaseInfo
+class Statistic final : public BaseInfo
 {
 public:
-	explicit Stats(int64_t characterId);
+	explicit Statistic(int64_t characterId);
 
 public:
 	auto GetStr()const->int32_t;
@@ -36,10 +36,11 @@ public:
 	auto SetLevel(int32_t level)->void;
 
 	auto GetExp()const->int32_t;
+	auto GainExp(int32_t exp)->void;
 	auto SetExp(int32_t exp)->void;
 
 public:
-	static auto Create(int64_t characterId)->std::shared_ptr<Stats>;
+	static auto Create(int64_t characterId)->std::shared_ptr<Statistic>;
 
 private:
 	auto NativeConstruct()->HRESULT;

@@ -18,7 +18,7 @@
 PROTOBUF_PRAGMA_INIT_SEG
 namespace Protocol {
 }  // namespace Protocol
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_game_5fenum_2eproto[4];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_game_5fenum_2eproto[5];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_game_5fenum_2eproto = nullptr;
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fenum_2eproto::offsets[1] = {};
 static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = nullptr;
@@ -37,11 +37,12 @@ const char descriptor_table_protodef_game_5fenum_2eproto[] PROTOBUF_SECTION_VARI
   "ack3B\020\014\022\r\n\tkAttack1C\020\r\022\r\n\tkAttack2C\020\016\022\r\n"
   "\tkAttack3C\020\017\022\n\n\006kDamgA\020\020\022\n\n\006kDamgB\020\021\022\n\n\006"
   "kDamgC\020\022*-\n\017kPlayerStatType\022\007\n\003kHp\020\000\022\007\n\003"
-  "kMp\020\001\022\010\n\004kExp\020\002b\006proto3"
+  "kMp\020\001\022\010\n\004kExp\020\002*2\n\020kMonsterStatType\022\016\n\nk"
+  "MonsterHp\020\000\022\016\n\nkMonsterMp\020\001b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fenum_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fenum_2eproto = {
-  false, false, 503, descriptor_table_protodef_game_5fenum_2eproto, "game_enum.proto", 
+  false, false, 555, descriptor_table_protodef_game_5fenum_2eproto, "game_enum.proto", 
   &descriptor_table_game_5fenum_2eproto_once, nullptr, 0, 0,
   schemas, file_default_instances, TableStruct_game_5fenum_2eproto::offsets,
   nullptr, file_level_enum_descriptors_game_5fenum_2eproto, file_level_service_descriptors_game_5fenum_2eproto,
@@ -123,6 +124,20 @@ bool kPlayerStatType_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kMonsterStatType_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_game_5fenum_2eproto);
+  return file_level_enum_descriptors_game_5fenum_2eproto[4];
+}
+bool kMonsterStatType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
       return true;
     default:
       return false;

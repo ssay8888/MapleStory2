@@ -3,7 +3,7 @@
 
 #include "src/game_object/map/cube/map_object.h"
 #include "src/game_object/player/player.h"
-#include "src/game_object/player/states/berserker_breakingskull_state/berserker_breakingskull_state.h"
+#include "src/game_object/player/states/large_sword_attack_state/large_sword_attack_state.h"
 #include "src/game_object/player/states/jump_state/jump_state.h"
 #include "src/game_object/player/states/move_state/move_state.h"
 #include "src/network/game_server_packet_handler.h"
@@ -80,7 +80,7 @@ auto IdleState::LateTick(const double timeDelta) -> void
 	_player->PlayAnimation(timeDelta);
 	if (_is_attack)
 	{
-		_player->ChangeCharacterState(BerserkerBreakingSkullState::GetInstance());
+		_player->ChangeCharacterState(LargeSwordAttackState::GetInstance());
 		return;
 	}
 	if (_is_move)

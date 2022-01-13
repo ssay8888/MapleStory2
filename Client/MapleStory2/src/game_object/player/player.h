@@ -40,8 +40,17 @@ public:
 	auto GetReloadRangeAabb()const->std::vector<std::shared_ptr<Collider>>;
 	auto GetBlockRangeAabb()const->std::shared_ptr<Collider>;
 
+	auto GetStartAttackTime()const->uint64_t;
+	auto IsStartAttackTime()const->bool;
+	auto SettingStartAttackTime()->void;
+	auto ResetStartAttackTime()->void;
+
 	auto GetRadian()const->float;
 	auto SetRadian(float radian)->void;
+
+	auto GetCurrentAnimationType()const->kAnimationType;
+
+	auto GetAnimationTimeAcc()->double;
 
 
 
@@ -84,6 +93,7 @@ private:
 	std::shared_ptr<CharacterState>					_character_state;
 
 	bool				_is_idle = true;
+	uint64_t				_start_attack_time;
 	float				_radian = 0.f;
 	int32_t				_current_mesh_num = 0;
 	int32_t				_new_mesh_num = 0;

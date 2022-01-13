@@ -63,3 +63,23 @@ auto GameServerPacketHandler::HandleGameServerUpdateStat(PacketSessionRef& sessi
 	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::UpdateStat, session, pkt);
 	return true;
 }
+
+auto GameServerPacketHandler::HandleGameServerAttackMonster(PacketSessionRef& session,
+	Protocol::GameServerAttackMonster& pkt) -> bool
+{
+	return true;
+}
+
+auto GameServerPacketHandler::HandleGameServerMonsterStatUpdate(PacketSessionRef& session,
+	Protocol::GameServerMonsterStatUpdate& pkt) -> bool
+{
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::UpdateMonsterStat, session, pkt);
+	return true;
+}
+
+auto GameServerPacketHandler::HandleGameServerKillMonster(PacketSessionRef& session,
+                                                          Protocol::GameServerKillMonster& pkt) -> bool
+{
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::KillMonster, session, pkt);
+	return true;
+}

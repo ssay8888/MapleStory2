@@ -169,7 +169,9 @@ public:
 	};
 
 	auto LoadAniKeyText()->void;
+	auto LoadAniKeyPlayerText()->void;
 	auto FindAniKey(int32_t npcId)->std::shared_ptr<Kfm>;
+	auto FindPlayerAniKey(int32_t gender)->std::shared_ptr<Kfm>;
 #pragma endregion
 
 #pragma region SkillData
@@ -249,6 +251,7 @@ private:
 	std::map<int32_t, std::shared_ptr<FieldData>>								_field_data;
 	std::map<int32_t, std::shared_ptr<MonsterInfo>>								_monster_info;
 	std::unordered_map<int32_t, std::shared_ptr<Kfm>>							_ani_key;
+	std::unordered_map<int32_t, std::shared_ptr<Kfm>>							_ani_key_player;
 	std::map<int32_t, std::shared_ptr<Skill>>									_skills;
 	std::map<std::shared_ptr<Motion>, std::shared_ptr<Effect>>					_motion_effects;
 	std::map<std::shared_ptr<Motion>, std::vector<std::shared_ptr<Effect>>>	_str_tag_effects;

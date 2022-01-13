@@ -162,7 +162,7 @@
     <ClCompile Include="game\entitiy\character\information_collection\base_info.cpp" />
     <ClCompile Include="game\entitiy\character\information_collection\inventorys\inventory.cpp" />
     <ClCompile Include="game\entitiy\character\information_collection\inventorys\inventorys.cpp" />
-    <ClCompile Include="game\entitiy\character\information_collection\stats\stats.cpp" />
+    <ClCompile Include="game\entitiy\character\information_collection\stats\statistic.cpp" />
     <ClCompile Include="game\entitiy\game_entity.cpp" />
     <ClCompile Include="game\entitiy\monster\game_monster.cpp" />
     <ClCompile Include="game\entitiy\monster\spawn_point\spawn_point.cpp" />
@@ -197,6 +197,7 @@
     <ClCompile Include="managers\game_job_queue\game_character_moving_queue.cpp" />
     <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler.cpp" />
     <ClCompile Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.cpp" />
+    <ClCompile Include="packet_handling\game_server_player_handler\game_server_player_handler.cpp" />
     <ClCompile Include="protocol\center_login_enum.pb.cc">
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -238,7 +239,7 @@
     <ClInclude Include="game\entitiy\character\information_collection\base_info.h" />
     <ClInclude Include="game\entitiy\character\information_collection\inventorys\inventory.h" />
     <ClInclude Include="game\entitiy\character\information_collection\inventorys\inventorys.h" />
-    <ClInclude Include="game\entitiy\character\information_collection\stats\stats.h" />
+    <ClInclude Include="game\entitiy\character\information_collection\stats\statistic.h" />
     <ClInclude Include="game\entitiy\game_entity.h" />
     <ClInclude Include="game\entitiy\monster\game_monster.h" />
     <ClInclude Include="game\entitiy\monster\spawn_point\spawn_point.h" />
@@ -268,6 +269,7 @@
     <ClInclude Include="managers\game_job_queue\game_character_moving_queue.h" />
     <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler.h" />
     <ClInclude Include="packet_handling\game_center_client_handler\game_center_client_handler_manager.h" />
+    <ClInclude Include="packet_handling\game_server_player_handler\game_server_player_handler.h" />
     <ClInclude Include="protocol\center_login_enum.pb.h" />
     <ClInclude Include="protocol\center_login_protocol.pb.h" />
     <ClInclude Include="protocol\center_login_struct.pb.h" />

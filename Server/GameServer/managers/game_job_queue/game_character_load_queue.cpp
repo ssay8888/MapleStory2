@@ -5,7 +5,7 @@
 
 #include "game/entitiy/character/game_character.h"
 #include "game/entitiy/character/information_collection/inventorys/inventorys.h"
-#include "game/entitiy/character/information_collection/stats/stats.h"
+#include "game/entitiy/character/information_collection/stats/Statistic.h"
 #include "game/map/map_instance.h"
 #include "game/map/map_manager.h"
 #include "game_session/game_client_packet_handler.h"
@@ -59,11 +59,12 @@ auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServer
 	sendPkt.set_name(StringUtils::ConvertWtoC(player->GetName().c_str()));
 	sendPkt.set_gender(player->GetGender());
 	sendPkt.set_face_id(player->GetFaceId());
+	sendPkt.set_map(player->GetMapId());
 	const auto& InfoManager = CharacterInfoStorageManager::GetInstance();
 	const auto baseStatInfo = InfoManager.FindInfo(CharacterInfoStorage::kInfoTypes::kStats, player->GetCharacterId());
 	if (baseStatInfo)
 	{
-		const auto statInfo = std::static_pointer_cast<Stats>(baseStatInfo);
+		const auto statInfo = std::static_pointer_cast<Statistic>(baseStatInfo);
 		sendPkt.set_str(statInfo->GetStr());
 		sendPkt.set_dex(statInfo->GetDex());
 		sendPkt.set_int_(statInfo->GetInt());

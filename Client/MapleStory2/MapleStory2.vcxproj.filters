@@ -223,8 +223,17 @@
     <ClInclude Include="src\managers\weapon_manager\weapon_manager.h">
       <Filter>managers\weapon_manager</Filter>
     </ClInclude>
-    <ClInclude Include="src\game_object\player\states\berserker_breakingskull_state\berserker_breakingskull_state.h">
-      <Filter>game_object\player\states\berserker_breakingskull_state</Filter>
+    <ClInclude Include="src\game_object\player\states\large_sword_attack_state\large_sword_attack_state.h">
+      <Filter>game_object\player\states\large_sword_attack_state</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\player\states\large_sword_attack_idle_state\large_sword_attack_idle_state.h">
+      <Filter>game_object\player\states\large_sword_attack_idle_state</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\monster\states\dead_state\monster_dead_state.h">
+      <Filter>game_object\monster\states\dead_state</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\player\states\large_sword_attack_run_state\large_sword_attack_run_state.h">
+      <Filter>game_object\player\states\large_sword_attack_run_state</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -444,8 +453,17 @@
     <ClCompile Include="src\managers\weapon_manager\weapon_manager.cpp">
       <Filter>managers\weapon_manager</Filter>
     </ClCompile>
-    <ClCompile Include="src\game_object\player\states\berserker_breakingskull_state\berserker_breakingskull_state.cpp">
-      <Filter>game_object\player\states\berserker_breakingskull_state</Filter>
+    <ClCompile Include="src\game_object\player\states\large_sword_attack_state\large_sword_attack_state.cpp">
+      <Filter>game_object\player\states\large_sword_attack_state</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\player\states\large_sword_attack_idle_state\large_sword_attack_idle_state.cpp">
+      <Filter>game_object\player\states\large_sword_attack_idle_state</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\monster\states\dead_state\monster_dead_state.cpp">
+      <Filter>game_object\monster\states\dead_state</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\player\states\large_sword_attack_run_state\large_sword_attack_run_state.cpp">
+      <Filter>game_object\player\states\large_sword_attack_run_state</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -619,8 +637,17 @@
     <Filter Include="managers\weapon_manager">
       <UniqueIdentifier>{b74a492c-0860-4b2b-bd3a-ea282e56a8e2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="game_object\player\states\berserker_breakingskull_state">
+    <Filter Include="game_object\player\states\large_sword_attack_state">
       <UniqueIdentifier>{1c5f397c-b9b6-49d5-b386-b7acb968524f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\player\states\large_sword_attack_idle_state">
+      <UniqueIdentifier>{f6a63d32-8e69-4f9c-aea6-b44296e4f88f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\monster\states\dead_state">
+      <UniqueIdentifier>{44116a35-9249-420a-9d48-4a812c0e5c31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\player\states\large_sword_attack_run_state">
+      <UniqueIdentifier>{2fbb686e-5981-4ed9-9dc8-e1530a5f6dfe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

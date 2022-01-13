@@ -8,5 +8,6 @@ public:
 
 	static auto Tick(double timeDelta)->int32_t;
 	static auto LateTick(double timeDelta)->int32_t;
+	static auto DeadRemove()->void;
 };
 

@@ -6,7 +6,8 @@
 MonsterStat::MonsterStat(const int32_t monsterId):
 	_monster_id(monsterId),
 	_hp(0),
-	_max_hp(0)
+	_max_hp(0),
+	_is_dead(false)
 {
 	const auto monsterInfo = DataReaderManager::GetInstance().FindMonsterInfo(_monster_id);
 	_skills = monsterInfo->skills;
@@ -25,14 +26,19 @@ auto MonsterStat::GetHp() const -> int32_t
 	return _hp;
 }
 
-auto MonsterStat::GainHp(int32_t hp) -> void
+auto MonsterStat::GainHp(const int32_t hp) -> void
 {
+	if (_hp + hp <= 0)
+	{
+		_is_dead = true;
+		_hp = 0;
+		return;
+	}
 	_hp += hp;
 }
 
 auto MonsterStat::GetMaxHp() const -> int32_t
 {
-
 	return _max_hp;
 }
 
@@ -60,6 +66,11 @@ auto MonsterStat::SkillToUse(const float distance) -> std::shared_ptr<DataReader
 	}
 
 	return nullptr;
+}
+
+auto MonsterStat::IsDead() const -> bool
+{
+	return _is_dead;
 }
 
 auto MonsterStat::Create(int32_t monsterId) -> std::shared_ptr<MonsterStat>
