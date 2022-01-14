@@ -38,6 +38,8 @@ public:
 
 	auto GetDirectMouseMoveState(const kDirectInMouseState mouseMove)->int32_t;
 
+public:
+	static auto Create(const HINSTANCE hInst, const HWND hWnd)->std::shared_ptr<InputDevice>;
 private:
 	ComPtr<IDirectInput8W>			_input_sdk = nullptr;
 	ComPtr<IDirectInputDevice8W>	_keyboard = nullptr;

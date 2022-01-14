@@ -64,6 +64,8 @@ public:
 private:
 	auto AddComponents()->HRESULT;
 	auto SetUpConstantTable() const->HRESULT;
+
+	auto OpenInventory()->HRESULT;
 	
 
 public:

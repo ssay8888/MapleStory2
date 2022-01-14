@@ -4,7 +4,7 @@
 class ViBufferRect;
 class Texture;
 
-class Ui final : public GameObject
+class Ui : public GameObject
 {
 public:
 	explicit Ui(const ComPtr<IDirect3DDevice9>& device);

@@ -24,6 +24,7 @@ private:
 
 	auto ReadyGamePlay0()->HRESULT;
 	auto LoadMainPlayerInfo()->HRESULT;
+	auto LoadInventory()->HRESULT;
 
 
 

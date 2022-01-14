@@ -235,6 +235,13 @@
     <ClInclude Include="src\game_object\player\states\large_sword_attack_run_state\large_sword_attack_run_state.h">
       <Filter>game_object\player\states\large_sword_attack_run_state</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\ui\inventory\inventory_ui.h">
+      <Filter>game_object\ui\inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\inventory\inventory_tab_btn\inventory_tab_btn.h">
+      <Filter>game_object\ui\inventory\inventory_tab_btn</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\item\Item.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -465,6 +472,13 @@
     <ClCompile Include="src\game_object\player\states\large_sword_attack_run_state\large_sword_attack_run_state.cpp">
       <Filter>game_object\player\states\large_sword_attack_run_state</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\ui\inventory\inventory_ui.cpp">
+      <Filter>game_object\ui\inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\inventory\inventory_tab_btn\inventory_tab_btn.cpp">
+      <Filter>game_object\ui\inventory\inventory_tab_btn</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\item\Item.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -648,6 +662,12 @@
     </Filter>
     <Filter Include="game_object\player\states\large_sword_attack_run_state">
       <UniqueIdentifier>{2fbb686e-5981-4ed9-9dc8-e1530a5f6dfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\inventory">
+      <UniqueIdentifier>{48529816-fca5-4d29-aff9-10a9f1be9b93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\inventory\inventory_tab_btn">
+      <UniqueIdentifier>{cc73818b-b313-425e-bb92-a662bc124fe4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

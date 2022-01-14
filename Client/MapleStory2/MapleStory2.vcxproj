@@ -185,6 +185,7 @@
     <ClInclude Include="src\game_object\effect\effect.h" />
     <ClInclude Include="src\game_object\equipped\equipped.h" />
     <ClInclude Include="src\game_object\fittingdoll\fittingdoll.h" />
+    <ClInclude Include="src\game_object\item\Item.h" />
     <ClInclude Include="src\game_object\item\Weapon.h" />
     <ClInclude Include="src\game_object\map\cube\map_object.h" />
     <ClInclude Include="src\game_object\map\map_instance.h" />
@@ -221,6 +222,8 @@
     <ClInclude Include="src\game_object\ui\character_select\character_ok_btn.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_select_item.h" />
     <ClInclude Include="src\game_object\ui\character_select\character_select_ui.h" />
+    <ClInclude Include="src\game_object\ui\inventory\inventory_tab_btn\inventory_tab_btn.h" />
+    <ClInclude Include="src\game_object\ui\inventory\inventory_ui.h" />
     <ClInclude Include="src\game_object\ui\login\text_box_ui.h" />
     <ClInclude Include="src\game_object\ui\player_info\player_info.h" />
     <ClInclude Include="src\game_object\ui\ui.h" />
@@ -292,6 +295,7 @@
     <ClCompile Include="src\game_object\effect\effect.cpp" />
     <ClCompile Include="src\game_object\equipped\equipped.cpp" />
     <ClCompile Include="src\game_object\fittingdoll\fittingdoll.cpp" />
+    <ClCompile Include="src\game_object\item\Item.cpp" />
     <ClCompile Include="src\game_object\item\Weapon.cpp" />
     <ClCompile Include="src\game_object\map\cube\map_object.cpp" />
     <ClCompile Include="src\game_object\map\map_instance.cpp" />
@@ -328,6 +332,8 @@
     <ClCompile Include="src\game_object\ui\character_select\character_ok_btn.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_select_item.cpp" />
     <ClCompile Include="src\game_object\ui\character_select\character_select_ui.cpp" />
+    <ClCompile Include="src\game_object\ui\inventory\inventory_tab_btn\inventory_tab_btn.cpp" />
+    <ClCompile Include="src\game_object\ui\inventory\inventory_ui.cpp" />
     <ClCompile Include="src\game_object\ui\login\text_box_ui.cpp" />
     <ClCompile Include="src\game_object\ui\player_info\player_info.cpp" />
     <ClCompile Include="src\game_object\ui\ui.cpp" />

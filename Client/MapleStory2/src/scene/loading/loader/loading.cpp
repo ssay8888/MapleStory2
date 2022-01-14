@@ -19,6 +19,7 @@
 #include "src/game_object/terrain/terrain.h"
 #include "src/game_object/ui/character_select/character_select_ui.h"
 #include "src/game_object/ui/character_select/character_beauty/character_beauty_ui.h"
+#include "src/game_object/ui/inventory/inventory_ui.h"
 #include "src/game_object/ui/player_info/player_info.h"
 #include "src/game_object/user/user.h"
 #include "src/utility/components/manager/component_manager.h"
@@ -454,6 +455,11 @@ auto Loading::ReadyGamePlay0()->HRESULT
 		return E_FAIL;
 	}
 
+	if (FAILED(LoadInventory()))
+	{
+		return E_FAIL;
+	}
+	
 	_system_message.clear();
 	_system_message.append(L"로딩이 완료되었습니다.");
 
@@ -490,6 +496,24 @@ auto Loading::LoadMainPlayerInfo() -> HRESULT
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_ExpBarProgress"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/expbar/uiexpbar_progress.png")))))
 		return E_FAIL;
 
+	return S_OK;
+}
+
+auto Loading::LoadInventory() -> HRESULT
+{
+	const auto& componentManager = ComponentManager::GetInstance();
+
+
+	auto& objectManager = ObjectManager::GetInstance();
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Inventory"), Inventory::Create())))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Inventory_Frame"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/inventory_ui/inventory/inventory_frame.png")))))
+		return E_FAIL;
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Inventory_Close_Btn"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/inventory_ui/inventory/inventory_close_%d.png"), 2))))
+		return E_FAIL;
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Inventory_Tab_Btn"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/inventory_ui/inventory/inventory_tab_%d.png"), 2))))
+		return E_FAIL;
 	return S_OK;
 }
 

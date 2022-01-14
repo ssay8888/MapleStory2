@@ -107,3 +107,13 @@ auto InputDevice::GetDirectMouseMoveState(const kDirectInMouseState mouseMove) -
 {
 	return reinterpret_cast<int32_t*>(&_mouse_state)[static_cast<int8_t>(mouseMove)];
 }
+
+auto InputDevice::Create(const HINSTANCE hInst, const HWND hWnd) -> std::shared_ptr<InputDevice>
+{
+	auto instance = std::make_shared<InputDevice>();
+	if (FAILED(instance->InitDevice(hInst, hWnd)))
+	{
+		return nullptr;
+	}
+	return instance;
+}

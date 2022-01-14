@@ -4,7 +4,6 @@
 class MeshDynamic;
 class Shader;
 class MeshStatic;
-class Renderer;
 
 class Weapon final : public GameObject
 {
@@ -35,7 +34,6 @@ private:
 	HRESULT SetUpConstantTable();
 
 private:
-	std::shared_ptr<Renderer>		_renderer_com = nullptr;
 	std::shared_ptr<Transform>		_transform_com = nullptr;
 	std::shared_ptr<MeshStatic>		_mesh_com = nullptr;
 	std::shared_ptr<Shader>			_shader_com = nullptr;

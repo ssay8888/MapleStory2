@@ -6,6 +6,7 @@
 #include "src/game_object/map/map_instance.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
+#include "src/game_object/ui/inventory/inventory_ui.h"
 #include "src/managers/characters_manager/character.h"
 #include "src/managers/character_stat/character_stat.h"
 #include "src/managers/weapon_manager/weapon_manager.h"
@@ -53,62 +54,8 @@ int32_t Player::Tick(const double timeDelta)
 {
 	_character_state->HandleInput();
 	_character_state->Tick(timeDelta);
-	//if (InputDevice::GetInstance().GetKeyDown(DIK_X))
-	//{
-	//	_is_idle = false;
-	//	_new_mesh_num = (_current_mesh_num + 1) % 4;
-	//	_character_mesh_list[0]->SetAnimationIndex(_new_mesh_num);
-	//	_current_mesh_num = _new_mesh_num;
-	//}
 
-	/*bool move = false;
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_UP) && InputDevice::GetInstance().GetKeyPressing(DIK_LEFT))
-	{
-		_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(135));
-		move = true;
-	}
-	else if (InputDevice::GetInstance().GetKeyPressing(DIK_UP) && InputDevice::GetInstance().GetKeyPressing(DIK_RIGHT))
-	{
-		_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(225));
-		move = true;
-	}
-	else if (InputDevice::GetInstance().GetKeyPressing(DIK_DOWN) && InputDevice::GetInstance().GetKeyPressing(DIK_LEFT))
-	{
-		_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(45));
-		move = true;
-	}
-	else if (InputDevice::GetInstance().GetKeyPressing(DIK_DOWN) && InputDevice::GetInstance().GetKeyPressing(DIK_RIGHT))
-	{
-		_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(315));
-		move = true;
-	}
-	else
-	{
-		if (InputDevice::GetInstance().GetKeyPressing(DIK_UP))
-		{
-			_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(180));
-			move = true;
-		}
-		if (InputDevice::GetInstance().GetKeyPressing(DIK_LEFT))
-		{
-			_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(90));
-			move = true;
-		}
-		if (InputDevice::GetInstance().GetKeyPressing(DIK_DOWN))
-		{
-			_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(0));
-			move = true;
-		}
-		if (InputDevice::GetInstance().GetKeyPressing(DIK_RIGHT))
-		{
-			_transform_com->SetUpRotation(_float3(0.f, 1.f, 0.f), D3DXToRadian(270));
-			move = true;
-		}
-	}
-	if (move)
-	{
-		_transform_com->BackStraight(timeDelta);
-	}*/
+	OpenInventory();
 
 	if (InputDevice::GetInstance().GetKeyPressing(DIK_SPACE))
 	{
@@ -116,24 +63,6 @@ int32_t Player::Tick(const double timeDelta)
 		pos.y += 0.1f;
 		_transform_com->SetState(Transform::kState::kStatePosition, pos);
 	}
-	//_character_aabb_com->UpdateCollider();
-	//for (const auto& reload : _reload_ragne_aabb_com)
-	//{
-	//	reload->UpdateCollider();
-	//}
-
-	//if (move)
-	//{
-	//	if (StraightCheck())
-	//	{
-	//		_transform_com->BackStraight(-timeDelta);
-	//	}
-	//}
-	//_character_aabb_com->UpdateCollider();
-	//for (const auto& reload : _reload_ragne_aabb_com)
-	//{
-	//	reload->UpdateCollider();
-	//}
 
 	return GameObject::Tick(timeDelta);
 }
@@ -519,7 +448,6 @@ auto Player::AddComponents() -> HRESULT
 		ChangeEqp(GameContents::EquipeType(item.itemid()), item.itemid());
 	}
 
-
 	return S_OK;
 }
 
@@ -541,6 +469,20 @@ auto Player::SetUpConstantTable() const -> HRESULT
 	result = _shader_com->SetUpConstantTable("g_vLightSpecular", &lightDesc.Specular, sizeof(_float4));
 	const auto camPos = _float4(pipeline.GetCamPosition(), 1.f);
 	result = _shader_com->SetUpConstantTable("g_vCamPosition", &camPos, sizeof(_float4));
+	return S_OK;
+}
+
+auto Player::OpenInventory() -> HRESULT
+{
+	if (InputDevice::GetInstance().GetKeyDown(DIK_I))
+	{
+		const auto& instance = ObjectManager::GetInstance();
+
+		if (const auto inventory = std::static_pointer_cast<Inventory>(instance.GetGameObjectPtr(kSceneGamePlay0, L"Layer_Inventory", 0)))
+		{
+			inventory->ChangeShow();
+		}
+	}
 	return S_OK;
 }
 
