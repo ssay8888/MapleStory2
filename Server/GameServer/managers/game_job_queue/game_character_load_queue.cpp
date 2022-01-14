@@ -51,6 +51,23 @@ auto GameCharacterLoadQueue::GameClientLoadingResponse(PacketSessionRef session,
 	}
 }
 
+auto GameCharacterLoadQueue::SaveDbToPlayer(PacketSessionRef session) -> void
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	auto player = gameSession->GetPlayer();
+	if (player)
+	{
+		auto saveResult = player->SaveToDb();
+		if (FAILED(saveResult))
+		{
+			std::cout << "저장오류 발생" << std::endl;
+		}
+		const auto& InfoStorageManager = CharacterInfoStorageManager::GetInstance();
+		auto result = InfoStorageManager.RemoveAllInfo(player->GetCharacterId());
+	}
+
+}
+
 auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServerLoadCharacter& sendPkt, PacketSessionRef session, std::shared_ptr<GameCharacter> player) -> void
 {
 	sendPkt.set_state(Protocol::kLoadSuccess);

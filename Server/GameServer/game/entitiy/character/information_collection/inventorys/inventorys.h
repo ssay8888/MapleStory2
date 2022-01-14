@@ -18,6 +18,9 @@ public:
 	auto AllItems(Protocol::kInventoryType type)->std::vector<std::pair<int32_t, int32_t>>;
 
 public:
+	auto ItemListToXml()const->std::wstring;
+
+public:
 	static auto Create(int64_t characterId)->std::shared_ptr<Inventorys>;
 
 private:

@@ -25,6 +25,8 @@ public:
 	auto GetSpawnPoint()const->int32_t;
 	auto GetTransform()const->std::shared_ptr<Transform>;
 
+	auto SaveToDb()->HRESULT;
+
 private:
 	auto NativeConstruct()->HRESULT;
 

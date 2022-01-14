@@ -1,6 +1,9 @@
 #include "game_server_pch.h"
 #include "inventorys.h"
 
+#include <pugixml.hpp>
+#include <sstream>
+
 #include "inventory.h"
 
 Inventorys::Inventorys(const int64_t characterId) :
@@ -59,6 +62,32 @@ auto Inventorys::AllItems(Protocol::kInventoryType type) -> std::vector<std::pai
 		allItems.insert(allItems.end(), items.begin(), items.end());
 	}
 	return allItems;
+}
+
+auto Inventorys::ItemListToXml() const -> std::wstring
+{
+	using namespace pugi;
+	xml_document doc;
+	xml_node root = doc.append_child("ms2");
+
+	auto items = root.append_child("items");
+	for (const auto& [type, inventory] : _inventory)
+	{
+		const auto allItems = inventory->AllItems();
+		if (!allItems.empty())
+		{
+			for (const auto& itemData : allItems)
+			{
+				auto item = items.append_child("item");
+				item.append_attribute("type").set_value(type);
+				item.append_attribute("itemid").set_value(itemData.second);
+				item.append_attribute("position").set_value(itemData.first);
+			}
+		}
+	}
+	std::wstringstream xml;
+	doc.save(xml);
+	return xml.str();
 }
 
 auto Inventorys::Create(const int64_t characterId) -> std::shared_ptr<Inventorys>

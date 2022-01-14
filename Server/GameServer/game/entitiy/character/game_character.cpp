@@ -174,3 +174,78 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 	}
 	return S_OK;
 }
+
+auto GameCharacter::SaveToDb() -> HRESULT
+{
+	const auto& InfoStorageManager = CharacterInfoStorageManager::GetInstance();
+	const auto baseStatInfo = InfoStorageManager.FindInfo(CharacterInfoStorage::kInfoTypes::kStats, _character_id);
+	const auto statInfo = std::static_pointer_cast<Statistic>(baseStatInfo);
+	const auto baseInventorysInfo = InfoStorageManager.FindInfo(CharacterInfoStorage::kInfoTypes::kInventory, _character_id);
+	const auto InventorysInfo = std::static_pointer_cast<Inventorys>(baseInventorysInfo);
+	if (statInfo == nullptr || InventorysInfo == nullptr)
+	{
+		return E_FAIL;
+	}
+	int32_t result = 0;
+	if (auto con = DBConnectionPool::GetInstance().Pop())
+	{
+		DBBind<14, 1> bind(*con, L"{CALL dbo.spSaveToPlayer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+		int32_t idx = 0;
+		bind.BindParam(idx++, _character_id);
+		int32_t spawnPoint = 0;
+		bind.BindParam(idx++, spawnPoint);//spawnPoint
+
+		int32_t hp(statInfo->GetHp());
+		bind.BindParam(idx++, hp);
+		int32_t maxHp(statInfo->GetMaxHp());
+		bind.BindParam(idx++, maxHp);
+
+		int32_t mp(statInfo->GetHp());
+		bind.BindParam(idx++, mp);
+		int32_t maxMp(statInfo->GetMaxHp());
+		bind.BindParam(idx++, maxMp);
+
+		int32_t level(statInfo->GetLevel());
+		bind.BindParam(idx++, level);
+		int32_t exp(statInfo->GetExp());
+		bind.BindParam(idx++, exp);
+		int32_t money(0);
+		bind.BindParam(idx++, money);
+
+		int32_t str(statInfo->GetStr());
+		bind.BindParam(idx++, str);
+		int32_t dex(statInfo->GetDex());
+		bind.BindParam(idx++, dex);
+		int32_t int_(statInfo->GetInt());
+		bind.BindParam(idx++, int_);
+		int32_t luk(statInfo->GetLuk());
+		bind.BindParam(idx++, luk);
+
+		auto itemList = InventorysInfo->ItemListToXml();
+		bind.BindParam(idx++, itemList.c_str());
+
+		bind.BindCol(0, result);
+
+
+
+		if (bind.Execute())
+		{
+			do
+			{
+				int16_t count = 0;
+				bind.SqlNumResultCols(&count);
+				if (count > 0)
+				{
+					while (bind.Fetch())
+					{
+					}
+
+				}
+			} while (bind.SqlMoreResults() != SQL_NO_DATA);
+
+		}
+
+		DBConnectionPool::GetInstance().Push(con);
+	}
+	return result == 1 ? S_OK : E_FAIL;
+}

@@ -166,7 +166,7 @@ auto CharacterItem::AddComponents() -> HRESULT
 		{
 			prototypeName.append(std::to_wstring(_info.man_item_id));
 		}
-		GameObject::AddComponent(kScene::kSceneCharacterSelect, prototypeName, TEXT("Com_Item_Icon"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_icon));
+		GameObject::AddComponent(kScene::kSceneStatic, prototypeName, TEXT("Com_Item_Icon"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_icon));
 		break;
 	}
 	case kEqpType::kFace:

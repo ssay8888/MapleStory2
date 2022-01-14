@@ -275,6 +275,7 @@ std::wstring LoginHandler::ItemListToXml(Protocol::LoginClientCreateCharacter pk
 		if (itemId)
 		{
 			auto item = items.append_child("item");
+			item.append_attribute("type").set_value(0);
 			item.append_attribute("itemid").set_value(itemId);
 			item.append_attribute("position").set_value(static_cast<int>(GameContents::EquipeType(itemId)));
 		}
