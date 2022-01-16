@@ -164,6 +164,7 @@
     <ClCompile Include="game\entitiy\character\information_collection\inventorys\inventorys.cpp" />
     <ClCompile Include="game\entitiy\character\information_collection\stats\statistic.cpp" />
     <ClCompile Include="game\entitiy\game_entity.cpp" />
+    <ClCompile Include="game\entitiy\item\game_item.cpp" />
     <ClCompile Include="game\entitiy\monster\game_monster.cpp" />
     <ClCompile Include="game\entitiy\monster\spawn_point\spawn_point.cpp" />
     <ClCompile Include="game\entitiy\monster\states\monster_attack_a_state\monster_attack_a_state.cpp" />
@@ -241,6 +242,7 @@
     <ClInclude Include="game\entitiy\character\information_collection\inventorys\inventorys.h" />
     <ClInclude Include="game\entitiy\character\information_collection\stats\statistic.h" />
     <ClInclude Include="game\entitiy\game_entity.h" />
+    <ClInclude Include="game\entitiy\item\game_item.h" />
     <ClInclude Include="game\entitiy\monster\game_monster.h" />
     <ClInclude Include="game\entitiy\monster\spawn_point\spawn_point.h" />
     <ClInclude Include="game\entitiy\monster\states\monster_attack_a_state\monster_attack_a_state.h" />

@@ -6,6 +6,7 @@
 #include "game/entitiy/character/game_character.h"
 #include "game/entitiy/character/information_collection/inventorys/inventorys.h"
 #include "game/entitiy/character/information_collection/stats/Statistic.h"
+#include "game/entitiy/item/game_item.h"
 #include "game/map/map_instance.h"
 #include "game/map/map_manager.h"
 #include "game_session/game_client_packet_handler.h"
@@ -102,11 +103,18 @@ auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServer
 	{
 		const auto statInfo = std::static_pointer_cast<Inventorys>(baseInventoryInfo);
 		const auto allItems = statInfo->AllItems();
-		for (auto itemPair : allItems)
+		for (auto gameItem : allItems)
 		{
 			auto item = sendPkt.add_items();
-			item->set_position(itemPair.first);
-			item->set_itemid(itemPair.second);
+			item->set_position(gameItem->GetPosition());
+			item->set_itemid(gameItem->GetItemId());
+			item->set_inventory_type(gameItem->GetInventoryType());
+			item->set_quantity(gameItem->GetQuantity());
+			item->set_str(gameItem->GetStr());
+			item->set_dex(gameItem->GetDex());
+			item->set_int_(gameItem->GetInt());
+			item->set_luk(gameItem->GetLuk());
+			item->set_wap(gameItem->GetWap());
 		}
 	}
 }

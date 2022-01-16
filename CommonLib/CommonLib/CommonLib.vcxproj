@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="common_defines.h" />
     <ClInclude Include="common_pch.h" />
     <ClInclude Include="data_reader\data_reader_manager.h" />
     <ClInclude Include="files_manager\file_manager.h" />

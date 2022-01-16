@@ -3,10 +3,14 @@
 
 #include "src/game_job_queue/game_logic_queue.h"
 #include "src/game_object/equipped/equipped.h"
+#include "src/game_object/item/Item.h"
 #include "src/game_object/map/map_instance.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
+#include "src/game_object/ui/equipped_ui/equipped_ui.h"
 #include "src/game_object/ui/inventory/inventory_ui.h"
+#include "src/game_object/ui/inventory/inventory_tab_btn/inventory_tab_btn.h"
+#include "src/game_object/ui/popup_info/popup_info.h"
 #include "src/managers/characters_manager/character.h"
 #include "src/managers/character_stat/character_stat.h"
 #include "src/managers/weapon_manager/weapon_manager.h"
@@ -286,6 +290,40 @@ auto Player::ChangeEqp(const GameContents::kEquipeType type, int32_t itemId)->vo
 				component->TargetCombinedTransformationMatrices(component, playerMesh.first, component->GetRootFrame(), rootFrame, index);
 			}
 		}
+		else
+		{
+			if (type != GameContents::kEquipeType::kWeapon)
+			{
+				switch (type)
+				{
+				case GameContents::kEquipeType::kPants:
+					_character_mesh_list[0]->ChangeSkinnedMesh(nullptr, "PA_");
+					_eqp_list->RemoveItem(type);
+					break;
+				case GameContents::kEquipeType::kCoat:
+					_character_mesh_list[0]->ChangeSkinnedMesh(nullptr, "CL_");
+					_eqp_list->RemoveItem(type);
+					break;
+				case GameContents::kEquipeType::kShoes:
+					_character_mesh_list[0]->ChangeSkinnedMesh(nullptr, "SH_");
+					_eqp_list->RemoveItem(type);
+					break;
+				case GameContents::kEquipeType::kFace:
+				{
+					auto texture = DataReaderManager::GetInstance().FindFace(itemId);
+					_character_mesh_list[0]->ChangeFaceTexture(texture->diffuse_map[0]);
+					break;
+				}
+				default:
+					return;
+				}
+
+				//const auto playerMesh = this->GetCurrentDynamicMesh();
+				//const auto rootFrame = playerMesh.first->GetRootFrame();
+				//int32_t index = 0;
+				//component->TargetCombinedTransformationMatrices(component, playerMesh.first, component->GetRootFrame(), rootFrame, index);
+			}
+		}
 
 		switch (type)
 		{
@@ -445,9 +483,34 @@ auto Player::AddComponents() -> HRESULT
 	_eqp_list = Equipped::Create();
 	for (auto item : characterInfo.items())
 	{
-		ChangeEqp(GameContents::EquipeType(item.itemid()), item.itemid());
+		if (item.position() < 0)
+		{
+			ChangeEqp(GameContents::EquipeType(item.itemid()), item.itemid());
+		}
 	}
+	auto& objectManager= ObjectManager::GetInstance();
+	auto baseInventory = objectManager.GetGameObjectPtr(kSceneGamePlay0, L"Layer_Inventory", 0);
+	auto inventory = std::static_pointer_cast<Inventory>(baseInventory);
+	if (inventory)
+	{
+		for (auto porotocolItem : characterInfo.items())
+		{
+			auto inventoryTab = inventory->GetInventoryTab(porotocolItem.inventory_type());
+			Item::ItemInfo info;
+			info.position = porotocolItem.position();
+			info.item_id = porotocolItem.itemid();
+			info.quantity = porotocolItem.quantity();
+			info.str = porotocolItem.str();
+			info.dex = porotocolItem.dex();
+			info.int_ = porotocolItem.int_();
+			info.luk = porotocolItem.luk();
+			info.wap = porotocolItem.wap();
 
+			auto item = Item::Create(info);
+			item->GetPopupInfo()->SetItemInfo(info);
+			inventoryTab->AddItem(info.position, item);
+		}
+	}
 	return S_OK;
 }
 
@@ -479,6 +542,15 @@ auto Player::OpenInventory() -> HRESULT
 		const auto& instance = ObjectManager::GetInstance();
 
 		if (const auto inventory = std::static_pointer_cast<Inventory>(instance.GetGameObjectPtr(kSceneGamePlay0, L"Layer_Inventory", 0)))
+		{
+			inventory->ChangeShow();
+		}
+	}
+	if (InputDevice::GetInstance().GetKeyDown(DIK_P))
+	{
+		const auto& instance = ObjectManager::GetInstance();
+
+		if (const auto inventory = std::static_pointer_cast<EquippedUi>(instance.GetGameObjectPtr(kSceneGamePlay0, L"Layer_EquippedUi", 0)))
 		{
 			inventory->ChangeShow();
 		}

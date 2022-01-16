@@ -1,6 +1,7 @@
 #include "game_server_pch.h"
 #include "game_character.h"
 
+#include "game/entitiy/item/game_item.h"
 #include "game/map/map_instance.h"
 #include "game/map/map_manager.h"
 #include "information_collection/inventorys/inventorys.h"
@@ -82,7 +83,7 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 	_transform->NativeConstruct(nullptr);
 	if (auto con = DBConnectionPool::GetInstance().Pop())
 	{
-		DBBind<1, 19> bind(*con, L"{CALL dbo.spLoadCharacter(?)}");
+		DBBind<1, 26> bind(*con, L"{CALL dbo.spLoadCharacter(?)}");
 		bind.BindParam(0, _character_id);
 
 		WCHAR name[100]{0};
@@ -123,6 +124,26 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 		bind.BindCol(colIndex++, itemid);
 		int32_t position;
 		bind.BindCol(colIndex++, position);
+		int32_t type;
+		bind.BindCol(colIndex++, type);
+
+		int32_t itemQuantity;
+		bind.BindCol(colIndex++, itemQuantity);
+
+		int32_t itemStr;
+		bind.BindCol(colIndex++, itemStr);
+
+		int32_t itemDex;
+		bind.BindCol(colIndex++, itemDex);
+
+		int32_t itemInt;
+		bind.BindCol(colIndex++, itemInt);
+
+		int32_t itemLuk;
+		bind.BindCol(colIndex++, itemLuk);
+
+		int32_t itemWap;
+		bind.BindCol(colIndex++, itemWap);
 
 		if (bind.Execute())
 		{
@@ -136,9 +157,25 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 				{
 					while (bind.Fetch())
 					{
-						if (position < 0)
+						const auto item = MakeShared<GameItem>(itemid, position, static_cast<Protocol::kInventoryType>(type));
+						item->SetQuantity(itemQuantity);
+						item->SetStr(itemStr);
+						item->SetDex(itemDex);
+						item->SetInt(itemInt);
+						item->SetLuk(itemLuk);
+						item->SetWap(itemWap);
+						switch (static_cast<Protocol::kInventoryType>(type))
 						{
-							inventory->PushItem(Protocol::kInventoryType::kInventoryEquipped, position, itemid);
+						case Protocol::kInventoryEquipped:
+							inventory->PushItem(Protocol::kInventoryType::kInventoryEquipped, position, item);
+							break;
+						case Protocol::kInventoryEqp:
+							inventory->PushItem(Protocol::kInventoryType::kInventoryEqp, position, item);
+							break;
+						case Protocol::kInventoryEtc:
+							inventory->PushItem(Protocol::kInventoryType::kInventoryEtc, position, item);
+							break;
+						default: ;
 						}
 					}
 

@@ -3,6 +3,7 @@
 
 #include "center_server_session/center_login_client_packet_handler.h"
 #include "center_server_session/center_login_session.h"
+#include "data_reader/data_reader_manager.h"
 #include "login_session/login_client_packet_handler.h"
 #include "login_session/login_session.h"
 #include "src/network/socket_utils.h"
@@ -18,6 +19,7 @@ auto LoginServer::LoginServerInit() -> void
 	ASSERT_CRASH(DBConnectionPool::GetInstance().Connect(10, L"Driver={SQL Server Native Client 11.0};Server=(localdb)\\MSSQLLocalDB;Database=maplestory2;Trusted_Connection=Yes;"));
 	LoginServerServiceCreate();
 	LoginCenterServerServiceCreate();
+	DataReaderManager::GetInstance().Init(nullptr);
 }
 
 auto LoginServer::LoginServerServiceCreate() -> void

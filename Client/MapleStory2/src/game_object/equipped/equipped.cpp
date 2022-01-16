@@ -70,6 +70,11 @@ auto Equipped::AddItem(GameContents::kEquipeType type, int32_t itemId) -> void
 	_eqp_item.emplace(type, itemId);
 }
 
+auto Equipped::RemoveItem(GameContents::kEquipeType type) -> void
+{
+	_eqp_item.erase(type);
+}
+
 auto Equipped::GetAllItem() -> std::vector<int32_t>
 {
 	std::vector<int32_t> items;

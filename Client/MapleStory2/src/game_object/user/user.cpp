@@ -157,6 +157,40 @@ auto User::ChangeEqp(GameContents::kEquipeType type, int32_t itemId) -> void
 				component->TargetCombinedTransformationMatrices(component, playerMesh.first, component->GetRootFrame(), rootFrame, index);
 			}
 		}
+		else
+		{
+			if (type != GameContents::kEquipeType::kWeapon)
+			{
+				switch (type)
+				{
+				case GameContents::kEquipeType::kPants:
+					_character_mesh_list[0]->ChangeSkinnedMesh(nullptr, "PA_");
+					_eqp_list->RemoveItem(type);
+					break;
+				case GameContents::kEquipeType::kCoat:
+					_character_mesh_list[0]->ChangeSkinnedMesh(nullptr, "CL_");
+					_eqp_list->RemoveItem(type);
+					break;
+				case GameContents::kEquipeType::kShoes:
+					_character_mesh_list[0]->ChangeSkinnedMesh(nullptr, "SH_");
+					_eqp_list->RemoveItem(type);
+					break;
+				case GameContents::kEquipeType::kFace:
+				{
+					auto texture = DataReaderManager::GetInstance().FindFace(itemId);
+					_character_mesh_list[0]->ChangeFaceTexture(texture->diffuse_map[0]);
+					break;
+				}
+				default:
+					return;
+				}
+
+				//const auto playerMesh = this->GetCurrentDynamicMesh();
+				//const auto rootFrame = playerMesh.first->GetRootFrame();
+				//int32_t index = 0;
+				//component->TargetCombinedTransformationMatrices(component, playerMesh.first, component->GetRootFrame(), rootFrame, index);
+			}
+		}
 
 		switch (type)
 		{
@@ -169,8 +203,9 @@ auto User::ChangeEqp(GameContents::kEquipeType type, int32_t itemId) -> void
 		}
 		case GameContents::kEquipeType::kWeapon:
 		{
-			WeaponManager::GetInstance().RemoveWeapon(_info.character_id());
-			WeaponManager::GetInstance().AddWeapon(_info.character_id(), itemId, _transform_com);
+			auto characterId = _info.character_id();
+			WeaponManager::GetInstance().RemoveWeapon(characterId);
+			WeaponManager::GetInstance().AddWeapon(characterId, itemId, _transform_com);
 			break;
 		}
 		default:

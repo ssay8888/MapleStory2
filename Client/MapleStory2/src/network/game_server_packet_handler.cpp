@@ -83,3 +83,10 @@ auto GameServerPacketHandler::HandleGameServerKillMonster(PacketSessionRef& sess
 	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::KillMonster, session, pkt);
 	return true;
 }
+
+auto GameServerPacketHandler::HandleGameServerDressChange(PacketSessionRef& session,
+	Protocol::GameServerDressChange& pkt) -> bool
+{
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::DressChange, session, pkt);
+	return true;
+}

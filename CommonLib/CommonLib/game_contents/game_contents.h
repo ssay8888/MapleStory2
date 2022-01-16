@@ -4,6 +4,7 @@
 class GameContents
 {
 public:
+
 #pragma region Equip
 	enum class kEquipeType
 	{

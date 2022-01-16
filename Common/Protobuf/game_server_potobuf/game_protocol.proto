@@ -141,3 +141,18 @@ message GameServerKillMonster
 {
 	int64 monster_obj_id = 1;
 }
+
+message GameClientInventoryItemMove
+{
+	kInventoryItemMoveType move_type = 1;
+	kInventoryType type = 2;
+	int32 src = 3;
+	int32 dst = 4;
+}
+
+message GameServerDressChange
+{
+	int64 character_id = 1;
+	int32 item_type = 2;
+	int32 item_id = 3;
+}

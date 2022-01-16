@@ -91,3 +91,8 @@ auto GameTick::AttackMonster(Protocol::GameClientAttackMonster pkt, GameSessionR
 {
 	GameServerPlayerHandler::AttackMonster(pkt, gameSession);
 }
+
+auto GameTick::InventoryItemMove(Protocol::GameClientInventoryItemMove pkt, GameSessionRef gameSession) -> void
+{
+	GameServerPlayerHandler::InventoryItemMove(pkt, gameSession);
+}

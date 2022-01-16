@@ -17,6 +17,7 @@
 #include "game_session/game_session.h"
 using GameSessionRef = std::shared_ptr<GameSession>;
 #include "game_contents/game_contents.h"
+#include "common_defines.h"
 #include <tbb/concurrent_hash_map.h>
 extern std::atomic<int64_t> default_object_id;
 #endif //PCH_H

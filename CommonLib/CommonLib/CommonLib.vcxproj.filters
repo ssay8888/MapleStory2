@@ -48,6 +48,9 @@
     <ClInclude Include="randomizer\randomizer.h">
       <Filter>randomizer</Filter>
     </ClInclude>
+    <ClInclude Include="common_defines.h">
+      <Filter>default</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="common_pch.cpp">

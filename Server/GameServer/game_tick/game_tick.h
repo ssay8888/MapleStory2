@@ -27,6 +27,7 @@ public:
 
 	auto TakeDamage(int64_t characterId, int64_t monsterObjectId, GameSessionRef gameSession)->void;
 	auto AttackMonster(Protocol::GameClientAttackMonster pkt, GameSessionRef gameSession)->void;
+	auto InventoryItemMove(Protocol::GameClientInventoryItemMove pkt, GameSessionRef gameSession)->void;
 
 private:
 	std::atomic<bool> _exit_loop;

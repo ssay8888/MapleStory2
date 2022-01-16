@@ -241,7 +241,15 @@
     <ClInclude Include="src\game_object\ui\inventory\inventory_tab_btn\inventory_tab_btn.h">
       <Filter>game_object\ui\inventory\inventory_tab_btn</Filter>
     </ClInclude>
-    <ClInclude Include="src\game_object\item\Item.h" />
+    <ClInclude Include="src\game_object\item\Item.h">
+      <Filter>game_object\item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\popup_info\popup_info.h">
+      <Filter>game_object\ui\popup_info</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\equipped_ui\equipped_ui.h">
+      <Filter>game_object\ui\equipped_ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -478,7 +486,15 @@
     <ClCompile Include="src\game_object\ui\inventory\inventory_tab_btn\inventory_tab_btn.cpp">
       <Filter>game_object\ui\inventory\inventory_tab_btn</Filter>
     </ClCompile>
-    <ClCompile Include="src\game_object\item\Item.cpp" />
+    <ClCompile Include="src\game_object\item\Item.cpp">
+      <Filter>game_object\item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\popup_info\popup_info.cpp">
+      <Filter>game_object\ui\popup_info</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\equipped_ui\equipped_ui.cpp">
+      <Filter>game_object\ui\equipped_ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -668,6 +684,12 @@
     </Filter>
     <Filter Include="game_object\ui\inventory\inventory_tab_btn">
       <UniqueIdentifier>{cc73818b-b313-425e-bb92-a662bc124fe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\popup_info">
+      <UniqueIdentifier>{49265dae-b781-4aee-82aa-83176afe33ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\equipped_ui">
+      <UniqueIdentifier>{744f2ad9-81cd-44d0-bdf4-5ae20ba5fdcc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

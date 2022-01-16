@@ -11,6 +11,7 @@
 #include "src/game_object/player/player.h"
 #include "src/game_object/user/user.h"
 #include "src/managers/character_stat/character_stat.h"
+#include "src/managers/weapon_manager/weapon_manager.h"
 #include "src/scene/loading/scene_loading.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/components/collider/collider.h"
@@ -233,5 +234,33 @@ auto GameLogicQueue::KillMonster(PacketSessionRef session, Protocol::GameServerK
 
 auto GameLogicQueue::TakeDamage(PacketSessionRef session, Protocol::GameServerTakeDamage pkt) -> void
 {
+}
+
+auto GameLogicQueue::DressChange(PacketSessionRef session, Protocol::GameServerDressChange pkt) -> void
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	std::wstring layer;
+	layer.append(L"Layer_User_").append(std::to_wstring(pkt.character_id()));
+	const auto userObject = std::static_pointer_cast<User>(objectManager.GetGameObjectPtr(kSceneGamePlay0, layer, 0));
+	if (userObject)
+	{
+		auto type = static_cast<GameContents::kEquipeType>(pkt.item_type());
+		if (type == GameContents::kEquipeType::kWeapon)
+		{
+			if (pkt.item_id() == 0)
+			{
+				WeaponManager::GetInstance().RemoveWeapon(pkt.character_id());
+			}
+			else
+			{
+				auto tarnsform =std::static_pointer_cast<Transform>(userObject->GetComponentPtr(L"Com_Transform"));
+				WeaponManager::GetInstance().AddWeapon(pkt.character_id(), pkt.item_id(), tarnsform);
+			}
+		}
+		else
+		{
+ 			userObject->ChangeEqp(static_cast<GameContents::kEquipeType>(pkt.item_type()), pkt.item_id());
+		}
+	}
 }
 

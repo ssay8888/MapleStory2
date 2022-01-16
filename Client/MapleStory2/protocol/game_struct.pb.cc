@@ -20,7 +20,15 @@ namespace Protocol {
 constexpr item::item(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : itemid_(0)
-  , position_(0){}
+  , position_(0)
+  , inventory_type_(0)
+
+  , quantity_(0)
+  , str_(0)
+  , dex_(0)
+  , int__(0)
+  , luk_(0)
+  , wap_(0){}
 struct itemDefaultTypeInternal {
   constexpr itemDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -57,6 +65,13 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fstruct_2eproto::offsets
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Protocol::item, itemid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::item, position_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::item, inventory_type_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::item, quantity_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::item, str_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::item, dex_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::item, int__),
+  PROTOBUF_FIELD_OFFSET(::Protocol::item, luk_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::item, wap_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::float3, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -68,7 +83,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fstruct_2eproto::offsets
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::Protocol::item)},
-  { 7, -1, sizeof(::Protocol::float3)},
+  { 14, -1, sizeof(::Protocol::float3)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -78,16 +93,19 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_game_5fstruct_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\021game_struct.proto\022\010Protocol\032\017game_enum"
-  ".proto\"(\n\004item\022\016\n\006itemid\030\001 \001(\005\022\020\n\010positi"
-  "on\030\002 \001(\005\")\n\006float3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002"
-  "\022\t\n\001z\030\003 \001(\002b\006proto3"
+  ".proto\"\255\001\n\004item\022\016\n\006itemid\030\001 \001(\005\022\020\n\010posit"
+  "ion\030\002 \001(\005\0220\n\016inventory_type\030\003 \001(\0162\030.Prot"
+  "ocol.kInventoryType\022\020\n\010quantity\030\004 \001(\005\022\013\n"
+  "\003str\030\005 \001(\005\022\013\n\003dex\030\006 \001(\005\022\013\n\003int\030\007 \001(\005\022\013\n\003"
+  "luk\030\010 \001(\005\022\013\n\003wap\030\t \001(\005\")\n\006float3\022\t\n\001x\030\001 "
+  "\001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_game_5fstruct_2eproto_deps[1] = {
   &::descriptor_table_game_5fenum_2eproto,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fstruct_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fstruct_2eproto = {
-  false, false, 139, descriptor_table_protodef_game_5fstruct_2eproto, "game_struct.proto", 
+  false, false, 273, descriptor_table_protodef_game_5fstruct_2eproto, "game_struct.proto", 
   &descriptor_table_game_5fstruct_2eproto_once, descriptor_table_game_5fstruct_2eproto_deps, 1, 2,
   schemas, file_default_instances, TableStruct_game_5fstruct_2eproto::offsets,
   file_level_metadata_game_5fstruct_2eproto, file_level_enum_descriptors_game_5fstruct_2eproto, file_level_service_descriptors_game_5fstruct_2eproto,
@@ -116,16 +134,16 @@ item::item(const item& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&itemid_, &from.itemid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&position_) -
-    reinterpret_cast<char*>(&itemid_)) + sizeof(position_));
+    static_cast<size_t>(reinterpret_cast<char*>(&wap_) -
+    reinterpret_cast<char*>(&itemid_)) + sizeof(wap_));
   // @@protoc_insertion_point(copy_constructor:Protocol.item)
 }
 
 void item::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&itemid_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&position_) -
-    reinterpret_cast<char*>(&itemid_)) + sizeof(position_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&wap_) -
+    reinterpret_cast<char*>(&itemid_)) + sizeof(wap_));
 }
 
 item::~item() {
@@ -155,8 +173,8 @@ void item::Clear() {
   (void) cached_has_bits;
 
   ::memset(&itemid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&position_) -
-      reinterpret_cast<char*>(&itemid_)) + sizeof(position_));
+      reinterpret_cast<char*>(&wap_) -
+      reinterpret_cast<char*>(&itemid_)) + sizeof(wap_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -177,6 +195,56 @@ const char* item::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inter
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           position_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .Protocol.kInventoryType inventory_type = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_inventory_type(static_cast<::Protocol::kInventoryType>(val));
+        } else goto handle_unusual;
+        continue;
+      // int32 quantity = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          quantity_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 str = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          str_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 dex = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
+          dex_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 int = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
+          int__ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 luk = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64)) {
+          luk_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 wap = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 72)) {
+          wap_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -221,6 +289,49 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_position(), target);
   }
 
+  // .Protocol.kInventoryType inventory_type = 3;
+  if (this->inventory_type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      3, this->_internal_inventory_type(), target);
+  }
+
+  // int32 quantity = 4;
+  if (this->quantity() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_quantity(), target);
+  }
+
+  // int32 str = 5;
+  if (this->str() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(5, this->_internal_str(), target);
+  }
+
+  // int32 dex = 6;
+  if (this->dex() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(6, this->_internal_dex(), target);
+  }
+
+  // int32 int = 7;
+  if (this->int_() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(7, this->_internal_int_(), target);
+  }
+
+  // int32 luk = 8;
+  if (this->luk() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(8, this->_internal_luk(), target);
+  }
+
+  // int32 wap = 9;
+  if (this->wap() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(9, this->_internal_wap(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -249,6 +360,54 @@ size_t item::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
         this->_internal_position());
+  }
+
+  // .Protocol.kInventoryType inventory_type = 3;
+  if (this->inventory_type() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_inventory_type());
+  }
+
+  // int32 quantity = 4;
+  if (this->quantity() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_quantity());
+  }
+
+  // int32 str = 5;
+  if (this->str() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_str());
+  }
+
+  // int32 dex = 6;
+  if (this->dex() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_dex());
+  }
+
+  // int32 int = 7;
+  if (this->int_() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_int_());
+  }
+
+  // int32 luk = 8;
+  if (this->luk() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_luk());
+  }
+
+  // int32 wap = 9;
+  if (this->wap() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_wap());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -288,6 +447,27 @@ void item::MergeFrom(const item& from) {
   if (from.position() != 0) {
     _internal_set_position(from._internal_position());
   }
+  if (from.inventory_type() != 0) {
+    _internal_set_inventory_type(from._internal_inventory_type());
+  }
+  if (from.quantity() != 0) {
+    _internal_set_quantity(from._internal_quantity());
+  }
+  if (from.str() != 0) {
+    _internal_set_str(from._internal_str());
+  }
+  if (from.dex() != 0) {
+    _internal_set_dex(from._internal_dex());
+  }
+  if (from.int_() != 0) {
+    _internal_set_int_(from._internal_int_());
+  }
+  if (from.luk() != 0) {
+    _internal_set_luk(from._internal_luk());
+  }
+  if (from.wap() != 0) {
+    _internal_set_wap(from._internal_wap());
+  }
 }
 
 void item::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -312,8 +492,8 @@ void item::InternalSwap(item* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(item, position_)
-      + sizeof(item::position_)
+      PROTOBUF_FIELD_OFFSET(item, wap_)
+      + sizeof(item::wap_)
       - PROTOBUF_FIELD_OFFSET(item, itemid_)>(
           reinterpret_cast<char*>(&itemid_),
           reinterpret_cast<char*>(&other->itemid_));

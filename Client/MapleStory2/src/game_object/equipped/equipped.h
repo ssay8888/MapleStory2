@@ -19,6 +19,7 @@ public:
 public:
 	auto FindItem(GameContents::kEquipeType type)->int32_t;
 	auto AddItem(GameContents::kEquipeType type, int32_t itemId)->void;
+	auto RemoveItem(GameContents::kEquipeType type)->void;
 	auto GetAllItem()->std::vector<int32_t>;
 
 private:

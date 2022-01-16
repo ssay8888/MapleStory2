@@ -2,7 +2,9 @@
 #include "game_server_player_handler.h"
 
 #include "game/entitiy/character/game_character.h"
+#include "game/entitiy/character/information_collection/inventorys/inventorys.h"
 #include "game/entitiy/character/information_collection/stats/Statistic.h"
+#include "game/entitiy/item/game_item.h"
 #include "game/entitiy/monster/game_monster.h"
 #include "game/entitiy/monster/stat/monster_stat.h"
 #include "game/map/map_instance.h"
@@ -11,7 +13,7 @@
 #include "protocol/game_protocol.pb.h"
 
 auto GameServerPlayerHandler::TakeDamage(const int64_t characterId, const int64_t monsterObjectId,
-                                         GameSessionRef gameSession) -> void
+	GameSessionRef gameSession) -> void
 {
 	if (gameSession->GetPlayer() == nullptr || gameSession->GetPlayer()->GetCharacterId() != characterId)
 	{
@@ -91,4 +93,93 @@ auto GameServerPlayerHandler::AttackMonster(Protocol::GameClientAttackMonster pk
 		}
 	}
 
+}
+
+auto GameServerPlayerHandler::InventoryItemMove(Protocol::GameClientInventoryItemMove pkt, GameSessionRef gameSession)->void
+{
+	if (gameSession->GetPlayer() == nullptr || pkt.src() >= kInventoryMaxSlot || pkt.dst() >= kInventoryMaxSlot)
+	{
+		return;
+	}
+
+	const auto player = gameSession->GetPlayer();
+	const auto baseInfo = CharacterInfoStorageManager::GetInstance().FindInfo(CharacterInfoStorage::kInfoTypes::kInventory, player->GetCharacterId());
+	const auto inventoryInfo = std::static_pointer_cast<Inventorys>(baseInfo);
+	if (inventoryInfo)
+	{
+		switch (pkt.move_type())
+		{
+		case Protocol::kMove:
+			inventoryInfo->SwapItem(pkt.type(), pkt.src(), pkt.dst());
+			break;
+		case Protocol::kEquipment:
+		{
+			const auto equippedInven = inventoryInfo->FindInventory(Protocol::kInventoryEquipped);
+			const auto eqpInven = inventoryInfo->FindInventory(Protocol::kInventoryEqp);
+			const auto oldEquippedItem = equippedInven->FindItem(pkt.dst());
+			const auto oldEqpItem = eqpInven->FindItem(pkt.src());
+			if (oldEqpItem == nullptr && eqpInven->FindItem(pkt.src()) != nullptr)
+			{
+				gameSession->Disconnect(L"인벤토리 패킷 조작");
+				return;
+			}
+			auto dst = static_cast<int32_t>(GameContents::EquipeType(oldEqpItem->GetItemId()));
+			equippedInven->RemoveItem(dst);
+			equippedInven->PushItem(dst, oldEqpItem);
+			oldEqpItem->SetPosition(dst);
+			oldEqpItem->SetInventoryType(Protocol::kInventoryEquipped);
+			eqpInven->RemoveItem(pkt.src());
+			if (oldEquippedItem)
+			{
+				oldEquippedItem->SetPosition(pkt.src());
+				oldEquippedItem->SetInventoryType(Protocol::kInventoryEqp);
+				eqpInven->PushItem(pkt.src(), oldEquippedItem);
+			}
+
+			Protocol::GameServerDressChange sendPkt;
+			sendPkt.set_character_id(player->GetCharacterId());
+			sendPkt.set_item_type(dst);
+			sendPkt.set_item_id(oldEqpItem->GetItemId());
+			if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(player->GetMapId()))
+			{
+				mapInstance->BroadCastMessage(sendPkt, gameSession);
+			}
+
+			break;
+		}
+		case Protocol::kUnEquipment:
+		{
+			const auto equippedInven = inventoryInfo->FindInventory(Protocol::kInventoryEquipped);
+			const auto eqpInven = inventoryInfo->FindInventory(Protocol::kInventoryEqp);
+			const auto equippedItem = equippedInven->FindItem(pkt.src());
+
+			if (equippedItem == nullptr || eqpInven->FindItem(pkt.dst()) != nullptr || pkt.src() >= 0)
+			{
+				gameSession->Disconnect(L"인벤토리 패킷 조작");
+				return;
+			}
+
+			auto src = static_cast<int32_t>(GameContents::EquipeType(equippedItem->GetItemId()));
+			equippedInven->RemoveItem(src);
+
+			if (equippedItem)
+			{
+				equippedItem->SetPosition(pkt.dst());
+				equippedItem->SetInventoryType(Protocol::kInventoryEqp);
+				eqpInven->PushItem(pkt.dst(), equippedItem);
+			}
+			Protocol::GameServerDressChange sendPkt;
+			sendPkt.set_character_id(player->GetCharacterId());
+			sendPkt.set_item_type(src);
+			sendPkt.set_item_id(0);
+			if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(player->GetMapId()))
+			{
+				mapInstance->BroadCastMessage(sendPkt, gameSession);
+			}
+
+			break;
+		}
+		default:;
+		}
+	}
 }

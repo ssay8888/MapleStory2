@@ -46,3 +46,11 @@ auto GameClientPacketHandler::HandleGameClientAttackMonster(PacketSessionRef& se
 	GameTick::GetInstance()->DoAsync(&GameTick::AttackMonster, pkt, gameSession);
 	return true;
 }
+
+auto GameClientPacketHandler::HandleGameClientInventoryItemMove(PacketSessionRef& session,
+	Protocol::GameClientInventoryItemMove& pkt) -> bool
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	GameTick::GetInstance()->DoAsync(&GameTick::InventoryItemMove, pkt, gameSession);
+	return true;
+}

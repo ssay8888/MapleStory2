@@ -57,6 +57,9 @@ int32_t Inventory::Tick(const double timeDelta)
 	{
 		return S_OK;
 	}
+	_input_device->InvalidateInputDevice();
+	_is_lbutton_down = _input_device->GetDirectMouseKeyDown(InputDevice::kDirectInMouseButton::kLeftButton);
+	_is_lbutton_up = _input_device->GetDirectMouseKeyUp(InputDevice::kDirectInMouseButton::kLeftButton);
 	if (FAILED(CloseButtonTick(timeDelta)))
 	{
 		return E_FAIL;
@@ -78,8 +81,10 @@ int32_t Inventory::LateTick(const double timeDelta)
 	{
 		return S_OK;
 	}
-	for (auto& tabBtn : _inventory_tab_btn)
+	for (int i = 1; i < Protocol::kInventoryType::kInventoryEnd; ++i)
 	{
+		auto tabBtn = _inventory_tab_btn[i];
+
 		if (tabBtn)
 		{
 			tabBtn->LateTick(timeDelta);
@@ -118,8 +123,10 @@ HRESULT Inventory::Render()
 	result = _shader_com->SetUpTextureConstantTable("g_DiffuseTexture", _inventory_close_btn, _close_btn_over);
 	_shader_com->Commit();
 	_vi_buffer_com->RenderViBuffer();
-	for (auto& tabBtn : _inventory_tab_btn)
+	for (int i = 1; i < Protocol::kInventoryType::kInventoryEnd; ++i)
 	{
+		auto tabBtn = _inventory_tab_btn[i];
+		
 		if (tabBtn)
 		{
 			tabBtn->Render(_float3(_pos.x - (g_WinCX >> 1), -_pos.y + (g_WinCY >> 1), 0.f), _shader_com);
@@ -163,6 +170,7 @@ auto Inventory::Create() -> std::shared_ptr<Inventory>
 
 auto Inventory::AddComponents() -> HRESULT
 {
+	_input_device = InputDevice::Create(g_hInst, g_Wnd);
 	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0,
 		TEXT("Prototype_Texture_Inventory_Frame"),
 		TEXT("Com_Texture"),
@@ -187,7 +195,7 @@ auto Inventory::AddComponents() -> HRESULT
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;
 
-	for (int i = 1; i < Protocol::kInventoryType::kInventoryEnd; ++i)
+	for (int i = 0; i < Protocol::kInventoryType::kInventoryEnd; ++i)
 	{
 		auto btn = InventoryTabBtn::Create(static_cast<Protocol::kInventoryType>(i), _float3(-165.f, 217.f - (i * 24), 0));
 		if (btn == nullptr)
@@ -203,23 +211,27 @@ auto Inventory::AddComponents() -> HRESULT
 auto Inventory::TabButtonTick(const double timeDelta) -> HRESULT
 {
 	std::shared_ptr<InventoryTabBtn> selectBtn = nullptr;
-	for (auto& tabBtn : _inventory_tab_btn)
+	for (int i = 1; i < Protocol::kInventoryType::kInventoryEnd; ++i)
 	{
+		auto tabBtn = _inventory_tab_btn[i];
+
 		if (tabBtn)
 		{
 			tabBtn->SetParentPos(_float3(_pos.x - (g_WinCX >> 1), -_pos.y + (g_WinCY >> 1), 0));
-			if (tabBtn->SelectBtn())
+			if (tabBtn->SelectBtn(_is_lbutton_down))
 			{
 				tabBtn->SetSelect(true);
 				selectBtn = tabBtn;
 			}
-			tabBtn->Tick(timeDelta);
+			tabBtn->Tick(_float3(_pos.x - (g_WinCX >> 1), -_pos.y + (g_WinCY >> 1), 0.f), timeDelta);
 		}
 	}
 	if (selectBtn)
 	{
-		for (auto& tabBtn : _inventory_tab_btn)
+		for (int i = 1; i < Protocol::kInventoryType::kInventoryEnd; ++i)
 		{
+			auto tabBtn = _inventory_tab_btn[i];
+
 			if (tabBtn != nullptr && tabBtn != selectBtn)
 			{
 				tabBtn->SetSelect(false);
@@ -245,7 +257,7 @@ auto Inventory::CloseButtonTick(double timeDelta) -> HRESULT
 	if (PtInRect(&rcUI, ptMouse))
 	{
 		_close_btn_over = true;
-		if (InputDevice::GetInstance().GetDirectMouseKeyDown(InputDevice::kDirectInMouseButton::kLeftButton))
+		if (_is_lbutton_down)
 		{
 			_is_show = !_is_show;
 		}
@@ -267,14 +279,14 @@ auto Inventory::MoveInventoryFrame() -> HRESULT
 	};
 	if (PtInRect(&rcUI, ptMouse))
 	{
-		if (InputDevice::GetInstance().GetDirectMouseKeyDown(InputDevice::kDirectInMouseButton::kLeftButton))
+		if (_is_lbutton_down)
 		{
 			_moving = true;
 		}
 	}
 	if (_moving)
 	{
-		if (InputDevice::GetInstance().GetDirectMouseKeyUp(InputDevice::kDirectInMouseButton::kLeftButton))
+		if (_is_lbutton_up)
 		{
 			_moving = false;
 		}

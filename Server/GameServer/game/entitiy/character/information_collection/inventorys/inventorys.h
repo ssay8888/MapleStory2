@@ -11,11 +11,14 @@ public:
 	virtual ~Inventorys() = default;
 
 public:
-	auto PushItem(Protocol::kInventoryType type, int32_t position, int32_t itemId)->bool;
-	auto FindItem(Protocol::kInventoryType type, int32_t position)->int32_t;
+	auto PushItem(Protocol::kInventoryType type, int32_t position, std::shared_ptr<GameItem> itemId)->bool;
+	auto FindItem(Protocol::kInventoryType type, int32_t position)->std::shared_ptr<GameItem>;
+	auto SwapItem(Protocol::kInventoryType type, int32_t src, int32_t dst)->void;
 	auto RemoveItem(Protocol::kInventoryType type, int32_t position)->bool;
-	auto AllItems()->std::vector<std::pair<int32_t, int32_t>>;
-	auto AllItems(Protocol::kInventoryType type)->std::vector<std::pair<int32_t, int32_t>>;
+	auto AllItems()->std::vector<std::shared_ptr<GameItem>>;
+	auto AllItems(Protocol::kInventoryType type)->std::vector<std::shared_ptr<GameItem>>;
+
+	auto FindInventory(Protocol::kInventoryType type)->std::shared_ptr<Inventory>;
 
 public:
 	auto ItemListToXml()const->std::wstring;

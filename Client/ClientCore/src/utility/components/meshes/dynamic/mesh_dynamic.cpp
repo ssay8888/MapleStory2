@@ -20,6 +20,8 @@ MeshDynamic::MeshDynamic(const MeshDynamic& rhs)
 	, _animation(rhs._animation->Clone())
 	, _mesh_containers(rhs._mesh_containers)
 	, _loader(rhs._loader)
+	, _origin_mesh_containers(rhs._origin_mesh_containers)
+	, _origin_combined_transfromation_matrix_pointers(rhs._origin_combined_transfromation_matrix_pointers)
 {
 	const size_t iNumMeshContainer = _mesh_containers.size();
 
@@ -37,7 +39,7 @@ MeshDynamic::~MeshDynamic()
 
 	for (size_t i = 0; i < numMeshContainer; ++i)
 	{
-		_origin_mesh_containers[i]->MeshData.pMesh->Release();
+		auto cunt = _origin_mesh_containers[i]->MeshData.pMesh->Release();
 	}
 
 	_origin_mesh_containers.clear();
@@ -329,7 +331,15 @@ auto MeshDynamic::UpdateSkinnedMesh(const uint32_t iMeshContainerIndex) -> HRESU
 
 auto MeshDynamic::ChangeSkinnedMesh(const std::shared_ptr<MeshDynamic> target, const std::string remove) -> HRESULT
 {
-	auto container = target->GetMeshContainer();
+	std::vector<D3DXMeshContainerDerived*> container;
+	if (target != nullptr)
+	{
+		container = target->GetMeshContainer();
+	}
+	else
+	{
+		container = _origin_mesh_containers;
+	}
 	std::vector<int32_t> indexList;
 	int32_t index = 0;
 	for (auto iter = container.begin(); iter != container.end(); ++iter)
@@ -351,7 +361,15 @@ auto MeshDynamic::ChangeSkinnedMesh(const std::shared_ptr<MeshDynamic> target, c
 			++index;
 		}
 	}
-	auto meshs = target->GetMeshContainer();
+	std::vector<D3DXMeshContainerDerived*> meshs;
+	if (target)
+	{
+		meshs = target->GetMeshContainer();
+	}
+	else
+	{
+		meshs = _origin_mesh_containers;
+	}
 	_mesh_containers.insert(_mesh_containers.end(), meshs.begin(), meshs.end());
 	index = 0;
 	for (auto iter = _combined_transfromation_matrix_pointers.begin(); iter != _combined_transfromation_matrix_pointers.end();)
@@ -373,9 +391,18 @@ auto MeshDynamic::ChangeSkinnedMesh(const std::shared_ptr<MeshDynamic> target, c
 			index++;
 		}
 	}
-	_combined_transfromation_matrix_pointers.insert(_combined_transfromation_matrix_pointers.end(), 
-		target->_origin_combined_transfromation_matrix_pointers.begin(), 
-		target->_origin_combined_transfromation_matrix_pointers.end());
+	if (target)
+	{
+		_combined_transfromation_matrix_pointers.insert(_combined_transfromation_matrix_pointers.end(),
+			target->_origin_combined_transfromation_matrix_pointers.begin(),
+			target->_origin_combined_transfromation_matrix_pointers.end());
+	}
+	else
+	{
+		_combined_transfromation_matrix_pointers.insert(_combined_transfromation_matrix_pointers.end(),
+			_origin_combined_transfromation_matrix_pointers.begin(),
+			_origin_combined_transfromation_matrix_pointers.end());
+	}
 	//bool isSkin = false;
 	//for (auto iter = _mesh_containers.begin(); iter != _mesh_containers.end(); ++iter)
 	//{

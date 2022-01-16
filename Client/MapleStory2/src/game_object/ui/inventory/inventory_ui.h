@@ -2,6 +2,7 @@
 #include "protocol/game_enum.pb.h"
 #include "src/utility/game_objects/game_object.h"
 
+class InputDevice;
 class InventoryTabBtn;
 class ViBufferRect;
 class Shader;
@@ -40,13 +41,16 @@ private:
 	std::shared_ptr<Shader>					_shader_com = nullptr;
 	std::shared_ptr<ViBufferRect>			_vi_buffer_com = nullptr;
 	std::shared_ptr<InventoryTabBtn>		_inventory_tab_btn[Protocol::kInventoryType::kInventoryEnd];
-
+	std::shared_ptr<InputDevice>			_input_device;
 	_matrix _proj_matrix;
 	_float3 _pos;
 
 	bool _is_show;
 	bool _close_btn_over;
 	bool _moving;
+
+	uint8_t _is_lbutton_down = 0;
+	uint8_t _is_lbutton_up = 0;
 
 	const float _size_x = 464;
 	const float _size_y = 524;

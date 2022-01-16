@@ -35,6 +35,42 @@ public:
 	auto LoadItemModel(const std::string& path)->void;
 	auto FindItemModel(const int32_t itemId)->std::shared_ptr<ItemModel>;
 	auto AllItemModel() const ->const std::map<int32_t, std::shared_ptr<ItemModel>>&;
+
+	struct ItemInfo
+	{
+		int32_t id;
+		struct Property
+		{
+			int32_t slot_max;
+			int32_t icon_code;
+			std::wstring slot_icon;
+			std::wstring category;
+		} property;
+
+		int32_t skill_id;
+
+		int32_t constant_id;
+
+	};
+	auto LoadItemInfo(std::string path)->void;
+	auto AllItemInfo() const ->std::map<int32_t, std::shared_ptr<ItemInfo>>;
+	auto FindItemInfo(int32_t itemId)->std::shared_ptr<ItemInfo>;
+
+	struct Option
+	{
+		int32_t code;
+		struct Rank
+		{
+			std::wstring name;
+			int32_t value;
+			int32_t lua_index;
+		};
+
+		std::map<std::wstring, std::shared_ptr<Rank>> ranks;
+	};
+
+	auto LoadItemOptionConstant()->void;
+	auto FindItemOptionConstant(int32_t optionId)->std::shared_ptr<Option>;
 #pragma endregion
 
 #pragma region AnimationLoader
@@ -206,6 +242,7 @@ public:
 		int32_t id;
 		std::string comment;
 		DetectProperty detect;
+		int32_t cooldown;
 		std::vector<std::shared_ptr<Motion>> motions;
 	};
 
@@ -246,6 +283,8 @@ public:
 private:
 	std::map<int32_t, std::shared_ptr<FaceInfo>>								_face_info;
 	std::map<int32_t, std::shared_ptr<ItemModel>>								_item_model;
+	std::map<int32_t, std::shared_ptr<ItemInfo>>								_item_info;
+	std::map<int32_t, std::shared_ptr<Option>>									_item_options;
 	std::vector<std::shared_ptr<AnimationInfo>>									_animations_info;
 	std::vector<std::shared_ptr<CreateCharacterItemInfo>>						_create_item_info;
 	std::map<int32_t, std::shared_ptr<FieldData>>								_field_data;

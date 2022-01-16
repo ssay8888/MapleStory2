@@ -1,10 +1,21 @@
 #include "c_pch.h"
 #include "inventory_tab_btn.h"
 
+#include "common_defines.h"
+#include "protocol/game_protocol.pb.h"
+#include "src/game_object/equipped/equipped.h"
+#include "src/game_object/item/Item.h"
+#include "src/game_object/player/player.h"
+#include "src/game_object/ui/equipped_ui/equipped_ui.h"
+#include "src/game_object/ui/popup_info/popup_info.h"
+#include "src/network/game_server_packet_handler.h"
+#include "src/network/send_manager.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
+#include "src/utility/game_objects/manager/object_manager.h"
+#include "src/game_object/ui/inventory/inventory_ui.h"
 
 InventoryTabBtn::InventoryTabBtn(Protocol::kInventoryType type, _float3 pos) :
 	GameObject(GraphicDevice::GetInstance().GetDevice()),
@@ -29,30 +40,145 @@ HRESULT InventoryTabBtn::NativeConstruct(void* arg)
 }
 int32_t InventoryTabBtn::Tick(const double timeDelta)
 {
-	_input_device->InvalidateInputDevice();
 	//if (InputDevice::GetInstance().GetKeyPressing(DIK_T))
 	//{
-	//	_pos.x += 1;
+	//	_original_pos.x += 1;
 	//}
 	//if (InputDevice::GetInstance().GetKeyPressing(DIK_Y))
 	//{
-	//	_pos.x -= 1;
+	//	_original_pos.x -= 1;
 	//}
 
 	//if (InputDevice::GetInstance().GetKeyPressing(DIK_G))
 	//{
-	//	_pos.y += 1;
+	//	_original_pos.y += 1;
 	//}
 	//if (InputDevice::GetInstance().GetKeyPressing(DIK_H))
 	//{
-	//	_pos.y -= 1;
+	//	_original_pos.y -= 1;
 	//}
 
 	return GameObject::Tick(timeDelta);
 }
 
+auto InventoryTabBtn::Tick(const _float3& pos, double timeDelta) -> int32_t
+{
+	_input_device->InvalidateInputDevice();
+
+	std::shared_ptr<Item> itemObject = nullptr;
+	auto lDown = _input_device->GetDirectMouseKeyDown(InputDevice::kDirectInMouseButton::kLeftButton);
+	auto lUp = _input_device->GetDirectMouseKeyUp(InputDevice::kDirectInMouseButton::kLeftButton);
+	auto rDown = _input_device->GetDirectMouseKeyUp(InputDevice::kDirectInMouseButton::kRightButton);
+	for (const auto [position, item] : _items)
+	{
+		if (item)
+		{
+			if (_is_click)
+			{
+				if (rDown)
+				{
+					if (_type == Protocol::kInventoryEqp)
+					{
+						if (item->SearchMouseOverState(pos))
+						{
+							auto& objectManager = ObjectManager::GetInstance();
+							auto baseCharacter = objectManager.GetGameObjectPtr(kSceneGamePlay0, L"Layer_Character", 0);
+							auto player = std::static_pointer_cast<Player>(baseCharacter);
+							auto baseInventory = objectManager.GetGameObjectPtr(kSceneGamePlay0, L"Layer_Inventory", 0);
+							auto inventory = std::static_pointer_cast<Inventory>(baseInventory);
+							if (inventory)
+							{
+								const auto equippedTab = inventory->GetInventoryTab(Protocol::kInventoryEquipped);
+								int32_t equippedPosition = static_cast<int32_t>(GameContents::EquipeType(item->GetItemId()));
+								int32_t oldPosition = position;
+								auto equippedItem = equippedTab->FindItem(equippedPosition);
+								equippedTab->AddItem(equippedPosition, item);
+								RemoveItem(oldPosition);
+								item->ChangePosition(equippedPosition);
+								if (equippedItem)
+								{
+									_items[oldPosition] = equippedItem;
+									equippedItem->ChangePosition(oldPosition);
+								}
+								player->ChangeEqp(GameContents::EquipeType(item->GetItemId()), item->GetItemId());
+								Protocol::GameClientInventoryItemMove sendPkt;
+								sendPkt.set_type(_type);
+								sendPkt.set_move_type(Protocol::kEquipment);
+								sendPkt.set_src(oldPosition);
+								sendPkt.set_dst(equippedPosition);
+								SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+							}
+						}
+					}
+				}
+				else
+				{
+					if (item->SelectItem(pos, lDown, lUp))
+					{
+						itemObject = item;
+						itemObject->SetSelectItem(true);
+					}
+					if (item->UnSelectItem(pos, lDown, lUp))
+					{
+						item->SetSelectItem(false);
+						const auto resultPosition = item->FindPosition(pos);
+						if (resultPosition >= 0)
+						{
+							const auto oldPosition = item->GetPosition();
+							auto findItem = _items.find(resultPosition);
+							if (findItem != _items.end())
+							{
+								if (findItem->second)
+								{
+									findItem->second->ChangePosition(oldPosition);
+								}
+								_items[oldPosition] = findItem->second;
+								_items[resultPosition] = item;
+							}
+							else
+							{
+								_items[oldPosition] = nullptr;
+								_items[resultPosition] = item;
+							}
+							item->ChangePosition(resultPosition);
+							Protocol::GameClientInventoryItemMove sendPkt;
+							sendPkt.set_type(_type);
+							sendPkt.set_move_type(Protocol::kMove);
+							sendPkt.set_src(oldPosition);
+							sendPkt.set_dst(resultPosition);
+							SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+						}
+						else
+						{
+							item->ResetPosition();
+						}
+					}
+				}
+			}
+			item->SetIsMouseUp(item->SearchMouseOverState(pos));
+		}
+	}
+
+	for (const auto& [key, item] : _items)
+	{
+		if (item)
+		{
+			item->Tick(pos, timeDelta);
+			item->GetPopupInfo()->Tick(timeDelta);
+		}
+	}
+	return S_OK;
+}
+
 int32_t InventoryTabBtn::LateTick(const double timeDelta)
 {
+	for (const auto& item : _items)
+	{
+		if (item.second)
+		{
+			item.second->LateTick(timeDelta);
+		}
+	}
 	return GameObject::LateTick(timeDelta);
 }
 
@@ -81,6 +207,11 @@ auto InventoryTabBtn::Render(const _float3& pos, std::shared_ptr<Shader> shader)
 		_vi_buffer_com->RenderViBuffer();
 	}
 
+	if (_is_click)
+	{
+		ItemListRender(pos, shader);
+	}
+
 
 	const float centerX = g_WinCX >> 1;
 	const float centerY = g_WinCY >> 1;
@@ -105,6 +236,29 @@ auto InventoryTabBtn::Render(const _float3& pos, std::shared_ptr<Shader> shader)
 	return S_OK;
 }
 
+auto InventoryTabBtn::ItemListRender(const _float3& pos, std::shared_ptr<Shader> shader) -> HRESULT
+{
+	for (auto item : _items)
+	{
+		if (item.second)
+		{
+			item.second->Render(pos, shader);
+		}
+	}
+
+	for (auto item : _items)
+	{
+		if (item.second)
+		{
+			if (item.second->MouseOverState())
+			{
+				item.second->GetPopupInfo()->Render();
+			}
+		}
+	}
+	return S_OK;
+}
+
 auto InventoryTabBtn::Clone(void* arg) -> std::shared_ptr<GameObject>
 {
 	auto instance = std::make_shared<InventoryTabBtn>(*this);
@@ -116,7 +270,7 @@ auto InventoryTabBtn::Clone(void* arg) -> std::shared_ptr<GameObject>
 	return instance;
 }
 
-auto InventoryTabBtn::SelectBtn() -> bool
+auto InventoryTabBtn::SelectBtn(uint8_t lButton) -> bool
 {
 	POINT		ptMouse;
 	GetCursorPos(&ptMouse);
@@ -133,7 +287,7 @@ auto InventoryTabBtn::SelectBtn() -> bool
 	if (PtInRect(&rcUI, ptMouse))
 	{
 		_is_over = true;
-		if (_input_device->GetDirectMouseKeyDown(InputDevice::kDirectInMouseButton::kLeftButton))
+		if (lButton)
 		{
 			return true;
 		}
@@ -151,9 +305,47 @@ auto InventoryTabBtn::SetSelect(bool click)->void
 	_is_click = click;
 }
 
-auto InventoryTabBtn::IsSelect() -> bool
+auto InventoryTabBtn::IsSelect() const -> bool
 {
 	return _is_click;
+}
+
+auto InventoryTabBtn::AllItem() const -> std::map<int32_t, std::shared_ptr<Item>>
+{
+	return _items;
+}
+
+auto InventoryTabBtn::AddItem(int32_t position, std::shared_ptr<Item> item) -> void
+{
+	_items[position] = item;
+}
+
+auto InventoryTabBtn::FindItem(const int32_t position) -> std::shared_ptr<Item>
+{
+	const auto iterator = _items.find(position);
+	if (iterator != _items.end())
+	{
+		return iterator->second;
+	}
+	return nullptr;
+}
+
+auto InventoryTabBtn::RemoveItem(int32_t position) -> void
+{
+	_items[position] = nullptr;
+}
+
+auto InventoryTabBtn::GetFreeSlot() const -> int32_t
+{
+	for (int32_t i = 0; i < kInventoryConstant::kInventoryMaxSlot; ++i)
+	{
+		auto iterator = _items.find(i);
+		if (iterator == _items.end() || iterator->second == nullptr)
+		{
+			return i;
+		}
+	}
+	return -1;
 }
 
 auto InventoryTabBtn::Create(Protocol::kInventoryType type, _float3 pos) -> std::shared_ptr<InventoryTabBtn>
@@ -170,6 +362,7 @@ auto InventoryTabBtn::Create(Protocol::kInventoryType type, _float3 pos) -> std:
 auto InventoryTabBtn::AddComponents() -> HRESULT
 {
 	_input_device = InputDevice::Create(g_hInst, g_Wnd);
+
 	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0,
 		TEXT("Prototype_Texture_Inventory_Tab_Btn"),
 		TEXT("Com_Texture"),

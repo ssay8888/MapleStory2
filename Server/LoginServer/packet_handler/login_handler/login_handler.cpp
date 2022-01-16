@@ -7,6 +7,7 @@
 #include "login_server.h"
 #include "auth_storage/auth_storage.h"
 #include "center_server_session/center_login_client_packet_handler.h"
+#include "data_reader/data_reader_manager.h"
 #include "game/player.h"
 #include "game/equipped/equipped.h"
 #include "login_session/login_client_packet_handler.h"
@@ -188,7 +189,6 @@ void LoginHandler::CreateCharacter(const PacketSessionRef session, const Protoco
 			auto character = sendPkt.mutable_character();
 			character->set_name(pkt.name().c_str());
 			character->set_gender(gender);
-
 			character->add_eqp_items(face);
 			do
 			{
@@ -202,6 +202,7 @@ void LoginHandler::CreateCharacter(const PacketSessionRef session, const Protoco
 				}
 			} while (bind.SqlMoreResults() != SQL_NO_DATA);
 
+			character->set_characterid(result);
 			switch (static_cast<kSqlCreateCharacterResult>(result))
 			{
 			case kSqlCreateCharacterResult::kIdDuplication:
@@ -210,10 +211,9 @@ void LoginHandler::CreateCharacter(const PacketSessionRef session, const Protoco
 			case kSqlCreateCharacterResult::kCreateFailed:
 				sendPkt.set_result(Protocol::kCreateFailed);
 				break;
-			case kSqlCreateCharacterResult::kCreateSuccess:
+			default:
 				sendPkt.set_result(Protocol::kCreateSuccess);
 				break;
-			default: ;
 			}
 
 			for (int i = 0; i < 3; ++i)
@@ -278,6 +278,31 @@ std::wstring LoginHandler::ItemListToXml(Protocol::LoginClientCreateCharacter pk
 			item.append_attribute("type").set_value(0);
 			item.append_attribute("itemid").set_value(itemId);
 			item.append_attribute("position").set_value(static_cast<int>(GameContents::EquipeType(itemId)));
+			auto iteminfo = DataReaderManager::GetInstance().FindItemInfo(itemId);
+			if (iteminfo)
+			{
+				if(iteminfo->constant_id != 0)
+				{
+					auto option = DataReaderManager::GetInstance().FindItemOptionConstant(iteminfo->constant_id);
+					if (option)
+					{
+						item.append_attribute("str").set_value(option->ranks[L"str"] != nullptr ? option->ranks[L"str"]->value : 0);
+						item.append_attribute("dex").set_value(option->ranks[L"dex"] != nullptr ? option->ranks[L"dex"]->value : 0);
+						item.append_attribute("_int").set_value(option->ranks[L"int"] != nullptr ? option->ranks[L"int"]->value : 0);
+						item.append_attribute("luk").set_value(option->ranks[L"luk"] != nullptr ? option->ranks[L"luk"]->value : 0);
+						item.append_attribute("wap").set_value(option->ranks[L"wap"] != nullptr ? option->ranks[L"wap"]->value : 0);
+					}
+				}
+				else
+				{
+					item.append_attribute("str").set_value(0);
+					item.append_attribute("dex").set_value(0);
+					item.append_attribute("_int").set_value(0);
+					item.append_attribute("luk").set_value(0);
+					item.append_attribute("wap").set_value(0);
+				}
+				item.append_attribute("quantity").set_value(1);
+			}
 		}
 	}
 	std::wstringstream xml;

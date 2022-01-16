@@ -201,6 +201,32 @@ inline bool kMonsterStatType_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kMonsterStatType>(
     kMonsterStatType_descriptor(), name, value);
 }
+enum kInventoryItemMoveType : int {
+  kMove = 0,
+  kEquipment = 1,
+  kUnEquipment = 2,
+  kInventoryItemMoveType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  kInventoryItemMoveType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool kInventoryItemMoveType_IsValid(int value);
+constexpr kInventoryItemMoveType kInventoryItemMoveType_MIN = kMove;
+constexpr kInventoryItemMoveType kInventoryItemMoveType_MAX = kUnEquipment;
+constexpr int kInventoryItemMoveType_ARRAYSIZE = kInventoryItemMoveType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kInventoryItemMoveType_descriptor();
+template<typename T>
+inline const std::string& kInventoryItemMoveType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, kInventoryItemMoveType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function kInventoryItemMoveType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    kInventoryItemMoveType_descriptor(), enum_t_value);
+}
+inline bool kInventoryItemMoveType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, kInventoryItemMoveType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kInventoryItemMoveType>(
+    kInventoryItemMoveType_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -247,6 +273,11 @@ template <> struct is_proto_enum< ::Protocol::kMonsterStatType> : ::std::true_ty
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kMonsterStatType>() {
   return ::Protocol::kMonsterStatType_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::kInventoryItemMoveType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kInventoryItemMoveType>() {
+  return ::Protocol::kInventoryItemMoveType_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

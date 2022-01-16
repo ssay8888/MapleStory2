@@ -50,3 +50,10 @@ enum kMonsterStatType
 	kMonsterHp = 0;
 	kMonsterMp = 1;
 }
+
+enum kInventoryItemMoveType
+{
+	kMove = 0;
+	kEquipment = 1;
+	kUnEquipment = 2;
+}

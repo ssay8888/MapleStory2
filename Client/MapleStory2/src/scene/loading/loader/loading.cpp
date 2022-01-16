@@ -19,6 +19,7 @@
 #include "src/game_object/terrain/terrain.h"
 #include "src/game_object/ui/character_select/character_select_ui.h"
 #include "src/game_object/ui/character_select/character_beauty/character_beauty_ui.h"
+#include "src/game_object/ui/equipped_ui/equipped_ui.h"
 #include "src/game_object/ui/inventory/inventory_ui.h"
 #include "src/game_object/ui/player_info/player_info.h"
 #include "src/game_object/user/user.h"
@@ -447,9 +448,6 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Shader_Terrain"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Terrain.hlsl")))))
 		return E_FAIL;
 
-	MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0);
-	
-
 	if (FAILED(LoadMainPlayerInfo()))
 	{
 		return E_FAIL;
@@ -459,7 +457,22 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	{
 		return E_FAIL;
 	}
+	if (FAILED(LoadItemIcon()))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(LoadItemInfoPopup()))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(LoadEquippedUi()))
+	{
+		return E_FAIL;
+	}
 	
+	MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0);
+	
+
 	_system_message.clear();
 	_system_message.append(L"로딩이 완료되었습니다.");
 
@@ -514,6 +527,50 @@ auto Loading::LoadInventory() -> HRESULT
 		return E_FAIL;
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Inventory_Tab_Btn"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/inventory_ui/inventory/inventory_tab_%d.png"), 2))))
 		return E_FAIL;
+
+
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_EquippedUi"), EquippedUi::Create())))
+		return E_FAIL;
+	return S_OK;
+}
+
+auto Loading::LoadItemIcon() -> HRESULT
+{
+	const auto& componentManager = ComponentManager::GetInstance();
+	const auto itemInfo = DataReaderManager::GetInstance().AllItemInfo();
+	for (const auto& [itemid, item] : itemInfo)
+	{
+		std::wstring iconPrototypeName = fmt::format(L"Prototype_Texture_{0}", itemid);
+		std::wstring iconPath = fmt::format(L"../../Binary/Resources/Image/item/icon/{0}.png", item->property.slot_icon == L"" ? std::to_wstring(itemid) : item->property.slot_icon);
+		if (FAILED(componentManager.AddPrototype(kSceneStatic, iconPrototypeName, Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, iconPath))))
+		{
+			std::cout << "icon 이미지를 불러오기에 실패했습니다. item code : " << itemid << std::endl;
+		}
+	}
+	return S_OK;
+}
+
+auto Loading::LoadItemInfoPopup() -> HRESULT
+{
+	const auto& componentManager = ComponentManager::GetInstance();
+
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_ItemInfoPopup"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/iteminfo_popup/iteminfo_popup.png")))))
+	{
+		return E_FAIL;
+	}
+	return S_OK;
+}
+
+auto Loading::LoadEquippedUi() -> HRESULT
+{
+	const auto& componentManager = ComponentManager::GetInstance();
+
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Equipped"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/equipped/equipped.png")))))
+	{
+		return E_FAIL;
+	}
 	return S_OK;
 }
 

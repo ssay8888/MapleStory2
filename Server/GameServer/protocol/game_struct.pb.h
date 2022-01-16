@@ -180,6 +180,13 @@ class item final :
   enum : int {
     kItemidFieldNumber = 1,
     kPositionFieldNumber = 2,
+    kInventoryTypeFieldNumber = 3,
+    kQuantityFieldNumber = 4,
+    kStrFieldNumber = 5,
+    kDexFieldNumber = 6,
+    kIntFieldNumber = 7,
+    kLukFieldNumber = 8,
+    kWapFieldNumber = 9,
   };
   // int32 itemid = 1;
   void clear_itemid();
@@ -199,6 +206,69 @@ class item final :
   void _internal_set_position(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
+  // .Protocol.kInventoryType inventory_type = 3;
+  void clear_inventory_type();
+  ::Protocol::kInventoryType inventory_type() const;
+  void set_inventory_type(::Protocol::kInventoryType value);
+  private:
+  ::Protocol::kInventoryType _internal_inventory_type() const;
+  void _internal_set_inventory_type(::Protocol::kInventoryType value);
+  public:
+
+  // int32 quantity = 4;
+  void clear_quantity();
+  ::PROTOBUF_NAMESPACE_ID::int32 quantity() const;
+  void set_quantity(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_quantity() const;
+  void _internal_set_quantity(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 str = 5;
+  void clear_str();
+  ::PROTOBUF_NAMESPACE_ID::int32 str() const;
+  void set_str(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_str() const;
+  void _internal_set_str(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 dex = 6;
+  void clear_dex();
+  ::PROTOBUF_NAMESPACE_ID::int32 dex() const;
+  void set_dex(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_dex() const;
+  void _internal_set_dex(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 int = 7;
+  void clear_int_();
+  ::PROTOBUF_NAMESPACE_ID::int32 int_() const;
+  void set_int_(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_int_() const;
+  void _internal_set_int_(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 luk = 8;
+  void clear_luk();
+  ::PROTOBUF_NAMESPACE_ID::int32 luk() const;
+  void set_luk(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_luk() const;
+  void _internal_set_luk(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 wap = 9;
+  void clear_wap();
+  ::PROTOBUF_NAMESPACE_ID::int32 wap() const;
+  void set_wap(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_wap() const;
+  void _internal_set_wap(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.item)
  private:
   class _Internal;
@@ -208,6 +278,13 @@ class item final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::int32 itemid_;
   ::PROTOBUF_NAMESPACE_ID::int32 position_;
+  int inventory_type_;
+  ::PROTOBUF_NAMESPACE_ID::int32 quantity_;
+  ::PROTOBUF_NAMESPACE_ID::int32 str_;
+  ::PROTOBUF_NAMESPACE_ID::int32 dex_;
+  ::PROTOBUF_NAMESPACE_ID::int32 int__;
+  ::PROTOBUF_NAMESPACE_ID::int32 luk_;
+  ::PROTOBUF_NAMESPACE_ID::int32 wap_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fstruct_2eproto;
 };
@@ -414,6 +491,146 @@ inline void item::_internal_set_position(::PROTOBUF_NAMESPACE_ID::int32 value) {
 inline void item::set_position(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_position(value);
   // @@protoc_insertion_point(field_set:Protocol.item.position)
+}
+
+// .Protocol.kInventoryType inventory_type = 3;
+inline void item::clear_inventory_type() {
+  inventory_type_ = 0;
+}
+inline ::Protocol::kInventoryType item::_internal_inventory_type() const {
+  return static_cast< ::Protocol::kInventoryType >(inventory_type_);
+}
+inline ::Protocol::kInventoryType item::inventory_type() const {
+  // @@protoc_insertion_point(field_get:Protocol.item.inventory_type)
+  return _internal_inventory_type();
+}
+inline void item::_internal_set_inventory_type(::Protocol::kInventoryType value) {
+  
+  inventory_type_ = value;
+}
+inline void item::set_inventory_type(::Protocol::kInventoryType value) {
+  _internal_set_inventory_type(value);
+  // @@protoc_insertion_point(field_set:Protocol.item.inventory_type)
+}
+
+// int32 quantity = 4;
+inline void item::clear_quantity() {
+  quantity_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::_internal_quantity() const {
+  return quantity_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::quantity() const {
+  // @@protoc_insertion_point(field_get:Protocol.item.quantity)
+  return _internal_quantity();
+}
+inline void item::_internal_set_quantity(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  quantity_ = value;
+}
+inline void item::set_quantity(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_quantity(value);
+  // @@protoc_insertion_point(field_set:Protocol.item.quantity)
+}
+
+// int32 str = 5;
+inline void item::clear_str() {
+  str_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::_internal_str() const {
+  return str_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::str() const {
+  // @@protoc_insertion_point(field_get:Protocol.item.str)
+  return _internal_str();
+}
+inline void item::_internal_set_str(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  str_ = value;
+}
+inline void item::set_str(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_str(value);
+  // @@protoc_insertion_point(field_set:Protocol.item.str)
+}
+
+// int32 dex = 6;
+inline void item::clear_dex() {
+  dex_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::_internal_dex() const {
+  return dex_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::dex() const {
+  // @@protoc_insertion_point(field_get:Protocol.item.dex)
+  return _internal_dex();
+}
+inline void item::_internal_set_dex(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  dex_ = value;
+}
+inline void item::set_dex(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_dex(value);
+  // @@protoc_insertion_point(field_set:Protocol.item.dex)
+}
+
+// int32 int = 7;
+inline void item::clear_int_() {
+  int__ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::_internal_int_() const {
+  return int__;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::int_() const {
+  // @@protoc_insertion_point(field_get:Protocol.item.int)
+  return _internal_int_();
+}
+inline void item::_internal_set_int_(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  int__ = value;
+}
+inline void item::set_int_(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_int_(value);
+  // @@protoc_insertion_point(field_set:Protocol.item.int)
+}
+
+// int32 luk = 8;
+inline void item::clear_luk() {
+  luk_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::_internal_luk() const {
+  return luk_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::luk() const {
+  // @@protoc_insertion_point(field_get:Protocol.item.luk)
+  return _internal_luk();
+}
+inline void item::_internal_set_luk(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  luk_ = value;
+}
+inline void item::set_luk(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_luk(value);
+  // @@protoc_insertion_point(field_set:Protocol.item.luk)
+}
+
+// int32 wap = 9;
+inline void item::clear_wap() {
+  wap_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::_internal_wap() const {
+  return wap_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 item::wap() const {
+  // @@protoc_insertion_point(field_get:Protocol.item.wap)
+  return _internal_wap();
+}
+inline void item::_internal_set_wap(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  wap_ = value;
+}
+inline void item::set_wap(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_wap(value);
+  // @@protoc_insertion_point(field_set:Protocol.item.wap)
 }
 
 // -------------------------------------------------------------------

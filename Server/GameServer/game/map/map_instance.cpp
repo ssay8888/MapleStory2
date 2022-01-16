@@ -3,6 +3,7 @@
 
 #include "game/entitiy/character/game_character.h"
 #include "game/entitiy/character/information_collection/inventorys/inventorys.h"
+#include "game/entitiy/item/game_item.h"
 #include "game/entitiy/monster/game_monster.h"
 #include "game/entitiy/monster/spawn_point/spawn_point.h"
 #include "game/entitiy/monster/stat/monster_stat.h"
@@ -92,8 +93,9 @@ auto MapInstance::BroadCastAddCharacter(std::shared_ptr<GameSession> session) ->
 	for (auto eqp : eqpItems)
 	{
 		auto item = respawnPlayerPkt.add_items();
-		item->set_position(eqp.first);
-		item->set_itemid(eqp.second);
+		item->set_position(eqp->GetPosition());
+		item->set_itemid(eqp->GetItemId());
+		item->set_inventory_type(eqp->GetInventoryType());
 	}
 
 	for (auto [key, targetSession] : _characters)
@@ -120,8 +122,9 @@ auto MapInstance::BroadCastAddCharacter(std::shared_ptr<GameSession> session) ->
 			for (const auto eqp : eqpItems)
 			{
 				const auto item = respawnTargetPlayerPkt.add_items();
-				item->set_position(eqp.first);
-				item->set_itemid(eqp.second);
+				item->set_position(eqp->GetPosition());
+				item->set_itemid(eqp->GetItemId());
+				item->set_inventory_type(eqp->GetInventoryType());
 			}
 
 			session->Send(GameClientPacketHandler::MakeSendBuffer(respawnTargetPlayerPkt));

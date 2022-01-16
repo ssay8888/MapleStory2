@@ -7,6 +7,13 @@ message item
 {
 	int32 itemid = 1;
 	int32 position = 2;
+	kInventoryType inventory_type = 3;
+	int32 quantity = 4;
+	int32 str = 5;
+	int32 dex = 6;
+	int32 int = 7;
+	int32 luk = 8;
+	int32 wap = 9;
 }
 
 message float3

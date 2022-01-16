@@ -22,7 +22,12 @@ auto DataReaderManager::Init(const Microsoft::WRL::ComPtr<IDirect3DDevice9> devi
 	LoadItemModel("../../Binary/Resources/Xml/itemmodel/115.xml");
 	LoadItemModel("../../Binary/Resources/Xml/itemmodel/117.xml");
 	LoadItemModel("../../Binary/Resources/Xml/itemmodel/150.xml");
+	LoadItemInfo("../../Binary/Resources/Xml/itemdata/114.xml");
+	LoadItemInfo("../../Binary/Resources/Xml/itemdata/115.xml");
+	LoadItemInfo("../../Binary/Resources/Xml/itemdata/117.xml");
+	LoadItemInfo("../../Binary/Resources/Xml/itemdata/200.xml");
 	LoadAnimationInfo();
+	LoadItemOptionConstant();
 	LoadCreateCharacterItemInfo();
 	LoadFieldData();
 	LoadMonsterInfo();
@@ -116,6 +121,99 @@ auto DataReaderManager::FindItemModel(const int32_t itemId) -> std::shared_ptr<I
 auto DataReaderManager::AllItemModel() const -> const std::map<int32_t, std::shared_ptr<ItemModel>>&
 {
 	return _item_model;
+}
+
+auto DataReaderManager::LoadItemInfo(std::string path) -> void
+{
+	xml_document doc;
+	const auto err = doc.load_file(path.c_str());
+
+	if (err.status == status_ok)
+	{
+		const auto nodeItems = doc.select_nodes("ms2/item");
+
+		for (auto nodeItem : nodeItems)
+		{
+			const auto item = std::make_shared<ItemInfo>();
+			item->id = std::stoi(nodeItem.node().attribute("id").value());
+			for (auto environment : nodeItem.node())
+			{
+				for (auto info : environment)
+				{
+					if (std::string(info.name()) == "property")
+					{
+						item->property.slot_max = info.attribute("slotMax").empty() ? 1 : std::stoi(info.attribute("slotMax").value());
+						item->property.slot_icon = info.attribute("slotIcon").empty() ? L"" : StringUtils::ConvertCtoW(info.attribute("slotIcon").value());
+						item->property.icon_code = info.attribute("iconCode").empty() ? -1 : std::stoi(info.attribute("iconCode").value());
+						item->property.category = StringUtils::ConvertCtoW(info.attribute("category").value());
+					}
+					else if (std::string(info.name()) == "skill")
+					{
+						item->skill_id = info.attribute("skillID").empty() ? -1 : std::stoi(info.attribute("skillID").value());
+					}
+					else if (std::string(info.name()) == "option")
+					{
+						item->constant_id = info.attribute("constantID").empty() ? -1 : std::stoi(info.attribute("constantID").value());
+					}
+				}
+			}
+			_item_info.emplace(item->id, item);
+		}
+	}
+}
+
+auto DataReaderManager::AllItemInfo() const -> std::map<int32_t, std::shared_ptr<ItemInfo>>
+{
+	return _item_info;
+}
+
+auto DataReaderManager::FindItemInfo(int32_t itemId) -> std::shared_ptr<ItemInfo>
+{
+	const auto& iterator = _item_info.find(itemId);
+	if (iterator != _item_info.end())
+	{
+		return iterator->second;
+	}
+	return nullptr;
+}
+
+auto DataReaderManager::LoadItemOptionConstant() -> void
+{
+	xml_document doc;
+	const auto err = doc.load_file("../../Binary/Resources/Xml/itemoption/itemoptionconstant.xml");
+
+	if (err.status == status_ok)
+	{
+		const auto options = doc.select_nodes("ms2/option");
+
+		for (auto optionNode : options)
+		{
+			const auto option = std::make_shared<Option>();
+			option->code = std::stoi(optionNode.node().attribute("code").value());
+			for (auto rank : optionNode.node())
+			{
+				for (auto v : rank)
+				{
+					auto rank = std::make_shared<Option::Rank>();
+					rank->value = std::stoi(v.attribute("value").value());
+					rank->lua_index = v.attribute("luaIndex").empty() ? 0 : std::stoi(v.attribute("luaIndex").value());
+					rank->name = StringUtils::ConvertCtoW(v.attribute("name").value());
+					option->ranks.emplace(rank->name, rank);
+				}
+			}
+			_item_options.emplace(option->code, option);
+		}
+	}
+}
+
+auto DataReaderManager::FindItemOptionConstant(int32_t optionId) -> std::shared_ptr<Option>
+{
+	const auto& iterator = _item_options.find(optionId);
+	if (iterator != _item_options.end())
+	{
+		return iterator->second;
+	}
+	return nullptr;
 }
 
 #pragma endregion
@@ -579,6 +677,7 @@ auto DataReaderManager::LoadSkillData() -> void
 				{
 					if (std::string(elementNode.name()) == "level")
 					{
+						skill->cooldown = elementNode.attribute("cooldown").empty() ? 0 : std::stoi(elementNode.attribute("cooldown").value());
 						for (auto infoNodes : elementNode)
 						{
 							if (std::string(infoNodes.name()) == "detectProperty")

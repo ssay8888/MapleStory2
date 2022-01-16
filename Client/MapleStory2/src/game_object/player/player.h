@@ -95,7 +95,7 @@ private:
 	std::shared_ptr<CharacterState>					_character_state;
 
 	bool				_is_idle = true;
-	uint64_t				_start_attack_time;
+	uint64_t			_start_attack_time;
 	float				_radian = 0.f;
 	int32_t				_current_mesh_num = 0;
 	int32_t				_new_mesh_num = 0;

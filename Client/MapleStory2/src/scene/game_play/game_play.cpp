@@ -34,6 +34,11 @@ HRESULT GamePlay::NativeConstruct()
 	}
 
 
+
+	if (FAILED(ReadyInventory()))
+	{
+		return E_FAIL;
+	}
 	if (FAILED(ReadyLayerPlayer(TEXT("Layer_Character"))))
 	{
 		return E_FAIL;
@@ -50,11 +55,6 @@ HRESULT GamePlay::NativeConstruct()
 	}
 
 	if (FAILED(ReadyMonster()))
-	{
-		return E_FAIL;
-	}
-
-	if (FAILED(ReadyInventory()))
 	{
 		return E_FAIL;
 	}
@@ -166,6 +166,10 @@ auto GamePlay::ReadyInventory() -> HRESULT
 {
 	auto& objectManager = ObjectManager::GetInstance();
 	if (FAILED(objectManager.AddGameObject(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Inventory"), L"Layer_Inventory")))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(objectManager.AddGameObject(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_EquippedUi"), L"Layer_EquippedUi")))
 	{
 		return E_FAIL;
 	}

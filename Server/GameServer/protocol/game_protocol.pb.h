@@ -48,7 +48,7 @@ struct TableStruct_game_5fprotocol_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[16]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[18]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -59,6 +59,9 @@ namespace Protocol {
 class GameClientAttackMonster;
 struct GameClientAttackMonsterDefaultTypeInternal;
 extern GameClientAttackMonsterDefaultTypeInternal _GameClientAttackMonster_default_instance_;
+class GameClientInventoryItemMove;
+struct GameClientInventoryItemMoveDefaultTypeInternal;
+extern GameClientInventoryItemMoveDefaultTypeInternal _GameClientInventoryItemMove_default_instance_;
 class GameClientLoading;
 struct GameClientLoadingDefaultTypeInternal;
 extern GameClientLoadingDefaultTypeInternal _GameClientLoading_default_instance_;
@@ -74,6 +77,9 @@ extern GameClientTakeDamageDefaultTypeInternal _GameClientTakeDamage_default_ins
 class GameServerAttackMonster;
 struct GameServerAttackMonsterDefaultTypeInternal;
 extern GameServerAttackMonsterDefaultTypeInternal _GameServerAttackMonster_default_instance_;
+class GameServerDressChange;
+struct GameServerDressChangeDefaultTypeInternal;
+extern GameServerDressChangeDefaultTypeInternal _GameServerDressChange_default_instance_;
 class GameServerKillMonster;
 struct GameServerKillMonsterDefaultTypeInternal;
 extern GameServerKillMonsterDefaultTypeInternal _GameServerKillMonster_default_instance_;
@@ -107,11 +113,13 @@ extern GameServerUpdateStatDefaultTypeInternal _GameServerUpdateStat_default_ins
 }  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
 template<> ::Protocol::GameClientAttackMonster* Arena::CreateMaybeMessage<::Protocol::GameClientAttackMonster>(Arena*);
+template<> ::Protocol::GameClientInventoryItemMove* Arena::CreateMaybeMessage<::Protocol::GameClientInventoryItemMove>(Arena*);
 template<> ::Protocol::GameClientLoading* Arena::CreateMaybeMessage<::Protocol::GameClientLoading>(Arena*);
 template<> ::Protocol::GameClientLogin* Arena::CreateMaybeMessage<::Protocol::GameClientLogin>(Arena*);
 template<> ::Protocol::GameClientMovePlayer* Arena::CreateMaybeMessage<::Protocol::GameClientMovePlayer>(Arena*);
 template<> ::Protocol::GameClientTakeDamage* Arena::CreateMaybeMessage<::Protocol::GameClientTakeDamage>(Arena*);
 template<> ::Protocol::GameServerAttackMonster* Arena::CreateMaybeMessage<::Protocol::GameServerAttackMonster>(Arena*);
+template<> ::Protocol::GameServerDressChange* Arena::CreateMaybeMessage<::Protocol::GameServerDressChange>(Arena*);
 template<> ::Protocol::GameServerKillMonster* Arena::CreateMaybeMessage<::Protocol::GameServerKillMonster>(Arena*);
 template<> ::Protocol::GameServerLoadCharacter* Arena::CreateMaybeMessage<::Protocol::GameServerLoadCharacter>(Arena*);
 template<> ::Protocol::GameServerLogin* Arena::CreateMaybeMessage<::Protocol::GameServerLogin>(Arena*);
@@ -2966,6 +2974,325 @@ class GameServerKillMonster final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fprotocol_2eproto;
 };
+// -------------------------------------------------------------------
+
+class GameClientInventoryItemMove final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.GameClientInventoryItemMove) */ {
+ public:
+  inline GameClientInventoryItemMove() : GameClientInventoryItemMove(nullptr) {}
+  ~GameClientInventoryItemMove() override;
+  explicit constexpr GameClientInventoryItemMove(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GameClientInventoryItemMove(const GameClientInventoryItemMove& from);
+  GameClientInventoryItemMove(GameClientInventoryItemMove&& from) noexcept
+    : GameClientInventoryItemMove() {
+    *this = ::std::move(from);
+  }
+
+  inline GameClientInventoryItemMove& operator=(const GameClientInventoryItemMove& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GameClientInventoryItemMove& operator=(GameClientInventoryItemMove&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GameClientInventoryItemMove& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GameClientInventoryItemMove* internal_default_instance() {
+    return reinterpret_cast<const GameClientInventoryItemMove*>(
+               &_GameClientInventoryItemMove_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    16;
+
+  friend void swap(GameClientInventoryItemMove& a, GameClientInventoryItemMove& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GameClientInventoryItemMove* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GameClientInventoryItemMove* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GameClientInventoryItemMove* New() const final {
+    return new GameClientInventoryItemMove();
+  }
+
+  GameClientInventoryItemMove* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GameClientInventoryItemMove>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const GameClientInventoryItemMove& from);
+  void MergeFrom(const GameClientInventoryItemMove& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GameClientInventoryItemMove* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.GameClientInventoryItemMove";
+  }
+  protected:
+  explicit GameClientInventoryItemMove(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMoveTypeFieldNumber = 1,
+    kTypeFieldNumber = 2,
+    kSrcFieldNumber = 3,
+    kDstFieldNumber = 4,
+  };
+  // .Protocol.kInventoryItemMoveType move_type = 1;
+  void clear_move_type();
+  ::Protocol::kInventoryItemMoveType move_type() const;
+  void set_move_type(::Protocol::kInventoryItemMoveType value);
+  private:
+  ::Protocol::kInventoryItemMoveType _internal_move_type() const;
+  void _internal_set_move_type(::Protocol::kInventoryItemMoveType value);
+  public:
+
+  // .Protocol.kInventoryType type = 2;
+  void clear_type();
+  ::Protocol::kInventoryType type() const;
+  void set_type(::Protocol::kInventoryType value);
+  private:
+  ::Protocol::kInventoryType _internal_type() const;
+  void _internal_set_type(::Protocol::kInventoryType value);
+  public:
+
+  // int32 src = 3;
+  void clear_src();
+  ::PROTOBUF_NAMESPACE_ID::int32 src() const;
+  void set_src(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_src() const;
+  void _internal_set_src(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 dst = 4;
+  void clear_dst();
+  ::PROTOBUF_NAMESPACE_ID::int32 dst() const;
+  void set_dst(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_dst() const;
+  void _internal_set_dst(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.GameClientInventoryItemMove)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int move_type_;
+  int type_;
+  ::PROTOBUF_NAMESPACE_ID::int32 src_;
+  ::PROTOBUF_NAMESPACE_ID::int32 dst_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fprotocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GameServerDressChange final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.GameServerDressChange) */ {
+ public:
+  inline GameServerDressChange() : GameServerDressChange(nullptr) {}
+  ~GameServerDressChange() override;
+  explicit constexpr GameServerDressChange(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GameServerDressChange(const GameServerDressChange& from);
+  GameServerDressChange(GameServerDressChange&& from) noexcept
+    : GameServerDressChange() {
+    *this = ::std::move(from);
+  }
+
+  inline GameServerDressChange& operator=(const GameServerDressChange& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GameServerDressChange& operator=(GameServerDressChange&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GameServerDressChange& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GameServerDressChange* internal_default_instance() {
+    return reinterpret_cast<const GameServerDressChange*>(
+               &_GameServerDressChange_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    17;
+
+  friend void swap(GameServerDressChange& a, GameServerDressChange& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GameServerDressChange* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GameServerDressChange* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GameServerDressChange* New() const final {
+    return new GameServerDressChange();
+  }
+
+  GameServerDressChange* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GameServerDressChange>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const GameServerDressChange& from);
+  void MergeFrom(const GameServerDressChange& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GameServerDressChange* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.GameServerDressChange";
+  }
+  protected:
+  explicit GameServerDressChange(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCharacterIdFieldNumber = 1,
+    kItemTypeFieldNumber = 2,
+    kItemIdFieldNumber = 3,
+  };
+  // int64 character_id = 1;
+  void clear_character_id();
+  ::PROTOBUF_NAMESPACE_ID::int64 character_id() const;
+  void set_character_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_character_id() const;
+  void _internal_set_character_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // int32 item_type = 2;
+  void clear_item_type();
+  ::PROTOBUF_NAMESPACE_ID::int32 item_type() const;
+  void set_item_type(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_item_type() const;
+  void _internal_set_item_type(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 item_id = 3;
+  void clear_item_id();
+  ::PROTOBUF_NAMESPACE_ID::int32 item_id() const;
+  void set_item_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_item_id() const;
+  void _internal_set_item_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.GameServerDressChange)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::int64 character_id_;
+  ::PROTOBUF_NAMESPACE_ID::int32 item_type_;
+  ::PROTOBUF_NAMESPACE_ID::int32 item_id_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fprotocol_2eproto;
+};
 // ===================================================================
 
 
@@ -5143,9 +5470,161 @@ inline void GameServerKillMonster::set_monster_obj_id(::PROTOBUF_NAMESPACE_ID::i
   // @@protoc_insertion_point(field_set:Protocol.GameServerKillMonster.monster_obj_id)
 }
 
+// -------------------------------------------------------------------
+
+// GameClientInventoryItemMove
+
+// .Protocol.kInventoryItemMoveType move_type = 1;
+inline void GameClientInventoryItemMove::clear_move_type() {
+  move_type_ = 0;
+}
+inline ::Protocol::kInventoryItemMoveType GameClientInventoryItemMove::_internal_move_type() const {
+  return static_cast< ::Protocol::kInventoryItemMoveType >(move_type_);
+}
+inline ::Protocol::kInventoryItemMoveType GameClientInventoryItemMove::move_type() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameClientInventoryItemMove.move_type)
+  return _internal_move_type();
+}
+inline void GameClientInventoryItemMove::_internal_set_move_type(::Protocol::kInventoryItemMoveType value) {
+  
+  move_type_ = value;
+}
+inline void GameClientInventoryItemMove::set_move_type(::Protocol::kInventoryItemMoveType value) {
+  _internal_set_move_type(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameClientInventoryItemMove.move_type)
+}
+
+// .Protocol.kInventoryType type = 2;
+inline void GameClientInventoryItemMove::clear_type() {
+  type_ = 0;
+}
+inline ::Protocol::kInventoryType GameClientInventoryItemMove::_internal_type() const {
+  return static_cast< ::Protocol::kInventoryType >(type_);
+}
+inline ::Protocol::kInventoryType GameClientInventoryItemMove::type() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameClientInventoryItemMove.type)
+  return _internal_type();
+}
+inline void GameClientInventoryItemMove::_internal_set_type(::Protocol::kInventoryType value) {
+  
+  type_ = value;
+}
+inline void GameClientInventoryItemMove::set_type(::Protocol::kInventoryType value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameClientInventoryItemMove.type)
+}
+
+// int32 src = 3;
+inline void GameClientInventoryItemMove::clear_src() {
+  src_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameClientInventoryItemMove::_internal_src() const {
+  return src_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameClientInventoryItemMove::src() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameClientInventoryItemMove.src)
+  return _internal_src();
+}
+inline void GameClientInventoryItemMove::_internal_set_src(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  src_ = value;
+}
+inline void GameClientInventoryItemMove::set_src(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_src(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameClientInventoryItemMove.src)
+}
+
+// int32 dst = 4;
+inline void GameClientInventoryItemMove::clear_dst() {
+  dst_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameClientInventoryItemMove::_internal_dst() const {
+  return dst_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameClientInventoryItemMove::dst() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameClientInventoryItemMove.dst)
+  return _internal_dst();
+}
+inline void GameClientInventoryItemMove::_internal_set_dst(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  dst_ = value;
+}
+inline void GameClientInventoryItemMove::set_dst(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_dst(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameClientInventoryItemMove.dst)
+}
+
+// -------------------------------------------------------------------
+
+// GameServerDressChange
+
+// int64 character_id = 1;
+inline void GameServerDressChange::clear_character_id() {
+  character_id_ = int64_t{0};
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 GameServerDressChange::_internal_character_id() const {
+  return character_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 GameServerDressChange::character_id() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerDressChange.character_id)
+  return _internal_character_id();
+}
+inline void GameServerDressChange::_internal_set_character_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  
+  character_id_ = value;
+}
+inline void GameServerDressChange::set_character_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_character_id(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerDressChange.character_id)
+}
+
+// int32 item_type = 2;
+inline void GameServerDressChange::clear_item_type() {
+  item_type_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerDressChange::_internal_item_type() const {
+  return item_type_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerDressChange::item_type() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerDressChange.item_type)
+  return _internal_item_type();
+}
+inline void GameServerDressChange::_internal_set_item_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  item_type_ = value;
+}
+inline void GameServerDressChange::set_item_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_item_type(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerDressChange.item_type)
+}
+
+// int32 item_id = 3;
+inline void GameServerDressChange::clear_item_id() {
+  item_id_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerDressChange::_internal_item_id() const {
+  return item_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GameServerDressChange::item_id() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerDressChange.item_id)
+  return _internal_item_id();
+}
+inline void GameServerDressChange::_internal_set_item_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  item_id_ = value;
+}
+inline void GameServerDressChange::set_item_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_item_id(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerDressChange.item_id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

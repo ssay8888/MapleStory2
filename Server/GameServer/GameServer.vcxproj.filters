@@ -130,6 +130,9 @@
     <ClCompile Include="packet_handling\game_server_player_handler\game_server_player_handler.cpp">
       <Filter>packet_handling\game_server_player_handler</Filter>
     </ClCompile>
+    <ClCompile Include="game\entitiy\item\game_item.cpp">
+      <Filter>game\entity\item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -224,6 +227,9 @@
     </Filter>
     <Filter Include="packet_handling\game_server_player_handler">
       <UniqueIdentifier>{5e8de27e-5142-41b2-861d-f8cde79feb05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\item">
+      <UniqueIdentifier>{c986ceb2-8134-4a13-a114-dea1b5718ece}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +361,9 @@
     </ClInclude>
     <ClInclude Include="packet_handling\game_server_player_handler\game_server_player_handler.h">
       <Filter>packet_handling\game_server_player_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\item\game_item.h">
+      <Filter>game\entity\item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

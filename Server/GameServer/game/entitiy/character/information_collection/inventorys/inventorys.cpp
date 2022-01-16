@@ -5,13 +5,14 @@
 #include <sstream>
 
 #include "inventory.h"
+#include "game/entitiy/item/game_item.h"
 
 Inventorys::Inventorys(const int64_t characterId) :
 	BaseInfo(characterId)
 {
 }
 
-auto Inventorys::PushItem(const Protocol::kInventoryType type, const int32_t position, const int32_t itemId) -> bool
+auto Inventorys::PushItem(const Protocol::kInventoryType type, const int32_t position, const std::shared_ptr<GameItem> itemId) -> bool
 {
 	auto iterator = _inventory.find(type);
 	if (iterator == _inventory.end())
@@ -21,19 +22,29 @@ auto Inventorys::PushItem(const Protocol::kInventoryType type, const int32_t pos
 	return iterator->second->PushItem(position, itemId);
 }
 
-auto Inventorys::FindItem(const Protocol::kInventoryType type, const int32_t position) -> int32_t
+auto Inventorys::FindItem(const Protocol::kInventoryType type, const int32_t position) -> std::shared_ptr<GameItem>
 {
-	auto iterator = _inventory.find(type);
+	const auto iterator = _inventory.find(type);
 	if (iterator == _inventory.end())
 	{
-		return -1;
+		return nullptr;
 	}
 	return iterator->second->FindItem(position);
 }
 
+auto Inventorys::SwapItem(Protocol::kInventoryType type, int32_t src, int32_t dst) -> void
+{
+	const auto iterator = _inventory.find(type);
+	if (iterator == _inventory.end())
+	{
+		return;
+	}
+	iterator->second->SwapItem(src, dst);
+}
+
 auto Inventorys::RemoveItem(const Protocol::kInventoryType type, const int32_t position) -> bool
 {
-	auto iterator = _inventory.find(type);
+	const auto iterator = _inventory.find(type);
 	if (iterator == _inventory.end())
 	{
 		return false;
@@ -41,10 +52,10 @@ auto Inventorys::RemoveItem(const Protocol::kInventoryType type, const int32_t p
 	return iterator->second->RemoveItem(position);
 }
 
-auto Inventorys::AllItems() -> std::vector<std::pair<int32_t, int32_t>>
+auto Inventorys::AllItems() -> std::vector<std::shared_ptr<GameItem>>
 {
-	std::vector<std::pair<int32_t, int32_t>> allItems;
-	for (auto& inventory : _inventory)
+	std::vector<std::shared_ptr<GameItem>> allItems;
+	for (const auto& inventory : _inventory)
 	{
 		auto items = inventory.second->AllItems();
 		allItems.insert(allItems.end(), items.begin(), items.end());
@@ -52,9 +63,9 @@ auto Inventorys::AllItems() -> std::vector<std::pair<int32_t, int32_t>>
 	return allItems;
 }
 
-auto Inventorys::AllItems(Protocol::kInventoryType type) -> std::vector<std::pair<int32_t, int32_t>>
+auto Inventorys::AllItems(Protocol::kInventoryType type) -> std::vector<std::shared_ptr<GameItem>>
 {
-	std::vector<std::pair<int32_t, int32_t>> allItems;
+	std::vector<std::shared_ptr<GameItem>> allItems;
 	auto iterator = _inventory.find(Protocol::kInventoryType::kInventoryEquipped);
 	if (iterator != _inventory.end())
 	{
@@ -62,6 +73,11 @@ auto Inventorys::AllItems(Protocol::kInventoryType type) -> std::vector<std::pai
 		allItems.insert(allItems.end(), items.begin(), items.end());
 	}
 	return allItems;
+}
+
+auto Inventorys::FindInventory(Protocol::kInventoryType type) -> std::shared_ptr<Inventory>
+{
+	return _inventory[type];
 }
 
 auto Inventorys::ItemListToXml() const -> std::wstring
@@ -78,10 +94,13 @@ auto Inventorys::ItemListToXml() const -> std::wstring
 		{
 			for (const auto& itemData : allItems)
 			{
-				auto item = items.append_child("item");
-				item.append_attribute("type").set_value(type);
-				item.append_attribute("itemid").set_value(itemData.second);
-				item.append_attribute("position").set_value(itemData.first);
+				if (itemData)
+				{
+					auto item = items.append_child("item");
+					item.append_attribute("type").set_value(itemData->GetInventoryType());
+					item.append_attribute("itemid").set_value(itemData->GetItemId());
+					item.append_attribute("position").set_value(itemData->GetPosition());
+				}
 			}
 		}
 	}
