@@ -227,6 +227,59 @@ inline bool kInventoryItemMoveType_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kInventoryItemMoveType>(
     kInventoryItemMoveType_descriptor(), name, value);
 }
+enum kStatType : int {
+  kStr = 0,
+  kDex = 1,
+  kInt = 2,
+  kLuk = 3,
+  kStatEnd = 4,
+  kStatType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  kStatType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool kStatType_IsValid(int value);
+constexpr kStatType kStatType_MIN = kStr;
+constexpr kStatType kStatType_MAX = kStatEnd;
+constexpr int kStatType_ARRAYSIZE = kStatType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kStatType_descriptor();
+template<typename T>
+inline const std::string& kStatType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, kStatType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function kStatType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    kStatType_descriptor(), enum_t_value);
+}
+inline bool kStatType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, kStatType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kStatType>(
+    kStatType_descriptor(), name, value);
+}
+enum kKeySetType : int {
+  kItem = 0,
+  kSkill = 1,
+  kKeySetType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  kKeySetType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool kKeySetType_IsValid(int value);
+constexpr kKeySetType kKeySetType_MIN = kItem;
+constexpr kKeySetType kKeySetType_MAX = kSkill;
+constexpr int kKeySetType_ARRAYSIZE = kKeySetType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kKeySetType_descriptor();
+template<typename T>
+inline const std::string& kKeySetType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, kKeySetType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function kKeySetType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    kKeySetType_descriptor(), enum_t_value);
+}
+inline bool kKeySetType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, kKeySetType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<kKeySetType>(
+    kKeySetType_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -278,6 +331,16 @@ template <> struct is_proto_enum< ::Protocol::kInventoryItemMoveType> : ::std::t
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kInventoryItemMoveType>() {
   return ::Protocol::kInventoryItemMoveType_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::kStatType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kStatType>() {
+  return ::Protocol::kStatType_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::kKeySetType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::kKeySetType>() {
+  return ::Protocol::kKeySetType_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

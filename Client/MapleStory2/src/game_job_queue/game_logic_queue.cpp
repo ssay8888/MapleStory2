@@ -1,6 +1,7 @@
 #include "c_pch.h"
 #include "game_logic_queue.h"
 
+#include "src/game_object/item/Item.h"
 #include "src/game_object/map/map_instance.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/monster/monster.h"
@@ -9,6 +10,8 @@
 #include "src/game_object/monster/states/walk_state/monster_walk_state.h"
 #include "src/game_object/monster/stats/monster_stats.h"
 #include "src/game_object/player/player.h"
+#include "src/game_object/ui/inventory/inventory_ui.h"
+#include "src/game_object/ui/inventory/inventory_tab_btn/inventory_tab_btn.h"
 #include "src/game_object/user/user.h"
 #include "src/managers/character_stat/character_stat.h"
 #include "src/managers/weapon_manager/weapon_manager.h"
@@ -95,12 +98,12 @@ auto GameLogicQueue::MoveMonster(PacketSessionRef session, Protocol::GameServerM
 			auto transform = std::static_pointer_cast<Transform>(monsterObject->GetComponentPtr(L"Com_Transform"));
 			if (monsterObject->GetCurrentState() == monsterObject->GetMonsterState(Protocol::kWalkA))
 			{
-				
+
 				if (const auto monsterWalkState = std::static_pointer_cast<MonsterWalkState>(monsterObject->GetMonsterState(Protocol::kWalkA)))
 				{
 					monsterWalkState->SetNextState(pkt);
 				}
-				
+
 			}
 			else if (monsterObject->GetCurrentState() == monsterObject->GetMonsterState(Protocol::kRunA))
 			{
@@ -226,7 +229,7 @@ auto GameLogicQueue::KillMonster(PacketSessionRef session, Protocol::GameServerK
 {
 	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
 	{
-		auto monster =	mapInstance->FindMonster(pkt.monster_obj_id());
+		auto monster = mapInstance->FindMonster(pkt.monster_obj_id());
 		monster->GetStat()->SetHp(0);
 		monster->ChangeAnimation(Protocol::kDeadA);
 	}
@@ -253,13 +256,55 @@ auto GameLogicQueue::DressChange(PacketSessionRef session, Protocol::GameServerD
 			}
 			else
 			{
-				auto tarnsform =std::static_pointer_cast<Transform>(userObject->GetComponentPtr(L"Com_Transform"));
+				auto tarnsform = std::static_pointer_cast<Transform>(userObject->GetComponentPtr(L"Com_Transform"));
 				WeaponManager::GetInstance().AddWeapon(pkt.character_id(), pkt.item_id(), tarnsform);
 			}
 		}
 		else
 		{
- 			userObject->ChangeEqp(static_cast<GameContents::kEquipeType>(pkt.item_type()), pkt.item_id());
+			userObject->ChangeEqp(static_cast<GameContents::kEquipeType>(pkt.item_type()), pkt.item_id());
+		}
+	}
+}
+
+auto GameLogicQueue::StatupChange(PacketSessionRef session, Protocol::GameServerStatUp pkt) -> void
+{
+	switch (pkt.type())
+	{
+	case Protocol::kStr:
+		CharacterStat::GetInstance().SetStr(pkt.value());
+		break;
+	case Protocol::kDex:
+		CharacterStat::GetInstance().SetDex(pkt.value());
+		break;
+	case Protocol::kInt:
+		CharacterStat::GetInstance().SetInt(pkt.value());
+		break;
+	case Protocol::kLuk:
+		CharacterStat::GetInstance().SetLuk(pkt.value());
+		break;
+	default:;
+	}
+	CharacterStat::GetInstance().SetAp(pkt.ap_value());
+}
+
+auto GameLogicQueue::ItemQuantityUpdate(PacketSessionRef session, Protocol::GameServerItemQuantityUpdate pkt) -> void
+{
+
+	auto baseInventory = ObjectManager::GetInstance().GetGameObjectPtr(kSceneGamePlay0, L"Layer_Inventory", 0);
+	auto inventory = std::static_pointer_cast<Inventory>(baseInventory);
+	if (inventory)
+	{
+		auto tabEqp = inventory->GetInventoryTab(pkt.type());
+		if (pkt.quantity() <= 0)
+		{
+			tabEqp->RemoveItem(pkt.position());
+			return;
+		}
+		auto item = tabEqp->FindItem(pkt.position());
+		if (item)
+		{
+			item->SetItemQuantity(pkt.quantity());
 		}
 	}
 }

@@ -28,7 +28,7 @@ HRESULT Ui::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t Ui::Tick(const double timeDelta)
+auto Ui::Tick(const double timeDelta) -> HRESULT
 {
 	 GameObject::Tick(timeDelta);
 	POINT		ptMouse;
@@ -47,7 +47,7 @@ int32_t Ui::Tick(const double timeDelta)
 	return S_OK;
 }
 
-int32_t Ui::LateTick(const double timeDelta)
+auto Ui::LateTick(const double timeDelta) -> HRESULT
 {
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderUi, shared_from_this());
 	return GameObject::LateTick(timeDelta);

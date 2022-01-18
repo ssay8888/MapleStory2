@@ -12,12 +12,12 @@ Sky::Sky(const ComPtr<IDirect3DDevice9>& device):
 {
 }
 
-HRESULT Sky::NativeConstructPrototype()
+auto Sky::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT Sky::NativeConstruct(void* arg)
+auto Sky::NativeConstruct(void* arg) -> HRESULT
 {
 	GameObject::NativeConstruct(arg);
 	if (FAILED(AddComponents()))
@@ -26,12 +26,12 @@ HRESULT Sky::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t Sky::Tick(const double timeDelta)
+auto Sky::Tick(const double timeDelta) -> HRESULT
 {
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Sky::LateTick(const double timeDelta)
+auto Sky::LateTick(const double timeDelta) -> HRESULT
 {
 	GameObject::LateTick(timeDelta);
 
@@ -47,7 +47,7 @@ int32_t Sky::LateTick(const double timeDelta)
 	return S_OK;
 }
 
-HRESULT Sky::Render()
+auto Sky::Render() -> HRESULT
 {
 	auto& pipeInstance = PipeLine::GetInstance();
 	_graphic_device->SetTransform(D3DTS_WORLD, &_transform_com->GetWorldMatrix());

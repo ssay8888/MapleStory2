@@ -301,7 +301,7 @@ std::wstring LoginHandler::ItemListToXml(Protocol::LoginClientCreateCharacter pk
 					item.append_attribute("luk").set_value(0);
 					item.append_attribute("wap").set_value(0);
 				}
-				item.append_attribute("quantity").set_value(1);
+				//item.append_attribute("quantity").set_value(1);
 			}
 		}
 	}
@@ -324,8 +324,8 @@ void LoginHandler::SelectCharacter(PacketSessionRef session, Protocol::LoginClie
 	centerSendPkt.set_accountid(game_session->GetAccountId());
 	centerSendPkt.set_characterid(pkt.characterid());
 	g_login_server->GetCenterServerSevice()->Broadcast(CenterLoginClientPacketHandler::MakeSendBuffer(centerSendPkt));
+	authInstance.RemoveAuth(game_session->GetAccountId());
 	authInstance.AddAuth(authInfo);
-
 
 	//Protocol::LoginServerCharacterSelect sendPkt;
 	//session->Send(LoginClientPacketHandler::MakeSendBuffer(sendPkt));

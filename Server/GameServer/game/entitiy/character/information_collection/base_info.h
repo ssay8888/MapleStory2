@@ -8,7 +8,7 @@ public:
 public:
 	auto GetCharacterId()const->int64_t;
 
-private:
+protected:
 	int64_t _character_id;
 };
 

@@ -1,11 +1,14 @@
 #include "c_pch.h"
 #include "Item.h"
 
+#include "src/game_object/ui/ket_set_ui/key_set_manager.h"
+#include "src/game_object/ui/ket_set_ui/key_set_ui.h"
 #include "src/game_object/ui/popup_info/popup_info.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
+#include "src/utility/game_objects/manager/object_manager.h"
 
 Item::Item(const ItemInfo info):
 	GameObject(GraphicDevice::GetInstance().GetDevice()),
@@ -13,7 +16,7 @@ Item::Item(const ItemInfo info):
 {
 }
 
-HRESULT Item::NativeConstructPrototype()
+auto Item::NativeConstructPrototype() -> HRESULT
 {
 	if (FAILED(AddComponents()))
 	{
@@ -26,16 +29,16 @@ HRESULT Item::NativeConstructPrototype()
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT Item::NativeConstruct(void* arg)
+auto Item::NativeConstruct(void* arg) -> HRESULT
 {
 	return GameObject::NativeConstruct(arg);
 }
-int32_t Item::Tick(const double timeDelta)
+auto Item::Tick(const double timeDelta) -> HRESULT
 {
 	return GameObject::Tick(timeDelta);
 }
 
-auto Item::Tick(const _float3& pos, const double timeDelta) -> int32_t
+auto Item::Tick(const _float3& pos, const double timeDelta) -> HRESULT
 {
 	_input_device->InvalidateInputDevice();
 	if (_is_select_item)
@@ -48,16 +51,17 @@ auto Item::Tick(const _float3& pos, const double timeDelta) -> int32_t
 		const float centerY = g_WinCY >> 1;
 		_pos.x = ptMouse.x - centerX;
 		_pos.y = -ptMouse.y + centerY;
+
 	}
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Item::LateTick(const double timeDelta)
+auto Item::LateTick(const double timeDelta) -> HRESULT
 {
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT Item::Render()
+auto Item::Render() -> HRESULT
 {
 	return GameObject::Render();
 }
@@ -86,6 +90,20 @@ auto Item::Render(const _float3& pos, std::shared_ptr<Shader> shader) const -> H
 	shader->Commit();
 	_vi_buffer_com->RenderViBuffer();
 
+	if (_info.type != Protocol::kInventoryEqp)
+	{
+		const float centerX = g_WinCX >> 1;
+		const float centerY = g_WinCY >> 1;
+		RECT		rcUI = {
+		   static_cast<LONG>(centerX + (pos.x + _original_pos.x) - 48 * 0.5f),
+		   static_cast<LONG>(centerY - (pos.y + _original_pos.y) - 48 * 0.5f),
+		   static_cast<LONG>(centerX + (pos.x + _original_pos.x) + 48 * 0.5f),
+		   static_cast<LONG>(centerY - (pos.y + _original_pos.y) + 48 * 0.5f)
+		};
+
+		std::wstring str(std::to_wstring(GetItemQuantity()));
+		GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rcUI, DT_RIGHT, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
 	return S_OK;
 }
 
@@ -182,16 +200,6 @@ auto Item::UnSelectItem(const _float3& pos, uint8_t isLButtonDown, uint8_t isLBu
 	{
 		if (isLButtonUp)
 		{
-			/*_is_select_item = false;
-			const auto resultPosition = FindPosition(pos);
-			if (resultPosition > 0)
-			{
-				ChangePosition(resultPosition);
-			}
-			else
-			{
-				_pos = _original_pos;
-			}*/
 			return true;
 		}
 	}
@@ -267,6 +275,26 @@ auto Item::GetPopupInfo() const -> std::shared_ptr<PopupInfo>
 auto Item::GetItemId() const -> int32_t
 {
 	return _info.item_id;
+}
+
+auto Item::GetItemQuantity() const -> int32_t
+{
+	return _info.quantity;
+}
+
+auto Item::SetItemQuantity(int32_t value) -> void
+{
+	_info.quantity = value;
+}
+
+auto Item::GetInventoryType() const -> Protocol::kInventoryType
+{
+	return _info.type;
+}
+
+auto Item::GetItemIcon() const -> std::shared_ptr<Texture>
+{
+	return _texture_com;
 }
 
 auto Item::Create(ItemInfo info) -> std::shared_ptr<Item>

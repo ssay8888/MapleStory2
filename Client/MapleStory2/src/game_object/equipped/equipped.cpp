@@ -8,27 +8,27 @@ Equipped::Equipped():
 {
 }
 
-HRESULT Equipped::NativeConstructPrototype()
+auto Equipped::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT Equipped::NativeConstruct(void* arg)
+auto Equipped::NativeConstruct(void* arg) -> HRESULT
 {
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t Equipped::Tick(const double timeDelta)
+auto Equipped::Tick(const double timeDelta) -> HRESULT
 {
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Equipped::LateTick(const double timeDelta)
+auto Equipped::LateTick(const double timeDelta) -> HRESULT
 {
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT Equipped::Render()
+auto Equipped::Render() -> HRESULT
 {
 	return GameObject::Render();
 }

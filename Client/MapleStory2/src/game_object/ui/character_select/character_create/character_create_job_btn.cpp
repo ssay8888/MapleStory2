@@ -12,12 +12,12 @@ CharacterCreateJobBtn::CharacterCreateJobBtn():
 {
 }
 
-HRESULT CharacterCreateJobBtn::NativeConstructPrototype()
+auto CharacterCreateJobBtn::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT CharacterCreateJobBtn::NativeConstruct(void* arg)
+auto CharacterCreateJobBtn::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(AddComponents()))
 	{
@@ -30,7 +30,7 @@ HRESULT CharacterCreateJobBtn::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t CharacterCreateJobBtn::Tick(double timeDelta)
+auto CharacterCreateJobBtn::Tick(double timeDelta) -> HRESULT
 {
 	if (IsCollision())
 	{
@@ -50,12 +50,12 @@ int32_t CharacterCreateJobBtn::Tick(double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t CharacterCreateJobBtn::LateTick(double timeDelta)
+auto CharacterCreateJobBtn::LateTick(double timeDelta) -> HRESULT
 {
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT CharacterCreateJobBtn::Render()
+auto CharacterCreateJobBtn::Render() -> HRESULT
 {
 	return GameObject::Render();
 }

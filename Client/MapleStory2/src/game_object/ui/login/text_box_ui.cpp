@@ -16,12 +16,12 @@ TextBoxUi::TextBoxUi(const ComPtr<IDirect3DDevice9>& device):
 {
 }
 
-HRESULT TextBoxUi::NativeConstructPrototype()
+auto TextBoxUi::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT TextBoxUi::NativeConstruct(void* arg)
+auto TextBoxUi::NativeConstruct(void* arg) -> HRESULT
 {
 	if (arg == nullptr || FAILED(AddComponents()))
 	{
@@ -44,7 +44,7 @@ HRESULT TextBoxUi::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t TextBoxUi::Tick(const double timeDelta)
+auto TextBoxUi::Tick(const double timeDelta) -> HRESULT
 {
 	if (InputDevice::GetInstance().GetDirectMouseKeyPressing(InputDevice::kDirectInMouseButton::kLeftButton))
 	{
@@ -78,13 +78,13 @@ int32_t TextBoxUi::Tick(const double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t TextBoxUi::LateTick(const double timeDelta)
+auto TextBoxUi::LateTick(const double timeDelta) -> HRESULT
 {
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderUi, shared_from_this());
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT TextBoxUi::Render()
+auto TextBoxUi::Render() -> HRESULT
 {
 	_matrix			TransformMatrix, ViewMatrix, ProjMatrix;
 

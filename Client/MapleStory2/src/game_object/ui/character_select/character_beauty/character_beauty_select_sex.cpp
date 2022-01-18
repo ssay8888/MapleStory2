@@ -12,12 +12,12 @@ CharacterBeautySelectSex::CharacterBeautySelectSex() :
 {
 }
 
-HRESULT CharacterBeautySelectSex::NativeConstructPrototype()
+auto CharacterBeautySelectSex::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT CharacterBeautySelectSex::NativeConstruct(void* arg)
+auto CharacterBeautySelectSex::NativeConstruct(void* arg) -> HRESULT
 {
 
 	_info = *static_cast<CreateSexBtnInfo*>(arg);
@@ -29,17 +29,17 @@ HRESULT CharacterBeautySelectSex::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t CharacterBeautySelectSex::Tick(const double timeDelta)
+auto CharacterBeautySelectSex::Tick(const double timeDelta) -> HRESULT
 {
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t CharacterBeautySelectSex::LateTick(const double timeDelta)
+auto CharacterBeautySelectSex::LateTick(const double timeDelta) -> HRESULT
 {
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT CharacterBeautySelectSex::Render()
+auto CharacterBeautySelectSex::Render() -> HRESULT
 {
 	return GameObject::Render();
 }

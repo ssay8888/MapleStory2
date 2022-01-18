@@ -23,6 +23,11 @@ enum : uint16_t
 	kPktGameServerKillMonster = 2015,
 	kPktGameClientInventoryItemMove = 2016,
 	kPktGameServerDressChange = 2017,
+	kPktGameClientStatUp = 2018,
+	kPktGameServerStatUp = 2019,
+	kPktGameClientKeySet = 2020,
+	kPktGameClientItemApply = 2021,
+	kPktGameServerItemQuantityUpdate = 2022,
 };
 
 
@@ -44,6 +49,8 @@ public:
 	static auto HandleGameServerMonsterStatUpdate(PacketSessionRef& session, Protocol::GameServerMonsterStatUpdate& pkt)->bool;
 	static auto HandleGameServerKillMonster(PacketSessionRef& session, Protocol::GameServerKillMonster& pkt)->bool;
 	static auto HandleGameServerDressChange(PacketSessionRef& session, Protocol::GameServerDressChange& pkt)->bool;
+	static auto HandleGameServerStatUp(PacketSessionRef& session, Protocol::GameServerStatUp& pkt)->bool;
+	static auto HandleGameServerItemQuantityUpdate(PacketSessionRef& session, Protocol::GameServerItemQuantityUpdate& pkt)->bool;
 	static void Init()
 	{
 		for (auto& handler : _packet_handler)
@@ -62,6 +69,8 @@ public:
 		_packet_handler[kPktGameServerMonsterStatUpdate] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerMonsterStatUpdate>(HandleGameServerMonsterStatUpdate, session, buffer, len); };
 		_packet_handler[kPktGameServerKillMonster] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerKillMonster>(HandleGameServerKillMonster, session, buffer, len); };
 		_packet_handler[kPktGameServerDressChange] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerDressChange>(HandleGameServerDressChange, session, buffer, len); };
+		_packet_handler[kPktGameServerStatUp] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerStatUp>(HandleGameServerStatUp, session, buffer, len); };
+		_packet_handler[kPktGameServerItemQuantityUpdate] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerItemQuantityUpdate>(HandleGameServerItemQuantityUpdate, session, buffer, len); };
 	}
 
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32_t len)
@@ -75,6 +84,9 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::GameClientTakeDamage& pkt) { return MakeSendBuffer(pkt, kPktGameClientTakeDamage); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameClientAttackMonster& pkt) { return MakeSendBuffer(pkt, kPktGameClientAttackMonster); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameClientInventoryItemMove& pkt) { return MakeSendBuffer(pkt, kPktGameClientInventoryItemMove); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameClientStatUp& pkt) { return MakeSendBuffer(pkt, kPktGameClientStatUp); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameClientKeySet& pkt) { return MakeSendBuffer(pkt, kPktGameClientKeySet); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameClientItemApply& pkt) { return MakeSendBuffer(pkt, kPktGameClientItemApply); }
 
 private:
 	template<typename PacketType, typename ProcessFunc>

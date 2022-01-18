@@ -11,6 +11,7 @@
 #include "src/game_object/ui/inventory/inventory_ui.h"
 #include "src/game_object/ui/inventory/inventory_tab_btn/inventory_tab_btn.h"
 #include "src/game_object/ui/popup_info/popup_info.h"
+#include "src/game_object/ui/skill_ui/skill_ui.h"
 #include "src/managers/characters_manager/character.h"
 #include "src/managers/character_stat/character_stat.h"
 #include "src/managers/weapon_manager/weapon_manager.h"
@@ -33,12 +34,12 @@ Player::Player(const ComPtr<IDirect3DDevice9>& device) :
 {
 }
 
-HRESULT Player::NativeConstructPrototype()
+auto Player::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT Player::NativeConstruct(void* arg)
+auto Player::NativeConstruct(void* arg) -> HRESULT
 {
 	GameObject::NativeConstruct(arg);
 	if (arg)
@@ -54,7 +55,7 @@ HRESULT Player::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t Player::Tick(const double timeDelta)
+auto Player::Tick(const double timeDelta) -> HRESULT
 {
 	_character_state->HandleInput();
 	_character_state->Tick(timeDelta);
@@ -71,7 +72,7 @@ int32_t Player::Tick(const double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Player::LateTick(const double timeDelta)
+auto Player::LateTick(const double timeDelta) -> HRESULT
 {
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());
 	_character_state->LateTick(timeDelta);
@@ -82,7 +83,7 @@ int32_t Player::LateTick(const double timeDelta)
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT Player::Render()
+auto Player::Render() -> HRESULT
 {
 	GameObject::Render();
 	if (FAILED(SetUpConstantTable()))
@@ -137,14 +138,15 @@ HRESULT Player::Render()
 		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).y)).append(L" / ")
 		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).z)).append(L"\r\n");
 
-	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rc, DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
+	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rc, 
+		DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
 
 #ifdef _DEBUG
 	_character_aabb_com->RenderDebug();
 	_block_ragne_aabb_com->RenderDebug();
-	for (const auto& reaload : _reload_ragne_aabb_com)
+	for (const auto& reload : _reload_ragne_aabb_com)
 	{
-		reaload->RenderDebug();
+		reload->RenderDebug();
 	}
 #endif
 	return S_OK;
@@ -505,6 +507,7 @@ auto Player::AddComponents() -> HRESULT
 			info.int_ = porotocolItem.int_();
 			info.luk = porotocolItem.luk();
 			info.wap = porotocolItem.wap();
+			info.type = porotocolItem.inventory_type();
 
 			auto item = Item::Create(info);
 			item->GetPopupInfo()->SetItemInfo(info);
@@ -537,6 +540,10 @@ auto Player::SetUpConstantTable() const -> HRESULT
 
 auto Player::OpenInventory() -> HRESULT
 {
+	if (!g_isWindowsActive)
+	{
+		return S_OK;
+	}
 	if (InputDevice::GetInstance().GetKeyDown(DIK_I))
 	{
 		const auto& instance = ObjectManager::GetInstance();
@@ -551,6 +558,15 @@ auto Player::OpenInventory() -> HRESULT
 		const auto& instance = ObjectManager::GetInstance();
 
 		if (const auto inventory = std::static_pointer_cast<EquippedUi>(instance.GetGameObjectPtr(kSceneGamePlay0, L"Layer_EquippedUi", 0)))
+		{
+			inventory->ChangeShow();
+		}
+	}
+	if (InputDevice::GetInstance().GetKeyDown(DIK_K))
+	{
+		const auto& instance = ObjectManager::GetInstance();
+
+		if (const auto inventory = std::static_pointer_cast<SkillUi>(instance.GetGameObjectPtr(kSceneGamePlay0, L"Layer_SkillUi", 0)))
 		{
 			inventory->ChangeShow();
 		}

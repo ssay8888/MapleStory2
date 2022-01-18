@@ -12,12 +12,12 @@ PlayerInfo::PlayerInfo(const ComPtr<IDirect3DDevice9>& device):
 {
 }
 
-HRESULT PlayerInfo::NativeConstructPrototype()
+auto PlayerInfo::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT PlayerInfo::NativeConstruct(void* arg)
+auto PlayerInfo::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(AddComponents()))
 		return E_FAIL;
@@ -30,18 +30,18 @@ HRESULT PlayerInfo::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t PlayerInfo::Tick(const double timeDelta)
+auto PlayerInfo::Tick(const double timeDelta) -> HRESULT
 {
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t PlayerInfo::LateTick(const double timeDelta)
+auto PlayerInfo::LateTick(const double timeDelta) -> HRESULT
 {
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderUi, shared_from_this());
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT PlayerInfo::Render()
+auto PlayerInfo::Render() -> HRESULT
 {
 	_matrix			transformMatrix, viewMatrix;
 	D3DXMatrixIdentity(&transformMatrix);

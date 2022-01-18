@@ -16,8 +16,8 @@ public:
 public:
 	virtual auto NativeConstructPrototype()->HRESULT;
 	virtual auto NativeConstruct(void* arg)->HRESULT;
-	virtual auto Tick(double timeDelta)->int32_t;
-	virtual auto LateTick(double timeDelta)->int32_t;
+	virtual auto Tick(double timeDelta)->HRESULT;
+	virtual auto LateTick(double timeDelta)->HRESULT;
 	virtual auto Render()->HRESULT;
 
 public:

@@ -57,3 +57,18 @@ enum kInventoryItemMoveType
 	kEquipment = 1;
 	kUnEquipment = 2;
 }
+
+enum kStatType
+{
+	kStr = 0;
+	kDex = 1;
+	kInt = 2;
+	kLuk = 3;
+	kStatEnd = 4;
+}
+
+enum kKeySetType
+{
+	kItem = 0;
+	kSkill = 1;
+}

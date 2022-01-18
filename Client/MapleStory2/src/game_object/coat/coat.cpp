@@ -18,16 +18,12 @@ Coat::Coat(const ComPtr<IDirect3DDevice9>& device):
 {
 }
 
-Coat::~Coat()
-{
-}
-
-HRESULT Coat::NativeConstructPrototype()
+auto Coat::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT Coat::NativeConstruct(void* arg)
+auto Coat::NativeConstruct(void* arg) -> HRESULT
 {
 	GameObject::NativeConstruct(arg);
 
@@ -47,7 +43,7 @@ HRESULT Coat::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t Coat::Tick(double timeDelta)
+auto Coat::Tick(double timeDelta) -> HRESULT
 {
 	const auto& instance = ObjectManager::GetInstance();
 	auto playerObject = std::static_pointer_cast<Fittingdoll>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));
@@ -68,14 +64,14 @@ int32_t Coat::Tick(double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Coat::LateTick(double timeDelta)
+auto Coat::LateTick(double timeDelta) -> HRESULT
 {
 	GameObject::LateTick(timeDelta);
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());
 	return S_OK;
 }
 
-HRESULT Coat::Render()
+auto Coat::Render() -> HRESULT
 {
 	GameObject::Render();
 	if (FAILED(SetUpConstantTable()))

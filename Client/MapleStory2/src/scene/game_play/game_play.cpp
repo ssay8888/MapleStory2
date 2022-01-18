@@ -58,7 +58,15 @@ HRESULT GamePlay::NativeConstruct()
 	{
 		return E_FAIL;
 	}
+	if (FAILED(ReadySkillUi()))
+	{
+		return E_FAIL;
+	}
 
+	if (FAILED(ReadyKeySetManager()))
+	{
+		return E_FAIL;
+	}
 	auto& objectManager = ObjectManager::GetInstance();
 	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_PlayerInfo"), L"Layer_PlayerInfo")))
 	{
@@ -165,15 +173,35 @@ auto GamePlay::ReadyMonster() -> HRESULT
 auto GamePlay::ReadyInventory() -> HRESULT
 {
 	auto& objectManager = ObjectManager::GetInstance();
-	if (FAILED(objectManager.AddGameObject(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Inventory"), L"Layer_Inventory")))
+	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_Inventory"), L"Layer_Inventory")))
 	{
 		return E_FAIL;
 	}
-	if (FAILED(objectManager.AddGameObject(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_EquippedUi"), L"Layer_EquippedUi")))
+	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_EquippedUi"), L"Layer_EquippedUi")))
 	{
 		return E_FAIL;
 	}
 
+	return S_OK;
+}
+
+auto GamePlay::ReadyKeySetManager() -> HRESULT
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_KeySetManager"), L"Layer_Keymanager")))
+	{
+		return E_FAIL;
+	}
+	return S_OK;
+}
+
+auto GamePlay::ReadySkillUi() -> HRESULT
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_SkillUi"), L"Layer_SkillUi")))
+	{
+		return E_FAIL;
+	}
 	return S_OK;
 }
 

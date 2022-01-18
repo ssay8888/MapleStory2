@@ -5,6 +5,7 @@
 #include "game/map/map_instance.h"
 #include "game/map/map_manager.h"
 #include "information_collection/inventorys/inventorys.h"
+#include "information_collection/keyset/keyset.h"
 #include "information_collection/stats/Statistic.h"
 #include "managers/character_info_manager/character_info_storage_manager.h"
 #include "src/database/db_connection_pool.h"
@@ -83,7 +84,7 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 	_transform->NativeConstruct(nullptr);
 	if (auto con = DBConnectionPool::GetInstance().Pop())
 	{
-		DBBind<1, 26> bind(*con, L"{CALL dbo.spLoadCharacter(?)}");
+		DBBind<1, 27> bind(*con, L"{CALL dbo.spLoadCharacter(?)}");
 		bind.BindParam(0, _character_id);
 
 		WCHAR name[100]{0};
@@ -119,6 +120,8 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 		bind.BindCol(colIndex++, int_);
 		int32_t luk;
 		bind.BindCol(colIndex++, luk);
+		int32_t ap;
+		bind.BindCol(colIndex++, ap);
 
 		int32_t itemid;
 		bind.BindCol(colIndex++, itemid);
@@ -149,6 +152,7 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 		{
 			const std::shared_ptr<Statistic> stats = Statistic::Create(_character_id);
 			const std::shared_ptr<Inventorys> inventory = Inventorys::Create(_character_id);
+			const std::shared_ptr<Keyset> keyset = Keyset::Create(_character_id);
 			do
 			{
 				int16_t count = 0;
@@ -180,15 +184,16 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 					}
 
 					stats->SetStr(str);
-					stats->SetDex(str);
-					stats->SetInt(str);
-					stats->SetLuk(str);
+					stats->SetDex(dex);
+					stats->SetInt(int_);
+					stats->SetLuk(luk);
 					stats->SetHp(hp);
 					stats->SetMaxHp(maxhp);
 					stats->SetMp(mp);
 					stats->SetMaxMp(maxmp);
 					stats->SetLevel(level);
 					stats->SetExp(exp);
+					stats->SetAp(ap);
 					_name = name;
 				}
 			} while (bind.SqlMoreResults() != SQL_NO_DATA);
@@ -199,6 +204,10 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 				return E_FAIL;
 			}
 			if (false == InfoStorageManager.PushInfo(CharacterInfoStorage::kInfoTypes::kInventory, _character_id, inventory))
+			{
+				return E_FAIL;
+			}
+			if (false == InfoStorageManager.PushInfo(CharacterInfoStorage::kInfoTypes::kKeyset, _character_id, keyset))
 			{
 				return E_FAIL;
 			}
@@ -219,14 +228,16 @@ auto GameCharacter::SaveToDb() -> HRESULT
 	const auto statInfo = std::static_pointer_cast<Statistic>(baseStatInfo);
 	const auto baseInventorysInfo = InfoStorageManager.FindInfo(CharacterInfoStorage::kInfoTypes::kInventory, _character_id);
 	const auto InventorysInfo = std::static_pointer_cast<Inventorys>(baseInventorysInfo);
-	if (statInfo == nullptr || InventorysInfo == nullptr)
+	const auto baseKeysetInfo = InfoStorageManager.FindInfo(CharacterInfoStorage::kInfoTypes::kKeyset, _character_id);
+	const auto keysetInfo = std::static_pointer_cast<Keyset>(baseKeysetInfo);
+	if (statInfo == nullptr || InventorysInfo == nullptr || keysetInfo == nullptr)
 	{
 		return E_FAIL;
 	}
 	int32_t result = 0;
 	if (auto con = DBConnectionPool::GetInstance().Pop())
 	{
-		DBBind<14, 1> bind(*con, L"{CALL dbo.spSaveToPlayer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+		DBBind<16, 1> bind(*con, L"{CALL dbo.spSaveToPlayer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
 		int32_t idx = 0;
 		bind.BindParam(idx++, _character_id);
 		int32_t spawnPoint = 0;
@@ -257,9 +268,14 @@ auto GameCharacter::SaveToDb() -> HRESULT
 		bind.BindParam(idx++, int_);
 		int32_t luk(statInfo->GetLuk());
 		bind.BindParam(idx++, luk);
+		int32_t ap(statInfo->GetAp());
+		bind.BindParam(idx++, ap);
 
-		auto itemList = InventorysInfo->ItemListToXml();
+		const auto itemList = InventorysInfo->ItemListToXml();
 		bind.BindParam(idx++, itemList.c_str());
+
+		const auto keyList = keysetInfo->KeyMapListToXml();
+		bind.BindParam(idx++, keyList.c_str());
 
 		bind.BindCol(0, result);
 

@@ -12,12 +12,12 @@ BackGround::BackGround(const ComPtr<IDirect3DDevice9>& device):
 {
 }
 
-HRESULT BackGround::NativeConstructPrototype()
+auto BackGround::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT BackGround::NativeConstruct(void* arg)
+auto BackGround::NativeConstruct(void* arg) -> HRESULT
 {
 	GameObject::NativeConstruct(arg);
 
@@ -34,18 +34,18 @@ HRESULT BackGround::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t BackGround::Tick(const double timeDelta)
+auto BackGround::Tick(const double timeDelta) -> HRESULT
 {
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t BackGround::LateTick(const double timeDelta)
+auto BackGround::LateTick(const double timeDelta) -> HRESULT
 {
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderPriority, shared_from_this());
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT BackGround::Render()
+auto BackGround::Render() -> HRESULT
 {
 	GameObject::Render();
 	_matrix		identityMatrix, scaleMatrix;

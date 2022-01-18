@@ -96,3 +96,18 @@ auto GameTick::InventoryItemMove(Protocol::GameClientInventoryItemMove pkt, Game
 {
 	GameServerPlayerHandler::InventoryItemMove(pkt, gameSession);
 }
+
+auto GameTick::PlayerStatUp(Protocol::GameClientStatUp pkt, GameSessionRef gameSession) -> void
+{
+	GameServerPlayerHandler::PlayerStatUp(pkt, gameSession);
+}
+
+auto GameTick::PlayerKeySetChange(Protocol::GameClientKeySet pkt, GameSessionRef gameSession) -> void
+{
+	GameServerPlayerHandler::PlayerKeySetChange(pkt, gameSession);
+}
+
+auto GameTick::PlayerItemApply(Protocol::GameClientItemApply pkt, GameSessionRef gameSession) -> void
+{
+	GameServerPlayerHandler::PlayerItemApply(pkt, gameSession);
+}

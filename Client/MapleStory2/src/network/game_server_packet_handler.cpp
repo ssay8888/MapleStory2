@@ -90,3 +90,16 @@ auto GameServerPacketHandler::HandleGameServerDressChange(PacketSessionRef& sess
 	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::DressChange, session, pkt);
 	return true;
 }
+
+auto GameServerPacketHandler::HandleGameServerStatUp(PacketSessionRef& session, Protocol::GameServerStatUp& pkt) -> bool
+{
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::StatupChange, session, pkt);
+	return true;
+}
+
+auto GameServerPacketHandler::HandleGameServerItemQuantityUpdate(PacketSessionRef& session,
+	Protocol::GameServerItemQuantityUpdate& pkt) -> bool
+{
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::ItemQuantityUpdate, session, pkt);
+	return true;
+}

@@ -11,12 +11,12 @@ CameraFree::CameraFree(const ComPtr<IDirect3DDevice9>& device):
 {
 }
 
-HRESULT CameraFree::NativeConstructPrototype()
+auto CameraFree::NativeConstructPrototype() -> HRESULT
 {
 	return Camera::NativeConstructPrototype();
 }
 
-HRESULT CameraFree::NativeConstruct(void* arg)
+auto CameraFree::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(AddComponents()))
 		return E_FAIL;
@@ -27,7 +27,7 @@ HRESULT CameraFree::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t CameraFree::Tick(const double timeDelta)
+auto CameraFree::Tick(const double timeDelta) -> HRESULT
 {
 	//if (InputDevice::GetInstance().GetKeyPressing(DIK_W))
 	//{
@@ -89,13 +89,13 @@ int32_t CameraFree::Tick(const double timeDelta)
 	return Camera::Tick(timeDelta);
 }
 
-int32_t CameraFree::LateTick(const double timeDelta)
+auto CameraFree::LateTick(const double timeDelta) -> HRESULT
 {
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderUi, shared_from_this());
 	return Camera::LateTick(timeDelta);
 }
 
-HRESULT CameraFree::Render()
+auto CameraFree::Render() -> HRESULT
 {
 	std::wstring str;
 
@@ -123,7 +123,7 @@ HRESULT CameraFree::Render()
 	return S_OK;
 }
 
-HRESULT CameraFree::AddComponents()
+auto CameraFree::AddComponents() -> HRESULT
 {
 	Transform::TransformDesc			transformDesc;
 	transformDesc.speed_per_sec = 10.0f;

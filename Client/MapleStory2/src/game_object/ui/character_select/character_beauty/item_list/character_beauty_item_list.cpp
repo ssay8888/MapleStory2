@@ -14,12 +14,12 @@ CharacterBeautyItemList::CharacterBeautyItemList() :
 {
 }
 
-HRESULT CharacterBeautyItemList::NativeConstructPrototype()
+auto CharacterBeautyItemList::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT CharacterBeautyItemList::NativeConstruct(void* arg)
+auto CharacterBeautyItemList::NativeConstruct(void* arg) -> HRESULT
 {
 	_info = *static_cast<CreateItemListTextureInfo*>(arg);
 	if (FAILED(AddComponents()))
@@ -30,7 +30,7 @@ HRESULT CharacterBeautyItemList::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t CharacterBeautyItemList::Tick(const double timeDelta)
+auto CharacterBeautyItemList::Tick(const double timeDelta) -> HRESULT
 {
 	auto& inputDevice = InputDevice::GetInstance();
 
@@ -79,12 +79,12 @@ int32_t CharacterBeautyItemList::Tick(const double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t CharacterBeautyItemList::LateTick(const double timeDelta)
+auto CharacterBeautyItemList::LateTick(const double timeDelta) -> HRESULT
 {
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT CharacterBeautyItemList::Render()
+auto CharacterBeautyItemList::Render() -> HRESULT
 {
 	return GameObject::Render();
 }

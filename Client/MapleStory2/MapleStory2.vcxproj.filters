@@ -250,6 +250,24 @@
     <ClInclude Include="src\game_object\ui\equipped_ui\equipped_ui.h">
       <Filter>game_object\ui\equipped_ui</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\ui\equipped_ui\statup_btn\statup_btn.h">
+      <Filter>game_object\ui\equipped_ui\statup_btn</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\ket_set_ui\key_set_ui.h">
+      <Filter>game_object\ui\keyset_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\ket_set_ui\key_set_manager.h">
+      <Filter>game_object\ui\keyset_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\skill_ui\skill_ui.h">
+      <Filter>game_object\ui\skill_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\skill_ui\skillset\skill_set.h">
+      <Filter>game_object\ui\skill_ui\skillset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\skill_ui\skillset\skilllevel_change_btn\skill_level_change_btn.h">
+      <Filter>game_object\ui\skill_ui\skillset\skilllevel_change_btn</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -495,6 +513,24 @@
     <ClCompile Include="src\game_object\ui\equipped_ui\equipped_ui.cpp">
       <Filter>game_object\ui\equipped_ui</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\ui\equipped_ui\statup_btn\statup_btn.cpp">
+      <Filter>game_object\ui\equipped_ui\statup_btn</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\ket_set_ui\key_set_ui.cpp">
+      <Filter>game_object\ui\keyset_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\ket_set_ui\key_set_manager.cpp">
+      <Filter>game_object\ui\keyset_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\skill_ui\skill_ui.cpp">
+      <Filter>game_object\ui\skill_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\skill_ui\skillset\skill_set.cpp">
+      <Filter>game_object\ui\skill_ui\skillset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\skill_ui\skillset\skilllevel_change_btn\skill_level_change_btn.cpp">
+      <Filter>game_object\ui\skill_ui\skillset\skilllevel_change_btn</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -690,6 +726,21 @@
     </Filter>
     <Filter Include="game_object\ui\equipped_ui">
       <UniqueIdentifier>{744f2ad9-81cd-44d0-bdf4-5ae20ba5fdcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\equipped_ui\statup_btn">
+      <UniqueIdentifier>{7d81edc0-f58a-4cb6-8343-1a1fa571114a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\keyset_ui">
+      <UniqueIdentifier>{0e03756c-6a1c-4064-8131-37245e567f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\skill_ui">
+      <UniqueIdentifier>{db064758-c4e2-4026-a146-e76e0784ee1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\skill_ui\skillset">
+      <UniqueIdentifier>{70708ea5-0008-4fe6-9852-a7d04b822da3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\skill_ui\skillset\skilllevel_change_btn">
+      <UniqueIdentifier>{6ad446ab-51ac-47f4-bc5c-855c92bac3b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

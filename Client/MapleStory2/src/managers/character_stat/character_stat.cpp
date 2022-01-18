@@ -25,6 +25,8 @@ auto CharacterStat::NativeConstruct() -> HRESULT
 	_level = characterInfo.level();
 
 	_exp = characterInfo.exp();
+
+	_ap = characterInfo.ap();
 	return S_OK;
 }
 
@@ -46,6 +48,26 @@ auto CharacterStat::GetInt() const -> int32_t
 auto CharacterStat::GetLuk() const -> int32_t
 {
 	return _luk;
+}
+
+auto CharacterStat::SetStr(int32_t value) -> void
+{
+	_str = value;
+}
+
+auto CharacterStat::SetDex(int32_t value) -> void
+{
+	_dex = value;
+}
+
+auto CharacterStat::SetInt(int32_t value) -> void
+{
+	_int = value;
+}
+
+auto CharacterStat::SetLuk(int32_t value) -> void
+{
+	_luk = value;
 }
 
 auto CharacterStat::GetHp() const -> int32_t
@@ -106,4 +128,14 @@ auto CharacterStat::SetExp(const int32_t value) -> void
 auto CharacterStat::GainExp(const int32_t value) -> void
 {
 	_exp += value;
+}
+
+auto CharacterStat::GetAp() const -> int32_t
+{
+	return _ap;
+}
+
+auto CharacterStat::SetAp(int32_t value) -> void
+{
+	_ap = value;
 }

@@ -14,31 +14,31 @@ Terrain::Terrain(const ComPtr<IDirect3DDevice9>& device):
 {
 }
 
-HRESULT Terrain::NativeConstructPrototype()
+auto Terrain::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT Terrain::NativeConstruct(void* arg)
+auto Terrain::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(AddComponents()))
 		return E_FAIL;
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t Terrain::Tick(const double timeDelta)
+auto Terrain::Tick(const double timeDelta) -> HRESULT
 {
 
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Terrain::LateTick(const double timeDelta)
+auto Terrain::LateTick(const double timeDelta) -> HRESULT
 {
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT Terrain::Render()
+auto Terrain::Render() -> HRESULT
 {
 	const auto view = PipeLine::GetInstance().GetTransform(D3DTS_VIEW);
 	const auto proj = PipeLine::GetInstance().GetTransform(D3DTS_PROJECTION);

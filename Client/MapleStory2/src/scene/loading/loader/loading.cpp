@@ -21,7 +21,9 @@
 #include "src/game_object/ui/character_select/character_beauty/character_beauty_ui.h"
 #include "src/game_object/ui/equipped_ui/equipped_ui.h"
 #include "src/game_object/ui/inventory/inventory_ui.h"
+#include "src/game_object/ui/ket_set_ui/key_set_manager.h"
 #include "src/game_object/ui/player_info/player_info.h"
+#include "src/game_object/ui/skill_ui/skill_ui.h"
 #include "src/game_object/user/user.h"
 #include "src/utility/components/manager/component_manager.h"
 #include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
@@ -469,6 +471,14 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	{
 		return E_FAIL;
 	}
+	if (FAILED(LoadFreeSet()))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(LoadSkillUi()))
+	{
+		return E_FAIL;
+	}
 	
 	MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0);
 	
@@ -570,6 +580,83 @@ auto Loading::LoadEquippedUi() -> HRESULT
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Equipped"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/equipped/equipped.png")))))
 	{
 		return E_FAIL;
+	}
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Statup_Btn"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/equipped/statup_%d.png"), 4))))
+	{
+		return E_FAIL;
+	}
+	return S_OK;
+}
+
+auto Loading::LoadFreeSet() -> HRESULT
+{
+	const auto& componentManager = ComponentManager::GetInstance();
+
+	auto& objectManager = ObjectManager::GetInstance();
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_KeySetManager"), KeySetManager::Create())))
+	{
+		return E_FAIL;
+	}
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Attack_Key"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/key_set/attack_key.png")))))
+	{
+		return E_FAIL;
+	}
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Jump_Key"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/key_set/jump_key.png")))))
+	{
+		return E_FAIL;
+	}
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PickUp_Key"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/key_set/pickup_key.png")))))
+	{
+		return E_FAIL;
+	}
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_KeySet"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/key_set/key_set.png")))))
+	{
+		return E_FAIL;
+	}
+	return S_OK;
+}
+
+auto Loading::LoadSkillUi() -> HRESULT
+{
+	const auto& componentManager = ComponentManager::GetInstance();
+	auto& objectManager = ObjectManager::GetInstance();
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_SkillUi"), SkillUi::Create())))
+	{
+		return E_FAIL;
+	}
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_SkillUi"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/skillui/skillui.png")))))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_SkillUi_MinusBtn"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/skillui/minus_%d.png"), 4))))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_SkillUi_PlusBtn"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/skillui/plus_%d.png"), 4))))
+	{
+		return E_FAIL;
+	}
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_SkillUi_SkillSet"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/skillui/skillset.png")))))
+	{
+		return E_FAIL;
+	}
+
+	const auto files = FileManager::GetDirFileName(L"../../Binary/Resources/Image/skill/");
+
+	for (const auto& filePath : files)
+	{
+		auto prototypeName = fmt::format(L"Prototype_Texture_Skill_Icon_{}", FileManager::GetFileName(filePath));
+
+		if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, prototypeName, Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, filePath))))
+		{
+			return E_FAIL;
+		}
 	}
 	return S_OK;
 }

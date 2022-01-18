@@ -133,6 +133,9 @@
     <ClCompile Include="game\entitiy\item\game_item.cpp">
       <Filter>game\entity\item</Filter>
     </ClCompile>
+    <ClCompile Include="game\entitiy\character\information_collection\keyset\keyset.cpp">
+      <Filter>game\entity\character\information_collection\keyset</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -230,6 +233,9 @@
     </Filter>
     <Filter Include="game\entity\item">
       <UniqueIdentifier>{c986ceb2-8134-4a13-a114-dea1b5718ece}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entity\character\information_collection\keyset">
+      <UniqueIdentifier>{68c105db-5f03-4a5d-b7f3-191c5d308ad1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -364,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="game\entitiy\item\game_item.h">
       <Filter>game\entity\item</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entitiy\character\information_collection\keyset\keyset.h">
+      <Filter>game\entity\character\information_collection\keyset</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

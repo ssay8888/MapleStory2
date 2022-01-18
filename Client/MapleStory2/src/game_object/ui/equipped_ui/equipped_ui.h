@@ -1,6 +1,8 @@
 #pragma once
+#include "protocol/game_enum.pb.h"
 #include "src/utility/game_objects/game_object.h"
 
+class StatupBtn;
 class InventoryTabBtn;
 class Inventory;
 class InputDevice;
@@ -16,8 +18,8 @@ public:
 public:
 	auto NativeConstructPrototype() -> HRESULT override;
 	auto NativeConstruct(void* arg) -> HRESULT override;
-	auto Tick(double timeDelta) -> int32_t override;
-	auto LateTick(double timeDelta) -> int32_t override;
+	auto Tick(double timeDelta) ->HRESULT override;
+	auto LateTick(double timeDelta) ->HRESULT override;
 	auto Render() -> HRESULT override;
 	auto Clone(void* arg) -> std::shared_ptr<GameObject> override;
 	static auto Create()->std::shared_ptr<EquippedUi>;
@@ -30,6 +32,8 @@ private:
 	auto CloseButtonTick(double timeDelta)->HRESULT;
 
 	auto ItemInfoRender()->HRESULT;
+	auto CharacterInfoRender()->HRESULT;
+	auto CharacterStatRender()->HRESULT;
 
 	auto UnEqpItem(std::shared_ptr<InventoryTabBtn> equippedTab, std::shared_ptr<Inventory> inventory, GameContents::kEquipeType type)->void;
 
@@ -44,6 +48,8 @@ private:
 	std::shared_ptr<Shader>					_shader_com = nullptr;
 	std::shared_ptr<ViBufferRect>			_vi_buffer_com = nullptr;
 	std::shared_ptr<InputDevice>			_input_device;
+
+	std::shared_ptr<StatupBtn>				_statup_btn[Protocol::kStatType::kStatEnd];
 
 	bool _is_show;
 	bool _close_btn_over = false;

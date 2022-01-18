@@ -56,6 +56,10 @@ auto Statistic::GetHp() const -> int32_t
 auto Statistic::SetHp(const int32_t hp) -> void
 {
 	_hp = hp;
+	if (_hp > _max_hp)
+	{
+		_hp = _max_hp;
+	}
 }
 
 auto Statistic::GainHp(int32_t hp) -> void
@@ -81,6 +85,10 @@ auto Statistic::GetMp() const -> int32_t
 auto Statistic::SetMp(const int32_t mp) -> void
 {
 	_mp = mp;
+	if (_mp > _max_mp)
+	{
+		_mp = _max_mp;
+	}
 }
 
 auto Statistic::GetMaxMp() const -> int32_t
@@ -116,6 +124,16 @@ auto Statistic::GainExp(const int32_t exp) -> void
 auto Statistic::SetExp(const int32_t exp) -> void
 {
 	_exp = exp;
+}
+
+auto Statistic::GetAp() const -> int32_t
+{
+	return _ap;
+}
+
+auto Statistic::SetAp(int32_t value) -> void
+{
+	_ap = value;
 }
 
 auto Statistic::Create(const int64_t characterId) -> std::shared_ptr<Statistic>

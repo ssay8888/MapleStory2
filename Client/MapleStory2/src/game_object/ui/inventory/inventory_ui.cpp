@@ -17,7 +17,7 @@ Inventory::Inventory() :
 	_moving = false;
 }
 
-HRESULT Inventory::NativeConstructPrototype()
+auto Inventory::NativeConstructPrototype() -> HRESULT
 {
 
 	D3DXMatrixOrthoLH(&_proj_matrix, g_WinCX, g_WinCY, 0.f, 1.f);
@@ -25,7 +25,7 @@ HRESULT Inventory::NativeConstructPrototype()
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT Inventory::NativeConstruct(void* arg)
+auto Inventory::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(AddComponents()))
 	{
@@ -34,7 +34,7 @@ HRESULT Inventory::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t Inventory::Tick(const double timeDelta)
+auto Inventory::Tick(const double timeDelta) -> HRESULT
 {
 	//if (InputDevice::GetInstance().GetKeyPressing(DIK_T))
 	//{
@@ -75,7 +75,7 @@ int32_t Inventory::Tick(const double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Inventory::LateTick(const double timeDelta)
+auto Inventory::LateTick(const double timeDelta) -> HRESULT
 {
 	if (!_is_show)
 	{
@@ -94,7 +94,7 @@ int32_t Inventory::LateTick(const double timeDelta)
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT Inventory::Render()
+auto Inventory::Render() -> HRESULT
 {
 	_matrix			transformMatrix, viewMatrix;
 	D3DXMatrixIdentity(&transformMatrix);
@@ -155,6 +155,7 @@ auto Inventory::GetInventoryTab(const Protocol::kInventoryType type) -> std::sha
 auto Inventory::ChangeShow() -> void
 {
 	_is_show = !_is_show;
+	_pos = { g_WinCX / 2.f, g_WinCY / 2.f, 0 };
 }
 
 auto Inventory::Create() -> std::shared_ptr<Inventory>

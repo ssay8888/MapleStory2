@@ -18,12 +18,12 @@ CharacterOkBtn::CharacterOkBtn() :
 {
 }
 
-HRESULT CharacterOkBtn::NativeConstructPrototype()
+auto CharacterOkBtn::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT CharacterOkBtn::NativeConstruct(void* arg)
+auto CharacterOkBtn::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(AddComponents()))
 	{
@@ -36,7 +36,7 @@ HRESULT CharacterOkBtn::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t CharacterOkBtn::Tick(const double timeDelta)
+auto CharacterOkBtn::Tick(const double timeDelta) -> HRESULT
 {
 	if (IsCollision())
 	{
@@ -56,12 +56,12 @@ int32_t CharacterOkBtn::Tick(const double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t CharacterOkBtn::LateTick(const double timeDelta)
+auto CharacterOkBtn::LateTick(const double timeDelta) -> HRESULT
 {
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT CharacterOkBtn::Render()
+auto CharacterOkBtn::Render() -> HRESULT
 {
 	return GameObject::Render();
 }

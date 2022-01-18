@@ -10,12 +10,12 @@ IngameCamera::IngameCamera(const ComPtr<IDirect3DDevice9>& device) :
 {
 }
 
-HRESULT IngameCamera::NativeConstructPrototype()
+auto IngameCamera::NativeConstructPrototype() -> HRESULT
 {
 	return Camera::NativeConstructPrototype();
 }
 
-HRESULT IngameCamera::NativeConstruct(void* arg)
+auto IngameCamera::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(AddComponents()))
 		return E_FAIL;
@@ -32,7 +32,7 @@ HRESULT IngameCamera::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t IngameCamera::Tick(const double timeDelta)
+auto IngameCamera::Tick(const double timeDelta) -> HRESULT
 {
 	if (_free_camera)
 	{
@@ -76,7 +76,7 @@ int32_t IngameCamera::Tick(const double timeDelta)
 	return Camera::Tick(timeDelta);
 }
 
-int32_t IngameCamera::LateTick(const double timeDelta)
+auto IngameCamera::LateTick(const double timeDelta) -> HRESULT
 {
 	if (!_free_camera)
 	{
@@ -91,12 +91,12 @@ int32_t IngameCamera::LateTick(const double timeDelta)
 	return Camera::LateTick(timeDelta);
 }
 
-HRESULT IngameCamera::Render()
+auto IngameCamera::Render() -> HRESULT
 {
 	return Camera::Render();
 }
 
-HRESULT IngameCamera::AddComponents()
+auto IngameCamera::AddComponents() -> HRESULT
 {
 	Transform::TransformDesc			transformDesc;
 	transformDesc.speed_per_sec = 10.0f;

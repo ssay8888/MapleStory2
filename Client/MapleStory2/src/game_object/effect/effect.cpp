@@ -7,12 +7,12 @@
 #include "src/utility/components/textures/texture.h"
 #include "src/utility/pipe_line/pipe_line.h"
 
-HRESULT Effect::NativeConstructPrototype()
+auto Effect::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT Effect::NativeConstruct(void* arg)
+auto Effect::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(GameObject::NativeConstruct(arg)))
 		return E_FAIL;
@@ -24,12 +24,12 @@ HRESULT Effect::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t Effect::Tick(const double timeDelta)
+auto Effect::Tick(const double timeDelta) -> HRESULT
 {
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Effect::LateTick(const double timeDelta)
+auto Effect::LateTick(const double timeDelta) -> HRESULT
 {
 	_matrix			viewMatrix = PipeLine::GetInstance().GetTransform(D3DTS_VIEW);
 
@@ -45,7 +45,7 @@ int32_t Effect::LateTick(const double timeDelta)
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT Effect::Render()
+auto Effect::Render() -> HRESULT
 {
 	GameObject::Render();
 	_graphic_device->SetTransform(D3DTS_WORLD, &_transform_com->GetWorldMatrix());

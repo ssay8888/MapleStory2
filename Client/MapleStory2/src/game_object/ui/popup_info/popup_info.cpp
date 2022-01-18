@@ -10,7 +10,7 @@ PopupInfo::PopupInfo():
 {
 }
 
-HRESULT PopupInfo::NativeConstructPrototype()
+auto PopupInfo::NativeConstructPrototype() -> HRESULT
 {
 	if (FAILED(AddComponents()))
 	{
@@ -22,12 +22,12 @@ HRESULT PopupInfo::NativeConstructPrototype()
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT PopupInfo::NativeConstruct(void* arg)
+auto PopupInfo::NativeConstruct(void* arg) -> HRESULT
 {
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t PopupInfo::Tick(const double timeDelta)
+auto PopupInfo::Tick(const double timeDelta) -> HRESULT
 {
 	POINT		ptMouse;
 	GetCursorPos(&ptMouse);
@@ -40,12 +40,12 @@ int32_t PopupInfo::Tick(const double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t PopupInfo::LateTick(const double timeDelta)
+auto PopupInfo::LateTick(const double timeDelta) -> HRESULT
 {
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT PopupInfo::Render()
+auto PopupInfo::Render() -> HRESULT
 {
 	_matrix			transformMatrix, viewMatrix;
 	D3DXMatrixIdentity(&transformMatrix);

@@ -32,7 +32,7 @@ auto MapObject::NativeConstruct(void* arg)->HRESULT
 	return S_OK;
 }
 
-auto MapObject::Tick(double timeDelta)-> int32_t
+auto MapObject::Tick(double timeDelta)-> HRESULT
 {
 	//if (_aabb_com)
 	//{
@@ -41,7 +41,7 @@ auto MapObject::Tick(double timeDelta)-> int32_t
 	return S_OK;
 }
 
-auto MapObject::LateTick(double timeDelta)->int32_t
+auto MapObject::LateTick(double timeDelta)->HRESULT
 {
 	return S_OK;
 }

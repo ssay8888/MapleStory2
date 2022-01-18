@@ -11,12 +11,12 @@ CharacterCreateNameBtn::CharacterCreateNameBtn() :
 {
 }
 
-HRESULT CharacterCreateNameBtn::NativeConstructPrototype()
+auto CharacterCreateNameBtn::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT CharacterCreateNameBtn::NativeConstruct(void* arg)
+auto CharacterCreateNameBtn::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(AddComponents()))
 	{
@@ -29,7 +29,7 @@ HRESULT CharacterCreateNameBtn::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t CharacterCreateNameBtn::Tick(const double timeDelta)
+auto CharacterCreateNameBtn::Tick(const double timeDelta) -> HRESULT
 {
 	if (IsCollision())
 	{
@@ -49,12 +49,12 @@ int32_t CharacterCreateNameBtn::Tick(const double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t CharacterCreateNameBtn::LateTick(const double timeDelta)
+auto CharacterCreateNameBtn::LateTick(const double timeDelta) -> HRESULT
 {
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT CharacterCreateNameBtn::Render()
+auto CharacterCreateNameBtn::Render() -> HRESULT
 {
 	return GameObject::Render();
 }

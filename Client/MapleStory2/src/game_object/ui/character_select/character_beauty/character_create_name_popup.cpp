@@ -18,12 +18,12 @@ CharacterCreateNamePopup::CharacterCreateNamePopup():
 {
 }
 
-HRESULT CharacterCreateNamePopup::NativeConstructPrototype()
+auto CharacterCreateNamePopup::NativeConstructPrototype() -> HRESULT
 {
 	return TextBoxUi::NativeConstructPrototype();
 }
 
-HRESULT CharacterCreateNamePopup::NativeConstruct(void* arg)
+auto CharacterCreateNamePopup::NativeConstruct(void* arg) -> HRESULT
 {
 	_info = *static_cast<CharacterCreateNamePopupInfo*>(arg);
 	TextBoxUi::NativeConstruct(&_info.textbox_info);
@@ -42,7 +42,7 @@ HRESULT CharacterCreateNamePopup::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t CharacterCreateNamePopup::Tick(double timeDelta)
+auto CharacterCreateNamePopup::Tick(double timeDelta) -> HRESULT
 {
 	if (_is_show)
 	{
@@ -82,12 +82,12 @@ int32_t CharacterCreateNamePopup::Tick(double timeDelta)
 	return S_OK;
 }
 
-int32_t CharacterCreateNamePopup::LateTick(double timeDelta)
+auto CharacterCreateNamePopup::LateTick(double timeDelta) -> HRESULT
 {
 	return TextBoxUi::LateTick(timeDelta);
 }
 
-HRESULT CharacterCreateNamePopup::Render()
+auto CharacterCreateNamePopup::Render() -> HRESULT
 {
 	return TextBoxUi::Render();
 }

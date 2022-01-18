@@ -15,7 +15,7 @@ CharacterSelectItem::CharacterSelectItem():
 {
 }
 
-HRESULT CharacterSelectItem::NativeConstructPrototype()
+auto CharacterSelectItem::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
@@ -33,7 +33,7 @@ auto CharacterSelectItem::NativeConstruct(void* arg) -> HRESULT
 	return S_OK;
 }
 
-auto CharacterSelectItem::Tick(double timeDelta) -> int32_t
+auto CharacterSelectItem::Tick(double timeDelta) -> HRESULT
 {
 	if (IsCollision())
 	{
@@ -52,7 +52,7 @@ auto CharacterSelectItem::Tick(double timeDelta) -> int32_t
 	return S_OK;
 }
 
-auto CharacterSelectItem::LateTick(double timeDelta) -> int32_t
+auto CharacterSelectItem::LateTick(double timeDelta) -> HRESULT
 {
 	return S_OK;
 }

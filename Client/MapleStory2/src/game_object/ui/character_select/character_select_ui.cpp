@@ -25,12 +25,12 @@ CharacterSelectUi::CharacterSelectUi(const ComPtr<IDirect3DDevice9>& device) :
 {
 }
 
-HRESULT CharacterSelectUi::NativeConstructPrototype()
+auto CharacterSelectUi::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT CharacterSelectUi::NativeConstruct(void* arg)
+auto CharacterSelectUi::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(AddComponents()))
 		return E_FAIL;
@@ -54,7 +54,7 @@ HRESULT CharacterSelectUi::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t CharacterSelectUi::Tick(double timeDelta)
+auto CharacterSelectUi::Tick(double timeDelta) -> HRESULT
 {
 	switch (_state)
 	{
@@ -71,7 +71,7 @@ int32_t CharacterSelectUi::Tick(double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t CharacterSelectUi::LateTick(const double timeDelta)
+auto CharacterSelectUi::LateTick(const double timeDelta) -> HRESULT
 {
 	for (const auto& item : _character_list)
 	{
@@ -83,7 +83,7 @@ int32_t CharacterSelectUi::LateTick(const double timeDelta)
 	return S_OK;
 }
 
-HRESULT CharacterSelectUi::Render()
+auto CharacterSelectUi::Render() -> HRESULT
 {
 	switch (_state)
 	{

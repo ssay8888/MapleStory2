@@ -40,12 +40,12 @@ HRESULT User::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t User::Tick(double timeDelta)
+auto User::Tick(double timeDelta) -> HRESULT
 {
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t User::LateTick(double timeDelta)
+auto User::LateTick(double timeDelta) -> HRESULT
 {
 	PlayAnimation(timeDelta);
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());

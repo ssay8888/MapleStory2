@@ -5,6 +5,7 @@
 
 #include "game/entitiy/character/game_character.h"
 #include "game/entitiy/character/information_collection/inventorys/inventorys.h"
+#include "game/entitiy/character/information_collection/keyset/keyset.h"
 #include "game/entitiy/character/information_collection/stats/Statistic.h"
 #include "game/entitiy/item/game_item.h"
 #include "game/map/map_instance.h"
@@ -97,13 +98,14 @@ auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServer
 		sendPkt.set_max_mp(statInfo->GetMaxMp());
 		sendPkt.set_level(statInfo->GetLevel());
 		sendPkt.set_exp(statInfo->GetExp());
+		sendPkt.set_ap(statInfo->GetAp());
 	}
 	const auto baseInventoryInfo = InfoManager.FindInfo(CharacterInfoStorage::kInfoTypes::kInventory, player->GetCharacterId());
 	if (baseInventoryInfo)
 	{
 		const auto statInfo = std::static_pointer_cast<Inventorys>(baseInventoryInfo);
 		const auto allItems = statInfo->AllItems();
-		for (auto gameItem : allItems)
+		for (const auto gameItem : allItems)
 		{
 			auto item = sendPkt.add_items();
 			item->set_position(gameItem->GetPosition());
@@ -115,6 +117,18 @@ auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServer
 			item->set_int_(gameItem->GetInt());
 			item->set_luk(gameItem->GetLuk());
 			item->set_wap(gameItem->GetWap());
+		}
+	}
+	const auto baseKeysetInfo = InfoManager.FindInfo(CharacterInfoStorage::kInfoTypes::kKeyset, player->GetCharacterId());
+	if (baseKeysetInfo)
+	{
+		const auto keyInfo = std::static_pointer_cast<Keyset>(baseKeysetInfo);
+		auto items = keyInfo->GetAllItems();
+		for (auto& [index, value] : items)
+		{
+			const auto keymap = sendPkt.add_keymap();
+			keymap->set_index(index);
+			keymap->set_value(value);
 		}
 	}
 }

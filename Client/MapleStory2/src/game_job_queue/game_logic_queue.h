@@ -26,6 +26,8 @@ public:
 	auto KillMonster(PacketSessionRef session, Protocol::GameServerKillMonster pkt)->void;
 	auto TakeDamage(PacketSessionRef session, Protocol::GameServerTakeDamage pkt)->void;
 	auto DressChange(PacketSessionRef session, Protocol::GameServerDressChange pkt)->void;
+	auto StatupChange(PacketSessionRef session, Protocol::GameServerStatUp pkt)->void;
+	auto ItemQuantityUpdate(PacketSessionRef session, Protocol::GameServerItemQuantityUpdate pkt)->void;
 
 
 private:

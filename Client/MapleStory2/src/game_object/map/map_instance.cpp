@@ -14,28 +14,28 @@ MapInstance::MapInstance(const ComPtr<IDirect3DDevice9>& device):
 {
 }
 
-HRESULT MapInstance::NativeConstructPrototype()
+auto MapInstance::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT MapInstance::NativeConstruct(void* arg)
+auto MapInstance::NativeConstruct(void* arg) -> HRESULT
 {
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t MapInstance::Tick(double timeDelta)
+auto MapInstance::Tick(double timeDelta) -> HRESULT
 {
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t MapInstance::LateTick(double timeDelta)
+auto MapInstance::LateTick(double timeDelta) -> HRESULT
 {
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderAlpha, shared_from_this());
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT MapInstance::Render()
+auto MapInstance::Render() -> HRESULT
 {
 	if (_shader_com)
 	{

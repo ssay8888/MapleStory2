@@ -22,12 +22,12 @@ Pants::~Pants()
 {
 }
 
-HRESULT Pants::NativeConstructPrototype()
+auto Pants::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT Pants::NativeConstruct(void* arg)
+auto Pants::NativeConstruct(void* arg) -> HRESULT
 {
 	GameObject::NativeConstruct(arg);
 
@@ -48,7 +48,7 @@ HRESULT Pants::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t Pants::Tick(double timeDelta)
+auto Pants::Tick(double timeDelta) -> HRESULT
 {
 	const auto& instance = ObjectManager::GetInstance();
 	auto playerObject = std::static_pointer_cast<Fittingdoll>(instance.GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));
@@ -63,14 +63,14 @@ int32_t Pants::Tick(double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Pants::LateTick(double timeDelta)
+auto Pants::LateTick(double timeDelta) -> HRESULT
 {
 	GameObject::LateTick(timeDelta);
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());
 	return S_OK;
 }
 
-HRESULT Pants::Render()
+auto Pants::Render() -> HRESULT
 {
 	GameObject::Render();
 	if (FAILED(SetUpConstantTable()))

@@ -18,6 +18,11 @@ public:
 	auto GetInt()const->int32_t;
 	auto GetLuk()const->int32_t;
 
+	auto SetStr(int32_t value)->void;
+	auto SetDex(int32_t value)->void;
+	auto SetInt(int32_t value)->void;
+	auto SetLuk(int32_t value)->void;
+
 	auto GetHp()const->int32_t;
 	auto SetHp(int32_t value)->void;
 	auto GainHp(int32_t value)->void;
@@ -36,9 +41,13 @@ public:
 	auto SetExp(int32_t value)->void;
 	auto GainExp(int32_t value)->void;
 
+	auto GetAp()const->int32_t;
+	auto SetAp(int32_t value)->void;
+
 private:
 	int32_t _str, _dex, _int, _luk;
 	int32_t _hp, _max_hp, _mp, _max_mp;
 	int32_t _level, _exp;
+	int32_t _ap;
 };
 

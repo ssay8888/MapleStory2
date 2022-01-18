@@ -11,12 +11,12 @@ CharacterCreateReturnBtn::CharacterCreateReturnBtn() :
 {
 }
 
-HRESULT CharacterCreateReturnBtn::NativeConstructPrototype()
+auto CharacterCreateReturnBtn::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT CharacterCreateReturnBtn::NativeConstruct(void* arg)
+auto CharacterCreateReturnBtn::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(AddComponents()))
 	{
@@ -29,7 +29,7 @@ HRESULT CharacterCreateReturnBtn::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t CharacterCreateReturnBtn::Tick(const double timeDelta)
+auto CharacterCreateReturnBtn::Tick(const double timeDelta) -> HRESULT
 {
 	if (IsCollision())
 	{
@@ -49,12 +49,12 @@ int32_t CharacterCreateReturnBtn::Tick(const double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t CharacterCreateReturnBtn::LateTick(const double timeDelta)
+auto CharacterCreateReturnBtn::LateTick(const double timeDelta) -> HRESULT
 {
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT CharacterCreateReturnBtn::Render()
+auto CharacterCreateReturnBtn::Render() -> HRESULT
 {
 	return GameObject::Render();
 }

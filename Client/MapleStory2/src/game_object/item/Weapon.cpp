@@ -63,12 +63,12 @@ HRESULT Weapon::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t Weapon::Tick(const double timeDelta)
+auto Weapon::Tick(const double timeDelta) -> HRESULT
 {
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Weapon::LateTick(const double timeDelta)
+auto Weapon::LateTick(const double timeDelta) -> HRESULT
 {
 	GameObject::LateTick(timeDelta);
 

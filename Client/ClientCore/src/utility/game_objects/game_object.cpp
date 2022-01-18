@@ -53,12 +53,12 @@ auto GameObject::NativeConstruct(void* arg) -> HRESULT
 	return S_OK;
 }
 
-auto GameObject::Tick(double timeDelta) -> int32_t
+auto GameObject::Tick(double timeDelta) -> HRESULT
 {
 	return int32_t();
 }
 
-auto GameObject::LateTick(double timeDelta) -> int32_t
+auto GameObject::LateTick(double timeDelta) -> HRESULT
 {
 	return int32_t();
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "protocol/game_enum.pb.h"
 #include "src/utility/game_objects/game_object.h"
 
 class PopupInfo;
@@ -20,19 +21,20 @@ public:
 		int32_t int_;
 		int32_t luk;
 		int32_t wap;
+		Protocol::kInventoryType type;
 	};
 
 	Item(ItemInfo info);
 	~Item() override = default;
-	auto NativeConstructPrototype() -> HRESULT override;
-	auto NativeConstruct(void* arg) -> HRESULT override;
-	auto Tick(double timeDelta) -> int32_t override;
-	auto Tick(const _float3& pos, double timeDelta) -> int32_t;
-	auto LateTick(double timeDelta) -> int32_t override;
-	auto Render() -> HRESULT override;
+	auto NativeConstructPrototype()->HRESULT override;
+	auto NativeConstruct(void* arg)->HRESULT override;
+	auto Tick(double timeDelta)->HRESULT override;
+	auto Tick(const _float3& pos, double timeDelta)->HRESULT;
+	auto LateTick(double timeDelta)->HRESULT override;
+	auto Render()->HRESULT override;
 	auto Render(const _float3& pos, std::shared_ptr<Shader> shader) const->HRESULT;
 	auto RenderEquipped(const _float3& pos, std::shared_ptr<Shader> shader) const->HRESULT;
-	auto Clone(void* arg) -> std::shared_ptr<GameObject> override;
+	auto Clone(void* arg)->std::shared_ptr<GameObject> override;
 
 public:
 	auto SearchMouseOverState(const _float3& pos)->bool;
@@ -55,6 +57,13 @@ public:
 
 	auto GetItemId()const->int32_t;
 
+	auto GetItemQuantity()const->int32_t;
+	auto SetItemQuantity(int32_t value)->void;
+
+	auto GetInventoryType()const->Protocol::kInventoryType;
+
+	auto GetItemIcon()const->std::shared_ptr<Texture>;
+
 public:
 	static auto Create(ItemInfo info)->std::shared_ptr<Item>;
 
@@ -63,7 +72,7 @@ private:
 
 private:
 	ItemInfo _info;
-	_float3 _original_pos{-81, 154, 0};
+	_float3 _original_pos{ -81, 154, 0 };
 
 	std::shared_ptr<Texture>		_texture_com = nullptr;
 	std::shared_ptr<InputDevice>	_input_device = nullptr;

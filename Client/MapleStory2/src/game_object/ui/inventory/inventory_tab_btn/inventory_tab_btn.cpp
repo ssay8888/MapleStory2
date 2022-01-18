@@ -16,6 +16,8 @@
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/game_object/ui/inventory/inventory_ui.h"
+#include "src/game_object/ui/ket_set_ui/key_set_manager.h"
+#include "src/game_object/ui/ket_set_ui/key_set_ui.h"
 
 InventoryTabBtn::InventoryTabBtn(Protocol::kInventoryType type, _float3 pos) :
 	GameObject(GraphicDevice::GetInstance().GetDevice()),
@@ -24,7 +26,7 @@ InventoryTabBtn::InventoryTabBtn(Protocol::kInventoryType type, _float3 pos) :
 {
 }
 
-HRESULT InventoryTabBtn::NativeConstructPrototype()
+auto InventoryTabBtn::NativeConstructPrototype() -> HRESULT
 {
 	D3DXMatrixOrthoLH(&_proj_matrix, g_WinCX, g_WinCY, 0.f, 1.f);
 	if (FAILED(AddComponents()))
@@ -34,11 +36,12 @@ HRESULT InventoryTabBtn::NativeConstructPrototype()
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT InventoryTabBtn::NativeConstruct(void* arg)
+auto InventoryTabBtn::NativeConstruct(void* arg) -> HRESULT
 {
 	return GameObject::NativeConstruct(arg);
 }
-int32_t InventoryTabBtn::Tick(const double timeDelta)
+
+auto InventoryTabBtn::Tick(const double timeDelta) -> HRESULT
 {
 	//if (InputDevice::GetInstance().GetKeyPressing(DIK_T))
 	//{
@@ -61,7 +64,7 @@ int32_t InventoryTabBtn::Tick(const double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-auto InventoryTabBtn::Tick(const _float3& pos, double timeDelta) -> int32_t
+auto InventoryTabBtn::Tick(const _float3& pos, double timeDelta) -> HRESULT
 {
 	_input_device->InvalidateInputDevice();
 
@@ -151,6 +154,25 @@ auto InventoryTabBtn::Tick(const _float3& pos, double timeDelta) -> int32_t
 						else
 						{
 							item->ResetPosition();
+							if (_type == Protocol::kInventoryEtc)
+							{
+								auto baseKeyManager = ObjectManager::GetInstance().GetGameObjectPtr(kSceneGamePlay0, L"Layer_Keymanager", 0);
+								auto keyManager = std::static_pointer_cast<KeySetManager>(baseKeyManager);
+								if (keyManager)
+								{
+									auto index = keyManager->IsCollisionKeySet();
+									if (index != -1)
+									{
+										const auto keySet = keyManager->GetKeySet(index);
+										keySet->SetItem(item);
+										Protocol::GameClientKeySet sendPkt;
+										sendPkt.set_key_value(index);
+										sendPkt.set_type(Protocol::kItem);
+										sendPkt.set_value(item->GetPosition());
+										SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+									}
+								}
+							}
 						}
 					}
 				}
@@ -170,7 +192,7 @@ auto InventoryTabBtn::Tick(const _float3& pos, double timeDelta) -> int32_t
 	return S_OK;
 }
 
-int32_t InventoryTabBtn::LateTick(const double timeDelta)
+auto InventoryTabBtn::LateTick(const double timeDelta) -> HRESULT
 {
 	for (const auto& item : _items)
 	{
@@ -182,7 +204,7 @@ int32_t InventoryTabBtn::LateTick(const double timeDelta)
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT InventoryTabBtn::Render()
+auto InventoryTabBtn::Render() -> HRESULT
 {
 	return GameObject::Render();
 }

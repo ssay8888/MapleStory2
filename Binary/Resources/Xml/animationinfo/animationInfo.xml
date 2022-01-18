@@ -13,4 +13,7 @@
     <model animation_name="largesword_run_a" targetnode="Weapon_Hand_R_Point" />
     <model animation_name="sword_jump_up_a" targetnode="Weapon_Hand_R_Point" />
     <model animation_name="sword_jump_down_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="berserker_rageslash_01_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="berserker_rageslash_02_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="berserker_rageslash_03_a" targetnode="Weapon_Hand_R_Point" />
 </ms2>

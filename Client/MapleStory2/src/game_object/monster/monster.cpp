@@ -27,12 +27,12 @@ Monster::Monster(const ComPtr<IDirect3DDevice9>& device):
 {
 }
 
-HRESULT Monster::NativeConstructPrototype()
+auto Monster::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT Monster::NativeConstruct(void* arg)
+auto Monster::NativeConstruct(void* arg) -> HRESULT
 {
 	GameObject::NativeConstruct(arg);
 	if (arg == nullptr)
@@ -56,21 +56,21 @@ HRESULT Monster::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t Monster::Tick(const double timeDelta)
+auto Monster::Tick(const double timeDelta) -> HRESULT
 {
 	_aabb_com->UpdateCollider();
 	_current_monster_state->Tick(timeDelta, GetMonster());
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Monster::LateTick(const double timeDelta)
+auto Monster::LateTick(const double timeDelta) -> HRESULT
 {
 	_current_monster_state->LateTick(timeDelta, GetMonster());
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT Monster::Render()
+auto Monster::Render() -> HRESULT
 {
 	GameObject::Render();
 	if (FAILED(SetUpConstantTable()))

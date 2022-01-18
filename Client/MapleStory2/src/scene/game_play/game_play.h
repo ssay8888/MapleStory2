@@ -19,6 +19,8 @@ private:
 	auto ReadyLayerBackGround(const std::wstring& pLayerTag)->HRESULT;
 	auto ReadyMonster()->HRESULT;
 	auto ReadyInventory()->HRESULT;
+	auto ReadyKeySetManager()->HRESULT;
+	auto ReadySkillUi()->HRESULT;
 public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& device)->std::shared_ptr<GamePlay>;
 };

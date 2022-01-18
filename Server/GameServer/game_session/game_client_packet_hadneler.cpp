@@ -54,3 +54,25 @@ auto GameClientPacketHandler::HandleGameClientInventoryItemMove(PacketSessionRef
 	GameTick::GetInstance()->DoAsync(&GameTick::InventoryItemMove, pkt, gameSession);
 	return true;
 }
+
+auto GameClientPacketHandler::HandleGameClientStatUp(PacketSessionRef& session, Protocol::GameClientStatUp& pkt) -> bool
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	GameTick::GetInstance()->DoAsync(&GameTick::PlayerStatUp, pkt, gameSession);
+	return true;
+}
+
+auto GameClientPacketHandler::HandleGameClientKeySet(PacketSessionRef& session, Protocol::GameClientKeySet& pkt) -> bool
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	GameTick::GetInstance()->DoAsync(&GameTick::PlayerKeySetChange, pkt, gameSession);
+	return true;
+}
+
+auto GameClientPacketHandler::HandleGameClientItemApply(PacketSessionRef& session,
+	Protocol::GameClientItemApply& pkt) -> bool
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	GameTick::GetInstance()->DoAsync(&GameTick::PlayerItemApply, pkt, gameSession);
+	return true;
+}

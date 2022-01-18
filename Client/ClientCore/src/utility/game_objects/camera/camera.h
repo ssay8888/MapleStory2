@@ -25,8 +25,8 @@ public:
 public:
 	auto NativeConstructPrototype()->HRESULT override;
 	auto NativeConstruct(void* arg)->HRESULT override;
-	auto Tick(double timeDelta)->int32_t override;
-	auto LateTick(double timeDelta)->int32_t override;
+	auto Tick(double timeDelta)->HRESULT override;
+	auto LateTick(double timeDelta)->HRESULT override;
 	auto Render()->HRESULT override;
 
 private:

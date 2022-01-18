@@ -8,6 +8,7 @@
 #include "src/game_object/ui/inventory/inventory_ui.h"
 #include "src/game_object/ui/inventory/inventory_tab_btn/inventory_tab_btn.h"
 #include "src/game_object/ui/popup_info/popup_info.h"
+#include "src/managers/character_stat/character_stat.h"
 #include "src/managers/weapon_manager/weapon_manager.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
@@ -17,6 +18,8 @@
 #include "src/utility/components/shader/shader.h"
 #include "src/utility/components/vi_buffer/vi_buffer_rect/vi_buffer_rect.h"
 #include "src/utility/game_objects/manager/object_manager.h"
+#include "statup_btn/statup_btn.h"
+#include "string_utils/string_utils.h"
 
 EquippedUi::EquippedUi():
 	GameObject(GraphicDevice::GetInstance().GetDevice())
@@ -25,13 +28,13 @@ EquippedUi::EquippedUi():
 	_moving = false;
 }
 
-HRESULT EquippedUi::NativeConstructPrototype()
+auto EquippedUi::NativeConstructPrototype() -> HRESULT
 {
 
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT EquippedUi::NativeConstruct(void* arg)
+auto EquippedUi::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(AddComponents()))
 	{
@@ -42,7 +45,7 @@ HRESULT EquippedUi::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t EquippedUi::Tick(const double timeDelta)
+auto EquippedUi::Tick(const double timeDelta) -> HRESULT
 {
 	if (!_is_show)
 	{
@@ -80,7 +83,6 @@ int32_t EquippedUi::Tick(const double timeDelta)
 		}
 		if (_input_device->GetDirectMouseKeyDown(InputDevice::kDirectInMouseButton::kRightButton))
 		{
-
 			if (ColliderCoat())
 			{
 				UnEqpItem(equippedTab, inventory, GameContents::kEquipeType::kCoat);
@@ -100,21 +102,28 @@ int32_t EquippedUi::Tick(const double timeDelta)
 			
 		}
 	}
-
+	for (int i = 0; i < Protocol::kStatType::kStatEnd; ++i)
+	{
+		_statup_btn[i]->Tick(_float3(_pos.x + 230, _pos.y - 83 + (i * 21), 0), timeDelta);
+	}
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t EquippedUi::LateTick(const double timeDelta)
+auto EquippedUi::LateTick(const double timeDelta) -> HRESULT
 {
 	if (!_is_show)
 	{
 		return S_OK;
 	}
+	for (int i = 0; i < Protocol::kStatType::kStatEnd; ++i)
+	{
+		_statup_btn[i]->LateTick(_float3(_pos.x + 230, _pos.y - 83 + (i * 21), 0), timeDelta);
+	}
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderUi, shared_from_this());
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT EquippedUi::Render()
+auto EquippedUi::Render() -> HRESULT
 {
 	_matrix			transformMatrix, viewMatrix;
 	D3DXMatrixIdentity(&transformMatrix);
@@ -145,6 +154,12 @@ HRESULT EquippedUi::Render()
 	_vi_buffer_com->RenderViBuffer();
 
 	ItemInfoRender();
+	CharacterInfoRender();
+	CharacterStatRender();
+	for (int i = 0; i < Protocol::kStatType::kStatEnd; ++i)
+	{
+		_statup_btn[i]->Render(_float3(_pos.x + 230, _pos.y - 83 + (i * 21), 0), _shader_com);
+	}
 	result = _shader_com->EndShader();
 
 
@@ -176,6 +191,7 @@ auto EquippedUi::Create() -> std::shared_ptr<EquippedUi>
 auto EquippedUi::ChangeShow() -> void
 {
 	_is_show = !_is_show;
+	_pos = { g_WinCX / 2.f, g_WinCY / 2.f, 0 };
 }
 
 auto EquippedUi::MoveInventoryFrame() -> HRESULT
@@ -240,6 +256,18 @@ auto EquippedUi::AddComponents() -> HRESULT
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;
 
+	for (int i = 0; i < Protocol::kStatType::kStatEnd; ++i)
+	{
+		_statup_btn[i] = StatupBtn::Create(
+			[=]()
+			{
+				Protocol::GameClientStatUp sendPkt;
+				sendPkt.set_type(static_cast<Protocol::kStatType>(i));
+				SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+			}
+		);
+
+	}
 	return S_OK;
 }
 
@@ -329,6 +357,48 @@ auto EquippedUi::ItemInfoRender() -> HRESULT
 			}
 		}
 	}
+	return S_OK;
+}
+
+auto EquippedUi::CharacterInfoRender() -> HRESULT
+{
+	const float centerX = g_WinCX >> 1;
+	const float centerY = g_WinCY >> 1;
+	RECT		rcUI = {
+	   static_cast<LONG>(_pos.x - 230),
+	   static_cast<LONG>(_pos.y - 150),
+	   static_cast<LONG>(_pos.x),
+	   static_cast<LONG>(_pos.y)
+	};
+	auto info = GameLogicQueue::GetInstance()->GetCharacterInfo();
+	std::wstring str = fmt::format(L"캐릭터 이름 : {0}\r\n레벨 : {1}", StringUtils::ConvertCtoW(info.name().c_str()), CharacterStat::GetInstance().GetLevel());
+	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rcUI, DT_VCENTER | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
+	return S_OK;
+}
+
+auto EquippedUi::CharacterStatRender() -> HRESULT
+{
+	const float centerX = g_WinCX >> 1;
+	const float centerY = g_WinCY >> 1;
+	RECT		rcUI = {
+	   static_cast<LONG>(_pos.x + 120),
+	   static_cast<LONG>(_pos.y - 100),
+	   static_cast<LONG>(_pos.x + 215),
+	   static_cast<LONG>(_pos.y)
+	};
+	const auto& stat = CharacterStat::GetInstance();
+	std::wstring str = fmt::format(L"{0}\r\n\r\n{1}\r\n\r\n{2}\r\n\r\n{3}", stat.GetStr(), stat.GetDex(), stat.GetInt(), stat.GetLuk());
+	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rcUI, DT_VCENTER | DT_RIGHT, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+	
+	rcUI = {
+	   static_cast<LONG>(_pos.x + 200),
+	   static_cast<LONG>(_pos.y - 85),
+	   static_cast<LONG>(_pos.x + 250),
+	   static_cast<LONG>(_pos.y + 250)
+	};
+	str = fmt::format(L"{0}", stat.GetAp());
+	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rcUI, DT_VCENTER | DT_LEFT, D3DCOLOR_ARGB(255, 255, 94, 0));
 	return S_OK;
 }
 

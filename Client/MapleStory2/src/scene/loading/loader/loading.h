@@ -28,6 +28,8 @@ private:
 	auto LoadItemIcon()->HRESULT;
 	auto LoadItemInfoPopup()->HRESULT;
 	auto LoadEquippedUi()->HRESULT;
+	auto LoadFreeSet()->HRESULT;
+	auto LoadSkillUi()->HRESULT;
 
 
 

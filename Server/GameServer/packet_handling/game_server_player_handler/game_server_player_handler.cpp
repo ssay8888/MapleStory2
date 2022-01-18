@@ -3,6 +3,7 @@
 
 #include "game/entitiy/character/game_character.h"
 #include "game/entitiy/character/information_collection/inventorys/inventorys.h"
+#include "game/entitiy/character/information_collection/keyset/keyset.h"
 #include "game/entitiy/character/information_collection/stats/Statistic.h"
 #include "game/entitiy/item/game_item.h"
 #include "game/entitiy/monster/game_monster.h"
@@ -181,5 +182,126 @@ auto GameServerPlayerHandler::InventoryItemMove(Protocol::GameClientInventoryIte
 		}
 		default:;
 		}
+	}
+}
+
+auto GameServerPlayerHandler::PlayerStatUp(Protocol::GameClientStatUp pkt, GameSessionRef gameSession) -> void
+{
+	if (gameSession->GetPlayer() == nullptr)
+	{
+		return;
+	}
+
+	const auto player = gameSession->GetPlayer();
+	const auto baseInfo = CharacterInfoStorageManager::GetInstance().FindInfo(CharacterInfoStorage::kInfoTypes::kStats, player->GetCharacterId());
+	const auto statInfo = std::static_pointer_cast<Statistic>(baseInfo);
+
+	if (statInfo)
+	{
+		if (statInfo->GetAp() <= 0)
+		{
+			return;
+		}
+
+		Protocol::GameServerStatUp sendPkt;
+		sendPkt.set_type(pkt.type());
+		switch (pkt.type())
+		{
+		case Protocol::kStr:
+			statInfo->SetStr(statInfo->GetStr() + 1);
+			sendPkt.set_value(statInfo->GetStr());
+			break;
+		case Protocol::kDex:
+			statInfo->SetDex(statInfo->GetDex() + 1);
+			sendPkt.set_value(statInfo->GetDex());
+			break;
+		case Protocol::kInt:
+			statInfo->SetInt(statInfo->GetInt() + 1);
+			sendPkt.set_value(statInfo->GetInt());
+			break;
+		case Protocol::kLuk:
+			statInfo->SetLuk(statInfo->GetLuk() + 1);
+			sendPkt.set_value(statInfo->GetLuk());
+			break;
+		default: 
+			return;
+		}
+		statInfo->SetAp(statInfo->GetAp() - 1);
+		sendPkt.set_ap_value(statInfo->GetAp());
+
+		gameSession->Send(GameClientPacketHandler::MakeSendBuffer(sendPkt)); 
+	}
+
+}
+
+auto GameServerPlayerHandler::PlayerKeySetChange(Protocol::GameClientKeySet pkt, GameSessionRef gameSession) -> void
+{
+	if (gameSession->GetPlayer() == nullptr || pkt.key_value() < 0 || pkt.key_value() > 16)
+	{
+		return;
+	}
+
+	const auto player = gameSession->GetPlayer();
+	const auto baseInfo = CharacterInfoStorageManager::GetInstance().FindInfo(CharacterInfoStorage::kInfoTypes::kKeyset, player->GetCharacterId());
+	const auto keysetInfo = std::static_pointer_cast<Keyset>(baseInfo);
+	if (keysetInfo)
+	{
+		if (pkt.value() == -1)
+		{
+			keysetInfo->RemoveItem(pkt.key_value());
+		}
+		else
+		{
+			auto index = keysetInfo->FindItem(pkt.key_value());
+			if (index == -1)
+			{
+				keysetInfo->PushItem(pkt.key_value(), pkt.value());
+			}
+			else
+			{
+				keysetInfo->ChangeItem(pkt.key_value(), pkt.value());
+			}
+		}
+	}
+}
+
+auto GameServerPlayerHandler::PlayerItemApply(Protocol::GameClientItemApply pkt, GameSessionRef gameSession) -> void
+{
+	if (gameSession->GetPlayer() == nullptr || pkt.position() < 0 || pkt.position() > kInventoryMaxSlot)
+	{
+		return;
+	}
+
+	const auto& infoManager = CharacterInfoStorageManager::GetInstance();
+	const auto player = gameSession->GetPlayer();
+	const auto baseInfo = infoManager.FindInfo(CharacterInfoStorage::kInfoTypes::kInventory, player->GetCharacterId());
+	const auto inventoryInfo = std::static_pointer_cast<Inventorys>(baseInfo);
+
+	if (inventoryInfo)
+	{
+		auto item = inventoryInfo->FindItem(pkt.type(), pkt.position());
+		if (item == nullptr || item->GetQuantity() <= 0)
+		{
+			return;
+		}
+		item->SetQuantity(item->GetQuantity() - 1);
+		const auto baseStats = infoManager.FindInfo(CharacterInfoStorage::kInfoTypes::kStats, player->GetCharacterId());
+		const auto statInfo = std::static_pointer_cast<Statistic>(baseStats);
+		statInfo->SetHp(statInfo->GetHp() + 50);
+
+		Protocol::GameServerUpdateStat sendStatPkt;
+		sendStatPkt.set_type(Protocol::kHp);
+		sendStatPkt.set_value(statInfo->GetHp());
+		gameSession->Send(GameClientPacketHandler::MakeSendBuffer(sendStatPkt));
+
+		if (item->GetQuantity() <= 0)
+		{
+			inventoryInfo->RemoveItem(pkt.type(), pkt.position());
+		}
+		Protocol::GameServerItemQuantityUpdate sendPkt;
+		sendPkt.set_type(pkt.type());
+		sendPkt.set_position(pkt.position());
+		sendPkt.set_quantity(item->GetQuantity());
+		gameSession->Send(GameClientPacketHandler::MakeSendBuffer(sendPkt));
 	}
 }

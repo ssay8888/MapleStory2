@@ -14,9 +14,9 @@ public:
 	explicit InventoryTabBtn(Protocol::kInventoryType type, _float3 pos);
 	auto NativeConstructPrototype() -> HRESULT override;
 	auto NativeConstruct(void* arg) -> HRESULT override;
-	auto Tick(double timeDelta) -> int32_t override;
-	auto Tick(const _float3& pos, double timeDelta) -> int32_t;
-	auto LateTick(double timeDelta) -> int32_t override;
+	auto Tick(double timeDelta) ->HRESULT override;
+	auto Tick(const _float3& pos, double timeDelta) ->HRESULT;
+	auto LateTick(double timeDelta) ->HRESULT override;
 	auto Render() -> HRESULT override;
 	auto Render(const _float3& pos, std::shared_ptr<Shader> shader)->HRESULT;
 	auto ItemListRender(const _float3& pos, std::shared_ptr<Shader> shader)->HRESULT;

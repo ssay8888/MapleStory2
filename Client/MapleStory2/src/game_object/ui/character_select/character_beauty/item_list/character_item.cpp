@@ -12,12 +12,12 @@ CharacterItem::CharacterItem() :
 {
 }
 
-HRESULT CharacterItem::NativeConstructPrototype()
+auto CharacterItem::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT CharacterItem::NativeConstruct(void* arg)
+auto CharacterItem::NativeConstruct(void* arg) -> HRESULT
 {
 	_info = *static_cast<CreateItemInfo*>(arg);
 	if (FAILED(AddComponents()))
@@ -28,17 +28,17 @@ HRESULT CharacterItem::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t CharacterItem::Tick(const double timeDelta)
+auto CharacterItem::Tick(const double timeDelta) -> HRESULT
 {
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t CharacterItem::LateTick(const double timeDelta)
+auto CharacterItem::LateTick(const double timeDelta) -> HRESULT
 {
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT CharacterItem::Render()
+auto CharacterItem::Render() -> HRESULT
 {
 	return GameObject::Render();
 }

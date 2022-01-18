@@ -17,12 +17,12 @@ CharacterBeautyUi::CharacterBeautyUi(const ComPtr<IDirect3DDevice9>& device):
 {
 }
 
-HRESULT CharacterBeautyUi::NativeConstructPrototype()
+auto CharacterBeautyUi::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT CharacterBeautyUi::NativeConstruct(void* arg)
+auto CharacterBeautyUi::NativeConstruct(void* arg) -> HRESULT
 {
 	if (FAILED(AddComponents()))
 		return E_FAIL;
@@ -34,7 +34,7 @@ HRESULT CharacterBeautyUi::NativeConstruct(void* arg)
 	return GameObject::NativeConstruct(arg);
 }
 
-int32_t CharacterBeautyUi::Tick(const double timeDelta)
+auto CharacterBeautyUi::Tick(const double timeDelta) -> HRESULT
 {
 	if (_beauty_stage != kBeautyStage::kEnd)
 	{
@@ -54,7 +54,7 @@ int32_t CharacterBeautyUi::Tick(const double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t CharacterBeautyUi::LateTick(const double timeDelta)
+auto CharacterBeautyUi::LateTick(const double timeDelta) -> HRESULT
 {
 
 	if (_beauty_stage != kBeautyStage::kEnd)
@@ -68,7 +68,7 @@ int32_t CharacterBeautyUi::LateTick(const double timeDelta)
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT CharacterBeautyUi::Render()
+auto CharacterBeautyUi::Render() -> HRESULT
 {
 
 	if (_beauty_stage != kBeautyStage::kEnd)

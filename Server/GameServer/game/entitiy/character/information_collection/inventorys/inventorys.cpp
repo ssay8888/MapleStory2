@@ -100,6 +100,7 @@ auto Inventorys::ItemListToXml() const -> std::wstring
 					item.append_attribute("type").set_value(itemData->GetInventoryType());
 					item.append_attribute("itemid").set_value(itemData->GetItemId());
 					item.append_attribute("position").set_value(itemData->GetPosition());
+					item.append_attribute("quantity").set_value(itemData->GetQuantity());
 				}
 			}
 		}

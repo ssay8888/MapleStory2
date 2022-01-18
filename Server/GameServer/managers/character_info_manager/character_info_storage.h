@@ -8,6 +8,7 @@ public:
 	{
 		kStats,
 		kInventory,
+		kKeyset,
 		kEnd
 	};
 

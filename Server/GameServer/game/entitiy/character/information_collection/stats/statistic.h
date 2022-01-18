@@ -39,6 +39,9 @@ public:
 	auto GainExp(int32_t exp)->void;
 	auto SetExp(int32_t exp)->void;
 
+	auto GetAp()const->int32_t;
+	auto SetAp(int32_t value)->void;
+
 public:
 	static auto Create(int64_t characterId)->std::shared_ptr<Statistic>;
 
@@ -49,5 +52,6 @@ private:
 	int32_t _str, _dex, _int, _luk;
 	int32_t _hp, _max_hp, _mp, _max_mp;
 	int32_t _level, _exp;
+	int32_t _ap;
 };
 

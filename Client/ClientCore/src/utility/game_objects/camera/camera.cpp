@@ -9,12 +9,12 @@ Camera::Camera(const ComPtr<IDirect3DDevice9>& device):
 {
 }
 
-HRESULT Camera::NativeConstructPrototype()
+auto Camera::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT Camera::NativeConstruct(void* arg)
+auto Camera::NativeConstruct(void* arg) -> HRESULT
 {
 	GameObject::NativeConstruct(arg);
 
@@ -72,7 +72,7 @@ HRESULT Camera::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t Camera::Tick(const double timeDelta)
+auto Camera::Tick(const double timeDelta) -> HRESULT
 {
 	GameObject::Tick(timeDelta);
 
@@ -81,14 +81,14 @@ int32_t Camera::Tick(const double timeDelta)
 	return int32_t();
 }
 
-int32_t Camera::LateTick(const double timeDelta)
+auto Camera::LateTick(const double timeDelta) -> HRESULT
 {
 	GameObject::LateTick(timeDelta);
 
 	return int32_t();
 }
 
-HRESULT Camera::Render()
+auto Camera::Render() -> HRESULT
 {
 	return S_OK;
 }

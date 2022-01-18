@@ -24,12 +24,12 @@ Fittingdoll::Fittingdoll(const ComPtr<IDirect3DDevice9>& device) :
 {
 }
 
-HRESULT Fittingdoll::NativeConstructPrototype()
+auto Fittingdoll::NativeConstructPrototype() -> HRESULT
 {
 	return GameObject::NativeConstructPrototype();
 }
 
-HRESULT Fittingdoll::NativeConstruct(void* arg)
+auto Fittingdoll::NativeConstruct(void* arg) -> HRESULT
 {
 	GameObject::NativeConstruct(arg);
 	if (arg)
@@ -49,7 +49,7 @@ HRESULT Fittingdoll::NativeConstruct(void* arg)
 	return S_OK;
 }
 
-int32_t Fittingdoll::Tick(double timeDelta)
+auto Fittingdoll::Tick(double timeDelta) -> HRESULT
 {
 	//static int32_t radian = 0;
 	//if (InputDevice::GetInstance().GetKeyPressing(DIK_Z))
@@ -108,7 +108,7 @@ int32_t Fittingdoll::Tick(double timeDelta)
 	return GameObject::Tick(timeDelta);
 }
 
-int32_t Fittingdoll::LateTick(const double timeDelta)
+auto Fittingdoll::LateTick(const double timeDelta) -> HRESULT
 {
 	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());
 	auto mesh = _character_mesh_list[0];
@@ -118,7 +118,7 @@ int32_t Fittingdoll::LateTick(const double timeDelta)
 	return GameObject::LateTick(timeDelta);
 }
 
-HRESULT Fittingdoll::Render()
+auto Fittingdoll::Render() -> HRESULT
 {
 	GameObject::Render();
 	if (FAILED(SetUpConstantTable()))
