@@ -20,6 +20,12 @@ public:
 	auto GravityPlayerSendMessage(kAnimationType type) const->void;
 	auto StraightCheck()->bool;
 
+public:
+	auto SetPushKey(int32_t key)->void;
+
+protected:
+	auto KeySetHandleInput() const->std::pair<int32_t, std::shared_ptr<CharacterState>>;
+
 protected:
 	auto ReloadMapObject()->void;
 
@@ -30,6 +36,7 @@ public:
 	}
 	
 protected:
+	int32_t _key;
 	std::shared_ptr<Player>									_player;
 	std::shared_ptr<MapObject>								_last_tile_map_object;
 	std::shared_ptr<MapObject>								_last_wall_map_object;

@@ -28,6 +28,7 @@ public:
 	static auto Create(int32_t skillId, _float3 pos)->std::shared_ptr<SkillSet>;
 	auto IsCollision(_float3 pos)->bool;
 	auto GetSkillIcon() const ->std::shared_ptr<Texture>;
+	auto GetSkillId()const->int32_t;
 
 private:
 	auto AddComponents()->HRESULT;

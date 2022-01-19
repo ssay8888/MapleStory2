@@ -90,16 +90,8 @@ auto Animation::SetAnimationIndex(const uint32_t animIndex) -> HRESULT
 
 auto Animation::ResetAnimation() -> HRESULT
 {
-	LPD3DXANIMATIONSET		pAS = nullptr;
-	if (FAILED(_animation_controller->GetAnimationSet(0, &pAS)))
-		return E_FAIL;
-
-	_animation_controller->SetTrackEnable(0, TRUE);
-	_animation_controller->SetTrackAnimationSet(0, pAS);
-	_animation_controller->SetTrackPosition(0, 0.0);
-	_animation_controller->SetTrackSpeed(0, _ani_speed);
-	pAS->Release();
 	_animation_controller->ResetTime();
+	_animation_controller->SetTrackPosition(_current_track, 0.0);
 	_time_acc = 0.0;
 	return S_OK;
 }

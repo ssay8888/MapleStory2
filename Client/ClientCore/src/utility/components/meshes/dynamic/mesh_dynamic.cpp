@@ -555,6 +555,19 @@ auto MeshDynamic::PlayAnimation(const double timeDelta) -> HRESULT
 	return S_OK;
 }
 
+auto MeshDynamic::SetAnimationTime(double timeDelta) -> HRESULT
+{
+	if (nullptr == _animation)
+		return E_FAIL;
+	_animation->ResetAnimation();
+	if (FAILED(_animation->PlayAnimation(timeDelta)))
+		return E_FAIL;
+
+	UpdateCombinedTransformationMatrices(_root_frame, _pivot_matrix);
+
+	return S_OK;
+}
+
 HRESULT MeshDynamic::CloneFrame(D3DxFrameDerived* pOriginalFrame)
 {
 

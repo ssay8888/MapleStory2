@@ -60,6 +60,10 @@ auto Statistic::SetHp(const int32_t hp) -> void
 	{
 		_hp = _max_hp;
 	}
+	else if (0 > _hp)
+	{
+		_hp = 0;
+	}
 }
 
 auto Statistic::GainHp(int32_t hp) -> void
@@ -88,6 +92,10 @@ auto Statistic::SetMp(const int32_t mp) -> void
 	if (_mp > _max_mp)
 	{
 		_mp = _max_mp;
+	}
+	else if (0 > _mp)
+	{
+		_hp = 0;
 	}
 }
 

@@ -374,6 +374,12 @@ auto Player::PlayAnimation(const double timeDelta) -> void
 	mesh->PlayAnimation(timeDelta);
 }
 
+auto Player::SetPlayAnimation(const double timeDelta) -> void
+{
+	auto mesh = _character_mesh_list[0];
+	mesh->SetAnimationTime(timeDelta);
+}
+
 auto Player::AddComponents() -> HRESULT
 {
 	const auto gameLogicManager = GameLogicQueue::GetInstance();

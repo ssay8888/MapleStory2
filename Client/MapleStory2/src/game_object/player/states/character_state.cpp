@@ -1,15 +1,23 @@
 #include "c_pch.h"
 #include "character_state.h"
 
+#include "berserker_rageslash_state/berserker_rageslash_state.h"
+#include "berserker_sweepattack_state/berserker_sweepattack_state.h"
+#include "berserker_volcanicslash_state/berserker_volcanicslash_state.h"
 #include "protocol/game_protocol.pb.h"
 #include "src/game_object/map/map_instance.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
 #include "src/game_object/player/player.h"
+#include "src/game_object/ui/ket_set_ui/key_set_manager.h"
+#include "src/game_object/ui/ket_set_ui/key_set_ui.h"
+#include "src/game_object/ui/skill_ui/skillset/skill_set.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
+#include "src/system/input/input_device.h"
 #include "src/utility/components/collider/collider.h"
 #include "src/utility/components/transform/transform.h"
+#include "src/utility/game_objects/manager/object_manager.h"
 
 std::vector<std::shared_ptr<MapObject>> CharacterState::_map_objects;
 
@@ -109,6 +117,45 @@ auto CharacterState::StraightCheck() -> bool
 		}
 	}
 	return check;
+}
+
+auto CharacterState::SetPushKey(int32_t key) -> void
+{
+	_key = key;
+}
+
+auto CharacterState::KeySetHandleInput() const -> std::pair<int32_t, std::shared_ptr<CharacterState>>
+{
+	static auto baseKeyset = ObjectManager::GetInstance().GetGameObjectPtr(kSceneGamePlay0, L"Layer_Keymanager", 0);
+	static auto keyseyManager = std::static_pointer_cast<KeySetManager>(baseKeyset);
+
+	for (int i = 0; i < 16; ++i)
+	{
+		auto keyset = keyseyManager->GetKeySet(i);
+		if (keyset && keyset->GetSkill())
+		{
+			if (InputDevice::GetInstance().GetKeyDown(keyset->GetKey()))
+			{
+				//constexpr int skills[] = { 10200001, 10200011, 10200031, 10200041 };
+				if (keyset->GetSkill()->GetSkillId() == 10200001)
+				{
+					return std::make_pair(keyset->GetKey(), BerserkerRageslashState::GetInstance());
+				}
+				else if (keyset->GetSkill()->GetSkillId() == 10200011)
+				{
+					return std::make_pair(keyset->GetKey(), BerserkerSweepAttackState::GetInstance());
+				}
+				else if (keyset->GetSkill()->GetSkillId() == 10200031)
+				{
+				}
+				else if (keyset->GetSkill()->GetSkillId() == 10200041)
+				{
+					return std::make_pair(keyset->GetKey(), BerserkerVolcanicslashState::GetInstance());
+				}
+			}
+		}
+	}
+	return std::make_pair(-1, nullptr);
 }
 
 auto CharacterState::ReloadMapObject()->void

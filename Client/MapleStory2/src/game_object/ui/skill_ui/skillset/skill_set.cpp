@@ -212,6 +212,11 @@ auto SkillSet::GetSkillIcon() const -> std::shared_ptr<Texture>
 	return _skill_icon;
 }
 
+auto SkillSet::GetSkillId() const -> int32_t
+{
+	return _skill_id;
+}
+
 auto SkillSet::AddComponents() -> HRESULT
 {
 	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,

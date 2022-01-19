@@ -35,7 +35,14 @@ enum class kAnimationType
 	kLargeSwordAttackIdle,
 	kLargeSwordRun,
 	kLargeSwordJumpUp,
-	kLargeSwordJumpDown
+	kLargeSwordJumpDown,
+	kBerserkerRageslash1A,
+	kBerserkerRageslash2A,
+	kBerserkerRageslash3A,
+	kBerserketSweepAttack1A,
+	kBerserketSweepAttack2A,
+	kBerserkerVolcanicslash1A,
+	kBerserkerVolcanicslash2A,
 };
 
 

@@ -144,6 +144,16 @@ auto KeySetUi::SetSkill(std::shared_ptr<SkillSet> skill) -> void
 	_skill = skill;
 }
 
+auto KeySetUi::GetSkill() const -> std::shared_ptr<SkillSet>
+{
+	return _skill;
+}
+
+auto KeySetUi::GetKey() const -> int32_t
+{
+	return _key;
+}
+
 auto KeySetUi::IsCollision() -> bool
 {
 	POINT		ptMouse;

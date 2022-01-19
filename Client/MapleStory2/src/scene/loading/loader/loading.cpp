@@ -397,7 +397,9 @@ auto Loading::ReadyGamePlay0()->HRESULT
 			swprintf_s(path, MAX_PATH, L"../../Binary/Resources/Meshes/DynamicMesh/NpcData/%d/", monsterInfo->id);
 			if (FAILED(componentManager.AddPrototype(kSceneStatic, prototypeName,
 				MeshDynamic::Create(_graphic_device, path, fileName))))
-				return E_FAIL;
+			{
+				
+			}
 		}
 	}
 

@@ -44,6 +44,16 @@ HRESULT Weapon::NativeConstruct(void* arg)
 
 	//D3DXMatrixIdentity(&_origin_matrix);
 	D3DXMatrixRotationX(&_origin_matrix, D3DXToRadian(90.f));
+
+	_float3 right, up, look;
+	right =  *reinterpret_cast<_float3*>(&_origin_matrix.m[0][0]);
+	up = *reinterpret_cast<_float3*>(&_origin_matrix.m[1][0]);
+	look = *reinterpret_cast<_float3*>(&_origin_matrix.m[2][0]);
+
+	memcpy(&_origin_matrix.m[0][0], *D3DXVec3Normalize(&right, &right) * 2, sizeof(_float3));
+	memcpy(&_origin_matrix.m[1][0], *D3DXVec3Normalize(&up, &up) * 2, sizeof(_float3));
+	memcpy(&_origin_matrix.m[2][0], *D3DXVec3Normalize(&look, &look) * 2, sizeof(_float3));
+
 	const auto& instance = ObjectManager::GetInstance();
 
 	std::wstring layerName;

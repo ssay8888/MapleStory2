@@ -54,6 +54,12 @@ auto LargeSwordAttackIdleState::HandleInput() -> void
 	{
 		_is_attack = true;
 	}
+	_is_skill_state = KeySetHandleInput();
+	if (_is_skill_state.first != -1)
+	{
+		_is_skill_state.second->SetPushKey(_is_skill_state.first);
+	}
+
 	_is_jump = InputDevice::GetInstance().GetKeyPressing(DIK_C);
 }
 
@@ -68,6 +74,11 @@ auto LargeSwordAttackIdleState::LateTick(const double timeDelta) -> void
 	if (check)
 	{
 		GravityPlayerSendMessage(kAnimationType::kIdle);
+	}
+	if (_is_skill_state.second != nullptr && _is_skill_state.first != -1)
+	{
+		_player->ChangeCharacterState(_is_skill_state.second);
+		return;
 	}
 	if (_is_attack)
 	{

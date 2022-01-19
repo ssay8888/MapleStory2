@@ -14,9 +14,9 @@
 
 auto IdleState::Enter() -> void
 {
-	// 상태가 바뀌었을때 최초 1회 호출됨.
 	_is_move = false;
 	_is_attack = false;
+	_is_skill_state = {-1, nullptr};
 	_player->ChangeAnimation(kAnimationType::kIdle);
 	const auto transform = _player->GetTransform();
 	Protocol::GameClientMovePlayer sendPkt;
@@ -56,6 +56,13 @@ auto IdleState::HandleInput() -> void
 	{
 		_is_attack = true;
 	}
+
+	_is_skill_state = KeySetHandleInput();
+	if (_is_skill_state.first != -1)
+	{
+		_is_skill_state.second->SetPushKey(_is_skill_state.first);
+	}
+
 	_is_jump = InputDevice::GetInstance().GetKeyPressing(DIK_C);
 }
 
@@ -78,6 +85,11 @@ auto IdleState::LateTick(const double timeDelta) -> void
 		GravityPlayerSendMessage(kAnimationType::kIdle);
 	}
 	_player->PlayAnimation(timeDelta);
+	if (_is_skill_state.second != nullptr && _is_skill_state.first != -1)
+	{
+		_player->ChangeCharacterState(_is_skill_state.second);
+		return;
+	}
 	if (_is_attack)
 	{
 		_player->ChangeCharacterState(LargeSwordAttackState::GetInstance());

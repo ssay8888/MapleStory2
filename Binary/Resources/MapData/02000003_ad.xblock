@@ -8187,7 +8187,7 @@
 				<set value="-900, 300, 2700" />
 			</property>
 			<property name="spawnMonster">
-				<set value="21000339" />
+				<set value="43000101" />
 			</property>
 		</entity>
 		<entity id="65ecbbdb4ea141daa328f305fa5a2afd" modelName="he_ground_rock_A04_" name="he_ground_rock_A04_[-8, -1, 9]" iterations="4">

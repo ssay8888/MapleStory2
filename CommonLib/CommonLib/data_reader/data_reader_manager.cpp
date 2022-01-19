@@ -682,7 +682,7 @@ auto DataReaderManager::LoadSkillData() -> void
 						{
 							if (std::string(infoNodes.name()) == "detectProperty")
 							{
-								skill->detect.distance = std::stof(infoNodes.attribute("distance").value()) / 150.f * 0.58f;
+								skill->detect.distance = infoNodes.attribute("distance").empty() ? 0 : std::stof(infoNodes.attribute("distance").value()) / 150.f * 0.58f;
 							}
 							else if (std::string(infoNodes.name()) == "motion")
 							{

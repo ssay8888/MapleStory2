@@ -25,7 +25,11 @@ public:
 
 public:
 	auto SetItem(std::shared_ptr<Item> item)->void;
+
 	auto SetSkill(std::shared_ptr<SkillSet> skill)->void;
+	auto GetSkill()const->std::shared_ptr<SkillSet>;
+
+	auto GetKey()const->int32_t;
 
 	auto IsCollision()->bool;
 

@@ -375,7 +375,7 @@ auto Monster::AnimationLoad() -> int32_t
 		commponentTag.append(Seq->name);
 		if (FAILED(AddComponent(kScene::kSceneStatic, prototypeName, commponentTag, reinterpret_cast<std::shared_ptr<Component>*>(&mesh))))
 		{
-			return E_FAIL;
+			continue;
 		}
 		if (Seq->name == L"Idle_A")
 		{

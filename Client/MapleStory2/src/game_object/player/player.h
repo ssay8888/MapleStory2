@@ -60,6 +60,7 @@ public:
 	auto ChangeCharacterState(const std::shared_ptr<CharacterState>& state)->void;
 	auto ChangeAnimation(kAnimationType type)->void;
 	auto PlayAnimation(const double timeDelta)->void;
+	auto SetPlayAnimation(const double timeDelta)->void;
 
 private:
 	auto AddComponents()->HRESULT;

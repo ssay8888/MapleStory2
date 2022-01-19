@@ -48,6 +48,7 @@ public:
 	auto SetAnimationIndex(uint32_t animIndex) const ->HRESULT;
 	auto ResetAnimation() const ->HRESULT;
 	auto PlayAnimation(double timeDelta)->HRESULT;
+	auto SetAnimationTime(double timeDelta)->HRESULT;
 
 private:
 	HRESULT CloneFrame(D3DxFrameDerived* pOriginalFrame);
