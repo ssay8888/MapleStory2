@@ -78,6 +78,11 @@ auto CharacterStat::GetHp() const -> int32_t
 auto CharacterStat::SetHp(const int32_t value) -> void
 {
 	_hp = value;
+	_is_dead = false;
+	if (_hp <= 0)
+	{
+		_is_dead = true;
+	}
 }
 
 auto CharacterStat::GainHp(const int32_t value) -> void
@@ -138,4 +143,9 @@ auto CharacterStat::GetAp() const -> int32_t
 auto CharacterStat::SetAp(int32_t value) -> void
 {
 	_ap = value;
+}
+
+auto CharacterStat::IsDead() const -> bool
+{
+	return _is_dead;
 }

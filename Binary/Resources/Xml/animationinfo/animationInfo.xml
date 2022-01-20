@@ -20,4 +20,6 @@
     <model animation_name="berserker_sweepattack_02_a" targetnode="Weapon_Hand_R_Point" />
     <model animation_name="berserker_volcanicslash_01_a" targetnode="Weapon_Hand_R_Point" />
     <model animation_name="berserker_volcanicslash_02_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="down_b" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="down_idle_b" targetnode="Weapon_Hand_R_Point" />
 </ms2>

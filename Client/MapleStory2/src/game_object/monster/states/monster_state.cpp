@@ -147,7 +147,6 @@ auto MonsterState::ReloadMapObject(std::shared_ptr<Monster> monster, bool check)
 			if (mapInstance)
 			{
 				_map_objects = mapInstance->FindRangeCellObject(blockRange);
-				std::cout << "»çÀÌÁî : " << _map_objects.size() << std::endl;
 			}
 			break;
 		}

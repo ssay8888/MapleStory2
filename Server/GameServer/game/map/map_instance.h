@@ -51,7 +51,8 @@ public:
 
 private:
 	const int32_t															_map_id;
-
+	uint64_t																_respawn_time;
+		
 	std::vector<_float3>													_spawn_points;
 	std::vector<std::shared_ptr<SpawnPoint>>								_region_points;
 	std::vector<std::shared_ptr<MapXblock>>									_objects;

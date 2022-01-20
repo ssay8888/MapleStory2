@@ -481,6 +481,10 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	{
 		return E_FAIL;
 	}
+	if (FAILED(LoadHpUi()))
+	{
+		return E_FAIL;
+	}
 	
 	MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0);
 	
@@ -662,6 +666,22 @@ auto Loading::LoadSkillUi() -> HRESULT
 	}
 	return S_OK;
 }
+
+auto Loading::LoadHpUi() -> HRESULT
+{
+	const auto& componentManager = ComponentManager::GetInstance();
+
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Monster_Hp_Ui_Frame"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/monster_hp_ui/monster_hp_frame.png")))))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Monster_Hp_Ui_Bar"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/monster_hp_ui/monster_hpbar.png")))))
+	{
+		return E_FAIL;
+	}
+	return S_OK; 
+} 
 
 auto Loading::ReadyGamePlay1()->HRESULT
 {

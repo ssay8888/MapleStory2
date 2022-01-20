@@ -58,6 +58,7 @@ public:
 	auto ChangeEqp(GameContents::kEquipeType type, int32_t itemId)->void;
 	auto GetEqpList() const->std::shared_ptr<Equipped>;
 	auto ChangeCharacterState(const std::shared_ptr<CharacterState>& state)->void;
+	auto GetCharacterState()const->std::shared_ptr<CharacterState>;
 	auto ChangeAnimation(kAnimationType type)->void;
 	auto PlayAnimation(const double timeDelta)->void;
 	auto SetPlayAnimation(const double timeDelta)->void;
@@ -96,7 +97,7 @@ private:
 	std::shared_ptr<CharacterState>					_character_state;
 
 	bool				_is_idle = true;
-	uint64_t			_start_attack_time;
+	uint64_t			_start_attack_time = 0;
 	float				_radian = 0.f;
 	int32_t				_current_mesh_num = 0;
 	int32_t				_new_mesh_num = 0;

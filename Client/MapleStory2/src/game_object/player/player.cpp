@@ -10,6 +10,7 @@
 #include "src/game_object/ui/equipped_ui/equipped_ui.h"
 #include "src/game_object/ui/inventory/inventory_ui.h"
 #include "src/game_object/ui/inventory/inventory_tab_btn/inventory_tab_btn.h"
+#include "src/game_object/ui/monster_hp_ui/monster_hp_ui.h"
 #include "src/game_object/ui/popup_info/popup_info.h"
 #include "src/game_object/ui/skill_ui/skill_ui.h"
 #include "src/managers/characters_manager/character.h"
@@ -65,7 +66,7 @@ auto Player::Tick(const double timeDelta) -> HRESULT
 	if (InputDevice::GetInstance().GetKeyPressing(DIK_SPACE))
 	{
 		auto pos = _transform_com->GetState(Transform::kState::kStatePosition);
-		pos.y += 0.1f;
+		pos.y += 1.f;
 		_transform_com->SetState(Transform::kState::kStatePosition, pos);
 	}
 
@@ -115,31 +116,32 @@ auto Player::Render() -> HRESULT
 
 	_character_state->Render();
 	WeaponManager::GetInstance().Render();
+	int a = 0;
 
-	std::wstring str;
+	//std::wstring str;
 
-	RECT rc = {
-		0, 0,
-		1000, 1000
-	};
-	str.append(L"¶ó : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).x)).append(L" / ")
-		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).y)).append(L" / ")
-		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).z)).append(L"\r\n");
+	//RECT rc = {
+	//	0, 0,
+	//	1000, 1000
+	//};
+	//str.append(L"¶ó : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).x)).append(L" / ")
+	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).y)).append(L" / ")
+	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).z)).append(L"\r\n");
 
-	str.append(L"¾÷ : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).x)).append(L" / ")
-		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).y)).append(L" / ")
-		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).z)).append(L"\r\n");
+	//str.append(L"¾÷ : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).x)).append(L" / ")
+	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).y)).append(L" / ")
+	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).z)).append(L"\r\n");
 
-	str.append(L"·è : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).x)).append(L" / ")
-		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).y)).append(L" / ")
-		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).z)).append(L"\r\n");
+	//str.append(L"·è : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).x)).append(L" / ")
+	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).y)).append(L" / ")
+	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).z)).append(L"\r\n");
 
-	str.append(L"Æ÷ : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).x)).append(L" / ")
-		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).y)).append(L" / ")
-		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).z)).append(L"\r\n");
+	//str.append(L"Æ÷ : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).x)).append(L" / ")
+	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).y)).append(L" / ")
+	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).z)).append(L"\r\n");
 
-	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rc, 
-		DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
+	//GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rc, 
+	//	DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
 
 #ifdef _DEBUG
 	_character_aabb_com->RenderDebug();
@@ -359,6 +361,11 @@ auto Player::ChangeCharacterState(const std::shared_ptr<CharacterState>& state)-
 	_character_state = state;
 	_character_state->SetPlayer(std::static_pointer_cast<Player>(shared_from_this()));
 	_character_state->Enter();
+}
+
+auto Player::GetCharacterState() const -> std::shared_ptr<CharacterState>
+{
+	return _character_state;
 }
 
 auto Player::ChangeAnimation(kAnimationType type) -> void

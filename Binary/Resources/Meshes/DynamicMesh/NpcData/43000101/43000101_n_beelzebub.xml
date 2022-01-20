@@ -62,14 +62,14 @@
   </Attack_02_B>
   <Attack_01_C>
     <key text="emo_skill" time="0.0000" />
-  </Attack_01_C>
-  <Attack_02_C>
-    <key text="emo_skill" time="0.0000" />
     <key text="p0" time="0.0100" />
     <key text="p1" time="0.1333" />
     <key text="loopstart" time="0.0010" />
     <key text="loopend" time="0.2666" />
     <key text="e0" time="0.0010" />
+  </Attack_01_C>
+  <Attack_02_C>
+    <key text="emo_skill" time="0.0000" />
   </Attack_02_C>
   <Attack_03_C>
     <key text="emo_skill" time="0.0000" />

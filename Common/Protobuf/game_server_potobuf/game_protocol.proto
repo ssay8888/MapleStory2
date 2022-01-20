@@ -191,3 +191,14 @@ message GameServerItemQuantityUpdate
 	int32 position = 2;
 	int32 quantity = 3;
 }
+
+message GameClientResurrection
+{
+	
+}
+
+message GameServerResurrection
+{
+	int64 character_id = 1;
+	float3 position = 2;
+}

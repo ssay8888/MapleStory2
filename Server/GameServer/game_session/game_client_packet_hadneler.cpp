@@ -76,3 +76,11 @@ auto GameClientPacketHandler::HandleGameClientItemApply(PacketSessionRef& sessio
 	GameTick::GetInstance()->DoAsync(&GameTick::PlayerItemApply, pkt, gameSession);
 	return true;
 }
+
+auto GameClientPacketHandler::HandleGameClientResurrection(PacketSessionRef& session,
+	Protocol::GameClientResurrection& pkt) -> bool
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	GameTick::GetInstance()->DoAsync(&GameTick::PlayerResurrection, pkt, gameSession);
+	return true;
+}

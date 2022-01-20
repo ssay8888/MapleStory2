@@ -111,3 +111,8 @@ auto GameTick::PlayerItemApply(Protocol::GameClientItemApply pkt, GameSessionRef
 {
 	GameServerPlayerHandler::PlayerItemApply(pkt, gameSession);
 }
+
+auto GameTick::PlayerResurrection(Protocol::GameClientResurrection pkt, GameSessionRef gameSession) -> void
+{
+	GameServerPlayerHandler::PlayerResurrection(pkt, gameSession);
+}

@@ -11486,7 +11486,7 @@
 			<model kfm="22000095_N_Beelzebub" scale="1.5" shadowScale="150" rotationSpeed="720" walkSpeed="200" runSpeed="400" />
 			<stat hp="93851016" asp="100" msp="100" atp="120" evp="90" cap="65" cad="500" car="50" ndd="814" pap="513514" map="513596" par="105" mar="105" scaleStatRate_1="1.4" scaleBaseTap_1="15194412" scaleBaseDef_1="14863" scaleBaseSpaRate_1="0.2" scaleStatRate_2="1.4" scaleBaseTap_2="22349270" scaleBaseDef_2="23089" scaleBaseSpaRate_2="0.2" />
 			<distance avoid="100" sight="1000" sightHeightUP="300" sightHeightDown="0" customLastSightRadius="4500" customLastSightHeightUp="1000" customLastSightHeightDown="1000" />
-			<skill ids="60147001,60147011,60147021,60147022,60147023" levels="20,20,20,20,20" />
+			<skill ids="60147001,60147011,60147022" probs="34,33,33" />
 			<collision shape="box" width="90" height="130" depth="90" />
 			<capsule radius="60" height="150" />
 			<dead time="5" defaultaction="Dead_B" upaction="Dead_B" />

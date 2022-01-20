@@ -14,9 +14,11 @@
 #include "game/map/map_object/map_object.h"
 #include "map_object/xblock/map_xblock.h"
 #include "src/utility/components/collider/collider.h"
+#include "src/utility/timers/timer_manager.h"
 
 MapInstance::MapInstance(const int32_t mapId):
-	_map_id(mapId)
+	_map_id(mapId),
+	_respawn_time(0)
 {
 }
 
@@ -175,10 +177,11 @@ auto MapInstance::RespawnAllMonster(std::shared_ptr<GameSession> session)->void
 
 auto MapInstance::Respawn() -> void
 {
-	if (_characters.empty())
+	if (_characters.empty() || _respawn_time + 5000 > GetTickCount64())
 	{
 		return;
 	}
+	_respawn_time = GetTickCount64();
 
 	for (const auto& regionPoint : _region_points)
 	{

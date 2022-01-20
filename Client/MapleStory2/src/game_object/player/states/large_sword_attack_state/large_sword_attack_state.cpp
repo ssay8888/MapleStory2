@@ -11,6 +11,7 @@
 #include "src/game_object/player/player.h"
 #include "src/game_object/player/states/idle_state/idle_state.h"
 #include "src/game_object/player/states/large_sword_attack_idle_state/large_sword_attack_idle_state.h"
+#include "src/game_object/ui/monster_hp_ui/monster_hp_ui.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
 #include "src/system/input/input_device.h"
@@ -106,6 +107,7 @@ auto LargeSwordAttackState::Tick(const double timeDelta) -> void
 				{
 					objectIds->Add(monster->GetMonsterInfo().object_id());
 					_monsters.emplace(monster->GetMonsterInfo().object_id(), monster);
+					MonsterHpUi::GetInstance()->SetMonster(monster);
 				}
 			}
 			SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));

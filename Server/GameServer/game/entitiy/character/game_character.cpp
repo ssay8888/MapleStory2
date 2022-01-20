@@ -187,10 +187,10 @@ auto GameCharacter::NativeConstruct() -> HRESULT
 					stats->SetDex(dex);
 					stats->SetInt(int_);
 					stats->SetLuk(luk);
-					stats->SetHp(hp);
 					stats->SetMaxHp(maxhp);
-					stats->SetMp(mp);
 					stats->SetMaxMp(maxmp);
+					stats->SetHp(hp);
+					stats->SetMp(mp);
 					stats->SetLevel(level);
 					stats->SetExp(exp);
 					stats->SetAp(ap);

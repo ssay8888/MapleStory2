@@ -5,6 +5,7 @@
 #include "skilllevel_change_btn/skill_level_change_btn.h"
 #include "src/game_object/ui/ket_set_ui/key_set_manager.h"
 #include "src/game_object/ui/ket_set_ui/key_set_ui.h"
+#include "src/game_object/ui/popup_info/popup_info.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
 #include "src/system/graphic/graphic_device.h"
@@ -84,6 +85,7 @@ auto SkillSet::Tick(const _float3 pos, const double timeDelta) -> HRESULT
 			}
 		}
 	}
+	_popup_info_com->Tick(timeDelta);
 	return GameObject::Tick(timeDelta);
 }
 
@@ -168,6 +170,7 @@ auto SkillSet::Render(_float3 pos, std::shared_ptr<Shader> shader) -> HRESULT
 		_vi_buffer_com->RenderViBuffer();
 
 	}
+
 	return S_OK;
 }
 
@@ -217,6 +220,11 @@ auto SkillSet::GetSkillId() const -> int32_t
 	return _skill_id;
 }
 
+auto SkillSet::GetPopupInfo() const -> std::shared_ptr<PopupInfo>
+{
+	return _popup_info_com;
+}
+
 auto SkillSet::AddComponents() -> HRESULT
 {
 	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
@@ -255,5 +263,24 @@ auto SkillSet::AddComponents() -> HRESULT
 		}, false);
 
 
+
+	_popup_info_com = PopupInfo::Create();
+	_popup_info_com->SetItemTexture(_skill_icon);
+	constexpr int skills[] = { 10200001, 10200011, 10200031, 10200041 };
+	switch (_skill_id)
+	{
+	case 10200001:
+		_popup_info_com->SetComment(L"라지소드를 휘둘러 암흑 피해를 입힌다.\n\n[상세 내용]\n명중 시 100%대미지\n스킬 연속 사용 시 반복 공격\n방향키 입력 시 이동 공격 가능");
+		break;
+	case 10200011:
+		_popup_info_com->SetComment(L"라지소드와 함께 몸을 팽이처럼 회전시켜 암흑 피해를 입힌다.\n\n[상세 내용]\n명중 시 100% 대미지\n방향키 입력 시 이동 공격 가능");
+		break;
+	case 10200031:
+		_popup_info_com->SetComment(L"어둠의 힘을 이용한다.\n\n[상세 내용]\n초당 SP 10 회복\n공격 명중 시 어둠의 기운 효과\n\n[추가 효과]\n어둠의 기운 : 중첩당 SP 재생력 1 증가, 초당 1회 발동, 최대 10 중첩");
+		break;
+	case 10200041:
+		_popup_info_com->SetComment(L"라지소드를 하늘로 쳐올리며 돌격해 암흑 피해를 입힌다.\n\n[상세 내용]\n명중 시 100% 대미지\n스킬 연속 사용 시 반복 공격, 소모 SP 11로 감소\n반복 공격 명중 시 75% 대미지 2회\n슈퍼 아머 효과");
+		break;
+	}
 	return S_OK;
 }

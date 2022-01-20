@@ -205,6 +205,8 @@
     <ClInclude Include="src\game_object\player\states\berserker_sweepattack_state\berserker_sweepattack_state.h" />
     <ClInclude Include="src\game_object\player\states\berserker_volcanicslash_state\berserker_volcanicslash_state.h" />
     <ClInclude Include="src\game_object\player\states\character_state.h" />
+    <ClInclude Include="src\game_object\player\states\down_idle_state\down_idle_state.h" />
+    <ClInclude Include="src\game_object\player\states\down_state\down_state.h" />
     <ClInclude Include="src\game_object\player\states\idle_state\idle_state.h" />
     <ClInclude Include="src\game_object\player\states\jump_state\jump_state.h" />
     <ClInclude Include="src\game_object\player\states\large_sword_attack_idle_state\large_sword_attack_idle_state.h" />
@@ -232,6 +234,7 @@
     <ClInclude Include="src\game_object\ui\ket_set_ui\key_set_manager.h" />
     <ClInclude Include="src\game_object\ui\ket_set_ui\key_set_ui.h" />
     <ClInclude Include="src\game_object\ui\login\text_box_ui.h" />
+    <ClInclude Include="src\game_object\ui\monster_hp_ui\monster_hp_ui.h" />
     <ClInclude Include="src\game_object\ui\player_info\player_info.h" />
     <ClInclude Include="src\game_object\ui\popup_info\popup_info.h" />
     <ClInclude Include="src\game_object\ui\skill_ui\skillset\skilllevel_change_btn\skill_level_change_btn.h" />
@@ -326,6 +329,8 @@
     <ClCompile Include="src\game_object\player\states\berserker_sweepattack_state\berserker_sweepattack_state.cpp" />
     <ClCompile Include="src\game_object\player\states\berserker_volcanicslash_state\berserker_volcanicslash_state.cpp" />
     <ClCompile Include="src\game_object\player\states\character_state.cpp" />
+    <ClCompile Include="src\game_object\player\states\down_idle_state\down_idle_state.cpp" />
+    <ClCompile Include="src\game_object\player\states\down_state\down_state.cpp" />
     <ClCompile Include="src\game_object\player\states\idle_state\idle_state.cpp" />
     <ClCompile Include="src\game_object\player\states\jump_state\jump_state.cpp" />
     <ClCompile Include="src\game_object\player\states\large_sword_attack_idle_state\large_sword_attack_idle_state.cpp" />
@@ -353,6 +358,7 @@
     <ClCompile Include="src\game_object\ui\ket_set_ui\key_set_manager.cpp" />
     <ClCompile Include="src\game_object\ui\ket_set_ui\key_set_ui.cpp" />
     <ClCompile Include="src\game_object\ui\login\text_box_ui.cpp" />
+    <ClCompile Include="src\game_object\ui\monster_hp_ui\monster_hp_ui.cpp" />
     <ClCompile Include="src\game_object\ui\player_info\player_info.cpp" />
     <ClCompile Include="src\game_object\ui\popup_info\popup_info.cpp" />
     <ClCompile Include="src\game_object\ui\skill_ui\skillset\skilllevel_change_btn\skill_level_change_btn.cpp" />

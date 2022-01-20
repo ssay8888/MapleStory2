@@ -1,6 +1,7 @@
 #include "c_pch.h"
 #include "player_info.h"
 
+#include "src/game_object/ui/monster_hp_ui/monster_hp_ui.h"
 #include "src/managers/character_stat/character_stat.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/renderer/renderer.h"
@@ -151,6 +152,7 @@ auto PlayerInfo::HpMpRender() -> HRESULT
 	MpRender();
 	ExpRender();
 	result = _shader_gage->EndShader();
+	MonsterHpUi::GetInstance()->Render(_shader_com);
 	return S_OK;
 }
 

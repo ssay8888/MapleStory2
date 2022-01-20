@@ -305,3 +305,38 @@ auto GameServerPlayerHandler::PlayerItemApply(Protocol::GameClientItemApply pkt,
 		gameSession->Send(GameClientPacketHandler::MakeSendBuffer(sendPkt));
 	}
 }
+
+auto GameServerPlayerHandler::PlayerResurrection(Protocol::GameClientResurrection pkt,
+	GameSessionRef gameSession) -> void
+{
+	if (gameSession->GetPlayer() == nullptr)
+	{
+		return;
+	}
+	auto player = gameSession->GetPlayer();
+	Protocol::GameServerResurrection sendPkt;
+	sendPkt.set_character_id(player->GetCharacterId());
+	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(player->GetMapId()))
+	{
+		auto spawnPoint = mapInstance->GetSpawnPoint(0);
+
+		auto position = 	sendPkt.mutable_position();
+		position->set_x(spawnPoint->x);
+		position->set_y(spawnPoint->y);
+		position->set_z(spawnPoint->z);
+		mapInstance->BroadCastMessage(sendPkt, nullptr);
+	}
+
+	auto baseInfo = CharacterInfoStorageManager::GetInstance().FindInfo(CharacterInfoStorage::kInfoTypes::kStats, player->GetCharacterId());
+	auto statInfo = std::static_pointer_cast<Statistic>(baseInfo);
+
+	if (statInfo)
+	{
+		statInfo->SetHp(statInfo->GetMaxHp() / 2);
+
+		Protocol::GameServerUpdateStat sendStatPkt;
+		sendStatPkt.set_type(Protocol::kHp);
+		sendStatPkt.set_value(statInfo->GetHp());
+		gameSession->Send(GameClientPacketHandler::MakeSendBuffer(sendStatPkt));
+	}
+}

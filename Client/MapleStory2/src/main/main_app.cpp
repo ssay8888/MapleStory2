@@ -94,8 +94,8 @@ auto MainApp::RenderMainApp() -> HRESULT
 		wsprintf(m_szFPS, TEXT("FPS : %d"), m_dwNumRender);
 		m_TimeAcc = 0.0;
 		m_dwNumRender = 0;
+		SetWindowText(g_Wnd, m_szFPS);
 	}
-	SetWindowText(g_Wnd, m_szFPS);
 	return S_OK;
 }
 

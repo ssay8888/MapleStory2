@@ -1,6 +1,7 @@
 #pragma once
 #include "src/utility/game_objects/game_object.h"
 
+class PopupInfo;
 class InputDevice;
 class SkillLevelChangeBtn;
 class Shader;
@@ -29,6 +30,7 @@ public:
 	auto IsCollision(_float3 pos)->bool;
 	auto GetSkillIcon() const ->std::shared_ptr<Texture>;
 	auto GetSkillId()const->int32_t;
+	auto GetPopupInfo()const->std::shared_ptr<PopupInfo>;
 
 private:
 	auto AddComponents()->HRESULT;
@@ -39,6 +41,7 @@ private:
 	std::shared_ptr<ViBufferRect>						_vi_buffer_com = nullptr;
 
 	std::shared_ptr<SkillLevelChangeBtn>				_change_btn[2];
+	std::shared_ptr<PopupInfo>							_popup_info_com;
 
 	std::shared_ptr<InputDevice>						_input_device;
 	uint8_t												_is_lbutton_down = 0;

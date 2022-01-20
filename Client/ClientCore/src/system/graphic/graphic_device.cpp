@@ -62,7 +62,7 @@ auto GraphicDevice::ReadyGraphicDevice(HWND hWnd, kWindowMode mode, uint32_t win
 	tFontDesc.Width = 11;
 	tFontDesc.Weight = FW_HEAVY;
 	tFontDesc.CharSet = HANGUL_CHARSET;
-	lstrcpy(tFontDesc.FaceName, L"µ¸¿òÃ¼");
+	lstrcpy(tFontDesc.FaceName, L"³Ø½¼Lv1°íµñ OTF");
 
 	if (FAILED(D3DXCreateFontIndirectW(_device.Get(), &tFontDesc, &_font)))
 	{

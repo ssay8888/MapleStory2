@@ -10,6 +10,9 @@
 #include "src/game_object/monster/states/walk_state/monster_walk_state.h"
 #include "src/game_object/monster/stats/monster_stats.h"
 #include "src/game_object/player/player.h"
+#include "src/game_object/player/states/down_idle_state/down_idle_state.h"
+#include "src/game_object/player/states/down_state/down_state.h"
+#include "src/game_object/player/states/idle_state/idle_state.h"
 #include "src/game_object/ui/inventory/inventory_ui.h"
 #include "src/game_object/ui/inventory/inventory_tab_btn/inventory_tab_btn.h"
 #include "src/game_object/user/user.h"
@@ -195,8 +198,24 @@ auto GameLogicQueue::UpdateStat(PacketSessionRef session, Protocol::GameServerUp
 	switch (pkt.type())
 	{
 	case Protocol::kHp:
+	{
 		CharacterStat::GetInstance().SetHp(pkt.value());
+
+		auto& objectManager = ObjectManager::GetInstance();
+		const auto playerObject = std::static_pointer_cast<Player>(objectManager.GetGameObjectPtr(kSceneGamePlay0, L"Layer_Character", 0));
+		if (playerObject)
+		{
+			if (playerObject->GetCharacterState() != DownState::GetInstance() &&
+				playerObject->GetCharacterState() != DownIdleState::GetInstance())
+			{
+				if (CharacterStat::GetInstance().IsDead())
+				{
+					playerObject->ChangeCharacterState(DownState::GetInstance());
+				}
+			}
+		}
 		break;
+	}
 	case Protocol::kMp:
 		CharacterStat::GetInstance().SetMp(pkt.value());
 		break;
@@ -290,7 +309,6 @@ auto GameLogicQueue::StatupChange(PacketSessionRef session, Protocol::GameServer
 
 auto GameLogicQueue::ItemQuantityUpdate(PacketSessionRef session, Protocol::GameServerItemQuantityUpdate pkt) -> void
 {
-
 	auto baseInventory = ObjectManager::GetInstance().GetGameObjectPtr(kSceneGamePlay0, L"Layer_Inventory", 0);
 	auto inventory = std::static_pointer_cast<Inventory>(baseInventory);
 	if (inventory)
@@ -305,6 +323,33 @@ auto GameLogicQueue::ItemQuantityUpdate(PacketSessionRef session, Protocol::Game
 		if (item)
 		{
 			item->SetItemQuantity(pkt.quantity());
+		}
+	}
+}
+
+auto GameLogicQueue::ResurrectionPlayer(PacketSessionRef session, Protocol::GameServerResurrection pkt) -> void
+{
+	auto& objectManager = ObjectManager::GetInstance();
+
+	if (_character_info.character_id() == pkt.character_id())
+	{
+		const auto playerObject = std::static_pointer_cast<Player>(objectManager.GetGameObjectPtr(kSceneGamePlay0, L"Layer_Character", 0));
+		if (playerObject)
+		{
+			playerObject->GetTransform()->SetState(Transform::kState::kStatePosition, _float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
+			playerObject->ChangeCharacterState(IdleState::GetInstance());
+		}
+	}
+	else
+	{
+		std::wstring layer;
+		layer.append(L"Layer_User_").append(std::to_wstring(pkt.character_id()));
+		const auto userObject = std::static_pointer_cast<User>(objectManager.GetGameObjectPtr(kSceneGamePlay0, layer, 0));
+		if (userObject)
+		{
+			auto transform = std::static_pointer_cast<Transform>(userObject->GetComponentPtr(L"Com_Transform"));
+			transform->SetState(Transform::kState::kStatePosition, _float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
+			userObject->ChangeAnimation(kAnimationType::kIdle);
 		}
 	}
 }

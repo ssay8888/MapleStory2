@@ -277,6 +277,15 @@
     <ClInclude Include="src\game_object\player\states\berserker_volcanicslash_state\berserker_volcanicslash_state.h">
       <Filter>game_object\player\states\berserker_volcanicslash_state</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\ui\monster_hp_ui\monster_hp_ui.h">
+      <Filter>game_object\ui\monster_hp_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\player\states\down_idle_state\down_idle_state.h">
+      <Filter>game_object\player\states\down_idle_state</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\player\states\down_state\down_state.h">
+      <Filter>game_object\player\states\down_state</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -549,6 +558,15 @@
     <ClCompile Include="src\game_object\player\states\berserker_volcanicslash_state\berserker_volcanicslash_state.cpp">
       <Filter>game_object\player\states\berserker_volcanicslash_state</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\ui\monster_hp_ui\monster_hp_ui.cpp">
+      <Filter>game_object\ui\monster_hp_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\player\states\down_idle_state\down_idle_state.cpp">
+      <Filter>game_object\player\states\down_idle_state</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\player\states\down_state\down_state.cpp">
+      <Filter>game_object\player\states\down_state</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -768,6 +786,15 @@
     </Filter>
     <Filter Include="game_object\player\states\berserker_volcanicslash_state">
       <UniqueIdentifier>{d53ae53a-d8ea-4558-bd99-3faa8ef7535f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\monster_hp_ui">
+      <UniqueIdentifier>{d9e40c97-bb2c-4d97-8d11-33eb0d0b022c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\player\states\down_state">
+      <UniqueIdentifier>{5866dfb6-d8c8-43f6-a077-29fac779b0e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\player\states\down_idle_state">
+      <UniqueIdentifier>{4d3360c7-93cf-4810-be3f-556f4431efd5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

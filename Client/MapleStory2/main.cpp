@@ -89,7 +89,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		fTimeAcc += timeDelta;
 
-		if (fTimeAcc > 1.0f / 144.0f)
+		//if (fTimeAcc > 1.0f / 144.0f)
 		{
 			double timeDelta60 = timerManager.ComputeTimeDelta(TEXT("Timer_60"));
 

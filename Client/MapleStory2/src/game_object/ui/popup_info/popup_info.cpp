@@ -19,6 +19,20 @@ auto PopupInfo::NativeConstructPrototype() -> HRESULT
 	_size_x = 238;
 	_size_y = 176;
 	D3DXMatrixOrthoLH(&_proj_matrix, g_WinCX, g_WinCY, 0.f, 1.f);
+
+	D3DXFONT_DESCW		font_info{};
+	ZeroMemory(&font_info, sizeof(D3DXFONT_DESCW));
+	font_info.Height = 9;
+	font_info.Width = 9;
+	font_info.Weight = FW_NORMAL;
+	font_info.CharSet = HANGUL_CHARSET;
+	lstrcpy(font_info.FaceName, L"³Ø½¼Lv1°íµñ OTF");
+
+	if (FAILED(D3DXCreateFontIndirectW(_graphic_device.Get(), &font_info, &_font)))
+	{
+		MSGBOX("Creating Failed TextBoxUi");
+		return E_FAIL;
+	}
 	return GameObject::NativeConstructPrototype();
 }
 
@@ -88,28 +102,36 @@ auto PopupInfo::Render() -> HRESULT
 	   static_cast<LONG>(centerY - (_pos.y) + 150)
 	};
 
-	std::wstring str;
-	if (_info.str > 0)
+	if (_info.quantity < 0)
 	{
-		str.append(L"STR : ").append(std::to_wstring(_info.str)).append(L"\r\n");
+		std::wstring str;
+		if (_info.str > 0)
+		{
+			str.append(L"STR : ").append(std::to_wstring(_info.str)).append(L"\r\n");
+		}
+		if (_info.dex > 0)
+		{
+			str.append(L"DEX : ").append(std::to_wstring(_info.dex)).append(L"\r\n");
+		}
+		if (_info.int_ > 0)
+		{
+			str.append(L"INT : ").append(std::to_wstring(_info.int_)).append(L"\r\n");
+		}
+		if (_info.luk > 0)
+		{
+			str.append(L"LUK : ").append(std::to_wstring(_info.luk)).append(L"\r\n");
+		}
+		if (_info.wap > 0)
+		{
+			str.append(L"°ø°Ý·Â : ").append(std::to_wstring(_info.wap)).append(L"\r\n");
+		}
+		_font->DrawTextW(NULL, str.c_str(), -1, &rcUI, DT_LEFT | DT_WORDBREAK, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
-	if (_info.dex > 0)
+	if (!_comment.empty())
 	{
-		str.append(L"DEX : ").append(std::to_wstring(_info.dex)).append(L"\r\n");
+		_font->DrawTextW(NULL, _comment.c_str(), -1, &rcUI, DT_LEFT | DT_WORDBREAK, D3DCOLOR_ARGB(255, 255, 255, 255));
+
 	}
-	if (_info.int_ > 0)
-	{
-		str.append(L"INT : ").append(std::to_wstring(_info.int_)).append(L"\r\n");
-	}
-	if (_info.luk > 0)
-	{
-		str.append(L"LUK : ").append(std::to_wstring(_info.luk)).append(L"\r\n");
-	}
-	if (_info.wap > 0)
-	{
-		str.append(L"°ø°Ý·Â : ").append(std::to_wstring(_info.wap)).append(L"\r\n");
-	}
-	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rcUI,  DT_LEFT | DT_WORDBREAK, D3DCOLOR_ARGB(255, 255, 255, 255));
 	return GameObject::Render();
 }
 
@@ -126,6 +148,11 @@ auto PopupInfo::Clone(void* arg) -> std::shared_ptr<GameObject>
 auto PopupInfo::SetItemTexture(std::shared_ptr<Texture> itemTexture) -> void
 {
 	_item_texture_com = itemTexture;
+}
+
+auto PopupInfo::SetComment(std::wstring str)->void
+{
+	_comment = str;
 }
 
 auto PopupInfo::SetItemInfo(Item::ItemInfo itemInfo) -> void

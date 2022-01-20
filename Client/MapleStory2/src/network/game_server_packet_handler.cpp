@@ -103,3 +103,10 @@ auto GameServerPacketHandler::HandleGameServerItemQuantityUpdate(PacketSessionRe
 	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::ItemQuantityUpdate, session, pkt);
 	return true;
 }
+
+auto GameServerPacketHandler::HandleGameServerResurrection(PacketSessionRef& session,
+	Protocol::GameServerResurrection& pkt) -> bool
+{
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::ResurrectionPlayer, session, pkt);
+	return true;
+}

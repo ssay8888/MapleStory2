@@ -100,11 +100,14 @@ auto MonsterAttackAState::Tick(const double timeDelta, std::shared_ptr<Monster> 
 				if (monster->GetAnimationTimeAcc() >= p0 && !_is_player_attack)
 				{
 					_is_player_attack = _aabb_com->CollisionAabb(player->GetCharacterColliderAabb());
-					Protocol::GameClientTakeDamage sendPkt;
-					
-					sendPkt.set_character_id(GameLogicQueue::GetInstance()->GetCharacterInfo().character_id());
-					sendPkt.set_monster_obj_id(monster->GetMonsterInfo().object_id());
-					SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+					if (_is_player_attack)
+					{
+						Protocol::GameClientTakeDamage sendPkt;
+
+						sendPkt.set_character_id(GameLogicQueue::GetInstance()->GetCharacterInfo().character_id());
+						sendPkt.set_monster_obj_id(monster->GetMonsterInfo().object_id());
+						SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+					}
 				}
 			}
 		}
@@ -170,7 +173,6 @@ auto MonsterAttackAState::LateTick(const double timeDelta, std::shared_ptr<Monst
 	auto endTime = seq->key[L"end"];
 	if (monster->GetAnimationTimeAcc() >= endTime)
 	{
-		std::cout << monster->GetAnimationTimeAcc() << "/" << endTime << std::endl;
 		if (_state == Protocol::kAttack1A)
 		{
 			if (_use_motions.size() >= 2)

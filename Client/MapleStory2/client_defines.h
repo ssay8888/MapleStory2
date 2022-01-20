@@ -43,6 +43,8 @@ enum class kAnimationType
 	kBerserketSweepAttack2A,
 	kBerserkerVolcanicslash1A,
 	kBerserkerVolcanicslash2A,
+	kDown,
+	kDownIdle
 };
 
 

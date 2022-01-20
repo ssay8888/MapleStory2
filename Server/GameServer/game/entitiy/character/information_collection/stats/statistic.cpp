@@ -3,8 +3,8 @@
 
 Statistic::Statistic(const int64_t characterId):
 	BaseInfo(characterId)
-
 {
+	_is_dead = false;
 }
 
 auto Statistic::GetStr() const -> int32_t
@@ -63,12 +63,23 @@ auto Statistic::SetHp(const int32_t hp) -> void
 	else if (0 > _hp)
 	{
 		_hp = 0;
+		_is_dead = true;
 	}
 }
 
 auto Statistic::GainHp(int32_t hp) -> void
 {
 	_hp += hp;
+
+	if (_hp > _max_hp)
+	{
+		_hp = _max_hp;
+	}
+	else if (0 > _hp)
+	{
+		_hp = 0;
+		_is_dead = true;
+	}
 }
 
 auto Statistic::GetMaxHp() const -> int32_t
@@ -95,7 +106,7 @@ auto Statistic::SetMp(const int32_t mp) -> void
 	}
 	else if (0 > _mp)
 	{
-		_hp = 0;
+		_mp = 0;
 	}
 }
 
@@ -142,6 +153,11 @@ auto Statistic::GetAp() const -> int32_t
 auto Statistic::SetAp(int32_t value) -> void
 {
 	_ap = value;
+}
+
+auto Statistic::IsDead() const -> bool
+{
+	return _is_dead;
 }
 
 auto Statistic::Create(const int64_t characterId) -> std::shared_ptr<Statistic>

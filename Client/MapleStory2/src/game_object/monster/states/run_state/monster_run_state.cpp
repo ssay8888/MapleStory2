@@ -5,7 +5,16 @@
 #include "src/utility/components/transform/transform.h"
 
 auto MonsterRunState::Enter(std::shared_ptr<Monster> monster) -> void
-{
+{/*
+	if (monster->GetMonsterInfo().monster_id() == 43000101)
+	{
+		_next_state.set_state(Protocol::kRunA);
+	}
+	else
+	{
+		_next_state.set_state(Protocol::kRunA);
+	}*/
+
 	_next_state.set_state(Protocol::kRunA);
 }
 
@@ -32,12 +41,12 @@ auto MonsterRunState::LateTick(const double timeDelta, std::shared_ptr<Monster> 
 	_float3	dir = _targetPos - position;
 	const float	distance = D3DXVec3Length(&dir);
 	D3DXVec3Normalize(&dir, &dir);
-	if (distance < 0.01f)
+	if (distance < 0.05f)
 	{
 		transform->SetState(Transform::kState::kStatePosition, _targetPos);
 		monster->ChangeAnimation(_next_state.state());
 	}
-	else if (distance >= 0.2f)
+	else if (distance >= 0.35f)
 	{
 		transform->SetState(Transform::kState::kStatePosition, _targetPos);
 		monster->ChangeAnimation(_next_state.state());

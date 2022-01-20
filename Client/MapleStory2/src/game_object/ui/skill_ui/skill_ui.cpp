@@ -2,6 +2,7 @@
 #include "skill_ui.h"
 
 #include "skillset/skill_set.h"
+#include "src/game_object/ui/popup_info/popup_info.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/renderer/renderer.h"
@@ -104,6 +105,14 @@ auto SkillUi::Render() -> HRESULT
 		skillset.second->Render(_pos, _shader_com);
 	}
 	result = _shader_com->EndShader();
+
+	for (const auto& skillset : _skill_sets)
+	{
+		if (skillset.second->IsCollision(_pos))
+		{
+			skillset.second->GetPopupInfo()->Render();
+		}
+	}
 	return GameObject::Render();
 }
 
@@ -122,6 +131,7 @@ auto SkillUi::Clone(void* arg) -> std::shared_ptr<GameObject>
 auto SkillUi::ChangeShow() -> void
 {
 	_is_show = !_is_show;
+	_pos = { g_WinCX / 2.f, g_WinCY / 2.f, 0 };
 }
 
 auto SkillUi::GetSkillSet(const int32_t skillId) -> std::shared_ptr<SkillSet>

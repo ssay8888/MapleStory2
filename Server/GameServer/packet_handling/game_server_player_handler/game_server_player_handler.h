@@ -15,5 +15,7 @@ public:
 	static auto PlayerKeySetChange(Protocol::GameClientKeySet pkt, GameSessionRef gameSession)->void;
 
 	static auto PlayerItemApply(Protocol::GameClientItemApply pkt, GameSessionRef gameSession)->void;
+
+	static auto PlayerResurrection(Protocol::GameClientResurrection pkt, GameSessionRef gameSession)->void;
 };
 

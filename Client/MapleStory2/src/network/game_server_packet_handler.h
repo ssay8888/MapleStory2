@@ -28,6 +28,8 @@ enum : uint16_t
 	kPktGameClientKeySet = 2020,
 	kPktGameClientItemApply = 2021,
 	kPktGameServerItemQuantityUpdate = 2022,
+	kPktGameClientResurrection = 2023,
+	kPktGameServerResurrection = 2024,
 };
 
 
@@ -51,6 +53,7 @@ public:
 	static auto HandleGameServerDressChange(PacketSessionRef& session, Protocol::GameServerDressChange& pkt)->bool;
 	static auto HandleGameServerStatUp(PacketSessionRef& session, Protocol::GameServerStatUp& pkt)->bool;
 	static auto HandleGameServerItemQuantityUpdate(PacketSessionRef& session, Protocol::GameServerItemQuantityUpdate& pkt)->bool;
+	static auto HandleGameServerResurrection(PacketSessionRef& session, Protocol::GameServerResurrection& pkt)->bool;
 	static void Init()
 	{
 		for (auto& handler : _packet_handler)
@@ -71,6 +74,7 @@ public:
 		_packet_handler[kPktGameServerDressChange] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerDressChange>(HandleGameServerDressChange, session, buffer, len); };
 		_packet_handler[kPktGameServerStatUp] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerStatUp>(HandleGameServerStatUp, session, buffer, len); };
 		_packet_handler[kPktGameServerItemQuantityUpdate] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerItemQuantityUpdate>(HandleGameServerItemQuantityUpdate, session, buffer, len); };
+		_packet_handler[kPktGameServerResurrection] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameServerResurrection>(HandleGameServerResurrection, session, buffer, len); };
 	}
 
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32_t len)
@@ -87,6 +91,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::GameClientStatUp& pkt) { return MakeSendBuffer(pkt, kPktGameClientStatUp); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameClientKeySet& pkt) { return MakeSendBuffer(pkt, kPktGameClientKeySet); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameClientItemApply& pkt) { return MakeSendBuffer(pkt, kPktGameClientItemApply); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameClientResurrection& pkt) { return MakeSendBuffer(pkt, kPktGameClientResurrection); }
 
 private:
 	template<typename PacketType, typename ProcessFunc>

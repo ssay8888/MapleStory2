@@ -30,6 +30,7 @@ private:
 	auto LoadEquippedUi()->HRESULT;
 	auto LoadFreeSet()->HRESULT;
 	auto LoadSkillUi()->HRESULT;
+	auto LoadHpUi()->HRESULT;
 
 
 

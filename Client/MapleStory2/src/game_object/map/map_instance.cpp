@@ -42,7 +42,6 @@ auto MapInstance::Render() -> HRESULT
 		auto result = _shader_com->BeginShader(0);
 		for (auto& mesh : _map_objects)
 		{
-			mesh->Tick(0);
 			SetUpConstantTable(mesh->GetTransform());
 			mesh->Render(_shader_com);
 		}
