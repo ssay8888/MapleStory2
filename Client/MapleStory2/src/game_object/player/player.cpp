@@ -118,30 +118,30 @@ auto Player::Render() -> HRESULT
 	WeaponManager::GetInstance().Render();
 	int a = 0;
 
-	//std::wstring str;
+	std::wstring str;
 
-	//RECT rc = {
-	//	0, 0,
-	//	1000, 1000
-	//};
-	//str.append(L"¶ó : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).x)).append(L" / ")
-	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).y)).append(L" / ")
-	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).z)).append(L"\r\n");
+	RECT rc = {
+		0, 0,
+		1000, 1000
+	};
+	str.append(L"¶ó : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).x)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).y)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateRight).z)).append(L"\r\n");
 
-	//str.append(L"¾÷ : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).x)).append(L" / ")
-	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).y)).append(L" / ")
-	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).z)).append(L"\r\n");
+	str.append(L"¾÷ : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).x)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).y)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateUp).z)).append(L"\r\n");
 
-	//str.append(L"·è : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).x)).append(L" / ")
-	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).y)).append(L" / ")
-	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).z)).append(L"\r\n");
+	str.append(L"·è : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).x)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).y)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStateLook).z)).append(L"\r\n");
 
-	//str.append(L"Æ÷ : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).x)).append(L" / ")
-	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).y)).append(L" / ")
-	//	.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).z)).append(L"\r\n");
+	str.append(L"Æ÷ : ").append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).x)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).y)).append(L" / ")
+		.append(std::to_wstring(_transform_com->GetState(Transform::kState::kStatePosition).z)).append(L"\r\n");
 
-	//GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rc, 
-	//	DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
+	GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rc, 
+		DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
 
 #ifdef _DEBUG
 	_character_aabb_com->RenderDebug();

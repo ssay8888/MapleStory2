@@ -30,6 +30,14 @@ auto CharacterState::GravityPlayer(const double timeDelta) -> bool
 		auto pos = transform->GetState(Transform::kState::kStatePosition);
 		pos.y -= static_cast<float>(gravity * timeDelta);
 		transform->SetState(Transform::kState::kStatePosition, pos);
+		if (_last_tile_map_object && pos.y < -2.f)
+		{
+			auto pos = transform->GetState(Transform::kState::kStatePosition);
+			pos.y = _last_tile_map_object->GetCollider()->GetMax().y;
+			pos.x = _last_tile_map_object->GetCollider()->GetMax().x;
+			pos.z = _last_tile_map_object->GetCollider()->GetMax().z;
+			transform->SetState(Transform::kState::kStatePosition, pos);
+		}
 		return true;
 	}
 	bool check = false;
@@ -48,6 +56,15 @@ auto CharacterState::GravityPlayer(const double timeDelta) -> bool
 		auto pos = transform->GetState(Transform::kState::kStatePosition);
 		pos.y -= static_cast<float>(gravity * timeDelta);
 		transform->SetState(Transform::kState::kStatePosition, pos);
+
+		if (_last_tile_map_object && pos.y < -2.f)
+		{
+			auto pos = transform->GetState(Transform::kState::kStatePosition);
+			pos.y = _last_tile_map_object->GetCollider()->GetMax().y;
+			pos.x = _last_tile_map_object->GetCollider()->GetMax().x;
+			pos.z = _last_tile_map_object->GetCollider()->GetMax().z;
+			transform->SetState(Transform::kState::kStatePosition, pos);
+		}
 	}
 	else
 	{
