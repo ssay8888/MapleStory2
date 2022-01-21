@@ -32,6 +32,8 @@ enum : uint16_t
 	kPktGameServerResurrection = 2024,
 	kPktGameClientSpRecovery = 2025,
 	kPktGameClientApplySkill = 2026,
+	kPktGameClientChat = 2027,
+	kPktGameServerChat = 2028,
 };
 
 
@@ -53,6 +55,7 @@ public:
 	static auto HandleGameClientResurrection(PacketSessionRef& session, Protocol::GameClientResurrection& pkt)->bool;
 	static auto HandleGameClientSpRecovery(PacketSessionRef& session, Protocol::GameClientSpRecovery& pkt)->bool;
 	static auto HandleGameClientApplySkill(PacketSessionRef& session, Protocol::GameClientApplySkill& pkt)->bool;
+	static auto HandleGameClientChat(PacketSessionRef& session, Protocol::GameClientChat& pkt)->bool;
 	static void Init()
 	{
 		for (auto& handler : _packet_handler)
@@ -71,6 +74,7 @@ public:
 		_packet_handler[kPktGameClientResurrection] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientResurrection>(HandleGameClientResurrection, session, buffer, len); };
 		_packet_handler[kPktGameClientSpRecovery] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientSpRecovery>(HandleGameClientSpRecovery, session, buffer, len); };
 		_packet_handler[kPktGameClientApplySkill] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientApplySkill>(HandleGameClientApplySkill, session, buffer, len); };
+		_packet_handler[kPktGameClientChat] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientChat>(HandleGameClientChat, session, buffer, len); };
 	}
 
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32_t len)
@@ -93,6 +97,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerStatUp& pkt) { return MakeSendBuffer(pkt, kPktGameServerStatUp); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerItemQuantityUpdate& pkt) { return MakeSendBuffer(pkt, kPktGameServerItemQuantityUpdate); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerResurrection& pkt) { return MakeSendBuffer(pkt, kPktGameServerResurrection); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameServerChat& pkt) { return MakeSendBuffer(pkt, kPktGameServerChat); }
 
 private:
 	template<typename PacketType, typename ProcessFunc>

@@ -111,3 +111,9 @@ auto GameServerPacketHandler::HandleGameServerResurrection(PacketSessionRef& ses
 	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::ResurrectionPlayer, session, pkt);
 	return true;
 }
+
+auto GameServerPacketHandler::HandleGameServerChat(PacketSessionRef& session, Protocol::GameServerChat& pkt) -> bool
+{
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::GameChat, session, pkt);
+	return true;
+}

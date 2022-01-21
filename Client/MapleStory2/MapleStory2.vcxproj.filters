@@ -292,6 +292,12 @@
     <ClInclude Include="src\game_object\numbers\numbers.h">
       <Filter>game_object\numbers</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\ui\loading_ui\loading_ui.h">
+      <Filter>game_object\ui\loading_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\ui\chat_ui\chat_ui.h">
+      <Filter>game_object\ui\chat_ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -579,6 +585,12 @@
     <ClCompile Include="src\game_object\numbers\numbers.cpp">
       <Filter>game_object\numbers</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\ui\loading_ui\loading_ui.cpp">
+      <Filter>game_object\ui\loading_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\ui\chat_ui\chat_ui.cpp">
+      <Filter>game_object\ui\chat_ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -813,6 +825,12 @@
     </Filter>
     <Filter Include="game_object\numbers">
       <UniqueIdentifier>{97bb82d1-7ad8-4249-8c18-3de89f890ba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\loading_ui">
+      <UniqueIdentifier>{07c77600-836a-459e-a03c-da6d09fc6b9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\ui\chat_ui">
+      <UniqueIdentifier>{207252cd-9680-4ef2-9a7a-8ceaff85298d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

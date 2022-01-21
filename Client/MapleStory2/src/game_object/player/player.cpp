@@ -66,7 +66,7 @@ auto Player::Tick(const double timeDelta) -> HRESULT
 
 	OpenInventory();
 
-	if (InputDevice::GetInstance().GetKeyPressing(DIK_SPACE))
+	if (!g_isChatActive && InputDevice::GetInstance().GetKeyPressing(DIK_SPACE))
 	{
 		auto pos = _transform_com->GetState(Transform::kState::kStatePosition);
 		pos.y += 1.f;
@@ -557,7 +557,7 @@ auto Player::SetUpConstantTable() const -> HRESULT
 
 auto Player::OpenInventory() -> HRESULT
 {
-	if (!g_isWindowsActive)
+	if (!g_isWindowsActive || g_isChatActive)
 	{
 		return S_OK;
 	}

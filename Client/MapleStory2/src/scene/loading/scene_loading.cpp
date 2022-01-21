@@ -6,6 +6,7 @@
 #include "src/scene/game_init/game_init.h"
 #include "src/scene/game_play/game_play.h"
 #include "src/utility/game_logic_manager/game_logic_manager.h"
+#include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/scene_utility/scene_manager.h"
 
 SceneLoading::SceneLoading(const ComPtr<IDirect3DDevice9>& device):
@@ -89,6 +90,12 @@ std::shared_ptr<SceneLoading> SceneLoading::Create(const ComPtr<IDirect3DDevice9
 
 auto SceneLoading::ReadyLayerBackGround(const std::wstring& layerTag) -> HRESULT
 {
+	auto& objectManager = ObjectManager::GetInstance();
+	if (FAILED(objectManager.AddGameObject(kScene::kSceneLoading, TEXT("Prototype_Loading_Ui"), layerTag)))
+	{
+		return E_FAIL;
+	}
+
 	return S_OK;
 }
 

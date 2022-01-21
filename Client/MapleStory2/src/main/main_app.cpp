@@ -27,6 +27,7 @@
 #include "src/utility/scene_utility/scene_manager.h"
 #include "src/common/xml/map_parser.h"
 #include "src/game_object/camera/ingame_camera.h"
+#include "src/game_object/ui/loading_ui/loading_ui.h"
 #include "src/game_object/user/user.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/utility/components/collider/collider.h"
@@ -223,6 +224,9 @@ HRESULT MainApp::AddPrototypeGameObject()
 
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_User"), User::Create(_graphic_device))))
 		return E_FAIL;
+
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Loading_Ui"), LoadingUi::Create())))
+		return E_FAIL;
 	return S_OK; 
 }
 
@@ -259,6 +263,17 @@ HRESULT MainApp::AddPrototypeComponent()
 
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Collider_NoTarget_AABB"), Collider::Create(_graphic_device, Collider::kNoTargetAabb))))
 		return E_FAIL;
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_Loading_Ui_Side_Bar"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/loading_ui/ui_loading_sidebar_%d.png"), 2))))
+	{
+		return E_FAIL;
+	}
+
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_Loading_henesys_02"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/loading_ui/henesys_02.dds")))))
+	{
+		return E_FAIL;
+	}
 
 	return S_OK;
 }

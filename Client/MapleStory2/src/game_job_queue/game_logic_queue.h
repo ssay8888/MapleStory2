@@ -30,6 +30,7 @@ public:
 	auto StatupChange(PacketSessionRef session, Protocol::GameServerStatUp pkt)->void;
 	auto ItemQuantityUpdate(PacketSessionRef session, Protocol::GameServerItemQuantityUpdate pkt)->void;
 	auto ResurrectionPlayer(PacketSessionRef session, Protocol::GameServerResurrection pkt)->void;
+	auto GameChat(PacketSessionRef session, Protocol::GameServerChat pkt)->void;
 
 
 private:

@@ -213,3 +213,13 @@ message GameClientApplySkill
 {
 	int32 skillid = 1;
 }
+
+message GameClientChat
+{
+	bytes contents = 1;
+}
+
+message GameServerChat
+{
+	bytes contents = 1;
+}

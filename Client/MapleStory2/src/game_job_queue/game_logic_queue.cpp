@@ -14,6 +14,7 @@
 #include "src/game_object/player/states/down_idle_state/down_idle_state.h"
 #include "src/game_object/player/states/down_state/down_state.h"
 #include "src/game_object/player/states/idle_state/idle_state.h"
+#include "src/game_object/ui/chat_ui/chat_ui.h"
 #include "src/game_object/ui/inventory/inventory_ui.h"
 #include "src/game_object/ui/inventory/inventory_tab_btn/inventory_tab_btn.h"
 #include "src/game_object/user/user.h"
@@ -26,6 +27,7 @@
 #include "src/utility/game_logic_manager/game_logic_manager.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/scene_utility/scene_manager.h"
+#include "string_utils/string_utils.h"
 
 auto GameLogicQueue::GetCharacterInfo() const -> Protocol::GameServerLoadCharacter
 {
@@ -409,6 +411,17 @@ auto GameLogicQueue::ResurrectionPlayer(PacketSessionRef session, Protocol::Game
 			transform->SetState(Transform::kState::kStatePosition, _float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
 			userObject->ChangeAnimation(kAnimationType::kIdle);
 		}
+	}
+}
+
+auto GameLogicQueue::GameChat(PacketSessionRef session, Protocol::GameServerChat pkt) -> void
+{
+	auto& objectManager = ObjectManager::GetInstance();
+
+	const auto chatUi = std::static_pointer_cast<ChatUi>(objectManager.GetGameObjectPtr(kSceneGamePlay0, L"Layer_ChatUi", 0));
+	if (chatUi)
+	{
+		chatUi->PushHistory(StringUtils::ConvertCtoW(pkt.contents().c_str()));
 	}
 }
 

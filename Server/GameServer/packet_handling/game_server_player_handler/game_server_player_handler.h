@@ -21,5 +21,7 @@ public:
 	static auto PlayerSpRecovry(Protocol::GameClientSpRecovery pkt, GameSessionRef gameSession)->void;
 
 	static auto ApplySkill(Protocol::GameClientApplySkill pkt, GameSessionRef gameSession)->void;
+
+	static auto GameChat(Protocol::GameClientChat pkt, GameSessionRef gameSession)->void;
 };
 

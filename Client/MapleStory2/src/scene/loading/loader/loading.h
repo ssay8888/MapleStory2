@@ -32,6 +32,7 @@ private:
 	auto LoadSkillUi()->HRESULT;
 	auto LoadHpUi()->HRESULT;
 	auto LoadNumberFont()->HRESULT;
+	auto LoadChatUi()->HRESULT;
 
 
 

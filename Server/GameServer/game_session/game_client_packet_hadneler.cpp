@@ -100,3 +100,10 @@ auto GameClientPacketHandler::HandleGameClientApplySkill(PacketSessionRef& sessi
 	GameTick::GetInstance()->DoAsync(&GameTick::ApplySkill, pkt, gameSession);
 	return true;
 }
+
+auto GameClientPacketHandler::HandleGameClientChat(PacketSessionRef& session, Protocol::GameClientChat& pkt) -> bool
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	GameTick::GetInstance()->DoAsync(&GameTick::GameChat, pkt, gameSession);
+	return true;
+}

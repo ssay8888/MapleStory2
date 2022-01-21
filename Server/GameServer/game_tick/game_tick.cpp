@@ -126,3 +126,8 @@ auto GameTick::ApplySkill(Protocol::GameClientApplySkill pkt, GameSessionRef gam
 {
 	GameServerPlayerHandler::ApplySkill(pkt, gameSession);
 }
+
+auto GameTick::GameChat(Protocol::GameClientChat pkt, GameSessionRef gameSession) -> void
+{
+	GameServerPlayerHandler::GameChat(pkt, gameSession);
+}

@@ -20,6 +20,7 @@
 #include "src/game_object/terrain/terrain.h"
 #include "src/game_object/ui/character_select/character_select_ui.h"
 #include "src/game_object/ui/character_select/character_beauty/character_beauty_ui.h"
+#include "src/game_object/ui/chat_ui/chat_ui.h"
 #include "src/game_object/ui/equipped_ui/equipped_ui.h"
 #include "src/game_object/ui/inventory/inventory_ui.h"
 #include "src/game_object/ui/ket_set_ui/key_set_manager.h"
@@ -232,6 +233,9 @@ auto Loading::ReadyCharacterSelect() -> HRESULT
 			}
 		}
 	}
+
+
+
 	_is_finish = true;
 	return S_OK;
 }
@@ -490,6 +494,10 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	{
 		return E_FAIL;
 	}
+	if (FAILED(LoadChatUi()))
+	{
+		return E_FAIL;
+	}
 	
 	MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0);
 	
@@ -703,6 +711,25 @@ auto Loading::LoadNumberFont() -> HRESULT
 		return E_FAIL;
 	}
 	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Player_Number"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/damage_font/player_%d.png"), 10))))
+	{
+		return E_FAIL;
+	}
+	return S_OK;
+}
+
+auto Loading::LoadChatUi() -> HRESULT
+{
+	const auto& componentManager = ComponentManager::GetInstance();
+	auto& objectManager = ObjectManager::GetInstance();
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_ChatUi"), ChatUi::Create())))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Chat"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/chat_ui/chat_%d.png"), 2))))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Chat_Frame"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/chat_ui/frame.png")))))
 	{
 		return E_FAIL;
 	}

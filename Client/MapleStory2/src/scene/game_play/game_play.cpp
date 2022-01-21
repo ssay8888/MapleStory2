@@ -45,6 +45,11 @@ HRESULT GamePlay::NativeConstruct()
 		return E_FAIL;
 	}
 
+	auto& objectManager = ObjectManager::GetInstance();
+	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_PlayerInfo"), L"Layer_PlayerInfo")))
+	{
+		return E_FAIL;
+	}
 	if (FAILED(ReadyLayerCamera(TEXT("Layer_Camera"))))
 	{
 		return E_FAIL;
@@ -68,8 +73,8 @@ HRESULT GamePlay::NativeConstruct()
 	{
 		return E_FAIL;
 	}
-	auto& objectManager = ObjectManager::GetInstance();
-	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_PlayerInfo"), L"Layer_PlayerInfo")))
+
+	if (FAILED(ReadyChatUi()))
 	{
 		return E_FAIL;
 	}
@@ -205,6 +210,7 @@ auto GamePlay::ReadyKeySetManager() -> HRESULT
 	{
 		return E_FAIL;
 	}
+	
 	return S_OK;
 }
 
@@ -212,6 +218,16 @@ auto GamePlay::ReadySkillUi() -> HRESULT
 {
 	auto& objectManager = ObjectManager::GetInstance();
 	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_SkillUi"), L"Layer_SkillUi")))
+	{
+		return E_FAIL;
+	}
+	return S_OK;
+}
+
+auto GamePlay::ReadyChatUi() -> HRESULT
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_ChatUi"), L"Layer_ChatUi")))
 	{
 		return E_FAIL;
 	}

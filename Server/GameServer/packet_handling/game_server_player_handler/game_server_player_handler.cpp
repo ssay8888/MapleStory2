@@ -14,6 +14,10 @@
 #include "protocol/game_protocol.pb.h"
 #include "randomizer/randomizer.h"
 
+#include <fmt/xchar.h>
+
+#include "string_utils/string_utils.h"
+
 auto GameServerPlayerHandler::TakeDamage(const int64_t characterId, const int64_t monsterObjectId,
                                          GameSessionRef gameSession) -> void
 {
@@ -410,4 +414,24 @@ auto GameServerPlayerHandler::ApplySkill(Protocol::GameClientApplySkill pkt, Gam
 		gameSession->Send(GameClientPacketHandler::MakeSendBuffer(sendStatPkt));
 	}
 
+}
+
+auto GameServerPlayerHandler::GameChat(Protocol::GameClientChat pkt, GameSessionRef gameSession) -> void
+{
+	if (gameSession->GetPlayer() == nullptr || pkt.contents().empty())
+	{
+		return;
+	}
+
+	auto player = gameSession->GetPlayer();
+	
+
+	Protocol::GameServerChat sendPkt;
+	sendPkt.set_contents(fmt::format("{0} : {1}", StringUtils::ConvertWtoC(player->GetName().c_str()), pkt.contents()));
+
+
+	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(player->GetMapId()))
+	{
+		mapInstance->BroadCastMessage(sendPkt, nullptr);
+	}
 }

@@ -21,6 +21,8 @@ private:
 	auto ReadyInventory()->HRESULT;
 	auto ReadyKeySetManager()->HRESULT;
 	auto ReadySkillUi()->HRESULT;
+	auto ReadyChatUi()->HRESULT;
+
 public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& device)->std::shared_ptr<GamePlay>;
 };
