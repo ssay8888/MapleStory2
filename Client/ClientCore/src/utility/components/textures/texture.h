@@ -15,7 +15,9 @@ public:
 	explicit Texture(const ComPtr<IDirect3DDevice9>& graphicDevice);
 	virtual ~Texture() = default;
 
-	ComPtr<IDirect3DBaseTexture9> GetTexture(int32_t index);
+	auto GetTexture(int32_t index) -> ComPtr<IDirect3DBaseTexture9>;
+
+	auto GetImageInfo(int32_t index) const ->D3DXIMAGE_INFO;
 public:
 	virtual auto NativeConstructPrototype(kType eType, const std::wstring& textureFilePath, int32_t numTextures)->HRESULT;
 	auto NativeConstruct(void* pArg)->HRESULT override;
@@ -28,5 +30,5 @@ public:
 	virtual auto Clone(void* arg = nullptr)->std::shared_ptr<Component>;
 
 private:
-	std::vector<ComPtr<IDirect3DBaseTexture9>>			_textures;
+	std::vector<std::pair<ComPtr<IDirect3DBaseTexture9>, D3DXIMAGE_INFO>>			_textures;
 };

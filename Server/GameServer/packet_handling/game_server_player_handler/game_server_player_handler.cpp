@@ -12,9 +12,10 @@
 #include "game/map/map_manager.h"
 #include "managers/character_info_manager/character_info_storage_manager.h"
 #include "protocol/game_protocol.pb.h"
+#include "randomizer/randomizer.h"
 
 auto GameServerPlayerHandler::TakeDamage(const int64_t characterId, const int64_t monsterObjectId,
-	GameSessionRef gameSession) -> void
+                                         GameSessionRef gameSession) -> void
 {
 	if (gameSession->GetPlayer() == nullptr || gameSession->GetPlayer()->GetCharacterId() != characterId)
 	{
@@ -36,6 +37,7 @@ auto GameServerPlayerHandler::TakeDamage(const int64_t characterId, const int64_
 				Protocol::GameServerTakeDamage sendPkt;
 				sendPkt.set_character_id(characterId);
 				sendPkt.set_damage(5);
+				sendPkt.set_monster_obj_id(monsterObjectId);
 				mapInstance->BroadCastMessage(sendPkt, nullptr);
 
 				Protocol::GameServerUpdateStat sendStatPkt;
@@ -58,12 +60,19 @@ auto GameServerPlayerHandler::AttackMonster(Protocol::GameClientAttackMonster pk
 
 	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(player->GetMapId()))
 	{
+		Protocol::GameServerAttackMonster attackMonster;
+		attackMonster.set_character_id(player->GetCharacterId());
 		for (const auto objectId : pkt.monster_obj_id())
 		{
 			if (const auto monster = mapInstance->FindMonster(objectId))
 			{
 				const auto stat = monster->GetStat();
-				stat->GainHp(-5000);
+				int64_t damage = Randomizer::Rand(10ll, 100ll);
+				stat->GainHp(static_cast<int32_t>(-damage));
+				auto damageItem = attackMonster.add_damages();
+				damageItem->set_damage(damage);
+				damageItem->set_monster_obj_id(monster->GetObjectId());
+
 				if (stat->IsDead())
 				{
 					mapInstance->RemoveMonster(objectId);
@@ -92,6 +101,7 @@ auto GameServerPlayerHandler::AttackMonster(Protocol::GameClientAttackMonster pk
 				}
 			}
 		}
+		mapInstance->BroadCastMessage(attackMonster, nullptr);
 	}
 
 }
@@ -339,4 +349,65 @@ auto GameServerPlayerHandler::PlayerResurrection(Protocol::GameClientResurrectio
 		sendStatPkt.set_value(statInfo->GetHp());
 		gameSession->Send(GameClientPacketHandler::MakeSendBuffer(sendStatPkt));
 	}
+}
+
+auto GameServerPlayerHandler::PlayerSpRecovry(Protocol::GameClientSpRecovery pkt, GameSessionRef gameSession) -> void
+{
+	if (gameSession->GetPlayer() == nullptr)
+	{
+		return;
+	}
+	
+	auto player = gameSession->GetPlayer();
+
+	if (player->IsLastSpRecovery())
+	{
+		player->SetLastSpRecovery(GetTickCount64());
+
+		auto baseInfo = CharacterInfoStorageManager::GetInstance().FindInfo(CharacterInfoStorage::kInfoTypes::kStats, player->GetCharacterId());
+		auto statInfo = std::static_pointer_cast<Statistic>(baseInfo);
+
+		if (statInfo)
+		{
+			statInfo->SetMp(statInfo->GetMp() + 10);
+
+			Protocol::GameServerUpdateStat sendStatPkt;
+			sendStatPkt.set_type(Protocol::kMp);
+			sendStatPkt.set_value(statInfo->GetMp());
+			gameSession->Send(GameClientPacketHandler::MakeSendBuffer(sendStatPkt));
+		}
+	}
+
+}
+
+auto GameServerPlayerHandler::ApplySkill(Protocol::GameClientApplySkill pkt, GameSessionRef gameSession) -> void
+{
+	if (gameSession->GetPlayer() == nullptr)
+	{
+		return;
+	}
+
+	auto player = gameSession->GetPlayer();
+
+	auto baseInfo = CharacterInfoStorageManager::GetInstance().FindInfo(CharacterInfoStorage::kInfoTypes::kStats, player->GetCharacterId());
+	auto statInfo = std::static_pointer_cast<Statistic>(baseInfo);
+
+	if (statInfo)
+	{
+		constexpr int skills[] = { 10200001, 10200011, 10200031, 10200041 };
+		switch (pkt.skillid())
+		{
+		case 10200011:
+			statInfo->SetMp(statInfo->GetMp() - 4);
+			break;
+		case 10200041:
+			statInfo->SetMp(statInfo->GetMp() - 24);
+			break;
+		}
+		Protocol::GameServerUpdateStat sendStatPkt;
+		sendStatPkt.set_type(Protocol::kMp);
+		sendStatPkt.set_value(statInfo->GetMp());
+		gameSession->Send(GameClientPacketHandler::MakeSendBuffer(sendStatPkt));
+	}
+
 }

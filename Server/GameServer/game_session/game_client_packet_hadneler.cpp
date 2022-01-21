@@ -84,3 +84,19 @@ auto GameClientPacketHandler::HandleGameClientResurrection(PacketSessionRef& ses
 	GameTick::GetInstance()->DoAsync(&GameTick::PlayerResurrection, pkt, gameSession);
 	return true;
 }
+
+auto GameClientPacketHandler::HandleGameClientSpRecovery(PacketSessionRef& session,
+	Protocol::GameClientSpRecovery& pkt) -> bool
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	GameTick::GetInstance()->DoAsync(&GameTick::PlayerSpRecovry, pkt, gameSession);
+	return true;
+}
+
+auto GameClientPacketHandler::HandleGameClientApplySkill(PacketSessionRef& session,
+	Protocol::GameClientApplySkill& pkt) -> bool
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	GameTick::GetInstance()->DoAsync(&GameTick::ApplySkill, pkt, gameSession);
+	return true;
+}

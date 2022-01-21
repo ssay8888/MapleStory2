@@ -25,6 +25,9 @@ public:
 	auto GetSpawnPoint()const->int32_t;
 	auto GetTransform()const->std::shared_ptr<Transform>;
 
+	auto IsLastSpRecovery()const->bool;
+	auto SetLastSpRecovery(uint64_t time)->void;
+
 	auto SaveToDb()->HRESULT;
 
 private:
@@ -39,5 +42,7 @@ private:
 	int32_t			_spawn_point;
 	std::wstring	_name;
 	std::shared_ptr<Transform> _transform;
+
+	uint64_t		_last_sp_recovery;
 };
 

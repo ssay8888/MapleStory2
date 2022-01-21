@@ -112,7 +112,8 @@ message GameClientTakeDamage
 message GameServerTakeDamage
 {
 	int64 character_id = 1;
-	int64 damage = 2;
+	int64 monster_obj_id = 2;
+	int64 damage = 3;
 }
 
 message GameServerUpdateStat
@@ -129,7 +130,7 @@ message GameClientAttackMonster
 message GameServerAttackMonster
 {
 	int64 character_id = 1;
-	repeated int64 monster_obj_id = 2;
+	repeated AttackMonster damages = 2;
 }
 
 message GameServerMonsterStatUpdate
@@ -201,4 +202,14 @@ message GameServerResurrection
 {
 	int64 character_id = 1;
 	float3 position = 2;
+}
+
+message GameClientSpRecovery
+{
+
+}
+
+message GameClientApplySkill
+{
+	int32 skillid = 1;
 }

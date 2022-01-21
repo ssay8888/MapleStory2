@@ -8,6 +8,7 @@
 #include "src/game_object/player/player.h"
 #include "src/game_object/player/states/large_sword_attack_idle_state/large_sword_attack_idle_state.h"
 #include "src/game_object/ui/monster_hp_ui/monster_hp_ui.h"
+#include "src/managers/character_stat/character_stat.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
 #include "src/system/input/input_device.h"
@@ -17,6 +18,15 @@
 
 auto BerserkerSweepAttackState::Enter() -> void
 {
+	if (CharacterStat::GetInstance().GetMp() < 4)
+	{
+		_player->ChangeAnimation(kAnimationType::kAttackIdle);
+		_player->ChangeCharacterState(LargeSwordAttackIdleState::GetInstance());
+		return;
+	}
+	Protocol::GameClientApplySkill skillPkt;
+	skillPkt.set_skillid(10200011);
+	SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(skillPkt));
 	_is_move = false;
 	_input_combo = false;
 	_moves.clear();
@@ -44,8 +54,8 @@ auto BerserkerSweepAttackState::Enter() -> void
 		const auto transform = _player->GetTransform();
 		Collider::TagColliderDesc		ColliderDesc;
 		ColliderDesc.parent_matrix = &transform->GetWorldMatrix();
-		ColliderDesc.scale = _float3(0.4f, 0.4f, 0.4f);
-		ColliderDesc.init_pos = _float3(0.f, 0.2f, -0.2f);
+		ColliderDesc.scale = _float3(0.8f, 0.4f, 0.8f);
+		ColliderDesc.init_pos = _float3(0.f, 0.5f, 0.f);
 
 		const auto& componentManager = ComponentManager::GetInstance();
 		auto component = componentManager.CloneComponent(0, TEXT("Prototype_Collider_AABB"), &ColliderDesc);
@@ -206,6 +216,7 @@ auto BerserkerSweepAttackState::Tick(const double timeDelta) -> void
 	{
 		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
 		{
+
 			const auto monsters = mapInstance->CollisionMonsters(_aabb_com);
 			Protocol::GameClientAttackMonster sendPkt;
 			const auto objectIds = sendPkt.mutable_monster_obj_id();
@@ -272,8 +283,20 @@ auto BerserkerSweepAttackState::LateTick(const double timeDelta) -> void
 				_player->ChangeCharacterState(GetInstance());
 				break;
 			case kAnimationType::kBerserketSweepAttack2A:
+			{
 				_player->SetPlayAnimation(0.0);
+
+				if (CharacterStat::GetInstance().GetMp() < 4)
+				{
+					_player->ChangeAnimation(kAnimationType::kAttackIdle);
+					_player->ChangeCharacterState(LargeSwordAttackIdleState::GetInstance());
+					return;
+				}
+				Protocol::GameClientApplySkill skillPkt;
+				skillPkt.set_skillid(10200011);
+				SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(skillPkt));
 				break;
+			}
 			default:
 				return;
 			}

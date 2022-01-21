@@ -12,6 +12,7 @@
 #include "src/game_object/ui/ket_set_ui/key_set_manager.h"
 #include "src/game_object/ui/ket_set_ui/key_set_ui.h"
 #include "src/game_object/ui/skill_ui/skillset/skill_set.h"
+#include "src/managers/character_stat/character_stat.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
 #include "src/system/input/input_device.h"
@@ -160,14 +161,17 @@ auto CharacterState::KeySetHandleInput() const -> std::pair<int32_t, std::shared
 				}
 				else if (keyset->GetSkill()->GetSkillId() == 10200011)
 				{
-					return std::make_pair(keyset->GetKey(), BerserkerSweepAttackState::GetInstance());
-				}
-				else if (keyset->GetSkill()->GetSkillId() == 10200031)
-				{
+					if (CharacterStat::GetInstance().GetMp() > 4)
+					{
+						return std::make_pair(keyset->GetKey(), BerserkerSweepAttackState::GetInstance());
+					}
 				}
 				else if (keyset->GetSkill()->GetSkillId() == 10200041)
 				{
-					return std::make_pair(keyset->GetKey(), BerserkerVolcanicslashState::GetInstance());
+					if (CharacterStat::GetInstance().GetMp() > 24)
+					{
+						return std::make_pair(keyset->GetKey(), BerserkerVolcanicslashState::GetInstance());
+					}
 				}
 			}
 		}

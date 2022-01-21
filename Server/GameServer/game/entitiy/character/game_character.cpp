@@ -78,6 +78,16 @@ auto GameCharacter::GetTransform() const -> std::shared_ptr<Transform>
 	return _transform;
 }
 
+auto GameCharacter::IsLastSpRecovery() const -> bool
+{
+	return _last_sp_recovery + 1000 < GetTickCount64();
+}
+
+auto GameCharacter::SetLastSpRecovery(uint64_t time) -> void
+{
+	_last_sp_recovery = time;
+}
+
 auto GameCharacter::NativeConstruct() -> HRESULT
 {
 	_transform = Transform::Create(nullptr);
@@ -248,7 +258,7 @@ auto GameCharacter::SaveToDb() -> HRESULT
 		int32_t maxHp(statInfo->GetMaxHp());
 		bind.BindParam(idx++, maxHp);
 
-		int32_t mp(statInfo->GetHp());
+		int32_t mp(statInfo->GetMp());
 		bind.BindParam(idx++, mp);
 		int32_t maxMp(statInfo->GetMaxHp());
 		bind.BindParam(idx++, maxMp);

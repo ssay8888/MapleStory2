@@ -16,6 +16,8 @@
 #include "src/managers/characters_manager/character.h"
 #include "src/managers/character_stat/character_stat.h"
 #include "src/managers/weapon_manager/weapon_manager.h"
+#include "src/network/game_server_packet_handler.h"
+#include "src/network/send_manager.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/collider/collider.h"
@@ -53,6 +55,7 @@ auto Player::NativeConstruct(void* arg) -> HRESULT
 
 	ChangeAnimation(kAnimationType::kIdle);
 	ChangeCharacterState(IdleState::GetInstance());
+	_last_sp_recovery = GetTickCount64();
 	return S_OK;
 }
 
@@ -70,6 +73,7 @@ auto Player::Tick(const double timeDelta) -> HRESULT
 		_transform_com->SetState(Transform::kState::kStatePosition, pos);
 	}
 
+	SpRecovery();
 	return GameObject::Tick(timeDelta);
 }
 
@@ -585,6 +589,20 @@ auto Player::OpenInventory() -> HRESULT
 		}
 	}
 	return S_OK;
+}
+
+auto Player::SpRecovery() -> void
+{
+	auto time = GetTickCount64();
+	if (_last_sp_recovery + 1000 < time)
+	{
+		if (CharacterStat::GetInstance().GetMp() < CharacterStat::GetInstance().GetMaxMp())
+		{
+			Protocol::GameClientSpRecovery sendPkt;
+			SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+			_last_sp_recovery = time;
+		}
+	}
 }
 
 auto Player::Create(const ComPtr<IDirect3DDevice9>& device) -> std::shared_ptr<Player>

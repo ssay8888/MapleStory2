@@ -32,6 +32,8 @@ public:
 	auto PlayerKeySetChange(Protocol::GameClientKeySet pkt, GameSessionRef gameSession)->void;
 	auto PlayerItemApply(Protocol::GameClientItemApply pkt, GameSessionRef gameSession)->void;
 	auto PlayerResurrection(Protocol::GameClientResurrection pkt, GameSessionRef gameSession)->void;
+	auto PlayerSpRecovry(Protocol::GameClientSpRecovery pkt, GameSessionRef gameSession)->void;
+	auto ApplySkill(Protocol::GameClientApplySkill pkt, GameSessionRef gameSession)->void;
 
 private:
 	std::atomic<bool> _exit_loop;

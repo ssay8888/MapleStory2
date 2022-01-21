@@ -286,6 +286,12 @@
     <ClInclude Include="src\game_object\player\states\down_state\down_state.h">
       <Filter>game_object\player\states\down_state</Filter>
     </ClInclude>
+    <ClInclude Include="src\managers\damage_manager\damage_manager.h">
+      <Filter>managers\damage_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object\numbers\numbers.h">
+      <Filter>game_object\numbers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -567,6 +573,12 @@
     <ClCompile Include="src\game_object\player\states\down_state\down_state.cpp">
       <Filter>game_object\player\states\down_state</Filter>
     </ClCompile>
+    <ClCompile Include="src\managers\damage_manager\damage_manager.cpp">
+      <Filter>managers\damage_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object\numbers\numbers.cpp">
+      <Filter>game_object\numbers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -795,6 +807,12 @@
     </Filter>
     <Filter Include="game_object\player\states\down_idle_state">
       <UniqueIdentifier>{4d3360c7-93cf-4810-be3f-556f4431efd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="managers\damage_manager">
+      <UniqueIdentifier>{e7fec0fb-fd26-4fa4-8455-903f13f9089d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\numbers">
+      <UniqueIdentifier>{97bb82d1-7ad8-4249-8c18-3de89f890ba3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

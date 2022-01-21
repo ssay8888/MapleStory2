@@ -13,6 +13,7 @@
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
 #include "src/game_object/monster/monster.h"
+#include "src/game_object/numbers/numbers.h"
 #include "src/game_object/pants/pants.h"
 #include "src/game_object/player/player.h"
 #include "src/game_object/sky/sky.h"
@@ -485,6 +486,10 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	{
 		return E_FAIL;
 	}
+	if (FAILED(LoadNumberFont()))
+	{
+		return E_FAIL;
+	}
 	
 	MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0);
 	
@@ -681,7 +686,28 @@ auto Loading::LoadHpUi() -> HRESULT
 		return E_FAIL;
 	}
 	return S_OK; 
-} 
+}
+
+auto Loading::LoadNumberFont() -> HRESULT
+{
+	const auto& componentManager = ComponentManager::GetInstance();
+	auto& objectManager = ObjectManager::GetInstance();
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Numbers"), Numbers::Create())))
+	{
+		return E_FAIL;
+	}
+
+
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Damage_Number"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/damage_font/damage_%d.png"), 10))))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Player_Number"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/damage_font/player_%d.png"), 10))))
+	{
+		return E_FAIL;
+	}
+	return S_OK;
+}
 
 auto Loading::ReadyGamePlay1()->HRESULT
 {

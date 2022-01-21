@@ -199,6 +199,7 @@
     <ClInclude Include="src\game_object\monster\states\run_state\monster_run_state.h" />
     <ClInclude Include="src\game_object\monster\states\walk_state\monster_walk_state.h" />
     <ClInclude Include="src\game_object\monster\stats\monster_stats.h" />
+    <ClInclude Include="src\game_object\numbers\numbers.h" />
     <ClInclude Include="src\game_object\pants\pants.h" />
     <ClInclude Include="src\game_object\player\player.h" />
     <ClInclude Include="src\game_object\player\states\berserker_rageslash_state\berserker_rageslash_state.h" />
@@ -246,6 +247,7 @@
     <ClInclude Include="src\managers\characters_manager\character.h" />
     <ClInclude Include="src\managers\characters_manager\characters_manager.h" />
     <ClInclude Include="src\managers\character_stat\character_stat.h" />
+    <ClInclude Include="src\managers\damage_manager\damage_manager.h" />
     <ClInclude Include="src\managers\weapon_manager\weapon_manager.h" />
     <ClInclude Include="src\network\game_server_packet_handler.h" />
     <ClInclude Include="src\network\login_server_packet_handler.h" />
@@ -323,6 +325,7 @@
     <ClCompile Include="src\game_object\monster\states\run_state\monster_run_state.cpp" />
     <ClCompile Include="src\game_object\monster\states\walk_state\monster_walk_state.cpp" />
     <ClCompile Include="src\game_object\monster\stats\monster_stats.cpp" />
+    <ClCompile Include="src\game_object\numbers\numbers.cpp" />
     <ClCompile Include="src\game_object\pants\pants.cpp" />
     <ClCompile Include="src\game_object\player\player.cpp" />
     <ClCompile Include="src\game_object\player\states\berserker_rageslash_state\berserker_rageslash_state.cpp" />
@@ -370,6 +373,7 @@
     <ClCompile Include="src\managers\characters_manager\character.cpp" />
     <ClCompile Include="src\managers\characters_manager\characters_manager.cpp" />
     <ClCompile Include="src\managers\character_stat\character_stat.cpp" />
+    <ClCompile Include="src\managers\damage_manager\damage_manager.cpp" />
     <ClCompile Include="src\managers\weapon_manager\weapon_manager.cpp" />
     <ClCompile Include="src\network\game_server_packet_handler.cpp" />
     <ClCompile Include="src\network\send_manager.cpp" />

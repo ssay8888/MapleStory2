@@ -14,6 +14,7 @@
 #include "src/game_object/ui/monster_hp_ui/monster_hp_ui.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
+#include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/collider/collider.h"
 #include "src/utility/components/manager/component_manager.h"
@@ -108,6 +109,14 @@ auto LargeSwordAttackState::Tick(const double timeDelta) -> void
 					objectIds->Add(monster->GetMonsterInfo().object_id());
 					_monsters.emplace(monster->GetMonsterInfo().object_id(), monster);
 					MonsterHpUi::GetInstance()->SetMonster(monster);
+
+					std::wstring str;
+					RECT rc = {
+						0, 0,
+						1000, 1000
+					};
+					GraphicDevice::GetInstance().GetFont()->DrawTextW(NULL, str.c_str(), -1, &rc,
+						DT_TOP | DT_LEFT, D3DCOLOR_ARGB(255, 0, 0, 0));
 				}
 			}
 			SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));

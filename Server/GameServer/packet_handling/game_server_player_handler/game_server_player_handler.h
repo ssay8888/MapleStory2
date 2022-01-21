@@ -17,5 +17,9 @@ public:
 	static auto PlayerItemApply(Protocol::GameClientItemApply pkt, GameSessionRef gameSession)->void;
 
 	static auto PlayerResurrection(Protocol::GameClientResurrection pkt, GameSessionRef gameSession)->void;
+
+	static auto PlayerSpRecovry(Protocol::GameClientSpRecovery pkt, GameSessionRef gameSession)->void;
+
+	static auto ApplySkill(Protocol::GameClientApplySkill pkt, GameSessionRef gameSession)->void;
 };
 

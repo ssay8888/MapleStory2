@@ -28,3 +28,9 @@ message float3
 	float y = 2;
 	float z = 3;
 }
+
+message AttackMonster
+{
+	int64 monster_obj_id = 1;
+	int64 damage = 2;
+}

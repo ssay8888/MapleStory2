@@ -193,6 +193,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT GameClientTakeDamageDefaultType
 constexpr GameServerTakeDamage::GameServerTakeDamage(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : character_id_(int64_t{0})
+  , monster_obj_id_(int64_t{0})
   , damage_(int64_t{0}){}
 struct GameServerTakeDamageDefaultTypeInternal {
   constexpr GameServerTakeDamageDefaultTypeInternal()
@@ -232,8 +233,7 @@ struct GameClientAttackMonsterDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT GameClientAttackMonsterDefaultTypeInternal _GameClientAttackMonster_default_instance_;
 constexpr GameServerAttackMonster::GameServerAttackMonster(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : monster_obj_id_()
-  , _monster_obj_id_cached_byte_size_()
+  : damages_()
   , character_id_(int64_t{0}){}
 struct GameServerAttackMonsterDefaultTypeInternal {
   constexpr GameServerAttackMonsterDefaultTypeInternal()
@@ -398,8 +398,31 @@ struct GameServerResurrectionDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT GameServerResurrectionDefaultTypeInternal _GameServerResurrection_default_instance_;
+constexpr GameClientSpRecovery::GameClientSpRecovery(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized){}
+struct GameClientSpRecoveryDefaultTypeInternal {
+  constexpr GameClientSpRecoveryDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~GameClientSpRecoveryDefaultTypeInternal() {}
+  union {
+    GameClientSpRecovery _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT GameClientSpRecoveryDefaultTypeInternal _GameClientSpRecovery_default_instance_;
+constexpr GameClientApplySkill::GameClientApplySkill(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : skillid_(0){}
+struct GameClientApplySkillDefaultTypeInternal {
+  constexpr GameClientApplySkillDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~GameClientApplySkillDefaultTypeInternal() {}
+  union {
+    GameClientApplySkill _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT GameClientApplySkillDefaultTypeInternal _GameClientApplySkill_default_instance_;
 }  // namespace Protocol
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_game_5fprotocol_2eproto[25];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_game_5fprotocol_2eproto[27];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_game_5fprotocol_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_game_5fprotocol_2eproto = nullptr;
 
@@ -520,6 +543,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fprotocol_2eproto::offse
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerTakeDamage, character_id_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerTakeDamage, monster_obj_id_),
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerTakeDamage, damage_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerUpdateStat, _internal_metadata_),
@@ -540,7 +564,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fprotocol_2eproto::offse
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerAttackMonster, character_id_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerAttackMonster, monster_obj_id_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerAttackMonster, damages_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerMonsterStatUpdate, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -621,6 +645,17 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fprotocol_2eproto::offse
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerResurrection, character_id_),
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerResurrection, position_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameClientSpRecovery, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameClientApplySkill, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameClientApplySkill, skillid_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::Protocol::GameClientLogin)},
@@ -634,20 +669,22 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 91, -1, sizeof(::Protocol::GameServerMoveMonster)},
   { 103, -1, sizeof(::Protocol::GameClientTakeDamage)},
   { 110, -1, sizeof(::Protocol::GameServerTakeDamage)},
-  { 117, -1, sizeof(::Protocol::GameServerUpdateStat)},
-  { 124, -1, sizeof(::Protocol::GameClientAttackMonster)},
-  { 130, -1, sizeof(::Protocol::GameServerAttackMonster)},
-  { 137, -1, sizeof(::Protocol::GameServerMonsterStatUpdate)},
-  { 145, -1, sizeof(::Protocol::GameServerKillMonster)},
-  { 151, -1, sizeof(::Protocol::GameClientInventoryItemMove)},
-  { 160, -1, sizeof(::Protocol::GameServerDressChange)},
-  { 168, -1, sizeof(::Protocol::GameClientStatUp)},
-  { 174, -1, sizeof(::Protocol::GameServerStatUp)},
-  { 182, -1, sizeof(::Protocol::GameClientKeySet)},
-  { 190, -1, sizeof(::Protocol::GameClientItemApply)},
-  { 197, -1, sizeof(::Protocol::GameServerItemQuantityUpdate)},
-  { 205, -1, sizeof(::Protocol::GameClientResurrection)},
-  { 210, -1, sizeof(::Protocol::GameServerResurrection)},
+  { 118, -1, sizeof(::Protocol::GameServerUpdateStat)},
+  { 125, -1, sizeof(::Protocol::GameClientAttackMonster)},
+  { 131, -1, sizeof(::Protocol::GameServerAttackMonster)},
+  { 138, -1, sizeof(::Protocol::GameServerMonsterStatUpdate)},
+  { 146, -1, sizeof(::Protocol::GameServerKillMonster)},
+  { 152, -1, sizeof(::Protocol::GameClientInventoryItemMove)},
+  { 161, -1, sizeof(::Protocol::GameServerDressChange)},
+  { 169, -1, sizeof(::Protocol::GameClientStatUp)},
+  { 175, -1, sizeof(::Protocol::GameServerStatUp)},
+  { 183, -1, sizeof(::Protocol::GameClientKeySet)},
+  { 191, -1, sizeof(::Protocol::GameClientItemApply)},
+  { 198, -1, sizeof(::Protocol::GameServerItemQuantityUpdate)},
+  { 206, -1, sizeof(::Protocol::GameClientResurrection)},
+  { 211, -1, sizeof(::Protocol::GameServerResurrection)},
+  { 218, -1, sizeof(::Protocol::GameClientSpRecovery)},
+  { 223, -1, sizeof(::Protocol::GameClientApplySkill)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -676,6 +713,8 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Protocol::_GameServerItemQuantityUpdate_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Protocol::_GameClientResurrection_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Protocol::_GameServerResurrection_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Protocol::_GameClientSpRecovery_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Protocol::_GameClientApplySkill_default_instance_),
 };
 
 const char descriptor_table_protodef_game_5fprotocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -717,37 +756,40 @@ const char descriptor_table_protodef_game_5fprotocol_2eproto[] PROTOBUF_SECTION_
   "\036\n\004look\030\005 \001(\0132\020.Protocol.float3\022\"\n\010posit"
   "ion\030\006 \001(\0132\020.Protocol.float3\022\017\n\007skillId\030\007"
   " \001(\005\"D\n\024GameClientTakeDamage\022\024\n\014characte"
-  "r_id\030\001 \001(\003\022\026\n\016monster_obj_id\030\002 \001(\003\"<\n\024Ga"
+  "r_id\030\001 \001(\003\022\026\n\016monster_obj_id\030\002 \001(\003\"T\n\024Ga"
   "meServerTakeDamage\022\024\n\014character_id\030\001 \001(\003"
-  "\022\016\n\006damage\030\002 \001(\003\"N\n\024GameServerUpdateStat"
-  "\022\'\n\004type\030\001 \001(\0162\031.Protocol.kPlayerStatTyp"
-  "e\022\r\n\005value\030\002 \001(\005\"1\n\027GameClientAttackMons"
-  "ter\022\026\n\016monster_obj_id\030\001 \003(\003\"G\n\027GameServe"
-  "rAttackMonster\022\024\n\014character_id\030\001 \001(\003\022\026\n\016"
-  "monster_obj_id\030\002 \003(\003\"n\n\033GameServerMonste"
-  "rStatUpdate\022\026\n\016monster_obj_id\030\001 \001(\003\022(\n\004t"
-  "ype\030\002 \001(\0162\032.Protocol.kMonsterStatType\022\r\n"
-  "\005value\030\003 \001(\005\"/\n\025GameServerKillMonster\022\026\n"
-  "\016monster_obj_id\030\001 \001(\003\"\224\001\n\033GameClientInve"
-  "ntoryItemMove\0223\n\tmove_type\030\001 \001(\0162 .Proto"
-  "col.kInventoryItemMoveType\022&\n\004type\030\002 \001(\016"
-  "2\030.Protocol.kInventoryType\022\013\n\003src\030\003 \001(\005\022"
-  "\013\n\003dst\030\004 \001(\005\"Q\n\025GameServerDressChange\022\024\n"
-  "\014character_id\030\001 \001(\003\022\021\n\titem_type\030\002 \001(\005\022\017"
-  "\n\007item_id\030\003 \001(\005\"5\n\020GameClientStatUp\022!\n\004t"
-  "ype\030\001 \001(\0162\023.Protocol.kStatType\"V\n\020GameSe"
-  "rverStatUp\022!\n\004type\030\001 \001(\0162\023.Protocol.kSta"
-  "tType\022\r\n\005value\030\002 \001(\005\022\020\n\010ap_value\030\003 \001(\005\"Y"
-  "\n\020GameClientKeySet\022\021\n\tkey_value\030\001 \001(\005\022#\n"
-  "\004type\030\002 \001(\0162\025.Protocol.kKeySetType\022\r\n\005va"
-  "lue\030\003 \001(\005\"O\n\023GameClientItemApply\022&\n\004type"
-  "\030\001 \001(\0162\030.Protocol.kInventoryType\022\020\n\010posi"
-  "tion\030\002 \001(\005\"j\n\034GameServerItemQuantityUpda"
-  "te\022&\n\004type\030\001 \001(\0162\030.Protocol.kInventoryTy"
-  "pe\022\020\n\010position\030\002 \001(\005\022\020\n\010quantity\030\003 \001(\005\"\030"
-  "\n\026GameClientResurrection\"R\n\026GameServerRe"
-  "surrection\022\024\n\014character_id\030\001 \001(\003\022\"\n\010posi"
-  "tion\030\002 \001(\0132\020.Protocol.float3b\006proto3"
+  "\022\026\n\016monster_obj_id\030\002 \001(\003\022\016\n\006damage\030\003 \001(\003"
+  "\"N\n\024GameServerUpdateStat\022\'\n\004type\030\001 \001(\0162\031"
+  ".Protocol.kPlayerStatType\022\r\n\005value\030\002 \001(\005"
+  "\"1\n\027GameClientAttackMonster\022\026\n\016monster_o"
+  "bj_id\030\001 \003(\003\"Y\n\027GameServerAttackMonster\022\024"
+  "\n\014character_id\030\001 \001(\003\022(\n\007damages\030\002 \003(\0132\027."
+  "Protocol.AttackMonster\"n\n\033GameServerMons"
+  "terStatUpdate\022\026\n\016monster_obj_id\030\001 \001(\003\022(\n"
+  "\004type\030\002 \001(\0162\032.Protocol.kMonsterStatType\022"
+  "\r\n\005value\030\003 \001(\005\"/\n\025GameServerKillMonster\022"
+  "\026\n\016monster_obj_id\030\001 \001(\003\"\224\001\n\033GameClientIn"
+  "ventoryItemMove\0223\n\tmove_type\030\001 \001(\0162 .Pro"
+  "tocol.kInventoryItemMoveType\022&\n\004type\030\002 \001"
+  "(\0162\030.Protocol.kInventoryType\022\013\n\003src\030\003 \001("
+  "\005\022\013\n\003dst\030\004 \001(\005\"Q\n\025GameServerDressChange\022"
+  "\024\n\014character_id\030\001 \001(\003\022\021\n\titem_type\030\002 \001(\005"
+  "\022\017\n\007item_id\030\003 \001(\005\"5\n\020GameClientStatUp\022!\n"
+  "\004type\030\001 \001(\0162\023.Protocol.kStatType\"V\n\020Game"
+  "ServerStatUp\022!\n\004type\030\001 \001(\0162\023.Protocol.kS"
+  "tatType\022\r\n\005value\030\002 \001(\005\022\020\n\010ap_value\030\003 \001(\005"
+  "\"Y\n\020GameClientKeySet\022\021\n\tkey_value\030\001 \001(\005\022"
+  "#\n\004type\030\002 \001(\0162\025.Protocol.kKeySetType\022\r\n\005"
+  "value\030\003 \001(\005\"O\n\023GameClientItemApply\022&\n\004ty"
+  "pe\030\001 \001(\0162\030.Protocol.kInventoryType\022\020\n\010po"
+  "sition\030\002 \001(\005\"j\n\034GameServerItemQuantityUp"
+  "date\022&\n\004type\030\001 \001(\0162\030.Protocol.kInventory"
+  "Type\022\020\n\010position\030\002 \001(\005\022\020\n\010quantity\030\003 \001(\005"
+  "\"\030\n\026GameClientResurrection\"R\n\026GameServer"
+  "Resurrection\022\024\n\014character_id\030\001 \001(\003\022\"\n\010po"
+  "sition\030\002 \001(\0132\020.Protocol.float3\"\026\n\024GameCl"
+  "ientSpRecovery\"\'\n\024GameClientApplySkill\022\017"
+  "\n\007skillid\030\001 \001(\005b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_game_5fprotocol_2eproto_deps[2] = {
   &::descriptor_table_game_5fenum_2eproto,
@@ -755,8 +797,8 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fprotocol_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fprotocol_2eproto = {
-  false, false, 2756, descriptor_table_protodef_game_5fprotocol_2eproto, "game_protocol.proto", 
-  &descriptor_table_game_5fprotocol_2eproto_once, descriptor_table_game_5fprotocol_2eproto_deps, 2, 25,
+  false, false, 2863, descriptor_table_protodef_game_5fprotocol_2eproto, "game_protocol.proto", 
+  &descriptor_table_game_5fprotocol_2eproto_once, descriptor_table_game_5fprotocol_2eproto_deps, 2, 27,
   schemas, file_default_instances, TableStruct_game_5fprotocol_2eproto::offsets,
   file_level_metadata_game_5fprotocol_2eproto, file_level_enum_descriptors_game_5fprotocol_2eproto, file_level_service_descriptors_game_5fprotocol_2eproto,
 };
@@ -4262,9 +4304,16 @@ const char* GameServerTakeDamage::_InternalParse(const char* ptr, ::PROTOBUF_NAM
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int64 damage = 2;
+      // int64 monster_obj_id = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          monster_obj_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int64 damage = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           damage_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
@@ -4304,10 +4353,16 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(1, this->_internal_character_id(), target);
   }
 
-  // int64 damage = 2;
+  // int64 monster_obj_id = 2;
+  if (this->monster_obj_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(2, this->_internal_monster_obj_id(), target);
+  }
+
+  // int64 damage = 3;
   if (this->damage() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(2, this->_internal_damage(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(3, this->_internal_damage(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4333,7 +4388,14 @@ size_t GameServerTakeDamage::ByteSizeLong() const {
         this->_internal_character_id());
   }
 
-  // int64 damage = 2;
+  // int64 monster_obj_id = 2;
+  if (this->monster_obj_id() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+        this->_internal_monster_obj_id());
+  }
+
+  // int64 damage = 3;
   if (this->damage() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
@@ -4373,6 +4435,9 @@ void GameServerTakeDamage::MergeFrom(const GameServerTakeDamage& from) {
 
   if (from.character_id() != 0) {
     _internal_set_character_id(from._internal_character_id());
+  }
+  if (from.monster_obj_id() != 0) {
+    _internal_set_monster_obj_id(from._internal_monster_obj_id());
   }
   if (from.damage() != 0) {
     _internal_set_damage(from._internal_damage());
@@ -4848,16 +4913,19 @@ class GameServerAttackMonster::_Internal {
  public:
 };
 
+void GameServerAttackMonster::clear_damages() {
+  damages_.Clear();
+}
 GameServerAttackMonster::GameServerAttackMonster(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
-  monster_obj_id_(arena) {
+  damages_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:Protocol.GameServerAttackMonster)
 }
 GameServerAttackMonster::GameServerAttackMonster(const GameServerAttackMonster& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
-      monster_obj_id_(from.monster_obj_id_) {
+      damages_(from.damages_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   character_id_ = from.character_id_;
   // @@protoc_insertion_point(copy_constructor:Protocol.GameServerAttackMonster)
@@ -4893,7 +4961,7 @@ void GameServerAttackMonster::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  monster_obj_id_.Clear();
+  damages_.Clear();
   character_id_ = int64_t{0};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -4911,14 +4979,16 @@ const char* GameServerAttackMonster::_InternalParse(const char* ptr, ::PROTOBUF_
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated int64 monster_obj_id = 2;
+      // repeated .Protocol.AttackMonster damages = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(_internal_mutable_monster_obj_id(), ptr, ctx);
-          CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16) {
-          _internal_add_monster_obj_id(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
-          CHK_(ptr);
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_damages(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -4956,13 +5026,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(1, this->_internal_character_id(), target);
   }
 
-  // repeated int64 monster_obj_id = 2;
-  {
-    int byte_size = _monster_obj_id_cached_byte_size_.load(std::memory_order_relaxed);
-    if (byte_size > 0) {
-      target = stream->WriteInt64Packed(
-          2, _internal_monster_obj_id(), byte_size, target);
-    }
+  // repeated .Protocol.AttackMonster damages = 2;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_damages_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, this->_internal_damages(i), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4981,19 +5050,11 @@ size_t GameServerAttackMonster::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated int64 monster_obj_id = 2;
-  {
-    size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      Int64Size(this->monster_obj_id_);
-    if (data_size > 0) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-            static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
-    }
-    int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(data_size);
-    _monster_obj_id_cached_byte_size_.store(cached_size,
-                                    std::memory_order_relaxed);
-    total_size += data_size;
+  // repeated .Protocol.AttackMonster damages = 2;
+  total_size += 1UL * this->_internal_damages_size();
+  for (const auto& msg : this->damages_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
   // int64 character_id = 1;
@@ -5034,7 +5095,7 @@ void GameServerAttackMonster::MergeFrom(const GameServerAttackMonster& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  monster_obj_id_.MergeFrom(from.monster_obj_id_);
+  damages_.MergeFrom(from.damages_);
   if (from.character_id() != 0) {
     _internal_set_character_id(from._internal_character_id());
   }
@@ -5061,7 +5122,7 @@ bool GameServerAttackMonster::IsInitialized() const {
 void GameServerAttackMonster::InternalSwap(GameServerAttackMonster* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  monster_obj_id_.InternalSwap(&other->monster_obj_id_);
+  damages_.InternalSwap(&other->damages_);
   swap(character_id_, other->character_id_);
 }
 
@@ -7597,6 +7658,354 @@ void GameServerResurrection::InternalSwap(GameServerResurrection* other) {
       file_level_metadata_game_5fprotocol_2eproto[24]);
 }
 
+// ===================================================================
+
+class GameClientSpRecovery::_Internal {
+ public:
+};
+
+GameClientSpRecovery::GameClientSpRecovery(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:Protocol.GameClientSpRecovery)
+}
+GameClientSpRecovery::GameClientSpRecovery(const GameClientSpRecovery& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:Protocol.GameClientSpRecovery)
+}
+
+void GameClientSpRecovery::SharedCtor() {
+}
+
+GameClientSpRecovery::~GameClientSpRecovery() {
+  // @@protoc_insertion_point(destructor:Protocol.GameClientSpRecovery)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void GameClientSpRecovery::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void GameClientSpRecovery::ArenaDtor(void* object) {
+  GameClientSpRecovery* _this = reinterpret_cast< GameClientSpRecovery* >(object);
+  (void)_this;
+}
+void GameClientSpRecovery::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void GameClientSpRecovery::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void GameClientSpRecovery::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.GameClientSpRecovery)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* GameClientSpRecovery::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+        if ((tag == 0) || ((tag & 7) == 4)) {
+          CHK_(ptr);
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* GameClientSpRecovery::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.GameClientSpRecovery)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.GameClientSpRecovery)
+  return target;
+}
+
+size_t GameClientSpRecovery::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.GameClientSpRecovery)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void GameClientSpRecovery::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Protocol.GameClientSpRecovery)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GameClientSpRecovery* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GameClientSpRecovery>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Protocol.GameClientSpRecovery)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Protocol.GameClientSpRecovery)
+    MergeFrom(*source);
+  }
+}
+
+void GameClientSpRecovery::MergeFrom(const GameClientSpRecovery& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Protocol.GameClientSpRecovery)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+}
+
+void GameClientSpRecovery::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Protocol.GameClientSpRecovery)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GameClientSpRecovery::CopyFrom(const GameClientSpRecovery& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.GameClientSpRecovery)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GameClientSpRecovery::IsInitialized() const {
+  return true;
+}
+
+void GameClientSpRecovery::InternalSwap(GameClientSpRecovery* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GameClientSpRecovery::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_game_5fprotocol_2eproto_getter, &descriptor_table_game_5fprotocol_2eproto_once,
+      file_level_metadata_game_5fprotocol_2eproto[25]);
+}
+
+// ===================================================================
+
+class GameClientApplySkill::_Internal {
+ public:
+};
+
+GameClientApplySkill::GameClientApplySkill(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:Protocol.GameClientApplySkill)
+}
+GameClientApplySkill::GameClientApplySkill(const GameClientApplySkill& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  skillid_ = from.skillid_;
+  // @@protoc_insertion_point(copy_constructor:Protocol.GameClientApplySkill)
+}
+
+void GameClientApplySkill::SharedCtor() {
+skillid_ = 0;
+}
+
+GameClientApplySkill::~GameClientApplySkill() {
+  // @@protoc_insertion_point(destructor:Protocol.GameClientApplySkill)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void GameClientApplySkill::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void GameClientApplySkill::ArenaDtor(void* object) {
+  GameClientApplySkill* _this = reinterpret_cast< GameClientApplySkill* >(object);
+  (void)_this;
+}
+void GameClientApplySkill::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void GameClientApplySkill::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void GameClientApplySkill::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.GameClientApplySkill)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  skillid_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* GameClientApplySkill::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 skillid = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          skillid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag == 0) || ((tag & 7) == 4)) {
+          CHK_(ptr);
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* GameClientApplySkill::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.GameClientApplySkill)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 skillid = 1;
+  if (this->skillid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_skillid(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.GameClientApplySkill)
+  return target;
+}
+
+size_t GameClientApplySkill::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.GameClientApplySkill)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 skillid = 1;
+  if (this->skillid() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_skillid());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void GameClientApplySkill::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Protocol.GameClientApplySkill)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GameClientApplySkill* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GameClientApplySkill>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Protocol.GameClientApplySkill)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Protocol.GameClientApplySkill)
+    MergeFrom(*source);
+  }
+}
+
+void GameClientApplySkill::MergeFrom(const GameClientApplySkill& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Protocol.GameClientApplySkill)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.skillid() != 0) {
+    _internal_set_skillid(from._internal_skillid());
+  }
+}
+
+void GameClientApplySkill::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Protocol.GameClientApplySkill)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GameClientApplySkill::CopyFrom(const GameClientApplySkill& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.GameClientApplySkill)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GameClientApplySkill::IsInitialized() const {
+  return true;
+}
+
+void GameClientApplySkill::InternalSwap(GameClientApplySkill* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(skillid_, other->skillid_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GameClientApplySkill::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_game_5fprotocol_2eproto_getter, &descriptor_table_game_5fprotocol_2eproto_once,
+      file_level_metadata_game_5fprotocol_2eproto[26]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
@@ -7674,6 +8083,12 @@ template<> PROTOBUF_NOINLINE ::Protocol::GameClientResurrection* Arena::CreateMa
 }
 template<> PROTOBUF_NOINLINE ::Protocol::GameServerResurrection* Arena::CreateMaybeMessage< ::Protocol::GameServerResurrection >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protocol::GameServerResurrection >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::GameClientSpRecovery* Arena::CreateMaybeMessage< ::Protocol::GameClientSpRecovery >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::GameClientSpRecovery >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::GameClientApplySkill* Arena::CreateMaybeMessage< ::Protocol::GameClientApplySkill >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::GameClientApplySkill >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

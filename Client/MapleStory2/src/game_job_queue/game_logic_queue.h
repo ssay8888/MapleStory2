@@ -22,6 +22,7 @@ public:
 	auto RespawnMonster(PacketSessionRef session, Protocol::GameServerRespawnMonster pkt)->void;
 	auto MoveMonster(PacketSessionRef session, Protocol::GameServerMoveMonster pkt)->void;
 	auto UpdateStat(PacketSessionRef session, Protocol::GameServerUpdateStat pkt)->void;
+	auto AttackMonster(PacketSessionRef session, Protocol::GameServerAttackMonster pkt)->void;
 	auto UpdateMonsterStat(PacketSessionRef session, Protocol::GameServerMonsterStatUpdate pkt)->void;
 	auto KillMonster(PacketSessionRef session, Protocol::GameServerKillMonster pkt)->void;
 	auto TakeDamage(PacketSessionRef session, Protocol::GameServerTakeDamage pkt)->void;

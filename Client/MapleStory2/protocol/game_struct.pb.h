@@ -47,7 +47,7 @@ struct TableStruct_game_5fstruct_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[3]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[4]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -55,6 +55,9 @@ struct TableStruct_game_5fstruct_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fstruct_2eproto;
 namespace Protocol {
+class AttackMonster;
+struct AttackMonsterDefaultTypeInternal;
+extern AttackMonsterDefaultTypeInternal _AttackMonster_default_instance_;
 class float3;
 struct float3DefaultTypeInternal;
 extern float3DefaultTypeInternal _float3_default_instance_;
@@ -66,6 +69,7 @@ struct keymapDefaultTypeInternal;
 extern keymapDefaultTypeInternal _keymap_default_instance_;
 }  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
+template<> ::Protocol::AttackMonster* Arena::CreateMaybeMessage<::Protocol::AttackMonster>(Arena*);
 template<> ::Protocol::float3* Arena::CreateMaybeMessage<::Protocol::float3>(Arena*);
 template<> ::Protocol::item* Arena::CreateMaybeMessage<::Protocol::item>(Arena*);
 template<> ::Protocol::keymap* Arena::CreateMaybeMessage<::Protocol::keymap>(Arena*);
@@ -589,6 +593,149 @@ class float3 final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fstruct_2eproto;
 };
+// -------------------------------------------------------------------
+
+class AttackMonster final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.AttackMonster) */ {
+ public:
+  inline AttackMonster() : AttackMonster(nullptr) {}
+  ~AttackMonster() override;
+  explicit constexpr AttackMonster(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  AttackMonster(const AttackMonster& from);
+  AttackMonster(AttackMonster&& from) noexcept
+    : AttackMonster() {
+    *this = ::std::move(from);
+  }
+
+  inline AttackMonster& operator=(const AttackMonster& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AttackMonster& operator=(AttackMonster&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AttackMonster& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AttackMonster* internal_default_instance() {
+    return reinterpret_cast<const AttackMonster*>(
+               &_AttackMonster_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(AttackMonster& a, AttackMonster& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AttackMonster* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AttackMonster* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AttackMonster* New() const final {
+    return new AttackMonster();
+  }
+
+  AttackMonster* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<AttackMonster>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const AttackMonster& from);
+  void MergeFrom(const AttackMonster& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AttackMonster* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.AttackMonster";
+  }
+  protected:
+  explicit AttackMonster(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMonsterObjIdFieldNumber = 1,
+    kDamageFieldNumber = 2,
+  };
+  // int64 monster_obj_id = 1;
+  void clear_monster_obj_id();
+  ::PROTOBUF_NAMESPACE_ID::int64 monster_obj_id() const;
+  void set_monster_obj_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_monster_obj_id() const;
+  void _internal_set_monster_obj_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // int64 damage = 2;
+  void clear_damage();
+  ::PROTOBUF_NAMESPACE_ID::int64 damage() const;
+  void set_damage(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_damage() const;
+  void _internal_set_damage(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.AttackMonster)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::int64 monster_obj_id_;
+  ::PROTOBUF_NAMESPACE_ID::int64 damage_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fstruct_2eproto;
+};
 // ===================================================================
 
 
@@ -888,9 +1035,55 @@ inline void float3::set_z(float value) {
   // @@protoc_insertion_point(field_set:Protocol.float3.z)
 }
 
+// -------------------------------------------------------------------
+
+// AttackMonster
+
+// int64 monster_obj_id = 1;
+inline void AttackMonster::clear_monster_obj_id() {
+  monster_obj_id_ = int64_t{0};
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 AttackMonster::_internal_monster_obj_id() const {
+  return monster_obj_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 AttackMonster::monster_obj_id() const {
+  // @@protoc_insertion_point(field_get:Protocol.AttackMonster.monster_obj_id)
+  return _internal_monster_obj_id();
+}
+inline void AttackMonster::_internal_set_monster_obj_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  
+  monster_obj_id_ = value;
+}
+inline void AttackMonster::set_monster_obj_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_monster_obj_id(value);
+  // @@protoc_insertion_point(field_set:Protocol.AttackMonster.monster_obj_id)
+}
+
+// int64 damage = 2;
+inline void AttackMonster::clear_damage() {
+  damage_ = int64_t{0};
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 AttackMonster::_internal_damage() const {
+  return damage_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 AttackMonster::damage() const {
+  // @@protoc_insertion_point(field_get:Protocol.AttackMonster.damage)
+  return _internal_damage();
+}
+inline void AttackMonster::_internal_set_damage(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  
+  damage_ = value;
+}
+inline void AttackMonster::set_damage(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_damage(value);
+  // @@protoc_insertion_point(field_set:Protocol.AttackMonster.damage)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

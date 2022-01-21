@@ -9,6 +9,7 @@
 #include "src/game_object/monster/states/run_state/monster_run_state.h"
 #include "src/game_object/monster/states/walk_state/monster_walk_state.h"
 #include "src/game_object/monster/stats/monster_stats.h"
+#include "src/game_object/numbers/numbers.h"
 #include "src/game_object/player/player.h"
 #include "src/game_object/player/states/down_idle_state/down_idle_state.h"
 #include "src/game_object/player/states/down_state/down_state.h"
@@ -43,16 +44,14 @@ auto GameLogicQueue::CharacterLoad(PacketSessionRef session, Protocol::GameServe
 auto GameLogicQueue::AddUser(PacketSessionRef session, Protocol::GameServerRespawnPlayer pkt)->void
 {
 	auto& objectManager = ObjectManager::GetInstance();
-	std::wstring layer;
-	layer.append(L"Layer_User_").append(std::to_wstring(pkt.character_id()));
+	std::wstring layer = fmt::format(L"Layer_User_{}", pkt.character_id());
 	objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_User"), layer, &pkt);
 }
 
 auto GameLogicQueue::MovePlayer(PacketSessionRef session, Protocol::GameServerMovePlayer pkt) -> void
 {
 	auto& objectManager = ObjectManager::GetInstance();
-	std::wstring layer;
-	layer.append(L"Layer_User_").append(std::to_wstring(pkt.character_id()));
+	std::wstring layer = fmt::format(L"Layer_User_{}", pkt.character_id());
 	const auto userObject = std::static_pointer_cast<User>(objectManager.GetGameObjectPtr(kSceneGamePlay0, layer, 0));
 	if (userObject)
 	{
@@ -88,8 +87,7 @@ auto GameLogicQueue::RespawnMonster(PacketSessionRef session, Protocol::GameServ
 auto GameLogicQueue::MoveMonster(PacketSessionRef session, Protocol::GameServerMoveMonster pkt)->void
 {
 	auto& objectManager = ObjectManager::GetInstance();
-	std::wstring layer;
-	layer.append(L"Layer_Monster_").append(std::to_wstring(pkt.object_id()));
+	std::wstring layer = fmt::format(L"Layer_Monster_{}", pkt.object_id());
 	const auto monsterObject = std::static_pointer_cast<Monster>(objectManager.GetGameObjectPtr(kSceneGamePlay0, layer, 0));
 	if (monsterObject)
 	{
@@ -226,6 +224,35 @@ auto GameLogicQueue::UpdateStat(PacketSessionRef session, Protocol::GameServerUp
 	}
 }
 
+auto GameLogicQueue::AttackMonster(PacketSessionRef session, Protocol::GameServerAttackMonster pkt) -> void
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	const auto playerObject = std::static_pointer_cast<Player>(objectManager.GetGameObjectPtr(kSceneGamePlay0, L"Layer_Character", 0));
+	if (playerObject)
+	{
+
+		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+		{
+			for (auto& damageItem : pkt.damages())
+			{
+				const auto monster = mapInstance->FindMonster(damageItem.monster_obj_id());
+				if (monster)
+				{
+					Numbers::NumberInfo info;
+					info.is_player_attack = true;
+					info.numbers = damageItem.damage();
+					info.parent_transform = monster->GetTransform();
+					if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_Numbers"), L"Layer_Numbers", &info)))
+					{
+						return;
+					}
+				}
+			}
+
+		}
+	}
+}
+
 auto GameLogicQueue::UpdateMonsterStat(PacketSessionRef session, Protocol::GameServerMonsterStatUpdate pkt) -> void
 {
 	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
@@ -256,13 +283,45 @@ auto GameLogicQueue::KillMonster(PacketSessionRef session, Protocol::GameServerK
 
 auto GameLogicQueue::TakeDamage(PacketSessionRef session, Protocol::GameServerTakeDamage pkt) -> void
 {
+	auto& objectManager = ObjectManager::GetInstance();
+	if (pkt.character_id() == _character_info.character_id())
+	{
+		const auto playerObject = std::static_pointer_cast<Player>(objectManager.GetGameObjectPtr(kSceneGamePlay0, L"Layer_Character", 0));
+		if (playerObject)
+		{
+			Numbers::NumberInfo info;
+			info.is_player_attack = false;
+			info.numbers = pkt.damage();
+			info.parent_transform = playerObject->GetTransform();
+			if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_Numbers"), L"Layer_Numbers", &info)))
+			{
+				return;
+			}
+		}
+	}
+	else
+	{
+		std::wstring layer = fmt::format(L"Layer_User_{}", pkt.character_id());
+		const auto userObject = std::static_pointer_cast<Monster>(objectManager.GetGameObjectPtr(kSceneGamePlay0, layer, 0));
+		if (userObject)
+		{
+			Numbers::NumberInfo info;
+			info.is_player_attack = false;
+			info.numbers = pkt.damage();
+			info.parent_transform = userObject->GetTransform();
+			if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_Numbers"), L"Layer_Numbers", &info)))
+			{
+				return;
+			}
+		}
+	}
+
 }
 
 auto GameLogicQueue::DressChange(PacketSessionRef session, Protocol::GameServerDressChange pkt) -> void
 {
 	auto& objectManager = ObjectManager::GetInstance();
-	std::wstring layer;
-	layer.append(L"Layer_User_").append(std::to_wstring(pkt.character_id()));
+	std::wstring layer = fmt::format(L"Layer_User_{}", pkt.character_id());
 	const auto userObject = std::static_pointer_cast<User>(objectManager.GetGameObjectPtr(kSceneGamePlay0, layer, 0));
 	if (userObject)
 	{
@@ -342,8 +401,7 @@ auto GameLogicQueue::ResurrectionPlayer(PacketSessionRef session, Protocol::Game
 	}
 	else
 	{
-		std::wstring layer;
-		layer.append(L"Layer_User_").append(std::to_wstring(pkt.character_id()));
+		std::wstring layer = fmt::format(L"Layer_User_{}", pkt.character_id());
 		const auto userObject = std::static_pointer_cast<User>(objectManager.GetGameObjectPtr(kSceneGamePlay0, layer, 0));
 		if (userObject)
 		{

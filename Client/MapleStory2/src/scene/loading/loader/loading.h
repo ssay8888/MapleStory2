@@ -31,6 +31,7 @@ private:
 	auto LoadFreeSet()->HRESULT;
 	auto LoadSkillUi()->HRESULT;
 	auto LoadHpUi()->HRESULT;
+	auto LoadNumberFont()->HRESULT;
 
 
 

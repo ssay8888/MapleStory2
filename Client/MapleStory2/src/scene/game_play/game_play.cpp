@@ -4,6 +4,7 @@
 #include "data_reader/data_reader_manager.h"
 #include "protocol/game_protocol.pb.h"
 #include "src/game_object/back_ground/back_ground.h"
+#include "src/game_object/numbers/numbers.h"
 #include "src/main/main_app.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/utility/game_objects/camera/camera.h"
@@ -135,6 +136,8 @@ auto GamePlay::ReadyLayerPlayer(const std::wstring& pLayerTag) -> HRESULT
 		return E_FAIL;
 	}
 
+
+
 	return S_OK;
 }
 
@@ -155,8 +158,8 @@ auto GamePlay::ReadyLayerBackGround(const std::wstring& pLayerTag) -> HRESULT
 
 auto GamePlay::ReadyMonster() -> HRESULT
 {
-	/*auto& objectManager = ObjectManager::GetInstance();
-	const auto monsters = DataReaderManager::GetInstance().AllMonsterInfo();
+	auto& objectManager = ObjectManager::GetInstance();
+	/*const auto monsters = DataReaderManager::GetInstance().AllMonsterInfo();
 	for (auto monster : monsters)
 	{
 		wchar_t LayerTag[MAX_PATH];
@@ -166,6 +169,16 @@ auto GamePlay::ReadyMonster() -> HRESULT
 			return E_FAIL;
 		}
 	}*/
+
+	Numbers::NumberInfo info;
+	info.is_player_attack = true;
+	info.numbers = 1234567890;
+	info.parent_transform = nullptr;
+	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_Numbers"), L"Layer_Numbers", &info)))
+	{
+		return E_FAIL;
+	}
+
 
 	return S_OK;
 }

@@ -68,7 +68,7 @@ private:
 	auto SetUpConstantTable() const->HRESULT;
 
 	auto OpenInventory()->HRESULT;
-	
+	auto SpRecovery()->void;
 
 public:
 	static auto Create(const ComPtr<IDirect3DDevice9>& device)->std::shared_ptr<Player>;
@@ -103,5 +103,6 @@ private:
 	int32_t				_new_mesh_num = 0;
 	_float3				_target_pos;
 	PlayerInfo			_info;
+	uint64_t			_last_sp_recovery;
 };
 

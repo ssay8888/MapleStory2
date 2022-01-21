@@ -10,7 +10,12 @@ Texture::Texture(const ComPtr<IDirect3DDevice9>& graphicDevice):
 
 auto Texture::GetTexture(const int32_t index) -> ComPtr<IDirect3DBaseTexture9>
 {
-	return _textures[index];
+	return _textures[index].first;
+}
+
+auto Texture::GetImageInfo(const int32_t index) const -> D3DXIMAGE_INFO
+{
+	return _textures[index].second;
 }
 
 auto Texture::NativeConstructPrototype(kType eType, const std::wstring& textureFilePath,
@@ -29,8 +34,11 @@ auto Texture::NativeConstructPrototype(kType eType, const std::wstring& textureF
 
 		//TODO : 이미지 출력이 안된다면 이곳을 확인하자.
 		IDirect3DBaseTexture9* tex = nullptr;
+		D3DXIMAGE_INFO imginfo;
 		if (eType == kType::kTypeGeneral)
 		{
+
+			D3DXGetImageInfoFromFile(szTexturePath, &imginfo);
 			/*if (FAILED(D3DXCreateTextureFromFile(_graphic_device.Get(), szTexturePath, reinterpret_cast<LPDIRECT3DTEXTURE9*>(&tex))))
 			{
 				return E_FAIL;
@@ -45,6 +53,7 @@ auto Texture::NativeConstructPrototype(kType eType, const std::wstring& textureF
 		}
 		else
 		{
+			D3DXGetImageInfoFromFile(szTexturePath, &imginfo);
 			if (FAILED(D3DXCreateCubeTextureFromFile(_graphic_device.Get(), szTexturePath, reinterpret_cast<LPDIRECT3DCUBETEXTURE9*>(&tex))))
 			{
 				return E_FAIL;
@@ -52,7 +61,7 @@ auto Texture::NativeConstructPrototype(kType eType, const std::wstring& textureF
 		}
 		pTexture.Attach(tex);
 		
-		_textures.push_back(pTexture);
+		_textures.push_back(std::make_pair(pTexture, imginfo));
 	}
 	return S_OK;
 }
@@ -68,7 +77,7 @@ auto Texture::SetUpOnGraphicDevice(const int32_t stage, const size_t textureInde
 		textureIndex >= _textures.size())
 		return E_FAIL;
 
-	return _graphic_device->SetTexture(stage, _textures[textureIndex].Get());
+	return _graphic_device->SetTexture(stage, _textures[textureIndex].first.Get());
 }
 
 auto Texture::Create(const ComPtr<IDirect3DDevice9>& graphicDevice, const kType type, const std::wstring& textureFilePath,

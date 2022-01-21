@@ -67,6 +67,7 @@ auto GameServerPacketHandler::HandleGameServerUpdateStat(PacketSessionRef& sessi
 auto GameServerPacketHandler::HandleGameServerAttackMonster(PacketSessionRef& session,
 	Protocol::GameServerAttackMonster& pkt) -> bool
 {
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::AttackMonster, session, pkt);
 	return true;
 }
 

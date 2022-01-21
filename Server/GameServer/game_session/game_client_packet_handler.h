@@ -30,6 +30,8 @@ enum : uint16_t
 	kPktGameServerItemQuantityUpdate = 2022,
 	kPktGameClientResurrection = 2023,
 	kPktGameServerResurrection = 2024,
+	kPktGameClientSpRecovery = 2025,
+	kPktGameClientApplySkill = 2026,
 };
 
 
@@ -49,6 +51,8 @@ public:
 	static auto HandleGameClientKeySet(PacketSessionRef& session, Protocol::GameClientKeySet& pkt)->bool;
 	static auto HandleGameClientItemApply(PacketSessionRef& session, Protocol::GameClientItemApply& pkt)->bool;
 	static auto HandleGameClientResurrection(PacketSessionRef& session, Protocol::GameClientResurrection& pkt)->bool;
+	static auto HandleGameClientSpRecovery(PacketSessionRef& session, Protocol::GameClientSpRecovery& pkt)->bool;
+	static auto HandleGameClientApplySkill(PacketSessionRef& session, Protocol::GameClientApplySkill& pkt)->bool;
 	static void Init()
 	{
 		for (auto& handler : _packet_handler)
@@ -65,6 +69,8 @@ public:
 		_packet_handler[kPktGameClientKeySet] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientKeySet>(HandleGameClientKeySet, session, buffer, len); };
 		_packet_handler[kPktGameClientItemApply] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientItemApply>(HandleGameClientItemApply, session, buffer, len); };
 		_packet_handler[kPktGameClientResurrection] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientResurrection>(HandleGameClientResurrection, session, buffer, len); };
+		_packet_handler[kPktGameClientSpRecovery] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientSpRecovery>(HandleGameClientSpRecovery, session, buffer, len); };
+		_packet_handler[kPktGameClientApplySkill] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientApplySkill>(HandleGameClientApplySkill, session, buffer, len); };
 	}
 
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32_t len)

@@ -30,6 +30,8 @@ enum : uint16_t
 	kPktGameServerItemQuantityUpdate = 2022,
 	kPktGameClientResurrection = 2023,
 	kPktGameServerResurrection = 2024,
+	kPktGameClientSpRecovery = 2025,
+	kPktGameClientApplySkill = 2026,
 };
 
 
@@ -92,6 +94,8 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::GameClientKeySet& pkt) { return MakeSendBuffer(pkt, kPktGameClientKeySet); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameClientItemApply& pkt) { return MakeSendBuffer(pkt, kPktGameClientItemApply); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameClientResurrection& pkt) { return MakeSendBuffer(pkt, kPktGameClientResurrection); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameClientSpRecovery& pkt) { return MakeSendBuffer(pkt, kPktGameClientSpRecovery); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameClientApplySkill& pkt) { return MakeSendBuffer(pkt, kPktGameClientApplySkill); }
 
 private:
 	template<typename PacketType, typename ProcessFunc>

@@ -116,3 +116,13 @@ auto GameTick::PlayerResurrection(Protocol::GameClientResurrection pkt, GameSess
 {
 	GameServerPlayerHandler::PlayerResurrection(pkt, gameSession);
 }
+
+auto GameTick::PlayerSpRecovry(Protocol::GameClientSpRecovery pkt, GameSessionRef gameSession) -> void
+{
+	GameServerPlayerHandler::PlayerSpRecovry(pkt, gameSession);
+}
+
+auto GameTick::ApplySkill(Protocol::GameClientApplySkill pkt, GameSessionRef gameSession) -> void
+{
+	GameServerPlayerHandler::ApplySkill(pkt, gameSession);
+}
