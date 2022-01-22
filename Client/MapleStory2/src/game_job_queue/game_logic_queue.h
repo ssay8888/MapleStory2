@@ -18,6 +18,7 @@ public:
 public:
 	auto CharacterLoad(PacketSessionRef session, Protocol::GameServerLoadCharacter pkt)->void;
 	auto AddUser(PacketSessionRef session, Protocol::GameServerRespawnPlayer pkt)->void;
+	auto RemoveUser(PacketSessionRef session, Protocol::GameServerRemovePlayer pkt)->void;
 	auto MovePlayer(PacketSessionRef session, Protocol::GameServerMovePlayer pkt)->void;
 	auto RespawnMonster(PacketSessionRef session, Protocol::GameServerRespawnMonster pkt)->void;
 	auto MoveMonster(PacketSessionRef session, Protocol::GameServerMoveMonster pkt)->void;
@@ -31,6 +32,7 @@ public:
 	auto ItemQuantityUpdate(PacketSessionRef session, Protocol::GameServerItemQuantityUpdate pkt)->void;
 	auto ResurrectionPlayer(PacketSessionRef session, Protocol::GameServerResurrection pkt)->void;
 	auto GameChat(PacketSessionRef session, Protocol::GameServerChat pkt)->void;
+	auto GameChangeMap(PacketSessionRef session, Protocol::GameServerChangeMap pkt)->void;
 
 
 private:

@@ -68,6 +68,11 @@ auto GameCharacter::GetMapId() const -> int32_t
 	return _map_id;
 }
 
+auto GameCharacter::SetMapId(const int32_t id) -> void
+{
+	_map_id = id;
+}
+
 auto GameCharacter::GetSpawnPoint() const -> int32_t
 {
 	return _spawn_point;
@@ -247,7 +252,7 @@ auto GameCharacter::SaveToDb() -> HRESULT
 	int32_t result = 0;
 	if (auto con = DBConnectionPool::GetInstance().Pop())
 	{
-		DBBind<16, 1> bind(*con, L"{CALL dbo.spSaveToPlayer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+		DBBind<17, 1> bind(*con, L"{CALL dbo.spSaveToPlayer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
 		int32_t idx = 0;
 		bind.BindParam(idx++, _character_id);
 		int32_t spawnPoint = 0;
@@ -278,6 +283,8 @@ auto GameCharacter::SaveToDb() -> HRESULT
 		bind.BindParam(idx++, int_);
 		int32_t luk(statInfo->GetLuk());
 		bind.BindParam(idx++, luk);
+
+		bind.BindParam(idx++, _map_id);
 		int32_t ap(statInfo->GetAp());
 		bind.BindParam(idx++, ap);
 

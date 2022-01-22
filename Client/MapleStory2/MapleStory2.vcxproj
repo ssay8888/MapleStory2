@@ -210,6 +210,7 @@
     <ClInclude Include="src\game_object\player\states\down_state\down_state.h" />
     <ClInclude Include="src\game_object\player\states\idle_state\idle_state.h" />
     <ClInclude Include="src\game_object\player\states\jump_state\jump_state.h" />
+    <ClInclude Include="src\game_object\player\states\ladder_state\ladder_state.h" />
     <ClInclude Include="src\game_object\player\states\large_sword_attack_idle_state\large_sword_attack_idle_state.h" />
     <ClInclude Include="src\game_object\player\states\large_sword_attack_run_state\large_sword_attack_run_state.h" />
     <ClInclude Include="src\game_object\player\states\large_sword_attack_state\large_sword_attack_state.h" />
@@ -250,6 +251,7 @@
     <ClInclude Include="src\managers\characters_manager\characters_manager.h" />
     <ClInclude Include="src\managers\character_stat\character_stat.h" />
     <ClInclude Include="src\managers\damage_manager\damage_manager.h" />
+    <ClInclude Include="src\managers\sound_manager\sound_manager.h" />
     <ClInclude Include="src\managers\weapon_manager\weapon_manager.h" />
     <ClInclude Include="src\network\game_server_packet_handler.h" />
     <ClInclude Include="src\network\login_server_packet_handler.h" />
@@ -338,6 +340,7 @@
     <ClCompile Include="src\game_object\player\states\down_state\down_state.cpp" />
     <ClCompile Include="src\game_object\player\states\idle_state\idle_state.cpp" />
     <ClCompile Include="src\game_object\player\states\jump_state\jump_state.cpp" />
+    <ClCompile Include="src\game_object\player\states\ladder_state\ladder_state.cpp" />
     <ClCompile Include="src\game_object\player\states\large_sword_attack_idle_state\large_sword_attack_idle_state.cpp" />
     <ClCompile Include="src\game_object\player\states\large_sword_attack_run_state\large_sword_attack_run_state.cpp" />
     <ClCompile Include="src\game_object\player\states\large_sword_attack_state\large_sword_attack_state.cpp" />
@@ -378,6 +381,7 @@
     <ClCompile Include="src\managers\characters_manager\characters_manager.cpp" />
     <ClCompile Include="src\managers\character_stat\character_stat.cpp" />
     <ClCompile Include="src\managers\damage_manager\damage_manager.cpp" />
+    <ClCompile Include="src\managers\sound_manager\sound_manager.cpp" />
     <ClCompile Include="src\managers\weapon_manager\weapon_manager.cpp" />
     <ClCompile Include="src\network\game_server_packet_handler.cpp" />
     <ClCompile Include="src\network\send_manager.cpp" />

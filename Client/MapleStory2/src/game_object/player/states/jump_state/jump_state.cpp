@@ -4,6 +4,7 @@
 #include "src/game_object/map/cube/map_object.h"
 #include "src/game_object/player/player.h"
 #include "src/game_object/player/states/idle_state/idle_state.h"
+#include "src/game_object/player/states/ladder_state/ladder_state.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
 #include "src/system/input/input_device.h"
@@ -20,11 +21,14 @@ auto JumpState::Enter() -> void
 	_player->ChangeAnimation(_player->IsStartAttackTime() ? kAnimationType::kJumpUp : kAnimationType::kLargeSwordJumpUp);
 	_is_jump_up = true;
 	_is_jump_down = false;
+	_is_ladder = false;
 }
 
 auto JumpState::HandleInput() -> void
 {
 	_is_move = false;
+	_is_up_key = false;
+	_is_ladder = false;
 	if (!g_isWindowsActive)
 	{
 		return;
@@ -41,11 +45,13 @@ auto JumpState::HandleInput() -> void
 	{
 		_player->SetRadian(D3DXToRadian(135));
 		_is_move = true;
+		_is_up_key = true;
 	}
 	else if (upKey && rightKey)
 	{
 		_player->SetRadian(D3DXToRadian(225));
 		_is_move = true;
+		_is_up_key = true;
 	}
 	else if (downKey && leftKey)
 	{
@@ -63,6 +69,7 @@ auto JumpState::HandleInput() -> void
 		{
 			_player->SetRadian(D3DXToRadian(180));
 			_is_move = true;
+			_is_up_key = true;
 		}
 		if (leftKey)
 		{
@@ -120,7 +127,22 @@ auto JumpState::Tick(const double timeDelta) -> void
 
 		if (StraightCheck())
 		{
-			transform->BackStraight(-timeDelta);
+			if (!_is_jump_up)
+			{
+				if (_is_up_key && LadderBlockCheck())
+				{
+					_is_ladder = true;
+					transform->BackStraight(-timeDelta);
+				}
+				else
+				{
+					transform->BackStraight(-timeDelta);
+				}
+			}
+			else
+			{
+				transform->BackStraight(-timeDelta);
+			}
 		}
 	}
 
@@ -176,6 +198,11 @@ auto JumpState::LateTick(const double timeDelta) -> void
 	if (!_is_jump_up && !gravity)
 	{
 		_player->ChangeCharacterState(IdleState::GetInstance());
+	}
+
+	if (_is_ladder)
+	{
+		_player->ChangeCharacterState(LadderState::GetInstance());
 	}
 }
 

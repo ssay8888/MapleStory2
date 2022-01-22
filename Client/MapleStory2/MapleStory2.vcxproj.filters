@@ -298,6 +298,12 @@
     <ClInclude Include="src\game_object\ui\chat_ui\chat_ui.h">
       <Filter>game_object\ui\chat_ui</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\player\states\ladder_state\ladder_state.h">
+      <Filter>game_object\player\states\ladder_state</Filter>
+    </ClInclude>
+    <ClInclude Include="src\managers\sound_manager\sound_manager.h">
+      <Filter>managers\sound_manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -591,6 +597,12 @@
     <ClCompile Include="src\game_object\ui\chat_ui\chat_ui.cpp">
       <Filter>game_object\ui\chat_ui</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\player\states\ladder_state\ladder_state.cpp">
+      <Filter>game_object\player\states\ladder_state</Filter>
+    </ClCompile>
+    <ClCompile Include="src\managers\sound_manager\sound_manager.cpp">
+      <Filter>managers\sound_manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -831,6 +843,12 @@
     </Filter>
     <Filter Include="game_object\ui\chat_ui">
       <UniqueIdentifier>{207252cd-9680-4ef2-9a7a-8ceaff85298d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\player\states\ladder_state">
+      <UniqueIdentifier>{86ee98a6-3c61-40da-8ce9-b326ff4e951d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="managers\sound_manager">
+      <UniqueIdentifier>{dbd24eca-ce2f-4e01-93cb-d92b5187b1a5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 
 
 #include "protocol/game_protocol.pb.h"
+#include "randomizer/randomizer.h"
 #include "src/game_object/map/map_instance.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/monster/monster.h"
@@ -10,6 +11,7 @@
 #include "src/game_object/player/states/large_sword_attack_idle_state/large_sword_attack_idle_state.h"
 #include "src/game_object/ui/monster_hp_ui/monster_hp_ui.h"
 #include "src/managers/character_stat/character_stat.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
 #include "src/system/input/input_device.h"
@@ -91,6 +93,16 @@ auto BerserkerVolcanicslashState::Enter() -> void
 	position->set_y(playerPos.y);
 	position->set_z(playerPos.z);
 	SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+
+	SoundManager::GetInstance().StopSound(SoundManager::kSkillUse);
+	if (Randomizer::IsSuccess(50))
+	{
+		SoundManager::GetInstance().PlaySound(L"Normal_Male_Job_Berserker_SkillVoidSlash_01.wav", SoundManager::kSkillUse);
+	}
+	else
+	{
+		SoundManager::GetInstance().PlaySound(L"Normal_Male_Job_Berserker_SkillVoidSlash_02.wav", SoundManager::kSkillUse);
+	}
 }
 
 auto BerserkerVolcanicslashState::HandleInput() -> void
@@ -233,7 +245,7 @@ auto BerserkerVolcanicslashState::Tick(const double timeDelta) -> void
 	auto p0 = _seq->key[L"p0"];
 	if (_player->GetAnimationTimeAcc() >= p0 && _monsters.empty())
 	{
-		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName()))
 		{
 			const auto monsters = mapInstance->CollisionMonsters(_aabb_com);
 			

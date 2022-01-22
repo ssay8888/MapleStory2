@@ -1,4 +1,6 @@
 #pragma once
+#include "data_reader/data_reader_manager.h"
+
 class CharacterStat
 {
 private:
@@ -44,6 +46,10 @@ public:
 	auto GetAp()const->int32_t;
 	auto SetAp(int32_t value)->void;
 
+	auto GetMapId()const->int32_t;
+	auto SetMapId(int32_t id)->void;
+	auto GetMapName()const->std::wstring;
+
 	auto IsDead()const->bool;
 
 private:
@@ -51,6 +57,9 @@ private:
 	int32_t _hp, _max_hp, _mp, _max_mp;
 	int32_t _level, _exp;
 	int32_t _ap;
+	std::shared_ptr<DataReaderManager::FieldData> _map;
+
+
 	bool	_is_dead = false;
 };
 

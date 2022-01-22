@@ -1,6 +1,7 @@
 #include "c_pch.h"
 #include "skill_level_change_btn.h"
 
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/shader/shader.h"
@@ -181,6 +182,8 @@ auto SkillLevelChangeBtn::ButtonStateChange(_float3 pos) -> void
 			if (_is_lbutton_up)
 			{
 				_btn_state = kEnable;
+				SoundManager::GetInstance().StopSound(SoundManager::kPotion);
+				SoundManager::GetInstance().PlaySound(L"MBtMouseClick.mp3", SoundManager::kPotion);
 			}
 		}
 		return;

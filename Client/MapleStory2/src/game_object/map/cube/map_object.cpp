@@ -133,6 +133,11 @@ auto MapObject::AddComponents(MapParser::MapEntity& entity) -> HRESULT
 			}
 		}
 
+		en = entity.propertise.find("portal");
+		if (en != entity.propertise.end())
+		{
+			_portal_number = static_cast<int32_t>(en->second.x);
+		}
 		//_transform_com->SetUpRotation(_float3{ 0, 1, 0 }, D3DXToRadian(270.f));
 
 	}
@@ -182,4 +187,14 @@ auto MapObject::AddComponents(MapParser::MapEntity& entity) -> HRESULT
 auto MapObject::GetTransform() -> std::shared_ptr<Transform>&
 {
 	return _transform_com;
+}
+
+auto MapObject::IsPortal() const -> bool
+{
+	return _portal_number >= 0;
+}
+
+auto MapObject::GetPortalNumber() const -> int32_t
+{
+	return _portal_number;
 }

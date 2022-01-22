@@ -5,6 +5,7 @@
 #include "protocol/game_protocol.pb.h"
 #include "src/game_object/player/player.h"
 #include "src/game_object/player/states/down_idle_state/down_idle_state.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
 #include "src/utility/components/collider/collider.h"
@@ -23,6 +24,8 @@ auto DownState::Enter() -> void
 	position->set_y(playerPos.y);
 	position->set_z(playerPos.z);
 	SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+	SoundManager::GetInstance().StopSound(SoundManager::kDead);
+	SoundManager::GetInstance().PlaySound(L"Normal_Male_Job_Berserker_Dead_01.wav", SoundManager::kDead);
 }
 
 auto DownState::HandleInput() -> void

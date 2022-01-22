@@ -28,8 +28,15 @@ auto GameServerPacketHandler::HandleGameServerRespawnPlayer(PacketSessionRef& se
 	return true;
 }
 
+auto GameServerPacketHandler::HandleGameServerRemovePlayer(PacketSessionRef& session,
+	Protocol::GameServerRemovePlayer& pkt) -> bool
+{
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::RemoveUser, session, pkt);
+	return true;
+}
+
 auto GameServerPacketHandler::HandleGameServerMovePlayer(PacketSessionRef& session,
-	Protocol::GameServerMovePlayer& pkt) -> bool
+                                                         Protocol::GameServerMovePlayer& pkt) -> bool
 {
 	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::MovePlayer, session, pkt);
 	return true;
@@ -115,5 +122,12 @@ auto GameServerPacketHandler::HandleGameServerResurrection(PacketSessionRef& ses
 auto GameServerPacketHandler::HandleGameServerChat(PacketSessionRef& session, Protocol::GameServerChat& pkt) -> bool
 {
 	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::GameChat, session, pkt);
+	return true;
+}
+
+auto GameServerPacketHandler::HandleGameServerChangeMap(PacketSessionRef& session,
+	Protocol::GameServerChangeMap& pkt) -> bool
+{
+	GameLogicQueue::GetInstance()->DoAsync(&GameLogicQueue::GameChangeMap, session, pkt);
 	return true;
 }

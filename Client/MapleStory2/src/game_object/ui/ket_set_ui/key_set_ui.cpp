@@ -4,6 +4,7 @@
 #include "protocol/game_protocol.pb.h"
 #include "src/game_object/item/Item.h"
 #include "src/game_object/ui/skill_ui/skillset/skill_set.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
 #include "src/system/graphic/graphic_device.h"
@@ -63,6 +64,9 @@ auto KeySetUi::Tick(const double timeDelta) -> HRESULT
 				sendPkt.set_type(Protocol::kInventoryEtc);
 				sendPkt.set_position(_item->GetPosition());
 				SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+
+				SoundManager::GetInstance().StopSound(SoundManager::kPotion);
+				SoundManager::GetInstance().PlaySound(L"Item_Potion_Consume.wav", SoundManager::kPotion);
 			}
 			else if (_skill)
 			{

@@ -29,8 +29,11 @@ public:
 
 	auto AddMonster(int64_t objectId, std::shared_ptr<Monster> monster)->void;
 	auto RemoveMonster(int64_t objectId)->void;
+	auto RemoveAllMonster()->void;
 	auto FindMonster(int64_t objectId)->std::shared_ptr<Monster>;
 	auto CollisionMonsters(std::shared_ptr<Collider> collider)->std::vector<std::shared_ptr<Monster>>;
+
+	auto CollisionPortal(std::shared_ptr<Collider> collider)->int32_t;
 
 public:
 	auto FindRangeCellObject(const std::shared_ptr<Collider>& targetCollider)->std::vector<std::shared_ptr<MapObject>>;
@@ -38,6 +41,7 @@ public:
 private:
 	std::shared_ptr<Shader>			 _shader_com = nullptr;
 	std::vector<std::shared_ptr<MapObject>>			 _map_objects;
+	std::vector<std::shared_ptr<MapObject>>			 _portals;
 
 	std::map<int64_t, std::shared_ptr<Monster>>			_monsters;
 };

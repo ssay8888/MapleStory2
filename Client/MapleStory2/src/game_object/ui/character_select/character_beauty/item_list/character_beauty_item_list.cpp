@@ -3,6 +3,7 @@
 
 #include "character_item.h"
 #include "src/game_object/fittingdoll/fittingdoll.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/shader/shader.h"
@@ -54,6 +55,8 @@ auto CharacterBeautyItemList::Tick(const double timeDelta) -> HRESULT
 			const auto item = _items[i];
 			if (i == _select_index)
 			{
+				SoundManager::GetInstance().StopSound(SoundManager::kUi);
+				SoundManager::GetInstance().PlaySound(L"MBtMouseClick.mp3", SoundManager::kUi);
 				item->ChangeState(CharacterItem::kSelect);
 				auto playerObject = std::static_pointer_cast<Fittingdoll>(
 					ObjectManager::GetInstance().GetGameObjectPtr(kSceneCharacterSelect, TEXT("Layer_Fittingdoll"), 0));

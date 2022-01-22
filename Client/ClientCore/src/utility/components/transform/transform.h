@@ -44,6 +44,8 @@ public:
 	auto BackStraight(const double timeDelta, const double perSec)->void;
 	auto WalkLeft(const double timeDelta)->void;
 	auto WalkRight(const double timeDelta)->void;
+	auto WalkUp(const double timeDelta)->void;
+	auto WalkDown(const double timeDelta)->void;
 	auto RotationAxis(_float3 axis, double timeDelta)->void;
 	void RotationAxis(float radian, _float3 axis);
 	auto RotationAxis(_float3 axis, double timeDelta, float perSecRadian)->void;

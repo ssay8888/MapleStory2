@@ -112,7 +112,7 @@ auto Transform::WalkLeft(const double timeDelta) -> void
 	D3DXVec3Normalize(&right, &right);
 
 	_float3	position = GetState(kState::kStatePosition);
-	position -= right * static_cast<float>(_transform_state.speed_per_sec * timeDelta);
+	position += right * static_cast<float>(_transform_state.speed_per_sec * timeDelta);
 
 	SetState(kState::kStatePosition, position);
 }
@@ -123,7 +123,29 @@ auto Transform::WalkRight(const double timeDelta) -> void
 	D3DXVec3Normalize(&right, &right);
 
 	_float3	position = GetState(kState::kStatePosition);
-	position += right * static_cast<float>(_transform_state.speed_per_sec * timeDelta);
+	position -= right * static_cast<float>(_transform_state.speed_per_sec * timeDelta);
+
+	SetState(kState::kStatePosition, position);
+}
+
+auto Transform::WalkUp(const double timeDelta) -> void
+{
+	_float3	up = GetState(kState::kStateUp);
+	D3DXVec3Normalize(&up, &up);
+
+	_float3	position = GetState(kState::kStatePosition);
+	position += up * static_cast<float>(_transform_state.speed_per_sec * timeDelta);
+
+	SetState(kState::kStatePosition, position);
+}
+
+auto Transform::WalkDown(const double timeDelta) -> void
+{
+	_float3	up = GetState(kState::kStateUp);
+	D3DXVec3Normalize(&up, &up);
+
+	_float3	position = GetState(kState::kStatePosition);
+	position -= up * static_cast<float>(_transform_state.speed_per_sec * timeDelta);
 
 	SetState(kState::kStatePosition, position);
 }

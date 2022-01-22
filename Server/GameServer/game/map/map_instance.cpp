@@ -41,6 +41,9 @@ auto MapInstance::RemoveCharacter(const int64_t characterId) -> bool
 		if (gameSession)
 		{
 			_entities.erase(gameSession->GetPlayer()->GetObjectId());
+			Protocol::GameServerRemovePlayer sendPkt;
+			sendPkt.set_character_id(gameSession->GetPlayer()->GetCharacterId());
+			BroadCastMessage(sendPkt, gameSession);
 		}
 	}
 	return result;
@@ -272,6 +275,10 @@ auto MapInstance::AddObjects(std::vector<MapManager::MapEntity> objects) -> void
 	{
 		auto block = MapXblock::Create(object);
 		_objects.push_back(block);
+		if (block->IsPortal())
+		{
+			_portals.emplace(block->GetPortalIndex(), block);
+		}
 	}
 }
 
@@ -307,7 +314,7 @@ auto MapInstance::FindRangeCellObject(const std::shared_ptr<Collider>& targetCol
 	std::vector<std::shared_ptr<MapXblock>> objects;
 	for (auto& object : _objects)
 	{
-		if (object->GetCollider())
+		if (!object->IsPortal() && object->GetCollider())
 		{
 			if (object->GetCollider()->CollisionAabb(targetCollider))
 			{
@@ -316,4 +323,30 @@ auto MapInstance::FindRangeCellObject(const std::shared_ptr<Collider>& targetCol
 		}
 	}
 	return objects;
+}
+
+auto MapInstance::FindPortal(const int32_t index) -> std::shared_ptr<MapXblock>
+{
+	const auto iterator = _portals.find(index);
+	if (iterator != _portals.end())
+	{
+		return iterator->second;
+	}
+	return nullptr;
+}
+
+auto MapInstance::PortalHackCheck(int32_t index, std::shared_ptr<Transform> targetTransfrom) -> bool
+{
+	auto portal = FindPortal(index);
+
+	if (portal)
+	{
+		auto look = portal->GetTransform()->GetState(Transform::kState::kStatePosition) - targetTransfrom->GetState(Transform::kState::kStatePosition);
+		auto length = D3DXVec3Length(&look);
+		if (1 >= length)
+		{
+			return true;
+		}
+	}
+	return false;
 }

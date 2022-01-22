@@ -35,6 +35,7 @@ public:
 	auto PlayerSpRecovry(Protocol::GameClientSpRecovery pkt, GameSessionRef gameSession)->void;
 	auto ApplySkill(Protocol::GameClientApplySkill pkt, GameSessionRef gameSession)->void;
 	auto GameChat(Protocol::GameClientChat pkt, GameSessionRef gameSession)->void;
+	auto ChangeMap(Protocol::GameClientChangeMap pkt, GameSessionRef gameSession)->void;
 
 private:
 	std::atomic<bool> _exit_loop;

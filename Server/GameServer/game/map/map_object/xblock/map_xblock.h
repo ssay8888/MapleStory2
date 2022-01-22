@@ -16,6 +16,12 @@ public:
 	auto GetCollider()const->std::shared_ptr<Collider>;
 	auto GetTransform()const->std::shared_ptr<Transform>;
 
+	auto GetPortalIndex()const->int32_t;
+	auto GetChangeMapId()const->int32_t;
+	auto IsPortal()->bool;
+
+
+
 private:
 	auto NativeConstruct(MapManager::MapEntity& entity)->HRESULT;
 
@@ -24,5 +30,8 @@ private:
 	std::shared_ptr<MeshStatic>		_mesh_com = nullptr;
 	std::shared_ptr<Collider>		_aabb_com = nullptr;
 	float							_scale = 1;
+
+	int32_t		_portal_index = -1;
+	int32_t		_change_map_id = -1;
 };
 

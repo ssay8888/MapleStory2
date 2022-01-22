@@ -137,6 +137,46 @@ auto CharacterState::StraightCheck() -> bool
 	return check;
 }
 
+auto CharacterState::LadderMoveCheck() -> bool
+{
+	if (_map_objects.empty())
+	{
+		return false;
+	}
+	bool check = false;
+	auto characterAabb = _player->GetCharacterColliderAabb();
+	for (const auto& object : _map_objects)
+	{
+		if (object->GetCollider()->CollisionAabb(characterAabb))
+		{
+			check = true;
+		}
+	}
+	return check;
+}
+
+auto CharacterState::LadderBlockCheck() -> bool
+{
+	if (_map_objects.empty())
+	{
+		return false;
+	}
+	bool check = false;
+	auto characterAabb = _player->GetCharacterColliderAabb();
+	for (const auto& object : _map_objects)
+	{
+		if (characterAabb->GetMin().y <= object->GetCollider()->GetMax().y && 
+			object->GetTransform()->GetState(Transform::kState::kStatePosition).y >= _player->GetTransform()->GetState(Transform::kState::kStatePosition).y)
+		{
+			if (object->GetCollider()->CollisionAabb(characterAabb))
+			{
+				check = true;
+			}
+		}
+	}
+	return check;
+}
+
 auto CharacterState::SetPushKey(int32_t key) -> void
 {
 	_key = key;
@@ -188,7 +228,7 @@ auto CharacterState::ReloadMapObject()->void
 		if (!reaload->CollisionAabb(blockRange))
 		{
 			blockRange->UpdateCollider();
-			auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad");
+			auto mapInstance = MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName());
 			_map_objects = mapInstance->FindRangeCellObject(blockRange);
 			break;
 		}

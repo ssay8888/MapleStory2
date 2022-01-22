@@ -9,6 +9,7 @@
 #include "src/game_object/player/states/large_sword_attack_idle_state/large_sword_attack_idle_state.h"
 #include "src/game_object/ui/monster_hp_ui/monster_hp_ui.h"
 #include "src/managers/character_stat/character_stat.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
 #include "src/system/input/input_device.h"
@@ -38,14 +39,23 @@ auto BerserkerSweepAttackState::Enter() -> void
 	case kAnimationType::kBerserketSweepAttack1A:
 		_seq = kfm->seqs[gender == false ? 571 : 568];
 		_player->ChangeAnimation(kAnimationType::kBerserketSweepAttack1A);
+		SoundManager::GetInstance().StopSound(SoundManager::kSkillUse);
+		SoundManager::GetInstance().PlaySound(L"Skill_Berserker_SweepAttack_Cast_01.wav", SoundManager::kSkillUse);
+		SoundManager::GetInstance().StopSound(SoundManager::kSkillVoice);
+		SoundManager::GetInstance().PlaySound(L"Normal_Male_Job_Berserker_SkillSweepAttack_02.wav", SoundManager::kSkillVoice);
 		break;
 	case kAnimationType::kBerserketSweepAttack2A:
 		_seq = kfm->seqs[gender == false ? 572 : 569];
 		_player->ChangeAnimation(kAnimationType::kBerserketSweepAttack2A);
+		SoundManager::GetInstance().PlaySound(L"Skill_Berserker_SweepAttack_Cast_02.wav", SoundManager::kSkillUse);
 		break;
 	default:
 		_seq = kfm->seqs[gender == false ? 571 : 568];
 		_player->ChangeAnimation(kAnimationType::kBerserketSweepAttack1A);
+		SoundManager::GetInstance().StopSound(SoundManager::kSkillUse);
+		SoundManager::GetInstance().PlaySound(L"Skill_Berserker_SweepAttack_Cast_01.wav", SoundManager::kSkillUse);
+		SoundManager::GetInstance().StopSound(SoundManager::kSkillVoice);
+		SoundManager::GetInstance().PlaySound(L"Normal_Male_Job_Berserker_SkillSweepAttack_02.wav", SoundManager::kSkillVoice);
 		break;;
 	}
 
@@ -90,6 +100,7 @@ auto BerserkerSweepAttackState::Enter() -> void
 	position->set_y(playerPos.y);
 	position->set_z(playerPos.z);
 	SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+
 }
 
 auto BerserkerSweepAttackState::HandleInput() -> void
@@ -214,7 +225,7 @@ auto BerserkerSweepAttackState::Tick(const double timeDelta) -> void
 	auto p0 = _seq->key[L"p0"];
 	if (_player->GetAnimationTimeAcc() >= p0 && _monsters.empty())
 	{
-		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName()))
 		{
 
 			const auto monsters = mapInstance->CollisionMonsters(_aabb_com);
@@ -265,6 +276,7 @@ auto BerserkerSweepAttackState::LateTick(const double timeDelta) -> void
 		{
 			endTime = _seq->key[L"end"];
 		}
+		SoundManager::GetInstance().PlaySound(L"Skill_Berserker_SweepAttack_Cast_02.wav", SoundManager::kSkillUse);
 		break;
 	default:
 		return;

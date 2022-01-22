@@ -6,6 +6,7 @@
 #include "src/game_object/back_ground/back_ground.h"
 #include "src/game_object/numbers/numbers.h"
 #include "src/main/main_app.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/utility/game_objects/camera/camera.h"
 #include "src/utility/game_objects/manager/object_manager.h"
@@ -38,45 +39,45 @@ HRESULT GamePlay::NativeConstruct()
 
 	if (FAILED(ReadyInventory()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	if (FAILED(ReadyLayerPlayer(TEXT("Layer_Character"))))
 	{
-		return E_FAIL;
+	//	return E_FAIL;
 	}
 
 	auto& objectManager = ObjectManager::GetInstance();
 	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_PlayerInfo"), L"Layer_PlayerInfo")))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	if (FAILED(ReadyLayerCamera(TEXT("Layer_Camera"))))
 	{
-		return E_FAIL;
+	//	return E_FAIL;
 	}
 
 	if (FAILED(ReadyLayerBackGround(TEXT("Layer_BackGround"))))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 
 	if (FAILED(ReadyMonster()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	if (FAILED(ReadySkillUi()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 
 	if (FAILED(ReadyKeySetManager()))
 	{
-		return E_FAIL;
+	//	return E_FAIL;
 	}
 
 	if (FAILED(ReadyChatUi()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	Protocol::GameClientLoading sendPkt;
 	auto authInfo = g_mainApp->GetAuthInfo();
@@ -84,6 +85,8 @@ HRESULT GamePlay::NativeConstruct()
 	sendPkt.set_state(Protocol::kLoadSuccess);
 	g_service->Broadcast(GameServerPacketHandler::MakeSendBuffer(sendPkt));
 	std::this_thread::sleep_for(100ms);
+	SoundManager::GetInstance().StopSound(SoundManager::kBgm);
+	SoundManager::GetInstance().PlayBGM(L"BGM_Henesys_01.wav");
 	return S_OK;
 
 }
@@ -136,9 +139,13 @@ auto GamePlay::ReadyLayerCamera(const std::wstring& pLayerTag) -> HRESULT
 auto GamePlay::ReadyLayerPlayer(const std::wstring& pLayerTag) -> HRESULT
 {
 	auto& objectManager = ObjectManager::GetInstance();
-	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_Player"), pLayerTag)))
+	auto object = objectManager.GetGameObjectPtr(kScene::kSceneStatic, pLayerTag, 0);
+	if (object == nullptr)
 	{
-		return E_FAIL;
+		if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_Player"), pLayerTag)))
+		{
+			//return E_FAIL;
+		}
 	}
 
 
@@ -193,11 +200,11 @@ auto GamePlay::ReadyInventory() -> HRESULT
 	auto& objectManager = ObjectManager::GetInstance();
 	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_Inventory"), L"Layer_Inventory")))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_EquippedUi"), L"Layer_EquippedUi")))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 
 	return S_OK;

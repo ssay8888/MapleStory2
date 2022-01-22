@@ -44,7 +44,15 @@ enum class kAnimationType
 	kBerserkerVolcanicslash1A,
 	kBerserkerVolcanicslash2A,
 	kDown,
-	kDownIdle
+	kDownIdle,
+	kLadderIdle,
+	kLadderLeftDown,
+	kLadderRightDown,
+	kLadderLeftUp,
+	kLadderRightUp,
+	kLadderLeftMove,
+	kLadderRightMove
+
 };
 
 

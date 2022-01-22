@@ -25,6 +25,9 @@ public:
 	auto GetCollider()->std::shared_ptr<Collider>;
 	auto GetTransform()->std::shared_ptr<Transform>&;
 
+	auto IsPortal() const ->bool;
+	auto GetPortalNumber() const ->int32_t;
+
 private:
 	auto AddComponents(MapParser::MapEntity& entity)->HRESULT;
 
@@ -33,6 +36,7 @@ private:
 	std::shared_ptr<MeshStatic>		_mesh_com = nullptr;
 	std::shared_ptr<Collider>		_aabb_com = nullptr;
 	float							_scale = 1;
+	int32_t							_portal_number = -1;
 
 };
 

@@ -7,6 +7,7 @@
 #include "character_create_return_btn.h"
 #include "data_reader/data_reader_manager.h"
 #include "item_list/character_beauty_item_list.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/renderer/renderer.h"
 #include "src/utility/components/shader/shader.h"
@@ -274,6 +275,8 @@ auto CharacterBeautyUi::SexBtnTick(const double timeDelta) -> HRESULT
 			if (i == select_index)
 			{
 				_sex_btn[i]->ChangeButtonState(CharacterBeautySelectSex::kCreateSexBtnState::kSelect);
+				SoundManager::GetInstance().StopSound(SoundManager::kUi);
+				SoundManager::GetInstance().PlaySound(L"MBtMouseClick.mp3", SoundManager::kUi);
 				if (i == 0)
 				{
 					ChangeBeautyStage(kBeautyStage::kSexChangeMan);

@@ -5,7 +5,7 @@ class CharacterSelect final : public Scene
 {
 public:
 	explicit CharacterSelect(const ComPtr<IDirect3DDevice9>& device);
-	~CharacterSelect() override = default;
+	~CharacterSelect() override;
 public:
 	auto NativeConstruct() -> HRESULT override;
 	auto Tick(double timeDelta) -> int32_t override;

@@ -16,6 +16,8 @@
 
 #include <fmt/xchar.h>
 
+#include "game/map/map_object/xblock/map_xblock.h"
+#include "src/utility/components/transform/transform.h"
 #include "string_utils/string_utils.h"
 
 auto GameServerPlayerHandler::TakeDamage(const int64_t characterId, const int64_t monsterObjectId,
@@ -433,5 +435,49 @@ auto GameServerPlayerHandler::GameChat(Protocol::GameClientChat pkt, GameSession
 	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(player->GetMapId()))
 	{
 		mapInstance->BroadCastMessage(sendPkt, nullptr);
+	}
+}
+
+auto GameServerPlayerHandler::ChangeMap(Protocol::GameClientChangeMap pkt, GameSessionRef gameSession) -> void
+{
+	if (gameSession->GetPlayer() == nullptr)
+	{
+		return;
+	}
+
+	auto player = gameSession->GetPlayer();
+	auto transform = player->GetTransform();
+
+	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(player->GetMapId()))
+	{
+		if (mapInstance->PortalHackCheck(pkt.portal_id(), player->GetTransform()))
+		{
+			auto portal = 	mapInstance->FindPortal(pkt.portal_id());
+			if (portal)
+			{
+				const auto changeMapInstance = MapManager::GetInstance().FindMapInstance(portal->GetChangeMapId());
+				const auto changeMapPortal = changeMapInstance->FindPortal(0);
+				player->SetMapId(portal->GetChangeMapId());
+				mapInstance->RemoveCharacter(player->GetCharacterId());
+				//changeMapInstance->AddCharacter(gameSession);
+				//changeMapInstance->BroadCastAddCharacter(gameSession);
+
+				transform->SetState(Transform::kState::kStatePosition, changeMapPortal->GetTransform()->GetState(Transform::kState::kStatePosition));
+
+				Protocol::GameServerResurrection changePosition;
+				changePosition.set_character_id(player->GetCharacterId());
+				auto position = changePosition.mutable_position();
+				auto pos = transform->GetState(Transform::kState::kStatePosition);
+				position->set_x(pos.x);
+				position->set_y(pos.y);
+				position->set_z(pos.z);
+				gameSession->Send(GameClientPacketHandler::MakeSendBuffer(changePosition));
+
+				Protocol::GameServerChangeMap sendPkt;
+				sendPkt.set_map_id(portal->GetChangeMapId());
+				gameSession->Send(GameClientPacketHandler::MakeSendBuffer(sendPkt));
+
+			}
+		}
 	}
 }

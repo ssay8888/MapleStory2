@@ -68,6 +68,7 @@ private:
 	auto SetUpConstantTable() const->HRESULT;
 
 	auto OpenInventory()->HRESULT;
+	auto MapChange()->HRESULT;
 	auto SpRecovery()->void;
 
 public:

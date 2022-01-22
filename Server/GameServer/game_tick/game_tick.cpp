@@ -131,3 +131,8 @@ auto GameTick::GameChat(Protocol::GameClientChat pkt, GameSessionRef gameSession
 {
 	GameServerPlayerHandler::GameChat(pkt, gameSession);
 }
+
+auto GameTick::ChangeMap(Protocol::GameClientChangeMap pkt, GameSessionRef gameSession) -> void
+{
+	GameServerPlayerHandler::ChangeMap(pkt, gameSession);
+}

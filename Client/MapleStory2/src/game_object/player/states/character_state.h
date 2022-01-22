@@ -19,6 +19,8 @@ public:
 	auto GravityPlayer(double timeDelta)->bool;
 	auto GravityPlayerSendMessage(kAnimationType type) const->void;
 	auto StraightCheck()->bool;
+	auto LadderMoveCheck()->bool;
+	auto LadderBlockCheck()->bool;
 
 public:
 	auto SetPushKey(int32_t key)->void;

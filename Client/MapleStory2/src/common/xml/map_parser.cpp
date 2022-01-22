@@ -51,14 +51,12 @@ auto MapParser::MapModelNameListExport(const std::string name)->std::list<std::s
 	return real_node_items;
 }
 
-auto MapParser::MapParsing(const std::string name)->std::vector<MapEntity>
+auto MapParser::MapParsing(const std::wstring name)->std::vector<MapEntity>
 {
 	xml_document doc;
 	//L"Client\\Character\\00012000.img.xml"
-	char xmlPath[100] = "";
-	sprintf_s(xmlPath, "../../Binary/Resources/MapData/%s.xblock", name.c_str());
 	//snprintf(xmlPath, 100, , size);
-	auto err = doc.load_file(xmlPath);
+	auto err = doc.load_file(fmt::format(L"../../Binary/Resources/MapData/{}.xblock", name).c_str());
 	std::list<std::string> overlap_node_items;
 	std::list<std::string> real_node_items;
 	std::vector<MapEntity> entities;
@@ -87,7 +85,8 @@ auto MapParser::MapParsing(const std::string name)->std::vector<MapEntity>
 			for (auto& property : entity.node())
 			{
 				if (!strcmp(property.attribute("name").value(), "Position") ||
-					!strcmp(property.attribute("name").value(), "Rotation"))
+					!strcmp(property.attribute("name").value(), "Rotation") ||
+					!strcmp(property.attribute("name").value(), "portal"))
 				{
 					for (auto& value : property)
 					{

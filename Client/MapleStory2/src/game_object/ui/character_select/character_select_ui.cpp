@@ -15,6 +15,7 @@
 
 #include "character_ok_btn.h"
 #include "src/managers/characters_manager/character.h"
+#include "src/managers/sound_manager/sound_manager.h"
 
 CharacterSelectUi::CharacterSelectUi(const ComPtr<IDirect3DDevice9>& device) :
 	GameObject(device),
@@ -159,6 +160,8 @@ auto CharacterSelectUi::SelectUpdateTick(const double timeDelta) -> HRESULT
 			{
 				item->ChangeState(CharacterSelectItem::kSelect);
 				CreateFittingDoll(static_cast<int32_t>(i));
+				SoundManager::GetInstance().StopSound(SoundManager::kUi);
+				SoundManager::GetInstance().PlaySound(L"CharSelect.mp3", SoundManager::kUi);
 			}
 			else
 			{

@@ -23,5 +23,7 @@ public:
 	static auto ApplySkill(Protocol::GameClientApplySkill pkt, GameSessionRef gameSession)->void;
 
 	static auto GameChat(Protocol::GameClientChat pkt, GameSessionRef gameSession)->void;
+
+	static auto ChangeMap(Protocol::GameClientChangeMap pkt, GameSessionRef gameSession)->void;
 };
 

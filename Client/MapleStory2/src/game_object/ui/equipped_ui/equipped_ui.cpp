@@ -9,6 +9,7 @@
 #include "src/game_object/ui/inventory/inventory_tab_btn/inventory_tab_btn.h"
 #include "src/game_object/ui/popup_info/popup_info.h"
 #include "src/managers/character_stat/character_stat.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/managers/weapon_manager/weapon_manager.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
@@ -192,6 +193,15 @@ auto EquippedUi::ChangeShow() -> void
 {
 	_is_show = !_is_show;
 	_pos = { g_WinCX / 2.f, g_WinCY / 2.f, 0 };
+	SoundManager::GetInstance().StopSound(SoundManager::kUi);
+	if (_is_show)
+	{
+		SoundManager::GetInstance().PlaySound(L"System_defaultDialog_open_02.wav", SoundManager::kUi);
+	}
+	else
+	{
+		SoundManager::GetInstance().PlaySound(L"System_defaultDialog_close_02.wav", SoundManager::kUi);
+	}
 }
 
 auto EquippedUi::MoveInventoryFrame() -> HRESULT

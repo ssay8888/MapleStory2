@@ -36,6 +36,21 @@ auto MapXblock::GetTransform() const -> std::shared_ptr<Transform>
 	return _transform_com;
 }
 
+auto MapXblock::GetPortalIndex() const -> int32_t
+{
+	return _portal_index;
+}
+
+auto MapXblock::GetChangeMapId() const -> int32_t
+{
+	return _change_map_id;
+}
+
+auto MapXblock::IsPortal() -> bool
+{
+	return _portal_index >= 0;
+}
+
 auto MapXblock::NativeConstruct(MapManager::MapEntity& entity) -> HRESULT
 {
 	_transform_com = Transform::Create(nullptr);
@@ -71,6 +86,14 @@ auto MapXblock::NativeConstruct(MapManager::MapEntity& entity) -> HRESULT
 
 			}
 		}
+		en = entity.propertise.find("portal");
+
+		if (en != entity.propertise.end())
+		{
+			_portal_index = static_cast<int32_t>(en->second.x);
+			_change_map_id = static_cast<int32_t>(en->second.z);
+		}
+
 	}
 	_transform_com->SetScale((_scale * 0.01f), (_scale * 0.01f), (_scale * 0.01f));
 

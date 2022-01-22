@@ -22,4 +22,11 @@
     <model animation_name="berserker_volcanicslash_02_a" targetnode="Weapon_Hand_R_Point" />
     <model animation_name="down_b" targetnode="Weapon_Hand_R_Point" />
     <model animation_name="down_idle_b" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="ladder_idle_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="ladder_l_down_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="ladder_r_down_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="ladder_l_up_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="ladder_r_up_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="ladder_left_a" targetnode="Weapon_Hand_R_Point" />
+    <model animation_name="ladder_right_a" targetnode="Weapon_Hand_R_Point" />
 </ms2>

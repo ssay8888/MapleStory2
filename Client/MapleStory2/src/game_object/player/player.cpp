@@ -65,7 +65,7 @@ auto Player::Tick(const double timeDelta) -> HRESULT
 	_character_state->Tick(timeDelta);
 
 	OpenInventory();
-
+	MapChange();
 	if (!g_isChatActive && InputDevice::GetInstance().GetKeyPressing(DIK_SPACE))
 	{
 		auto pos = _transform_com->GetState(Transform::kState::kStatePosition);
@@ -586,6 +586,28 @@ auto Player::OpenInventory() -> HRESULT
 		if (const auto inventory = std::static_pointer_cast<SkillUi>(instance.GetGameObjectPtr(kSceneGamePlay0, L"Layer_SkillUi", 0)))
 		{
 			inventory->ChangeShow();
+		}
+	}
+	return S_OK;
+}
+
+auto Player::MapChange() -> HRESULT
+{
+	if (!g_isWindowsActive || g_isChatActive)
+	{
+		return S_OK;
+	}
+
+	if(InputDevice::GetInstance().GetKeyDown(DIK_SPACE))
+	{
+		if (auto instance= MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName()))
+		{
+			auto portalNumber = instance->CollisionPortal(_character_aabb_com);
+
+			Protocol::GameClientChangeMap sendPkt;
+			sendPkt.set_portal_id(portalNumber);
+			SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+
 		}
 	}
 	return S_OK;

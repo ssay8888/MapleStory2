@@ -1,4 +1,5 @@
 #pragma once
+class Portal;
 class SpawnPoint;
 class MapObject;
 class GameCharacter;

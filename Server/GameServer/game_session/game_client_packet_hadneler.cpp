@@ -107,3 +107,11 @@ auto GameClientPacketHandler::HandleGameClientChat(PacketSessionRef& session, Pr
 	GameTick::GetInstance()->DoAsync(&GameTick::GameChat, pkt, gameSession);
 	return true;
 }
+
+auto GameClientPacketHandler::HandleGameClientChangeMap(PacketSessionRef& session,
+	Protocol::GameClientChangeMap& pkt) -> bool
+{
+	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	GameTick::GetInstance()->DoAsync(&GameTick::ChangeMap, pkt, gameSession);
+	return true;
+}

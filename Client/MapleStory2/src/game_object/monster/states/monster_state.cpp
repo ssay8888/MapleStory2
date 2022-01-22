@@ -5,6 +5,7 @@
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/map/cube/map_object.h"
 #include "src/game_object/monster/monster.h"
+#include "src/managers/character_stat/character_stat.h"
 #include "src/utility/components/collider/collider.h"
 #include "src/utility/components/transform/transform.h"
 
@@ -143,7 +144,7 @@ auto MonsterState::ReloadMapObject(std::shared_ptr<Monster> monster, bool check)
 		if (!reaload->CollisionAabb(blockRange) || check)
 		{
 			blockRange->UpdateCollider();
-			auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad");
+			auto mapInstance = MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName());
 			if (mapInstance)
 			{
 				_map_objects = mapInstance->FindRangeCellObject(blockRange);

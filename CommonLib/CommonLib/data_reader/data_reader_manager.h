@@ -140,6 +140,7 @@ public:
 
 	auto LoadFieldData()->void;
 	auto AllFieldData() const ->std::map<int32_t, std::shared_ptr<FieldData>>;
+	auto FindMapName(int32_t id)->std::shared_ptr<FieldData>;
 #pragma endregion
 
 

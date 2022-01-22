@@ -10,30 +10,33 @@ enum : uint16_t
 	kPktGameServerLoadCharacter = 2002,
 	kPktGameClientLoading = 2003,
 	kPktGameServerRespawnPlayer = 2004,
-	kPktGameClientMovePlayer = 2005,
-	kPktGameServerMovePlayer = 2006,
-	kPktGameServerRespawnMonster = 2007,
-	kPktGameServerMoveMonster = 2008,
-	kPktGameClientTakeDamage = 2009,
-	kPktGameServerTakeDamage = 2010,
-	kPktGameServerUpdateStat = 2011,
-	kPktGameClientAttackMonster = 2012,
-	kPktGameServerAttackMonster = 2013,
-	kPktGameServerMonsterStatUpdate = 2014,
-	kPktGameServerKillMonster = 2015,
-	kPktGameClientInventoryItemMove = 2016,
-	kPktGameServerDressChange = 2017,
-	kPktGameClientStatUp = 2018,
-	kPktGameServerStatUp = 2019,
-	kPktGameClientKeySet = 2020,
-	kPktGameClientItemApply = 2021,
-	kPktGameServerItemQuantityUpdate = 2022,
-	kPktGameClientResurrection = 2023,
-	kPktGameServerResurrection = 2024,
-	kPktGameClientSpRecovery = 2025,
-	kPktGameClientApplySkill = 2026,
-	kPktGameClientChat = 2027,
-	kPktGameServerChat = 2028,
+	kPktGameServerRemovePlayer = 2005,
+	kPktGameClientMovePlayer = 2006,
+	kPktGameServerMovePlayer = 2007,
+	kPktGameServerRespawnMonster = 2008,
+	kPktGameServerMoveMonster = 2009,
+	kPktGameClientTakeDamage = 2010,
+	kPktGameServerTakeDamage = 2011,
+	kPktGameServerUpdateStat = 2012,
+	kPktGameClientAttackMonster = 2013,
+	kPktGameServerAttackMonster = 2014,
+	kPktGameServerMonsterStatUpdate = 2015,
+	kPktGameServerKillMonster = 2016,
+	kPktGameClientInventoryItemMove = 2017,
+	kPktGameServerDressChange = 2018,
+	kPktGameClientStatUp = 2019,
+	kPktGameServerStatUp = 2020,
+	kPktGameClientKeySet = 2021,
+	kPktGameClientItemApply = 2022,
+	kPktGameServerItemQuantityUpdate = 2023,
+	kPktGameClientResurrection = 2024,
+	kPktGameServerResurrection = 2025,
+	kPktGameClientSpRecovery = 2026,
+	kPktGameClientApplySkill = 2027,
+	kPktGameClientChat = 2028,
+	kPktGameServerChat = 2029,
+	kPktGameClientChangeMap = 2030,
+	kPktGameServerChangeMap = 2031,
 };
 
 
@@ -56,6 +59,7 @@ public:
 	static auto HandleGameClientSpRecovery(PacketSessionRef& session, Protocol::GameClientSpRecovery& pkt)->bool;
 	static auto HandleGameClientApplySkill(PacketSessionRef& session, Protocol::GameClientApplySkill& pkt)->bool;
 	static auto HandleGameClientChat(PacketSessionRef& session, Protocol::GameClientChat& pkt)->bool;
+	static auto HandleGameClientChangeMap(PacketSessionRef& session, Protocol::GameClientChangeMap& pkt)->bool;
 	static void Init()
 	{
 		for (auto& handler : _packet_handler)
@@ -75,6 +79,7 @@ public:
 		_packet_handler[kPktGameClientSpRecovery] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientSpRecovery>(HandleGameClientSpRecovery, session, buffer, len); };
 		_packet_handler[kPktGameClientApplySkill] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientApplySkill>(HandleGameClientApplySkill, session, buffer, len); };
 		_packet_handler[kPktGameClientChat] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientChat>(HandleGameClientChat, session, buffer, len); };
+		_packet_handler[kPktGameClientChangeMap] = [](PacketSessionRef& session, BYTE* buffer, int32_t len) { return HandlePacket<Protocol::GameClientChangeMap>(HandleGameClientChangeMap, session, buffer, len); };
 	}
 
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32_t len)
@@ -85,6 +90,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerLogin& pkt) { return MakeSendBuffer(pkt, kPktGameServerLogin); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerLoadCharacter& pkt) { return MakeSendBuffer(pkt, kPktGameServerLoadCharacter); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerRespawnPlayer& pkt) { return MakeSendBuffer(pkt, kPktGameServerRespawnPlayer); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameServerRemovePlayer& pkt) { return MakeSendBuffer(pkt, kPktGameServerRemovePlayer); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerMovePlayer& pkt) { return MakeSendBuffer(pkt, kPktGameServerMovePlayer); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerRespawnMonster& pkt) { return MakeSendBuffer(pkt, kPktGameServerRespawnMonster); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerMoveMonster& pkt) { return MakeSendBuffer(pkt, kPktGameServerMoveMonster); }
@@ -98,6 +104,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerItemQuantityUpdate& pkt) { return MakeSendBuffer(pkt, kPktGameServerItemQuantityUpdate); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerResurrection& pkt) { return MakeSendBuffer(pkt, kPktGameServerResurrection); }
 	static SendBufferRef MakeSendBuffer(Protocol::GameServerChat& pkt) { return MakeSendBuffer(pkt, kPktGameServerChat); }
+	static SendBufferRef MakeSendBuffer(Protocol::GameServerChangeMap& pkt) { return MakeSendBuffer(pkt, kPktGameServerChangeMap); }
 
 private:
 	template<typename PacketType, typename ProcessFunc>

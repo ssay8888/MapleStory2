@@ -27,6 +27,9 @@ auto CharacterStat::NativeConstruct() -> HRESULT
 	_exp = characterInfo.exp();
 
 	_ap = characterInfo.ap();
+
+	SetMapId(characterInfo.map());
+	//SetMapId(2000230);
 	return S_OK;
 }
 
@@ -143,6 +146,29 @@ auto CharacterStat::GetAp() const -> int32_t
 auto CharacterStat::SetAp(int32_t value) -> void
 {
 	_ap = value;
+}
+
+auto CharacterStat::GetMapId() const -> int32_t
+{
+	return _map->id;
+}
+
+auto CharacterStat::SetMapId(int32_t id) -> void
+{
+	auto data = DataReaderManager::GetInstance().FindMapName(id);
+	if (data)
+	{
+		_map = data;
+	}
+	else
+	{
+		_map = nullptr;
+	}
+}
+
+auto CharacterStat::GetMapName() const -> std::wstring
+{
+	return _map->environment.name;
 }
 
 auto CharacterStat::IsDead() const -> bool

@@ -42,6 +42,7 @@ public:
 	auto SelectItem(const _float3& pos, uint8_t isLButtonDown, uint8_t isLButtonUp) const ->bool;
 	auto UnSelectItem(const _float3& pos, uint8_t isLButtonDown, uint8_t isLButtonUp) const ->bool;
 	auto SetSelectItem(bool select)->void;
+	auto IsSelectItem()const->bool;
 
 	auto MouseOverState()const->bool;
 	auto SetIsMouseUp(bool isup)->void;

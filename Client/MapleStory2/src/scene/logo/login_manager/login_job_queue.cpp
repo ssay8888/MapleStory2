@@ -3,9 +3,11 @@
 
 #include "src/game_object/equipped/equipped.h"
 #include "src/game_object/ui/character_select/character_select_ui.h"
+#include "src/game_object/ui/login/text_box_ui.h"
 #include "src/main/main_app.h"
 #include "src/managers/characters_manager/character.h"
 #include "src/managers/characters_manager/characters_manager.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/network/send_manager.h"
 #include "src/network/login_server_packet_handler.h"
 #include "src/scene/loading/scene_loading.h"
@@ -18,6 +20,14 @@
 auto LoginJobQueue::LoginAttempt(PacketSessionRef session, Protocol::LoginServerLogin pkt) -> Protocol::kLoginMessage
 {
 	std::cout << " 로그인 처리 " << std::endl;
+
+	auto object = ObjectManager::GetInstance().GetGameObjectPtr(kSceneLogo, L"Layer_LoginBox", 0);
+	auto textboxui = std::static_pointer_cast<TextBoxUi>(object);
+	if (textboxui)
+	{
+		textboxui->SetLoginResult(pkt.result());
+	}
+
 	if (pkt.result() == Protocol::kLoginMessage::kLoginSuccess)
 	{
 		const auto scene = SceneLoading::Create(GraphicDevice::GetInstance().GetDevice(), kSceneCharacterSelect);
@@ -32,6 +42,8 @@ auto LoginJobQueue::LoginAttempt(PacketSessionRef session, Protocol::LoginServer
 		return Protocol::kLoginMessage::kLoginSuccess;
 	}
 	EnableWindow(g_hEdit, true);
+	SoundManager::GetInstance().StopSound(SoundManager::kUi);
+	SoundManager::GetInstance().PlaySound(L"DlgNotice.mp3", SoundManager::kUi);
 	return pkt.result();
 }
 

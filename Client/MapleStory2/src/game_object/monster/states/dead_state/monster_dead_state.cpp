@@ -4,6 +4,7 @@
 #include "src/game_object/map/map_instance.h"
 #include "src/game_object/map/map_manager.h"
 #include "src/game_object/monster/monster.h"
+#include "src/managers/character_stat/character_stat.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 
 auto MonsterDeadState::Enter(std::shared_ptr<Monster> monster) -> void
@@ -29,7 +30,7 @@ auto MonsterDeadState::LateTick(const double timeDelta, std::shared_ptr<Monster>
 	auto endTime = seq->key[L"end"];
 	if (monster->GetAnimationTimeAcc() >= endTime)
 	{
-		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName()))
 		{
 			monster->SetDead(true);
 			mapInstance->RemoveMonster(monster->GetMonsterInfo().object_id());

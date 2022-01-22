@@ -18760,6 +18760,14 @@
 				<set value="0, 0, 0" />
 			</property>
 		</entity>
+		<entity id="65ebb14dd86b4cb1bb15bafae071b005" modelName="portal" name="portal[]" iterations="10">
+			<property name="Position">
+				<set value="0, 1350, 3300" />
+			</property>
+			<property name="portal">
+				<set value="0, 2000230, 0" />
+			</property>
+		</entity>
 		<entity id="eebb959627bb47f1883e4bf015ce2827" modelName="MS2RegionSpawn_2" name="MS2RegionSpawn_1" iterations="1">
 			<property name="Position">
 				<set value="0, 1350, 3300" />

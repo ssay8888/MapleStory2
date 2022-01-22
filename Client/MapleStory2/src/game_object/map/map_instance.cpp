@@ -62,6 +62,10 @@ auto MapInstance::AddMapObject(MapParser::MapEntity modelName) -> bool
 	if (object)
 	{
 		_map_objects.push_back(object);
+		if (modelName.modelName == "portal")
+		{
+			_portals.push_back(object);
+		}
 	}
 
 
@@ -102,6 +106,20 @@ auto MapInstance::AddMonster(int64_t objectId, std::shared_ptr<Monster> monster)
 auto MapInstance::RemoveMonster(const int64_t objectId) -> void
 {
 	_monsters.erase(objectId);
+
+	std::wstring layerTag = fmt::format(L"Layer_Monster_{}", objectId);
+	ObjectManager::GetInstance().LayerClear(kSceneGamePlay0, layerTag);
+}
+
+auto MapInstance::RemoveAllMonster() -> void
+{
+	for (auto& object : _monsters)
+	{
+		std::wstring layerTag = fmt::format(L"Layer_Monster_{}", object.first);
+		ObjectManager::GetInstance().LayerClear(kSceneGamePlay0, layerTag);
+	}
+	_monsters.clear();
+
 }
 
 auto MapInstance::FindMonster(const int64_t objectId) -> std::shared_ptr<Monster>
@@ -127,12 +145,27 @@ auto MapInstance::CollisionMonsters(const std::shared_ptr<Collider> collider) ->
 	return monsters;
 }
 
+auto MapInstance::CollisionPortal(std::shared_ptr<Collider> collider) -> int32_t
+{
+	for (auto& portal : _portals)
+	{
+		if (portal->GetCollider())
+		{
+			if (portal->GetCollider()->CollisionAabb(collider))
+			{
+				return portal->GetPortalNumber();
+			}
+		}
+	}
+	return -1;
+}
+
 auto MapInstance::FindRangeCellObject(const std::shared_ptr<Collider>& targetCollider)->std::vector<std::shared_ptr<MapObject>>
 {
 	std::vector<std::shared_ptr<MapObject>> objects;
 	for (auto& object : _map_objects)
 	{
-		if (object->GetCollider())
+		if (!object->IsPortal() && object->GetCollider())
 		{
 			if (object->GetCollider()->CollisionAabb(targetCollider))
 			{

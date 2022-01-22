@@ -2,6 +2,7 @@
 #include "inventory_ui.h"
 
 #include "inventory_tab_btn/inventory_tab_btn.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/renderer/renderer.h"
@@ -156,6 +157,15 @@ auto Inventory::ChangeShow() -> void
 {
 	_is_show = !_is_show;
 	_pos = { g_WinCX / 2.f, g_WinCY / 2.f, 0 };
+	SoundManager::GetInstance().StopSound(SoundManager::kUi);
+	if (_is_show)
+	{
+		SoundManager::GetInstance().PlaySound(L"System_defaultDialog_open_02.wav", SoundManager::kUi);
+	}
+	else
+	{
+		SoundManager::GetInstance().PlaySound(L"System_defaultDialog_close_02.wav", SoundManager::kUi);
+	}
 }
 
 auto Inventory::Create() -> std::shared_ptr<Inventory>
@@ -221,6 +231,9 @@ auto Inventory::TabButtonTick(const double timeDelta) -> HRESULT
 			tabBtn->SetParentPos(_float3(_pos.x - (g_WinCX >> 1), -_pos.y + (g_WinCY >> 1), 0));
 			if (tabBtn->SelectBtn(_is_lbutton_down))
 			{
+				SoundManager::GetInstance().StopSound(SoundManager::kUi);
+				SoundManager::GetInstance().PlaySound(L"MBtMouseClick.mp3", SoundManager::kUi);
+
 				tabBtn->SetSelect(true);
 				selectBtn = tabBtn;
 			}

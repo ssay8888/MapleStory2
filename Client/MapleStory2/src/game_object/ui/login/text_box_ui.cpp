@@ -40,7 +40,10 @@ auto TextBoxUi::NativeConstruct(void* arg) -> HRESULT
 	_is_password = _text_info.is_password;
 	D3DXMatrixOrthoLH(&_proj_matrix, g_WinCX, g_WinCY, 0.f, 1.f);
 	_max_content_length = std::max(_text_info.max_content_length, 13);
-	_rc = { static_cast<LONG>(_pos.x - (_size.x / 2)), static_cast<LONG>(_pos.y - (_size.y / 2)), static_cast<LONG>(_pos.x + (_size.x / 2)), static_cast<LONG>(_pos.y + (_size.y / 2)) };
+	_rc = { static_cast<LONG>(_pos.x - (_size.x / 2)) + 3,
+		static_cast<LONG>(_pos.y - (_size.y / 2)),
+		static_cast<LONG>(_pos.x + (_size.x / 2)),
+		static_cast<LONG>(_pos.y + (_size.y / 2)) };
 	return GameObject::NativeConstruct(arg);
 }
 
@@ -75,6 +78,7 @@ auto TextBoxUi::Tick(const double timeDelta) -> HRESULT
 		GetWindowText(g_hEdit, str, 100);
 		SetText(str);
 	}
+
 	return GameObject::Tick(timeDelta);
 }
 
@@ -101,16 +105,56 @@ auto TextBoxUi::Render() -> HRESULT
 	auto result = _shader_com->SetUpConstantTable("g_WorldMatrix", &TransformMatrix, sizeof(_matrix));
 	result = _shader_com->SetUpConstantTable("g_ViewMatrix", &ViewMatrix, sizeof(_matrix));
 	result = _shader_com->SetUpConstantTable("g_ProjMatrix", &_proj_matrix, sizeof(_matrix));
-	result = _shader_com->SetUpTextureConstantTable("g_DiffuseTexture", _texture_com, 0);
+	result = _shader_com->SetUpTextureConstantTable("g_DiffuseTexture", _texture_textbox, _is_password);
 
 
 	result = _shader_com->BeginShader(0);
 
 	_vi_buffer_com->RenderViBuffer();
 
+
+	//TransformMatrix._11 = 134.f;
+	//TransformMatrix._22 = 82.f;
+
+	//TransformMatrix._41 = (_pos.x + 200) - (g_WinCX >> 1);
+	//TransformMatrix._42 = -(_pos.y + 20) + (g_WinCY >> 1);
+
+	//D3DXMatrixIdentity(&ViewMatrix);
+	//result = _shader_com->SetUpConstantTable("g_WorldMatrix", &TransformMatrix, sizeof(_matrix));
+	//result = _shader_com->SetUpConstantTable("g_ViewMatrix", &ViewMatrix, sizeof(_matrix));
+	//result = _shader_com->SetUpConstantTable("g_ProjMatrix", &_proj_matrix, sizeof(_matrix));
+	//result = _shader_com->SetUpTextureConstantTable("g_DiffuseTexture", _texture_btn, 0);
+	//_shader_com->Commit();
+
+	//_vi_buffer_com->RenderViBuffer();
+
 	result = _shader_com->EndShader();
 	UiDrawText();
+	if (_last_result_time > GetTickCount64())
+	{
+		RECT rc{
+			(g_WinCX >> 1)- 130,
+			(g_WinCY >> 1) - 125,
+			(g_WinCX >> 1)+ 1000,
+			(g_WinCY >> 1) + 500
+		};
 
+		switch (_result)
+		{
+		case Protocol::kLoginSuccess:
+			break;
+		case Protocol::kIdError:
+			_font->DrawTextW(NULL, L"아이디를 찾을 수 없습니다.", -1, &rc, DT_TOP | DT_LEFT, _text_info.text_color);
+			break;
+		case Protocol::kPasswordError:
+			_font->DrawTextW(NULL, L"비밀번호를 확인하세요.", -1, &rc, DT_TOP | DT_LEFT, _text_info.text_color);
+			break;
+		case Protocol::kAlreadyConnected:
+			_font->DrawTextW(NULL, L"이미 접속 중인 아이디입니다.", -1, &rc, DT_TOP | DT_LEFT, _text_info.text_color);
+			break;
+		default:;
+		}
+	}
 	return GameObject::Render();
 }
 
@@ -176,6 +220,12 @@ auto TextBoxUi::IsFocus() const -> bool
 	return _is_focus;
 }
 
+auto TextBoxUi::SetLoginResult(const Protocol::kLoginMessage result) -> void
+{
+	_result = result;
+	_last_result_time = GetTickCount64() + 2000;
+}
+
 auto TextBoxUi::UiDrawText() -> void
 {
 	if(_is_password)
@@ -185,20 +235,26 @@ auto TextBoxUi::UiDrawText() -> void
 		{
 			contents.append(L"*");
 		}
-		_font->DrawTextW(NULL, contents.c_str(), -1, &_rc, DT_TOP | DT_LEFT, _text_info.text_color);
+		_font->DrawTextW(NULL, contents.c_str(), -1, &_rc, DT_VCENTER | DT_LEFT, _text_info.text_color);
 	}
 	else
 	{
-		_font->DrawTextW(NULL, _contents.c_str(), -1, &_rc, DT_TOP | DT_LEFT, _text_info.text_color);
+		_font->DrawTextW(NULL, _contents.c_str(), -1, &_rc, DT_VCENTER | DT_LEFT, _text_info.text_color);
 	}
 }
 
 auto TextBoxUi::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, 
-		TEXT("Prototype_Texture_Default2"), 
-		TEXT("Com_Texture"), 
-		reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
+	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+		TEXT("Prototype_Texture_Login_TextBox"),
+		TEXT("Com_Texture1"),
+		reinterpret_cast<std::shared_ptr<Component>*>(&_texture_textbox))))
+		return E_FAIL;
+
+	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+		TEXT("Prototype_Texture_Login_Btn"),
+		TEXT("Com_Texture2"),
+		reinterpret_cast<std::shared_ptr<Component>*>(&_texture_btn))))
 		return E_FAIL;
 
 	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, 

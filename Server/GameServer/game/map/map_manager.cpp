@@ -7,6 +7,7 @@
 #include "data_reader/data_reader_manager.h"
 #include "game/entitiy/monster/spawn_point/spawn_point.h"
 #include "map_object/map_object.h"
+#include "src/utility/components/transform/transform.h"
 
 MapManager::MapManager()
 {
@@ -84,7 +85,8 @@ auto MapManager::MapPasing(const std::wstring& name) -> std::vector<MapEntity>
 				for (auto& property : entity.node())
 				{
 					if (!strcmp(property.attribute("name").value(), "Position") ||
-						!strcmp(property.attribute("name").value(), "Rotation"))
+						!strcmp(property.attribute("name").value(), "Rotation") ||
+						!strcmp(property.attribute("name").value(), "portal"))
 					{
 						for (auto& value : property)
 						{

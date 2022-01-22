@@ -6,6 +6,7 @@
 #include "src/game_object/ui/character_select/character_select_ui.h"
 #include "src/game_object/ui/character_select/character_beauty/character_beauty_select_sex.h"
 #include "src/game_object/ui/character_select/character_beauty/character_beauty_ui.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/utility/components/transform/transform.h"
 #include "src/utility/game_objects/camera/camera.h"
 #include "src/utility/game_objects/manager/object_manager.h"
@@ -14,6 +15,11 @@
 CharacterSelect::CharacterSelect(const ComPtr<IDirect3DDevice9>& device):
 	Scene(device)
 {
+}
+
+CharacterSelect::~CharacterSelect()
+{
+	SoundManager::GetInstance().StopSound(SoundManager::kBgm);
 }
 
 HRESULT CharacterSelect::NativeConstruct()

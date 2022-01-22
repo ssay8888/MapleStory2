@@ -33,7 +33,7 @@ HRESULT GameLogicManager::InitDevice(const HINSTANCE hInst, const HWND hWnd, con
 auto GameLogicManager::Clear(const uint32_t levelIndex) -> void
 {
 	ObjectManager::GetInstance().Clear(levelIndex);
-	ComponentManager::GetInstance().Clear(levelIndex);
+	//ComponentManager::GetInstance().Clear(levelIndex);
 }
 
 auto GameLogicManager::Tick(const double timeDelta) -> int32_t

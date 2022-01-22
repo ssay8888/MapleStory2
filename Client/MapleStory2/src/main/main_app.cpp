@@ -29,6 +29,7 @@
 #include "src/game_object/camera/ingame_camera.h"
 #include "src/game_object/ui/loading_ui/loading_ui.h"
 #include "src/game_object/user/user.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/utility/components/collider/collider.h"
 
@@ -42,7 +43,7 @@ auto MainApp::NativeConstruct() -> HRESULT
 {
 	GameLogicManager::InitDevice(g_hInst, g_Wnd, kSceneEnd);
 
-
+	SoundManager::GetInstance().Initialize();
 	if (FAILED(GraphicDevice::GetInstance().ReadyGraphicDevice(g_Wnd, GraphicDevice::kWindowMode::kModeWin, g_WinCX, g_WinCY, &_graphic_device)))
 		return E_FAIL;
 	

@@ -27,6 +27,7 @@
 #include "src/game_object/ui/player_info/player_info.h"
 #include "src/game_object/ui/skill_ui/skill_ui.h"
 #include "src/game_object/user/user.h"
+#include "src/managers/character_stat/character_stat.h"
 #include "src/utility/components/manager/component_manager.h"
 #include "src/utility/components/meshes/dynamic/mesh_dynamic.h"
 #include "src/utility/components/meshes/static/mesh_static.h"
@@ -369,20 +370,17 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	auto& objectManager = ObjectManager::GetInstance();
 	auto& componentManager = ComponentManager::GetInstance();
 	/* For.Prototype_Player*/
-	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Player"), Player::Create(_graphic_device))))
-		return E_FAIL;
+	objectManager.AddPrototype(TEXT("Prototype_Player"), Player::Create(_graphic_device));
 
 
 	/* For.Prototype_Terrain*/
-	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Terrain"), Terrain::Create(_graphic_device))))
-		return E_FAIL;
+	objectManager.AddPrototype(TEXT("Prototype_Terrain"), Terrain::Create(_graphic_device));
 
 
-	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Sky"), Sky::Create(_graphic_device))))
-		return E_FAIL;
+	objectManager.AddPrototype(TEXT("Prototype_Sky"), Sky::Create(_graphic_device));
+		
 
-	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mesh_Monster"), Monster::Create(_graphic_device))))
-		return E_FAIL;
+	objectManager.AddPrototype(TEXT("Prototype_Mesh_Monster"), Monster::Create(_graphic_device));
 
 	auto allMonster = DataReaderManager::GetInstance().AllMonsterInfo();
 	for (auto monsterInfo : allMonster)
@@ -422,84 +420,87 @@ auto Loading::ReadyGamePlay0()->HRESULT
 	/* 원형 리소스 객체를 생성한다. */
 
 	/* For.Prototype_Mesh_Stone*/
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Man"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Player/"), TEXT("man.x")))))
-		return E_FAIL;
-	const auto modelList = MapParser::MapModelNameListExport("02000003_ad");
+	componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Mesh_Man"), MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Player/"), TEXT("man.x")));
+	auto modelList = MapParser::MapModelNameListExport("02000003_ad");
 	for (auto& model : modelList)
 	{
 		componentManager.AddPrototype(kSceneGamePlay0,
-		                              std::wstring(L"Prototype_Mesh_Cube_").append(FileUtils::ConvertCtoW(model.c_str())),
-		                              MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Cube/"), 
-		                                                 FileUtils::ConvertCtoW(model.c_str()).append(L".X")));
+			std::wstring(L"Prototype_Mesh_Cube_").append(FileUtils::ConvertCtoW(model.c_str())),
+			MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Cube/"),
+				FileUtils::ConvertCtoW(model.c_str()).append(L".X")));
 	}
 
+	std::string list;
+	modelList = MapParser::MapModelNameListExport("02000230_bf");
+	for (auto& model : modelList)
+	{
+		list.append(model).append("\r\n");
+		componentManager.AddPrototype(kSceneGamePlay0,
+			std::wstring(L"Prototype_Mesh_Cube_").append(FileUtils::ConvertCtoW(model.c_str())),
+			MeshStatic::Create(_graphic_device, TEXT("../../Binary/Resources/Meshes/StaticMesh/Cube/"),
+				FileUtils::ConvertCtoW(model.c_str()).append(L".X")));
+	}
 	/* For.Prototype_Texture_Robby */
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Robby"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Robby.png")))))
-		return E_FAIL;
+	componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Robby"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Robby.png")));
 
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Sky"), Texture::Create(_graphic_device, Texture::kType::kTypeCube, TEXT("../../Binary/Resources/Textures/SkyBox/burger%d.dds"), 4))))
-		return E_FAIL;
+	componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Sky"), Texture::Create(_graphic_device, Texture::kType::kTypeCube, TEXT("../../Binary/Resources/Textures/SkyBox/burger%d.dds"), 4));
 
 	/* For.Prototype_Texture_Terrain */
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Terrain"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Terrain/Grass_%d.tga"), 2))))
-		return E_FAIL;
+	componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Terrain"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Terrain/Grass_%d.tga"), 2));
 
 	/* For.Prototype_VIBuffer_Terrain*/
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_VIBuffer_Terrain"), ViBufferTerrain::Create(_graphic_device, TEXT("../../Binary/Resources/Textures/Terrain/Height.bmp")))))
-		return E_FAIL;
+	componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_VIBuffer_Terrain"), ViBufferTerrain::Create(_graphic_device, TEXT("../../Binary/Resources/Textures/Terrain/Height.bmp")));
 
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Filter"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Terrain/Filter.bmp")))))
-		return E_FAIL;
+	componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Texture_Filter"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Terrain/Filter.bmp")));
 
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_VIBuffer_Cube"), ViBufferCube::Create(_graphic_device))))
-		return E_FAIL;		   
+	componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_VIBuffer_Cube"), ViBufferCube::Create(_graphic_device));
 
-	if (FAILED(componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Shader_Terrain"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Terrain.hlsl")))))
-		return E_FAIL;
+	componentManager.AddPrototype(static_cast<int32_t>(kScene::kSceneGamePlay0), TEXT("Prototype_Shader_Terrain"), Shader::Create(_graphic_device, TEXT("../../Binary/ShaderFiles/Shader_Terrain.hlsl")));
 
 	if (FAILED(LoadMainPlayerInfo()))
 	{
-		return E_FAIL;
+	//	return E_FAIL;
 	}
 
 	if (FAILED(LoadInventory()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	if (FAILED(LoadItemIcon()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	if (FAILED(LoadItemInfoPopup()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	if (FAILED(LoadEquippedUi()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	if (FAILED(LoadFreeSet()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	if (FAILED(LoadSkillUi()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	if (FAILED(LoadHpUi()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	if (FAILED(LoadNumberFont()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	if (FAILED(LoadChatUi()))
 	{
-		return E_FAIL;
+		//return E_FAIL;
 	}
 	
-	MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0);
+	MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0, CharacterStat::GetInstance().GetMapName());
+	//MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0, L"02000230_bf");
 	
 
 	_system_message.clear();

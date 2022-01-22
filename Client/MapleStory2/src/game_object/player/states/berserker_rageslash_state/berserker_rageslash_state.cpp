@@ -8,6 +8,8 @@
 #include "src/game_object/player/player.h"
 #include "src/game_object/player/states/large_sword_attack_idle_state/large_sword_attack_idle_state.h"
 #include "src/game_object/ui/monster_hp_ui/monster_hp_ui.h"
+#include "src/managers/character_stat/character_stat.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
 #include "src/system/input/input_device.h"
@@ -28,18 +30,26 @@ auto BerserkerRageslashState::Enter() -> void
 	case kAnimationType::kBerserkerRageslash1A:
 		_seq = kfm->seqs[gender == false ? 434 : 477];
 		_player->ChangeAnimation(kAnimationType::kBerserkerRageslash1A);
+		SoundManager::GetInstance().StopSound(SoundManager::kSkillUse);
+		SoundManager::GetInstance().PlaySound(L"Skill_Berserker_RageSlash_Cast_01.wav", SoundManager::kSkillUse);
 		break;
 	case kAnimationType::kBerserkerRageslash2A:
 		_seq = kfm->seqs[gender == false ? 456 : 476];
 		_player->ChangeAnimation(kAnimationType::kBerserkerRageslash2A);
+		SoundManager::GetInstance().StopSound(SoundManager::kSkillUse);
+		SoundManager::GetInstance().PlaySound(L"Skill_Berserker_RageSlash_Cast_02.wav", SoundManager::kSkillUse);
 		break;
 	case kAnimationType::kBerserkerRageslash3A:
 		_seq = kfm->seqs[gender == false ? 435 : 465];
 		_player->ChangeAnimation(kAnimationType::kBerserkerRageslash3A);
+		SoundManager::GetInstance().StopSound(SoundManager::kSkillUse);
+		SoundManager::GetInstance().PlaySound(L"Skill_Berserker_RageSlash_Cast_03.wav", SoundManager::kSkillUse);
 		break;
 	default:
 		_seq = kfm->seqs[gender == false ? 434 : 477];
 		_player->ChangeAnimation(kAnimationType::kBerserkerRageslash1A);
+		SoundManager::GetInstance().StopSound(SoundManager::kSkillUse);
+		SoundManager::GetInstance().PlaySound(L"Skill_Berserker_RageSlash_Cast_01.wav", SoundManager::kSkillUse);
 		break;;
 	}
 
@@ -209,7 +219,7 @@ auto BerserkerRageslashState::Tick(const double timeDelta) -> void
 	auto p0 = _seq->key[L"p0"];
 	if (_player->GetAnimationTimeAcc() >= p0 && _monsters.empty())
 	{
-		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName()))
 		{
 			const auto monsters = mapInstance->CollisionMonsters(_aabb_com);
 			Protocol::GameClientAttackMonster sendPkt;

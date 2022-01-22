@@ -12,6 +12,8 @@
 #include "src/game_object/player/states/idle_state/idle_state.h"
 #include "src/game_object/player/states/large_sword_attack_idle_state/large_sword_attack_idle_state.h"
 #include "src/game_object/ui/monster_hp_ui/monster_hp_ui.h"
+#include "src/managers/character_stat/character_stat.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/network/game_server_packet_handler.h"
 #include "src/network/send_manager.h"
 #include "src/system/graphic/graphic_device.h"
@@ -31,18 +33,26 @@ auto LargeSwordAttackState::Enter() -> void
 	case kAnimationType::kLargeSwordAttack1A:
 		_seq = kfm->seqs[gender == false ? 131 : 83];
 		_player->ChangeAnimation(kAnimationType::kLargeSwordAttack1A);
+		SoundManager::GetInstance().StopSound(SoundManager::kSkillUse);
+		SoundManager::GetInstance().PlaySound(L"Swing_LargeSword2_01.wav", SoundManager::kSkillUse);
 		break;
 	case kAnimationType::kLargeSwordAttack2A:
 		_seq = kfm->seqs[gender == false ? 132 : 84];
 		_player->ChangeAnimation(kAnimationType::kLargeSwordAttack2A);
+		SoundManager::GetInstance().StopSound(SoundManager::kSkillUse);
+		SoundManager::GetInstance().PlaySound(L"Swing_LargeSword2_02.wav", SoundManager::kSkillUse);
 		break;
 	case kAnimationType::kLargeSwordAttack3A:
 		_seq = kfm->seqs[gender == false ? 82 : 224];
 		_player->ChangeAnimation(kAnimationType::kLargeSwordAttack3A);
+		SoundManager::GetInstance().StopSound(SoundManager::kSkillUse);
+		SoundManager::GetInstance().PlaySound(L"Swing_LargeSword2_03.wav", SoundManager::kSkillUse);
 		break;
 	default:
 		_seq = kfm->seqs[gender == false ? 131 : 83];
 		_player->ChangeAnimation(kAnimationType::kLargeSwordAttack1A);
+		SoundManager::GetInstance().StopSound(SoundManager::kSkillUse);
+		SoundManager::GetInstance().PlaySound(L"Swing_LargeSword2_01.wav", SoundManager::kSkillUse);
 		break;;
 	}
 
@@ -96,7 +106,7 @@ auto LargeSwordAttackState::Tick(const double timeDelta) -> void
 	auto p0 = _seq->key[L"p0"];
 	if (_player->GetAnimationTimeAcc() >= p0 && _monsters.empty())
 	{
-		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName()))
 		{
 			const auto monsters = mapInstance->CollisionMonsters(_aabb_com);
 			Protocol::GameClientAttackMonster sendPkt;

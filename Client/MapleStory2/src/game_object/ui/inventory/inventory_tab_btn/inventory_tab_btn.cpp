@@ -18,6 +18,7 @@
 #include "src/game_object/ui/inventory/inventory_ui.h"
 #include "src/game_object/ui/ket_set_ui/key_set_manager.h"
 #include "src/game_object/ui/ket_set_ui/key_set_ui.h"
+#include "src/managers/sound_manager/sound_manager.h"
 
 InventoryTabBtn::InventoryTabBtn(Protocol::kInventoryType type, _float3 pos) :
 	GameObject(GraphicDevice::GetInstance().GetDevice()),
@@ -116,13 +117,17 @@ auto InventoryTabBtn::Tick(const _float3& pos, double timeDelta) -> HRESULT
 				}
 				else
 				{
-					if (item->SelectItem(pos, lDown, lUp))
+					if (!item->IsSelectItem() && item->SelectItem(pos, lDown, lUp))
 					{
 						itemObject = item;
 						itemObject->SetSelectItem(true);
+						SoundManager::GetInstance().StopSound(SoundManager::kPotion);
+						SoundManager::GetInstance().PlaySound(L"Item_Default_uiMaterial.wav", SoundManager::kPotion);
 					}
 					if (item->UnSelectItem(pos, lDown, lUp))
 					{
+						SoundManager::GetInstance().StopSound(SoundManager::kPotion);
+						SoundManager::GetInstance().PlaySound(L"Item_Default_uiMaterial.wav", SoundManager::kPotion);
 						item->SetSelectItem(false);
 						const auto resultPosition = item->FindPosition(pos);
 						if (resultPosition >= 0)

@@ -211,6 +211,11 @@ auto Item::SetSelectItem(const bool select)->void
 	_is_select_item = select;
 }
 
+auto Item::IsSelectItem() const -> bool
+{
+	return _is_select_item;
+}
+
 auto Item::MouseOverState() const -> bool
 {
 	return _is_up_mouse;

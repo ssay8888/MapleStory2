@@ -2,6 +2,7 @@
 #include "statup_btn.h"
 
 #include "src/managers/character_stat/character_stat.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/shader/shader.h"
@@ -71,6 +72,9 @@ auto StatupBtn::Tick(_float3 pos, double timeDelta) -> HRESULT
 			if (_input_device->GetDirectMouseKeyUp(InputDevice::kDirectInMouseButton::kLeftButton))
 			{
 				_call();
+				SoundManager::GetInstance().StopSound(SoundManager::kUi);
+				SoundManager::GetInstance().PlaySound(L"MBtMouseClick.mp3", SoundManager::kUi);
+
 			}
 		}
 		else

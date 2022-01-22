@@ -22,6 +22,7 @@ public:
 	auto GetFaceId()const->int32_t;
 	auto GetName()const->std::wstring;
 	auto GetMapId()const->int32_t;
+	auto SetMapId(int32_t id)->void;
 	auto GetSpawnPoint()const->int32_t;
 	auto GetTransform()const->std::shared_ptr<Transform>;
 

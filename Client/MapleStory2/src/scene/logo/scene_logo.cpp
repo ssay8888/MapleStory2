@@ -7,10 +7,13 @@
 
 #include "src/game_object/back_ground/back_ground.h"
 #include "src/game_object/ui/login/text_box_ui.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/network/send_manager.h"
 #include "src/network/login_server_packet_handler.h"
 #include "src/scene/loading/scene_loading.h"
 #include "src/system/input/input_device.h"
+#include "src/utility/components/manager/component_manager.h"
+#include "src/utility/components/textures/texture.h"
 #include "src/utility/game_logic_manager/game_logic_manager.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 #include "src/utility/scene_utility/scene_manager.h"
@@ -24,6 +27,7 @@ SceneLogo::SceneLogo(const ComPtr<IDirect3DDevice9>& device) :
 
 SceneLogo::~SceneLogo()
 {
+
 }
 
 auto SceneLogo::NativeConstruct() -> HRESULT
@@ -37,6 +41,7 @@ auto SceneLogo::NativeConstruct() -> HRESULT
 
 	auto& timerManager = TimerManager::GetInstance();
 	timerManager.AddTimers(TEXT("LoginTryTimer"));
+	SoundManager::GetInstance().PlayBGM(L"BGM_Henesys_01.wav");
 	return S_OK;
 }
 
@@ -108,16 +113,30 @@ auto SceneLogo::ReadyLayerBackGround(const std::wstring& layerTag) -> HRESULT
 
 auto SceneLogo::ReadyLayerTextBox(const std::wstring& layerTag) -> HRESULT
 {
+	const auto& componentManager = ComponentManager::GetInstance();
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_Login_TextBox"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/login_ui/textbox_%d.png"), 2))))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_Login_Btn"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/Ui/login_ui/login_btn_%d.png"), 2))))
+	{
+		return E_FAIL;
+	}
+
 	TagTextBoxInformation info;
-	info.pos = { 250, 250 };
-	info.size = { 300, 36 };
+	info.size = { 263.f, 30.f };
+	info.pos = { g_WinCX >> 1, g_WinCY >> 1 };
 
 	if (FAILED(ObjectManager::GetInstance().AddGameObject(static_cast<int32_t>(kScene::kSceneLogo), TEXT("Prototype_Login_Textbox"), layerTag, &info)))
+	{
 		return E_FAIL;
-	info.pos = { 250, 300 };
+	}
+	info.pos = { g_WinCX >> 1, (g_WinCY >> 1) + 30 };
 	info.is_password = true;
 	if (FAILED(ObjectManager::GetInstance().AddGameObject(static_cast<int32_t>(kScene::kSceneLogo), TEXT("Prototype_Login_Textbox"), layerTag, &info)))
+	{
 		return E_FAIL;
+	}
 
 	return S_OK;
 }

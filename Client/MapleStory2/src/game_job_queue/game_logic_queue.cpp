@@ -47,7 +47,18 @@ auto GameLogicQueue::AddUser(PacketSessionRef session, Protocol::GameServerRespa
 {
 	auto& objectManager = ObjectManager::GetInstance();
 	std::wstring layer = fmt::format(L"Layer_User_{}", pkt.character_id());
-	objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_User"), layer, &pkt);
+	auto object = objectManager.GetGameObjectPtr(kSceneGamePlay0, layer, 0);
+	if (object == nullptr)
+	{
+		objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_User"), layer, &pkt);
+	}
+}
+
+auto GameLogicQueue::RemoveUser(PacketSessionRef session, Protocol::GameServerRemovePlayer pkt) -> void
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	std::wstring layer = fmt::format(L"Layer_User_{}", pkt.character_id());
+	objectManager.LayerClear(kSceneGamePlay0, layer);
 }
 
 auto GameLogicQueue::MovePlayer(PacketSessionRef session, Protocol::GameServerMovePlayer pkt) -> void
@@ -68,15 +79,14 @@ auto GameLogicQueue::RespawnMonster(PacketSessionRef session, Protocol::GameServ
 {
 	auto& objectManager = ObjectManager::GetInstance();
 
-	wchar_t LayerTag[MAX_PATH];
-	swprintf_s(LayerTag, L"Layer_Monster_%lld", pkt.object_id());
+	std::wstring LayerTag = fmt::format(L"Layer_Monster_{}", pkt.object_id());
 	if (FAILED(objectManager.AddGameObject(kScene::kSceneGamePlay0, TEXT("Prototype_Mesh_Monster"), LayerTag, &pkt)))
 	{
 		GetInstance()->DoAsync(&GameLogicQueue::RespawnMonster, session, pkt);
 	}
 	else
 	{
-		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName()))
 		{
 			if (const auto monster = std::static_pointer_cast<Monster>(objectManager.GetGameObjectPtr(kSceneGamePlay0, LayerTag, 0)))
 			{
@@ -233,7 +243,7 @@ auto GameLogicQueue::AttackMonster(PacketSessionRef session, Protocol::GameServe
 	if (playerObject)
 	{
 
-		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName()))
 		{
 			for (auto& damageItem : pkt.damages())
 			{
@@ -257,7 +267,8 @@ auto GameLogicQueue::AttackMonster(PacketSessionRef session, Protocol::GameServe
 
 auto GameLogicQueue::UpdateMonsterStat(PacketSessionRef session, Protocol::GameServerMonsterStatUpdate pkt) -> void
 {
-	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+	
+	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName()))
 	{
 		const auto monster = mapInstance->FindMonster(pkt.monster_obj_id());
 
@@ -275,7 +286,7 @@ auto GameLogicQueue::UpdateMonsterStat(PacketSessionRef session, Protocol::GameS
 
 auto GameLogicQueue::KillMonster(PacketSessionRef session, Protocol::GameServerKillMonster pkt) -> void
 {
-	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(L"02000003_ad"))
+	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName()))
 	{
 		auto monster = mapInstance->FindMonster(pkt.monster_obj_id());
 		monster->GetStat()->SetHp(0);
@@ -397,6 +408,9 @@ auto GameLogicQueue::ResurrectionPlayer(PacketSessionRef session, Protocol::Game
 		const auto playerObject = std::static_pointer_cast<Player>(objectManager.GetGameObjectPtr(kSceneGamePlay0, L"Layer_Character", 0));
 		if (playerObject)
 		{
+			_character_info.set_pos_x(pkt.position().x());
+			_character_info.set_pos_y(pkt.position().y());
+			_character_info.set_pos_z(pkt.position().z());
 			playerObject->GetTransform()->SetState(Transform::kState::kStatePosition, _float3(pkt.position().x(), pkt.position().y(), pkt.position().z()));
 			playerObject->ChangeCharacterState(IdleState::GetInstance());
 		}
@@ -422,6 +436,23 @@ auto GameLogicQueue::GameChat(PacketSessionRef session, Protocol::GameServerChat
 	if (chatUi)
 	{
 		chatUi->PushHistory(StringUtils::ConvertCtoW(pkt.contents().c_str()));
+	}
+}
+
+auto GameLogicQueue::GameChangeMap(PacketSessionRef session, Protocol::GameServerChangeMap pkt) -> void
+{
+	auto& objectManager = ObjectManager::GetInstance();
+	const auto playerObject = std::static_pointer_cast<Player>(objectManager.GetGameObjectPtr(kSceneGamePlay0, L"Layer_Character", 0));
+
+	if (playerObject)
+	{
+		CharacterStat::GetInstance().SetMapId(pkt.map_id());
+		//MapManager::GetInstance().LoadMapInstance(kSceneGamePlay0, CharacterStat::GetInstance().GetMapName());
+		const auto scene = SceneLoading::Create(GraphicDevice::GetInstance().GetDevice(), kSceneGamePlay0);
+		if (SUCCEEDED(SceneManager::GetInstance().SetUpScene(scene)))
+		{
+			GameLogicManager::Clear(static_cast<uint32_t>(kSceneGamePlay0));
+		}
 	}
 }
 

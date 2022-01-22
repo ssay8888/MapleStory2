@@ -3,22 +3,29 @@
 
 #include "map_instance.h"
 #include "src/common/xml/map_parser.h"
+#include "src/managers/character_stat/character_stat.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/utility/game_objects/manager/object_manager.h"
 
-auto MapManager::LoadMapInstance(kScene scene) -> void
+auto MapManager::LoadMapInstance(kScene scene, std::wstring mapName) -> void
 {
-	auto mapData = MapParser::MapParsing("02000003_ad");
+	auto mapData = MapParser::MapParsing(mapName);
 
 	auto mapInstance = std::make_shared<MapInstance>(GraphicDevice::GetInstance().GetDevice());
-
 	for (auto& entity : mapData)
 	{
 		entity.scene = scene;
 		mapInstance->AddMapObject(entity);
 	}
+	ObjectManager::GetInstance().LayerClear(kSceneGamePlay0, L"MapLayer_");
 	ObjectManager::GetInstance().AddGameObject(scene, L"MapLayer_", mapInstance);
-	_maps.emplace(L"02000003_ad", mapInstance);
+
+	auto map = FindMapInstance(mapName);
+	if (map != nullptr)
+	{
+		map->RemoveAllMonster();
+	}
+	_maps.emplace(mapName, mapInstance);
 }
 
 auto MapManager::LoadCharacterInstance(kScene scene) -> void

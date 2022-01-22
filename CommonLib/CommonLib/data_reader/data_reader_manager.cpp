@@ -386,6 +386,17 @@ auto DataReaderManager::AllFieldData() const -> std::map<int32_t, std::shared_pt
 {
 	return _field_data;
 }
+
+auto DataReaderManager::FindMapName(const int32_t id) -> std::shared_ptr<FieldData>
+{
+	auto iterator = _field_data.find(id);
+	if (iterator != _field_data.end())
+	{
+		return iterator->second;
+	}
+	return nullptr;
+}
+
 auto DataReaderManager::LoadMonsterInfo() -> void
 {
 	xml_document doc;

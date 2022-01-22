@@ -3,6 +3,7 @@
 
 #include "skillset/skill_set.h"
 #include "src/game_object/ui/popup_info/popup_info.h"
+#include "src/managers/sound_manager/sound_manager.h"
 #include "src/system/graphic/graphic_device.h"
 #include "src/system/input/input_device.h"
 #include "src/utility/components/renderer/renderer.h"
@@ -132,6 +133,15 @@ auto SkillUi::ChangeShow() -> void
 {
 	_is_show = !_is_show;
 	_pos = { g_WinCX / 2.f, g_WinCY / 2.f, 0 };
+	SoundManager::GetInstance().StopSound(SoundManager::kUi);
+	if (_is_show)
+	{
+		SoundManager::GetInstance().PlaySound(L"System_defaultDialog_open_02.wav", SoundManager::kUi);
+	}
+	else
+	{
+		SoundManager::GetInstance().PlaySound(L"System_defaultDialog_close_02.wav", SoundManager::kUi);
+	}
 }
 
 auto SkillUi::GetSkillSet(const int32_t skillId) -> std::shared_ptr<SkillSet>

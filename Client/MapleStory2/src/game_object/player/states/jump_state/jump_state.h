@@ -23,6 +23,10 @@ private:
 	bool _is_jump_up = false;
 	bool _is_jump_down = false;
 
+	bool _is_ladder = false;
+
+	bool _is_up_key = false;
+
 	bool	_is_move = false;
 
 	const float _jump_up_time = 0.31f;

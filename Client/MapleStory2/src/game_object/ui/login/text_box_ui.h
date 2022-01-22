@@ -28,6 +28,8 @@ public:
 	auto SetFocus(bool focus)->void;
 	auto IsFocus() const ->bool;
 
+	auto SetLoginResult(Protocol::kLoginMessage result)->void;
+
 protected:
 	auto UiDrawText()->void;
 	auto AddComponents()->HRESULT;
@@ -43,10 +45,14 @@ protected:
 	int32_t							_max_content_length;
 	std::wstring					_contents;
 	ComPtr<ID3DXFont>				_font = nullptr;
-	std::shared_ptr<Texture>		_texture_com = nullptr;
+	std::shared_ptr<Texture>		_texture_textbox = nullptr;
+	std::shared_ptr<Texture>		_texture_btn = nullptr;
 	std::shared_ptr<Shader>			_shader_com = nullptr;
 	std::shared_ptr<ViBufferRect>	_vi_buffer_com = nullptr;
 
 	TextBoxInformation				_text_info;
+
+	Protocol::kLoginMessage			_result;
+	uint64_t						_last_result_time = 0;
 };
 
