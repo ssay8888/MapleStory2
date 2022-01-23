@@ -144,10 +144,10 @@ auto CharacterItem::GetGirlItemId()const ->int32_t
 
 auto CharacterItem::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_BeautyItem"), TEXT("Com_Item"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture))))
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_BeautyItem"), TEXT("Com_Item"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture))))
 		return E_FAIL;
 
 	switch (_info.type)
@@ -166,7 +166,7 @@ auto CharacterItem::AddComponents() -> HRESULT
 		{
 			prototypeName.append(std::to_wstring(_info.man_item_id));
 		}
-		GameObject::AddComponent(kScene::kSceneStatic, prototypeName, TEXT("Com_Item_Icon"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_icon));
+		AddComponent(kScene::kSceneStatic, prototypeName, TEXT("Com_Item_Icon"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_icon));
 		break;
 	}
 	case kEqpType::kFace:

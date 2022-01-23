@@ -117,21 +117,21 @@ auto MonsterHpUi::SetMonster(std::shared_ptr<Monster> monster) -> void
 auto MonsterHpUi::AddComponents() -> HRESULT
 {
 	 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 	{
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Monster_Hp_Ui_Frame"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_frame_com))))
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Monster_Hp_Ui_Frame"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_frame_com))))
 	{
 	 return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Monster_Hp_Ui_Bar"), TEXT("Com_Texture2"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_hp_com))))
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Monster_Hp_Ui_Bar"), TEXT("Com_Texture2"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_hp_com))))
 	{
 	 return E_FAIL;
 	}
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		L"Prototype_Shader_Ui_Gage",
 		L"Com_Shader_Hp",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))

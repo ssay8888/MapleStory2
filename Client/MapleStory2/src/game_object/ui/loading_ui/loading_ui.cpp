@@ -105,7 +105,7 @@ auto LoadingUi::Create() -> std::shared_ptr<LoadingUi>
 
 auto LoadingUi::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, 
+	if (FAILED(AddComponent(kScene::kSceneStatic, 
 		TEXT("Prototype_VIBuffer_Rect"), 
 		TEXT("Com_VIBuffer"), 
 		reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
@@ -113,7 +113,7 @@ auto LoadingUi::AddComponents() -> HRESULT
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		L"Prototype_Shader_Rect",
 		L"Com_Shader",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
@@ -121,7 +121,7 @@ auto LoadingUi::AddComponents() -> HRESULT
 		return E_FAIL;
 	}
 	
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		TEXT("Prototype_Texture_Loading_henesys_02"),
 		TEXT("Com_Texture_BackGround1"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_loading_ui))))
@@ -129,7 +129,7 @@ auto LoadingUi::AddComponents() -> HRESULT
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		TEXT("Prototype_Texture_Loading_Ui_Side_Bar"),
 		TEXT("Com_Texture_BackGround2"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_texture_progress))))

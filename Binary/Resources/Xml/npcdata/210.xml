@@ -5285,7 +5285,7 @@
 	<npc id="21000153">
 		<environment feature="Season2" npcAttackGroup="1" npcDefenseGroup="2" nametag="1" minimap="0" hpBar="1" defenceMaterial="1" hitImmune="1" abnormalImmune="1" level="33" rankIcon="c" carePathToEnemy="1" raceString="animal" gender="2" portrait="./Data/Resource/Image/Portrait/Mob/21000153_M_TurtleBabyHorn01_P.png" damagedColorScale="6" damagedVibrateDuration="0.8" damagedVibrateAmp="1" regenEffect="BG/Common/Eff_Test_Regen.xml" lookAtMyPCWhenTalking="0">
 			<model kfm="21000153_M_TurtleBabyHorn01" shadowScale="150" rotationSpeed="720" walkSpeed="30" runSpeed="100" />
-			<stat hp="7238" asp="100" msp="100" atp="80" evp="82" cap="54" cad="500" car="50" ndd="265" pap="7127" map="7129" par="90" mar="90" />
+			<stat hp="300" asp="100" msp="100" atp="80" evp="82" cap="54" cad="500" car="50" ndd="265" pap="7127" map="7129" par="90" mar="90" />
 			<distance avoid="60" sight="400" sightHeightUP="300" sightHeightDown="0" />
 			<skill ids="40123001,40349001" probs="80,20" />
 			<additionalEffect codes="90000814" levels="1" />
@@ -9960,7 +9960,7 @@
 	<npc id="21000294">
 		<environment feature="Season2" npcAttackGroup="1" npcDefenseGroup="2" nametag="1" minimap="0" hpBar="1" defenceMaterial="1" hitImmune="1" abnormalImmune="1" level="34" rankIcon="c" carePathToEnemy="1" raceString="creature" gender="2" portrait="./Data/Resource/Image/Portrait/Mob/21000294_M_LegoGolemSmallOrange_P.png" damagedColorScale="6" damagedVibrateDuration="0.8" damagedVibrateAmp="1" regenEffect="BG/Common/Eff_Test_Regen.xml" lookAtMyPCWhenTalking="0">
 			<model kfm="21000294_M_LegoGolemSmallOrange" shadowScale="150" rotationSpeed="720" walkSpeed="100" runSpeed="200" />
-			<stat hp="7698" asp="100" msp="100" atp="80" evp="82" cap="54" cad="500" car="50" ndd="279" pap="7844" map="7847" par="90" mar="90" />
+			<stat hp="350" asp="100" msp="100" atp="80" evp="82" cap="54" cad="500" car="50" ndd="279" pap="7844" map="7847" par="90" mar="90" />
 			<distance avoid="60" sight="400" sightHeightUP="300" sightHeightDown="0" />
 			<skill ids="40226011,40226021" />
 			<additionalEffect codes="90000814" levels="1" />
@@ -11527,7 +11527,7 @@
 	<npc id="21000339">
 		<environment feature="Season2" npcAttackGroup="1" npcDefenseGroup="2" nametag="1" minimap="0" hpBar="1" defenceMaterial="1" hitImmune="1" abnormalImmune="1" level="34" rankIcon="c" carePathToEnemy="1" raceString="plant" gender="2" portrait="./Data/Resource/Image/Portrait/Mob/21000339_M_BrownSpore_P.png" damagedColorScale="6" damagedVibrateDuration="0.8" damagedVibrateAmp="1" regenEffect="BG/Common/Eff_Test_Regen.xml" lookAtMyPCWhenTalking="0">
 			<model kfm="21000339_M_BrownSpore" scale="0.55" shadowScale="120" rotationSpeed="720" walkSpeed="60" runSpeed="200" />
-			<stat hp="7698" asp="100" msp="100" atp="80" evp="82" cap="54" cad="500" car="50" ndd="335" pap="7844" map="7847" par="90" mar="90" />
+			<stat hp="150" asp="100" msp="100" atp="80" evp="82" cap="54" cad="500" car="50" ndd="335" pap="7844" map="7847" par="90" mar="90" />
 			<distance avoid="45" sight="450" sightHeightUP="300" sightHeightDown="0" />
 			<skill ids="40307011" probs="100" />
 			<additionalEffect codes="90000814" levels="1" />

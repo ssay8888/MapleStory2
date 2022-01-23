@@ -55,32 +55,35 @@ auto SkillSet::Tick(const _float3 pos, const double timeDelta) -> HRESULT
 			pos.x + _pos.x - (g_WinCX >> 1),
 			-pos.y + _pos.y + (g_WinCY >> 1), 0), timeDelta);
 	}
-	if (IsCollision(pos))
+	if (_skill_id != 10200031)
 	{
-		if (_is_lbutton_down)
+		if (IsCollision(pos))
 		{
-			_is_select_skill = true;
-		}
-	}
-	if (_is_select_skill)
-	{
-		if (_is_lbutton_up)
-		{
-			_is_select_skill = false;
-			auto baseKeyManager = ObjectManager::GetInstance().GetGameObjectPtr(kSceneGamePlay0, L"Layer_Keymanager", 0);
-			auto keyManager = std::static_pointer_cast<KeySetManager>(baseKeyManager);
-			if (keyManager)
+			if (_is_lbutton_down)
 			{
-				auto index = keyManager->IsCollisionKeySet();
-				if (index != -1)
+				_is_select_skill = true;
+			}
+		}
+		if (_is_select_skill)
+		{
+			if (_is_lbutton_up)
+			{
+				_is_select_skill = false;
+				auto baseKeyManager = ObjectManager::GetInstance().GetGameObjectPtr(kSceneGamePlay0, L"Layer_Keymanager", 0);
+				auto keyManager = std::static_pointer_cast<KeySetManager>(baseKeyManager);
+				if (keyManager)
 				{
-					const auto keySet = keyManager->GetKeySet(index);
-					keySet->SetSkill(std::static_pointer_cast<SkillSet>(shared_from_this()));
-					Protocol::GameClientKeySet sendPkt;
-					sendPkt.set_key_value(index);
-					sendPkt.set_type(Protocol::kSkill);
-					sendPkt.set_value(_skill_id);
-					SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+					auto index = keyManager->IsCollisionKeySet();
+					if (index != -1)
+					{
+						const auto keySet = keyManager->GetKeySet(index);
+						keySet->SetSkill(std::static_pointer_cast<SkillSet>(shared_from_this()));
+						Protocol::GameClientKeySet sendPkt;
+						sendPkt.set_key_value(index);
+						sendPkt.set_type(Protocol::kSkill);
+						sendPkt.set_value(_skill_id);
+						SendManager::GetInstance().Push(GameServerPacketHandler::MakeSendBuffer(sendPkt));
+					}
 				}
 			}
 		}
@@ -227,7 +230,7 @@ auto SkillSet::GetPopupInfo() const -> std::shared_ptr<PopupInfo>
 
 auto SkillSet::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		TEXT("Prototype_VIBuffer_Rect"),
 		TEXT("Com_VIBuffer"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
@@ -235,7 +238,7 @@ auto SkillSet::AddComponents() -> HRESULT
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0,
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0,
 		TEXT("Prototype_Texture_SkillUi_SkillSet"),
 		TEXT("Com_Texture"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_skillset_texture))))
@@ -244,7 +247,7 @@ auto SkillSet::AddComponents() -> HRESULT
 	}
 
 	const auto skillIconPrototype = fmt::format(L"Prototype_Texture_Skill_Icon_{}.png", _skill_id);
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0,
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0,
 		fmt::format(L"Prototype_Texture_Skill_Icon_{}.png", _skill_id),
 		fmt::format(L"Layer_Skillicon", _skill_id),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_skill_icon))))

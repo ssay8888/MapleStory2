@@ -41,6 +41,8 @@ message GameServerLoadCharacter
 
 	repeated item items = 23;
 	repeated keymap keymap = 24;
+
+	bool is_first = 25;
 }
 
 message GameClientLoading

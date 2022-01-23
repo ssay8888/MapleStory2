@@ -203,7 +203,7 @@ auto ChatUi::PushHistory(std::wstring content) -> void
 
 auto ChatUi::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		TEXT("Prototype_VIBuffer_Rect"),
 		TEXT("Com_VIBuffer"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
@@ -211,7 +211,7 @@ auto ChatUi::AddComponents() -> HRESULT
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		L"Prototype_Shader_Rect",
 		L"Com_Shader",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
@@ -219,7 +219,7 @@ auto ChatUi::AddComponents() -> HRESULT
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0,
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0,
 		TEXT("Prototype_Texture_Chat_Frame"),
 		TEXT("Com_Texture"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_frame_texture))))
@@ -227,7 +227,7 @@ auto ChatUi::AddComponents() -> HRESULT
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0,
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0,
 		TEXT("Prototype_Texture_Chat"),
 		TEXT("Com_Texture_1"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_chat_texture))))

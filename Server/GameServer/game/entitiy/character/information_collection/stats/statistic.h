@@ -47,8 +47,10 @@ public:
 public:
 	static auto Create(int64_t characterId)->std::shared_ptr<Statistic>;
 
+	auto LevelUp()->void;
 private:
 	auto NativeConstruct()->HRESULT;
+
 
 private:
 	int32_t _str, _dex, _int, _luk;

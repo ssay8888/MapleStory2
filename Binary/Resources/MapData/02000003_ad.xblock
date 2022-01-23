@@ -16396,6 +16396,22 @@
 				<set value="0, 0, 180" />
 			</property>
 		</entity>
+		<entity id="ed45a305b1d346f8a8299ec1997f77d0" modelName="he_fi_prop_flag_C04_" name="he_obj_flagA_04_2" iterations="23">
+			<property name="Position">
+				<set value="1050, 3000, 3300" />
+			</property>
+			<property name="Rotation">
+				<set value="0, 0, 180" />
+			</property>
+		</entity>
+		<entity id="65ebb14dd86b4cb1bb15bafae071b005" modelName="portal" name="portal[]" iterations="10">
+			<property name="Position">
+				<set value="1200, 3000, 3300" />
+			</property>
+			<property name="portal">
+				<set value="0, 2000230, 0" />
+			</property>
+		</entity>
 		<entity id="cf73a65d3e694e4b82fd2f85b598bd9d" modelName="he_ground_rock_A05_" name="he_ground_rock_A05_[-4, 0, 14]" iterations="5">
 			<property name="Position">
 				<set value="-600, 0, 2100" />
@@ -18648,14 +18664,6 @@
 				<set value="0, 0, 180" />
 			</property>
 		</entity>
-		<entity id="ed45a305b1d346f8a8299ec1997f77d0" modelName="he_fi_prop_flag_C04_" name="he_obj_flagA_04_2" iterations="23">
-			<property name="Position">
-				<set value="1050, 3000, 3300" />
-			</property>
-			<property name="Rotation">
-				<set value="0, 0, 180" />
-			</property>
-		</entity>
 		<entity id="ed5dc38e243a42e4b6e71c4fad815982" modelName="he_floor_brick_B01_" name="he_floor_brick_B01_[-10, -15, 5]" iterations="4">
 			<property name="Position">
 				<set value="-1500, -2250, 750" />
@@ -18758,14 +18766,6 @@
 			</property>
 			<property name="Rotation">
 				<set value="0, 0, 0" />
-			</property>
-		</entity>
-		<entity id="65ebb14dd86b4cb1bb15bafae071b005" modelName="portal" name="portal[]" iterations="10">
-			<property name="Position">
-				<set value="0, 1350, 3300" />
-			</property>
-			<property name="portal">
-				<set value="0, 2000230, 0" />
 			</property>
 		</entity>
 		<entity id="eebb959627bb47f1883e4bf015ce2827" modelName="MS2RegionSpawn_2" name="MS2RegionSpawn_1" iterations="1">

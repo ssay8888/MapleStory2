@@ -154,12 +154,13 @@ enum kPlayerStatType : int {
   kHp = 0,
   kMp = 1,
   kExp = 2,
+  kLevel = 3,
   kPlayerStatType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   kPlayerStatType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool kPlayerStatType_IsValid(int value);
 constexpr kPlayerStatType kPlayerStatType_MIN = kHp;
-constexpr kPlayerStatType kPlayerStatType_MAX = kExp;
+constexpr kPlayerStatType kPlayerStatType_MAX = kLevel;
 constexpr int kPlayerStatType_ARRAYSIZE = kPlayerStatType_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* kPlayerStatType_descriptor();

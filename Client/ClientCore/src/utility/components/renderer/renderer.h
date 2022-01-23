@@ -12,6 +12,7 @@ public:
 		kRenderNonAlpha,
 		kRenderAlpha,
 		kRenderUi,
+		kRenderMouse,
 		kRenderEnd
 	};
 
@@ -35,6 +36,7 @@ private:
 	auto RenderNonAlpha()->HRESULT;
 	auto RenderAlpha()->HRESULT;
 	auto RenderUi()->HRESULT;
+	auto RenderMouse()->HRESULT;
 
 private:
 	std::vector<std::shared_ptr<GameObject>> _render_objects[static_cast<int32_t>(kRenderGroup::kRenderEnd)];

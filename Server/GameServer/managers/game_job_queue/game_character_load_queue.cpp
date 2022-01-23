@@ -42,6 +42,11 @@ auto GameCharacterLoadQueue::GameClientLoadingResponse(PacketSessionRef session,
 	Protocol::GameClientLoading pkt) -> void
 {
 	const auto gameSession = std::static_pointer_cast<GameSession>(session);
+	if (gameSession->GetPlayer() == nullptr)
+	{
+		return;
+	}
+
 
 	auto& authManager = GameAuthManager::GetInstance();
 	const auto authInfo = authManager.FindAuth(pkt.auth());
@@ -70,7 +75,7 @@ auto GameCharacterLoadQueue::SaveDbToPlayer(PacketSessionRef session) -> void
 
 }
 
-auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServerLoadCharacter& sendPkt, PacketSessionRef session, std::shared_ptr<GameCharacter> player) -> void
+auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServerLoadCharacter& sendPkt, PacketSessionRef session, std::shared_ptr<GameCharacter> player, bool first) -> void
 {
 	sendPkt.set_state(Protocol::kLoadSuccess);
 	sendPkt.set_account_id(player->GetAccountId());
@@ -131,4 +136,5 @@ auto GameCharacterLoadQueue::SettingCharacterInfoSendPacket(Protocol::GameServer
 			keymap->set_value(value);
 		}
 	}
+	sendPkt.set_is_first(first);
 }

@@ -1,6 +1,7 @@
 #include "c_pch.h"
 #include "player_info.h"
 
+#include "common_defines.h"
 #include "src/game_object/ui/monster_hp_ui/monster_hp_ui.h"
 #include "src/managers/character_stat/character_stat.h"
 #include "src/system/input/input_device.h"
@@ -94,30 +95,30 @@ auto PlayerInfo::Create(const ComPtr<IDirect3DDevice9>& device) -> std::shared_p
 auto PlayerInfo::AddComponents() -> HRESULT
 {
 	/* Com_VIBuffer */
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_Frame"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_Frame"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_HpGage"), TEXT("Com_Texture_Hp"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_hp))))
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_HpGage"), TEXT("Com_Texture_Hp"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_hp))))
 		return E_FAIL;
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_MpGage"), TEXT("Com_Texture_Mp"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_mp))))
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_MpGage"), TEXT("Com_Texture_Mp"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_mp))))
 		return E_FAIL;
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_ExpBarFrame"), TEXT("Com_ExpBar_Frame"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_exp_frame))))
-		return E_FAIL;
-
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_ExpBarProgress"), TEXT("Com_ExpBar_Progress"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_exp_progress))))
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_ExpBarFrame"), TEXT("Com_ExpBar_Frame"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_exp_frame))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_PlayerInfo_ExpBarProgress"), TEXT("Com_ExpBar_Progress"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_exp_progress))))
+		return E_FAIL;
+
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		L"Prototype_Shader_Ui",
 		L"Com_Shader",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		L"Prototype_Shader_Ui_Gage",
 		L"Com_Shader_Hp",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_gage))))
@@ -213,8 +214,8 @@ auto PlayerInfo::ExpProgressRender() -> HRESULT
 
 	const auto& statInstance = CharacterStat::GetInstance();
 	const float expPercent =
-		static_cast<float>(statInstance.GetExp()) / static_cast<float>(statInstance.GetMaxMp()) * 100.f;
-	float expWidth = expPercent / 100;
+		static_cast<float>(statInstance.GetExp()) / g_exp[statInstance.GetLevel()] * 100.f;
+	float expWidth = expPercent / g_exp[statInstance.GetLevel()];
 
 	auto result = _shader_gage->SetUpConstantTable("g_WorldMatrix", &transformMatrix, sizeof(_matrix));
 	result = _shader_gage->SetUpTextureConstantTable("g_DiffuseTexture", _texture_exp_progress);

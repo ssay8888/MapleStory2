@@ -123,6 +123,11 @@ auto CharacterStat::GetLevel() const -> int32_t
 	return _level;
 }
 
+auto CharacterStat::SetLevel(const int32_t level) -> void
+{
+	_level = level;
+}
+
 auto CharacterStat::GetExp() const -> int32_t
 {
 	return _exp;

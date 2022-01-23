@@ -16,7 +16,9 @@
 
 #include <fmt/xchar.h>
 
+#include "game/entitiy/monster/spawn_point/spawn_point.h"
 #include "game/map/map_object/xblock/map_xblock.h"
+#include "managers/game_job_queue/game_character_load_queue.h"
 #include "src/utility/components/transform/transform.h"
 #include "string_utils/string_utils.h"
 
@@ -90,11 +92,21 @@ auto GameServerPlayerHandler::AttackMonster(Protocol::GameClientAttackMonster pk
 
 					if (statInfo)
 					{
-						statInfo->GainExp(5);
+						auto monsterInfo = DataReaderManager::GetInstance().FindMonsterInfo(monster->GetSpawnPoint()->GetSpawnNpcId());
+						statInfo->GainExp(30);
 						Protocol::GameServerUpdateStat statPkt;
 						statPkt.set_type(Protocol::kExp);
 						statPkt.set_value(statInfo->GetExp());
 						gameSession->Send(GameClientPacketHandler::MakeSendBuffer(statPkt));
+
+						if (statInfo->GetExp() >= g_exp[statInfo->GetLevel()])
+						{
+							statInfo->LevelUp();
+							Protocol::GameServerUpdateStat statPkt;
+							statPkt.set_type(Protocol::kLevel);
+							statPkt.set_value(statInfo->GetLevel());
+							gameSession->Send(GameClientPacketHandler::MakeSendBuffer(statPkt));
+						}
 					}
 				}
 				else
@@ -446,7 +458,7 @@ auto GameServerPlayerHandler::ChangeMap(Protocol::GameClientChangeMap pkt, GameS
 	}
 
 	auto player = gameSession->GetPlayer();
-	auto transform = player->GetTransform();
+	auto transform = gameSession->GetPlayer()->GetTransform();
 
 	if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(player->GetMapId()))
 	{
@@ -461,21 +473,30 @@ auto GameServerPlayerHandler::ChangeMap(Protocol::GameClientChangeMap pkt, GameS
 				mapInstance->RemoveCharacter(player->GetCharacterId());
 				//changeMapInstance->AddCharacter(gameSession);
 				//changeMapInstance->BroadCastAddCharacter(gameSession);
+				auto pos = changeMapPortal->GetTransform()->GetState(Transform::kState::kStatePosition);
+				transform->SetState(Transform::kState::kStatePosition, pos);
 
-				transform->SetState(Transform::kState::kStatePosition, changeMapPortal->GetTransform()->GetState(Transform::kState::kStatePosition));
-
-				Protocol::GameServerResurrection changePosition;
-				changePosition.set_character_id(player->GetCharacterId());
-				auto position = changePosition.mutable_position();
-				auto pos = transform->GetState(Transform::kState::kStatePosition);
-				position->set_x(pos.x);
-				position->set_y(pos.y);
-				position->set_z(pos.z);
-				gameSession->Send(GameClientPacketHandler::MakeSendBuffer(changePosition));
-
-				Protocol::GameServerChangeMap sendPkt;
-				sendPkt.set_map_id(portal->GetChangeMapId());
+				Protocol::GameServerLoadCharacter sendPkt;
+				GameCharacterLoadQueue::SettingCharacterInfoSendPacket(sendPkt, gameSession, gameSession->GetPlayer(), false);
+				sendPkt.set_pos_x(pos.x);
+				sendPkt.set_pos_y(pos.y);
+				sendPkt.set_pos_z(pos.z);
 				gameSession->Send(GameClientPacketHandler::MakeSendBuffer(sendPkt));
+
+				//Protocol::GameServerResurrection changePosition;
+				//changePosition.set_character_id(player->GetCharacterId());
+				//auto position = changePosition.mutable_position();
+				//auto pos = transform->GetState(Transform::kState::kStatePosition);
+				//position->set_x(pos.x);
+				//position->set_y(pos.y);
+				//position->set_z(pos.z);
+				//gameSession->Send(GameClientPacketHandler::MakeSendBuffer(changePosition));
+
+				Protocol::GameServerChangeMap changePkt;
+				changePkt.set_map_id(portal->GetChangeMapId());
+				gameSession->Send(GameClientPacketHandler::MakeSendBuffer(changePkt));
+
+
 
 			}
 		}

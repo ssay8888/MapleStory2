@@ -162,12 +162,12 @@ auto PopupInfo::SetItemInfo(Item::ItemInfo itemInfo) -> void
 
 auto PopupInfo::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 	{
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		L"Prototype_Shader_Ui",
 		L"Com_Shader",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
@@ -175,7 +175,7 @@ auto PopupInfo::AddComponents() -> HRESULT
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_ItemInfoPopup"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_ItemInfoPopup"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
 	{
 		return E_FAIL;
 	}

@@ -390,13 +390,13 @@ auto InventoryTabBtn::AddComponents() -> HRESULT
 {
 	_input_device = InputDevice::Create(g_hInst, g_Wnd);
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0,
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0,
 		TEXT("Prototype_Texture_Inventory_Tab_Btn"),
 		TEXT("Com_Texture"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_inventory_tab_btn))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		TEXT("Prototype_VIBuffer_Rect"),
 		TEXT("Com_VIBuffer"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))

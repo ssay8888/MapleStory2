@@ -143,13 +143,13 @@ auto StatupBtn::Create(std::function<void()> call) -> std::shared_ptr<StatupBtn>
 
 auto StatupBtn::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0,
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0,
 		TEXT("Prototype_Texture_Statup_Btn"),
 		TEXT("Com_Texture"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_statup_btn))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		TEXT("Prototype_VIBuffer_Rect"),
 		TEXT("Com_VIBuffer"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))

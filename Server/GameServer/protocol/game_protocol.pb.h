@@ -569,7 +569,6 @@ class GameServerLoadCharacter final :
     kAccountIdFieldNumber = 2,
     kCharacterIdFieldNumber = 3,
     kStateFieldNumber = 1,
-    kGenderFieldNumber = 5,
     kFaceIdFieldNumber = 6,
     kStrFieldNumber = 7,
     kDexFieldNumber = 8,
@@ -580,6 +579,8 @@ class GameServerLoadCharacter final :
     kPosZFieldNumber = 13,
     kHpFieldNumber = 14,
     kMaxHpFieldNumber = 15,
+    kGenderFieldNumber = 5,
+    kIsFirstFieldNumber = 25,
     kMpFieldNumber = 16,
     kMaxMpFieldNumber = 17,
     kLevelFieldNumber = 18,
@@ -663,15 +664,6 @@ class GameServerLoadCharacter final :
   private:
   ::Protocol::kLoadState _internal_state() const;
   void _internal_set_state(::Protocol::kLoadState value);
-  public:
-
-  // bool gender = 5;
-  void clear_gender();
-  bool gender() const;
-  void set_gender(bool value);
-  private:
-  bool _internal_gender() const;
-  void _internal_set_gender(bool value);
   public:
 
   // int32 face_id = 6;
@@ -764,6 +756,24 @@ class GameServerLoadCharacter final :
   void _internal_set_max_hp(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
+  // bool gender = 5;
+  void clear_gender();
+  bool gender() const;
+  void set_gender(bool value);
+  private:
+  bool _internal_gender() const;
+  void _internal_set_gender(bool value);
+  public:
+
+  // bool is_first = 25;
+  void clear_is_first();
+  bool is_first() const;
+  void set_is_first(bool value);
+  private:
+  bool _internal_is_first() const;
+  void _internal_set_is_first(bool value);
+  public:
+
   // int32 mp = 16;
   void clear_mp();
   ::PROTOBUF_NAMESPACE_ID::int32 mp() const;
@@ -840,7 +850,6 @@ class GameServerLoadCharacter final :
   ::PROTOBUF_NAMESPACE_ID::int64 account_id_;
   ::PROTOBUF_NAMESPACE_ID::int64 character_id_;
   int state_;
-  bool gender_;
   ::PROTOBUF_NAMESPACE_ID::int32 face_id_;
   ::PROTOBUF_NAMESPACE_ID::int32 str_;
   ::PROTOBUF_NAMESPACE_ID::int32 dex_;
@@ -851,6 +860,8 @@ class GameServerLoadCharacter final :
   float pos_z_;
   ::PROTOBUF_NAMESPACE_ID::int32 hp_;
   ::PROTOBUF_NAMESPACE_ID::int32 max_hp_;
+  bool gender_;
+  bool is_first_;
   ::PROTOBUF_NAMESPACE_ID::int32 mp_;
   ::PROTOBUF_NAMESPACE_ID::int32 max_mp_;
   ::PROTOBUF_NAMESPACE_ID::int32 level_;
@@ -5909,6 +5920,26 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::keymap >&
 GameServerLoadCharacter::keymap() const {
   // @@protoc_insertion_point(field_list:Protocol.GameServerLoadCharacter.keymap)
   return keymap_;
+}
+
+// bool is_first = 25;
+inline void GameServerLoadCharacter::clear_is_first() {
+  is_first_ = false;
+}
+inline bool GameServerLoadCharacter::_internal_is_first() const {
+  return is_first_;
+}
+inline bool GameServerLoadCharacter::is_first() const {
+  // @@protoc_insertion_point(field_get:Protocol.GameServerLoadCharacter.is_first)
+  return _internal_is_first();
+}
+inline void GameServerLoadCharacter::_internal_set_is_first(bool value) {
+  
+  is_first_ = value;
+}
+inline void GameServerLoadCharacter::set_is_first(bool value) {
+  _internal_set_is_first(value);
+  // @@protoc_insertion_point(field_set:Protocol.GameServerLoadCharacter.is_first)
 }
 
 // -------------------------------------------------------------------

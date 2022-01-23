@@ -36,8 +36,15 @@ auto GameLogicQueue::GetCharacterInfo() const -> Protocol::GameServerLoadCharact
 
 auto GameLogicQueue::CharacterLoad(PacketSessionRef session, Protocol::GameServerLoadCharacter pkt) -> void
 {
-	const auto scene = SceneLoading::Create(GraphicDevice::GetInstance().GetDevice(), kSceneGamePlay0);
-	if (SUCCEEDED(SceneManager::GetInstance().SetUpScene(scene)))
+	if (pkt.is_first())
+	{
+		const auto scene = SceneLoading::Create(GraphicDevice::GetInstance().GetDevice(), kSceneGamePlay0);
+		if (SUCCEEDED(SceneManager::GetInstance().SetUpScene(scene)))
+		{
+			_character_info = pkt;
+		}
+	}
+	else
 	{
 		_character_info = pkt;
 	}
@@ -231,6 +238,9 @@ auto GameLogicQueue::UpdateStat(PacketSessionRef session, Protocol::GameServerUp
 		break;
 	case Protocol::kExp:
 		CharacterStat::GetInstance().SetExp(pkt.value());
+		break;
+	case Protocol::kLevel:
+		CharacterStat::GetInstance().SetLevel(pkt.value());
 		break;
 	default:;
 	}

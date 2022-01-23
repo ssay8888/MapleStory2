@@ -251,28 +251,28 @@ auto CharacterJobBtn::SelectRender(const std::shared_ptr<Shader> shader) -> HRES
 
 auto CharacterJobBtn::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
 	std::wstring prototypeSelName(L"Prototype_Texture_");
 	prototypeSelName.append(L"Sel_").append(_info.job_name).append(L"_il");
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, prototypeSelName, TEXT("Com_Select_Normal"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture))))
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, prototypeSelName, TEXT("Com_Select_Normal"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Create_Sel_FrontGround"), std::wstring(L"Com_Select_Over").append(L"_").append(_info.job_name), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture_front))))
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Create_Sel_FrontGround"), std::wstring(L"Com_Select_Over").append(L"_").append(_info.job_name), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture_front))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Create_SelectEffect"), std::wstring(L"Com_SelectEffect").append(L"_").append(_info.job_name), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture_effect))))
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Create_SelectEffect"), std::wstring(L"Com_SelectEffect").append(L"_").append(_info.job_name), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture_effect))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Create_Sel_ShowInfo"), TEXT("Com_ShowInfo"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture_showinfo))))
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Create_Sel_ShowInfo"), TEXT("Com_ShowInfo"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture_showinfo))))
 		return E_FAIL;
 
 	std::wstring prototypeName(L"Prototype_Texture_");
 	prototypeName.append(_info.job_name).append(L"_il");
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, prototypeName, TEXT("Com_Job_Il"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture_il))))
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, prototypeName, TEXT("Com_Job_Il"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture_il))))
 		return E_FAIL;
 
 	CharacterCreateJobBtn::CreateJobBtnInfo info;

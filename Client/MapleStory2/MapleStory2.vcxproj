@@ -199,6 +199,7 @@
     <ClInclude Include="src\game_object\monster\states\run_state\monster_run_state.h" />
     <ClInclude Include="src\game_object\monster\states\walk_state\monster_walk_state.h" />
     <ClInclude Include="src\game_object\monster\stats\monster_stats.h" />
+    <ClInclude Include="src\game_object\mouse\game_mouse.h" />
     <ClInclude Include="src\game_object\numbers\numbers.h" />
     <ClInclude Include="src\game_object\pants\pants.h" />
     <ClInclude Include="src\game_object\player\player.h" />
@@ -329,6 +330,7 @@
     <ClCompile Include="src\game_object\monster\states\run_state\monster_run_state.cpp" />
     <ClCompile Include="src\game_object\monster\states\walk_state\monster_walk_state.cpp" />
     <ClCompile Include="src\game_object\monster\stats\monster_stats.cpp" />
+    <ClCompile Include="src\game_object\mouse\game_mouse.cpp" />
     <ClCompile Include="src\game_object\numbers\numbers.cpp" />
     <ClCompile Include="src\game_object\pants\pants.cpp" />
     <ClCompile Include="src\game_object\player\player.cpp" />

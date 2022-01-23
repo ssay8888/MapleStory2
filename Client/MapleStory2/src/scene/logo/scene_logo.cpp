@@ -38,6 +38,8 @@ auto SceneLogo::NativeConstruct() -> HRESULT
 		return E_FAIL;
 	if (FAILED(ReadyLayerTextBox(TEXT("Layer_LoginBox"))))
 		return E_FAIL;
+	if (FAILED(ReadyMouse()))
+		return E_FAIL;
 
 	auto& timerManager = TimerManager::GetInstance();
 	timerManager.AddTimers(TEXT("LoginTryTimer"));
@@ -138,5 +140,25 @@ auto SceneLogo::ReadyLayerTextBox(const std::wstring& layerTag) -> HRESULT
 		return E_FAIL;
 	}
 
+	return S_OK;
+}
+
+auto SceneLogo::ReadyMouse() -> HRESULT
+{
+	const auto& componentManager = ComponentManager::GetInstance();
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_Click_Mouse"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/mouse/click_%d.png"), 3))))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(componentManager.AddPrototype(kScene::kSceneStatic, TEXT("Prototype_Texture_Grab_Mouse"), Texture::Create(_graphic_device, Texture::kType::kTypeGeneral, TEXT("../../Binary/Resources/Textures/mouse/grab_%d.png"), 3))))
+	{
+		return E_FAIL;
+	}
+
+
+	if (FAILED(ObjectManager::GetInstance().AddGameObject(static_cast<int32_t>(kScene::kSceneStatic), TEXT("Prototype_Mouse"), L"Layer_Mouse")))
+	{
+		return E_FAIL;
+	}
 	return S_OK;
 }

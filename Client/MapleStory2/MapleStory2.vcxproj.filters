@@ -304,6 +304,9 @@
     <ClInclude Include="src\managers\sound_manager\sound_manager.h">
       <Filter>managers\sound_manager</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object\mouse\game_mouse.h">
+      <Filter>game_object\mouse</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -603,6 +606,9 @@
     <ClCompile Include="src\managers\sound_manager\sound_manager.cpp">
       <Filter>managers\sound_manager</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_object\mouse\game_mouse.cpp">
+      <Filter>game_object\mouse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="maplestory2.ico">
@@ -849,6 +855,9 @@
     </Filter>
     <Filter Include="managers\sound_manager">
       <UniqueIdentifier>{dbd24eca-ce2f-4e01-93cb-d92b5187b1a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_object\mouse">
+      <UniqueIdentifier>{c5962638-a7de-4778-8d42-81e2d3533c80}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

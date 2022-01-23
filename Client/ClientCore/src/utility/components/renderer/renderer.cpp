@@ -17,6 +17,7 @@ auto Renderer::RenderGameObject() -> HRESULT
 	RenderNonAlpha();
 	RenderAlpha();
 	RenderUi();
+	RenderMouse();
 	return S_OK;
 }
 
@@ -65,6 +66,20 @@ auto Renderer::RenderAlpha() -> HRESULT
 auto Renderer::RenderUi() -> HRESULT
 {
 	constexpr auto index = static_cast<int32_t>(kRenderGroup::kRenderUi);
+	for (const auto& gameObject : _render_objects[index])
+	{
+		if (FAILED(gameObject->Render()))
+		{
+			return E_FAIL;
+		}
+	}
+	_render_objects[index].clear();
+	return S_OK;
+}
+
+auto Renderer::RenderMouse() -> HRESULT
+{
+	constexpr auto index = static_cast<int32_t>(kRenderGroup::kRenderMouse);
 	for (const auto& gameObject : _render_objects[index])
 	{
 		if (FAILED(gameObject->Render()))

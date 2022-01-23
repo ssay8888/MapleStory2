@@ -337,21 +337,21 @@ auto CharacterSelectUi::SelectJobRender() -> HRESULT
 auto CharacterSelectUi::AddComponents() -> HRESULT
 {
 	/* Com_VIBuffer */
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SelectFrame"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SelectFrame"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		L"Prototype_Shader_Rect",
 		L"Com_Shader",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
 		return E_FAIL;
 
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Create_BackGround"), TEXT("Com_Texture_BackGround"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_background))))
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_Create_BackGround"), TEXT("Com_Texture_BackGround"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_background))))
 		return E_FAIL;
 	
 	return S_OK;

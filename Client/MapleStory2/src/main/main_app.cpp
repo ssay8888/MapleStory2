@@ -27,6 +27,7 @@
 #include "src/utility/scene_utility/scene_manager.h"
 #include "src/common/xml/map_parser.h"
 #include "src/game_object/camera/ingame_camera.h"
+#include "src/game_object/mouse/game_mouse.h"
 #include "src/game_object/ui/loading_ui/loading_ui.h"
 #include "src/game_object/user/user.h"
 #include "src/managers/sound_manager/sound_manager.h"
@@ -227,6 +228,10 @@ HRESULT MainApp::AddPrototypeGameObject()
 		return E_FAIL;
 
 	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Loading_Ui"), LoadingUi::Create())))
+		return E_FAIL;
+
+
+	if (FAILED(objectManager.AddPrototype(TEXT("Prototype_Mouse"), GameMouse::Create())))
 		return E_FAIL;
 	return S_OK; 
 }

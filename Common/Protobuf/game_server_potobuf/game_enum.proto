@@ -43,6 +43,7 @@ enum kPlayerStatType
 	kHp = 0;
 	kMp = 1;
 	kExp = 2;
+	kLevel = 3;
 }
 
 enum kMonsterStatType

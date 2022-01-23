@@ -316,7 +316,7 @@ HRESULT Item::AddComponents()
 {
 	_input_device = InputDevice::Create(g_hInst, g_Wnd);
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		fmt::format(L"Prototype_Texture_{0}", _info.item_id),
 		TEXT("Com_Texture"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
@@ -324,7 +324,7 @@ HRESULT Item::AddComponents()
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		TEXT("Prototype_VIBuffer_Rect"),
 		TEXT("Com_VIBuffer"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))

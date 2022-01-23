@@ -165,14 +165,14 @@ auto SkillUi::AddComponents() -> HRESULT
 {
 	_input_device = InputDevice::Create(g_hInst, g_Wnd);
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, 
+	if (FAILED(AddComponent(kScene::kSceneStatic, 
 		TEXT("Prototype_VIBuffer_Rect"), 
 		TEXT("Com_VIBuffer"), 
 		reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 	{
 		return E_FAIL;
 	}
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0, 
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0, 
 		TEXT("Prototype_Texture_SkillUi"), 
 		TEXT("Com_Texture"), 
 		reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
@@ -180,7 +180,7 @@ auto SkillUi::AddComponents() -> HRESULT
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		L"Prototype_Shader_Ui",
 		L"Com_Shader",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
@@ -188,7 +188,7 @@ auto SkillUi::AddComponents() -> HRESULT
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0,
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0,
 		TEXT("Prototype_Texture_Inventory_Close_Btn"),
 		TEXT("Com_Texture_2"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_inventory_close_btn))))

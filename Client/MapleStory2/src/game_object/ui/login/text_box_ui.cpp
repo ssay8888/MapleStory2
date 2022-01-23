@@ -245,25 +245,25 @@ auto TextBoxUi::UiDrawText() -> void
 
 auto TextBoxUi::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		TEXT("Prototype_Texture_Login_TextBox"),
 		TEXT("Com_Texture1"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_texture_textbox))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		TEXT("Prototype_Texture_Login_Btn"),
 		TEXT("Com_Texture2"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_texture_btn))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, 
+	if (FAILED(AddComponent(kScene::kSceneStatic, 
 		TEXT("Prototype_VIBuffer_Rect"),
 		TEXT("Com_VIBuffer"), 
 		reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		L"Prototype_Shader_Rect",
 		L"Com_Shader",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))

@@ -131,10 +131,10 @@ auto CharacterCreateReturnBtn::IsCollision() const -> bool
 
 auto CharacterCreateReturnBtn::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_ReturnBtn"), TEXT("Com_RetrunBtn"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture))))
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_ReturnBtn"), TEXT("Com_RetrunBtn"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture))))
 		return E_FAIL;
 	
 	return S_OK;

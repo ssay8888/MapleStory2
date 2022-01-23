@@ -165,10 +165,10 @@ auto CharacterBeautyItemList::InitEqp() -> void
 
 auto CharacterBeautyItemList::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_BeautyList"), TEXT("Com_Item_List"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture))))
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_BeautyList"), TEXT("Com_Item_List"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture))))
 		return E_FAIL;
 
 

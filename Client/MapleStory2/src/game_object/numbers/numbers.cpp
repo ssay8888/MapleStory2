@@ -162,12 +162,12 @@ auto Numbers::AddComponents() -> HRESULT
 	TransformDesc.rotation_per_sec = D3DXToRadian(90.f);
 
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Damage_Number"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_damage_numbers))))
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Damage_Number"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_damage_numbers))))
 	{
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Player_Number"), TEXT("Com_Texture_2"), reinterpret_cast<std::shared_ptr<Component>*>(&_player_attack_numbers))))
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_Player_Number"), TEXT("Com_Texture_2"), reinterpret_cast<std::shared_ptr<Component>*>(&_player_attack_numbers))))
 	{
 		return E_FAIL;
 	}
@@ -182,7 +182,7 @@ auto Numbers::AddComponents() -> HRESULT
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 	{
 		return E_FAIL;
 	}

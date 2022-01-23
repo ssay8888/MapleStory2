@@ -1,6 +1,8 @@
 #include "game_server_pch.h"
 #include "statistic.h"
 
+#include "game_session/game_client_packet_handler.h"
+
 Statistic::Statistic(const int64_t characterId):
 	BaseInfo(characterId)
 {
@@ -175,4 +177,10 @@ auto Statistic::Create(const int64_t characterId) -> std::shared_ptr<Statistic>
 auto Statistic::NativeConstruct() -> HRESULT
 {
 	return S_OK;
+}
+
+auto Statistic::LevelUp() -> void
+{
+	_level += 1;
+	_exp = _exp - g_exp[_level];
 }

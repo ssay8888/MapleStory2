@@ -36,7 +36,7 @@ HRESULT KeySetUi::NativeConstruct(void* arg)
 auto KeySetUi::Tick(const double timeDelta) -> HRESULT
 {
 	_input_device->InvalidateInputDevice();
-	if (!g_isWindowsActive)
+	if (!g_isWindowsActive || g_isChatActive)
 	{
 		return 0;
 	}
@@ -192,12 +192,12 @@ auto KeySetUi::Create(const _float3 pos, const int32_t index, const int32_t key)
 
 auto KeySetUi::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 	{
 		return E_FAIL;
 	}
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_KeySet"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_free_set_ui))))
+	if (FAILED(AddComponent(kScene::kSceneGamePlay0, TEXT("Prototype_Texture_KeySet"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_free_set_ui))))
 	{
 		return E_FAIL;
 	}

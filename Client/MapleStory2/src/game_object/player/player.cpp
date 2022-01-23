@@ -405,6 +405,7 @@ auto Player::AddComponents() -> HRESULT
 	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_Transform"), TEXT("Com_Transform"), reinterpret_cast<std::shared_ptr<Component>*>(&_transform_com), &transformDesc)))
 		return E_FAIL;
 	_transform_com->SetState(Transform::kState::kStatePosition, _float3(characterInfo.pos_x(), characterInfo.pos_y(), characterInfo.pos_z()));
+
 	const auto animationNames = DataReaderManager::GetInstance().AllAnimationName();
 
 	std::shared_ptr<MeshDynamic> mesh;

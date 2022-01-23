@@ -38,6 +38,7 @@ public:
 	auto GetMaxMp()const->int32_t;
 
 	auto GetLevel()const->int32_t;
+	auto SetLevel(int32_t level)->void;
 
 	auto GetExp()const->int32_t;
 	auto SetExp(int32_t value)->void;

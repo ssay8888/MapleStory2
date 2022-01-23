@@ -50,7 +50,6 @@ constexpr GameServerLoadCharacter::GameServerLoadCharacter(
   , character_id_(int64_t{0})
   , state_(0)
 
-  , gender_(false)
   , face_id_(0)
   , str_(0)
   , dex_(0)
@@ -61,6 +60,8 @@ constexpr GameServerLoadCharacter::GameServerLoadCharacter(
   , pos_z_(0)
   , hp_(0)
   , max_hp_(0)
+  , gender_(false)
+  , is_first_(false)
   , mp_(0)
   , max_mp_(0)
   , level_(0)
@@ -528,6 +529,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fprotocol_2eproto::offse
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, ap_),
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, items_),
   PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, keymap_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::GameServerLoadCharacter, is_first_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::GameClientLoading, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -751,35 +753,35 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 0, -1, sizeof(::Protocol::GameClientLogin)},
   { 6, -1, sizeof(::Protocol::GameServerLogin)},
   { 12, -1, sizeof(::Protocol::GameServerLoadCharacter)},
-  { 41, -1, sizeof(::Protocol::GameClientLoading)},
-  { 48, -1, sizeof(::Protocol::GameServerRespawnPlayer)},
-  { 61, -1, sizeof(::Protocol::GameServerRemovePlayer)},
-  { 67, -1, sizeof(::Protocol::GameClientMovePlayer)},
-  { 75, -1, sizeof(::Protocol::GameServerMovePlayer)},
-  { 84, -1, sizeof(::Protocol::GameServerRespawnMonster)},
-  { 97, -1, sizeof(::Protocol::GameServerMoveMonster)},
-  { 109, -1, sizeof(::Protocol::GameClientTakeDamage)},
-  { 116, -1, sizeof(::Protocol::GameServerTakeDamage)},
-  { 124, -1, sizeof(::Protocol::GameServerUpdateStat)},
-  { 131, -1, sizeof(::Protocol::GameClientAttackMonster)},
-  { 137, -1, sizeof(::Protocol::GameServerAttackMonster)},
-  { 144, -1, sizeof(::Protocol::GameServerMonsterStatUpdate)},
-  { 152, -1, sizeof(::Protocol::GameServerKillMonster)},
-  { 158, -1, sizeof(::Protocol::GameClientInventoryItemMove)},
-  { 167, -1, sizeof(::Protocol::GameServerDressChange)},
-  { 175, -1, sizeof(::Protocol::GameClientStatUp)},
-  { 181, -1, sizeof(::Protocol::GameServerStatUp)},
-  { 189, -1, sizeof(::Protocol::GameClientKeySet)},
-  { 197, -1, sizeof(::Protocol::GameClientItemApply)},
-  { 204, -1, sizeof(::Protocol::GameServerItemQuantityUpdate)},
-  { 212, -1, sizeof(::Protocol::GameClientResurrection)},
-  { 217, -1, sizeof(::Protocol::GameServerResurrection)},
-  { 224, -1, sizeof(::Protocol::GameClientSpRecovery)},
-  { 229, -1, sizeof(::Protocol::GameClientApplySkill)},
-  { 235, -1, sizeof(::Protocol::GameClientChat)},
-  { 241, -1, sizeof(::Protocol::GameServerChat)},
-  { 247, -1, sizeof(::Protocol::GameClientChangeMap)},
-  { 253, -1, sizeof(::Protocol::GameServerChangeMap)},
+  { 42, -1, sizeof(::Protocol::GameClientLoading)},
+  { 49, -1, sizeof(::Protocol::GameServerRespawnPlayer)},
+  { 62, -1, sizeof(::Protocol::GameServerRemovePlayer)},
+  { 68, -1, sizeof(::Protocol::GameClientMovePlayer)},
+  { 76, -1, sizeof(::Protocol::GameServerMovePlayer)},
+  { 85, -1, sizeof(::Protocol::GameServerRespawnMonster)},
+  { 98, -1, sizeof(::Protocol::GameServerMoveMonster)},
+  { 110, -1, sizeof(::Protocol::GameClientTakeDamage)},
+  { 117, -1, sizeof(::Protocol::GameServerTakeDamage)},
+  { 125, -1, sizeof(::Protocol::GameServerUpdateStat)},
+  { 132, -1, sizeof(::Protocol::GameClientAttackMonster)},
+  { 138, -1, sizeof(::Protocol::GameServerAttackMonster)},
+  { 145, -1, sizeof(::Protocol::GameServerMonsterStatUpdate)},
+  { 153, -1, sizeof(::Protocol::GameServerKillMonster)},
+  { 159, -1, sizeof(::Protocol::GameClientInventoryItemMove)},
+  { 168, -1, sizeof(::Protocol::GameServerDressChange)},
+  { 176, -1, sizeof(::Protocol::GameClientStatUp)},
+  { 182, -1, sizeof(::Protocol::GameServerStatUp)},
+  { 190, -1, sizeof(::Protocol::GameClientKeySet)},
+  { 198, -1, sizeof(::Protocol::GameClientItemApply)},
+  { 205, -1, sizeof(::Protocol::GameServerItemQuantityUpdate)},
+  { 213, -1, sizeof(::Protocol::GameClientResurrection)},
+  { 218, -1, sizeof(::Protocol::GameServerResurrection)},
+  { 225, -1, sizeof(::Protocol::GameClientSpRecovery)},
+  { 230, -1, sizeof(::Protocol::GameClientApplySkill)},
+  { 236, -1, sizeof(::Protocol::GameClientChat)},
+  { 242, -1, sizeof(::Protocol::GameServerChat)},
+  { 248, -1, sizeof(::Protocol::GameClientChangeMap)},
+  { 254, -1, sizeof(::Protocol::GameServerChangeMap)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -821,7 +823,7 @@ const char descriptor_table_protodef_game_5fprotocol_2eproto[] PROTOBUF_SECTION_
   "\n\023game_protocol.proto\022\010Protocol\032\017game_en"
   "um.proto\032\021game_struct.proto\"\037\n\017GameClien"
   "tLogin\022\014\n\004auth\030\001 \001(\003\"\037\n\017GameServerLogin\022"
-  "\014\n\004auth\030\001 \001(\003\"\265\003\n\027GameServerLoadCharacte"
+  "\014\n\004auth\030\001 \001(\003\"\307\003\n\027GameServerLoadCharacte"
   "r\022#\n\005state\030\001 \001(\0162\024.Protocol.kLoadState\022\022"
   "\n\naccount_id\030\002 \001(\003\022\024\n\014character_id\030\003 \001(\003"
   "\022\014\n\004name\030\004 \001(\014\022\016\n\006gender\030\005 \001(\010\022\017\n\007face_i"
@@ -832,69 +834,70 @@ const char descriptor_table_protodef_game_5fprotocol_2eproto[] PROTOBUF_SECTION_
   "\022\r\n\005level\030\022 \001(\005\022\013\n\003exp\030\023 \001(\005\022\r\n\005money\030\024 "
   "\001(\005\022\013\n\003map\030\025 \001(\005\022\n\n\002ap\030\026 \001(\005\022\035\n\005items\030\027 "
   "\003(\0132\016.Protocol.item\022 \n\006keymap\030\030 \003(\0132\020.Pr"
-  "otocol.keymap\"F\n\021GameClientLoading\022#\n\005st"
-  "ate\030\001 \001(\0162\024.Protocol.kLoadState\022\014\n\004auth\030"
-  "\002 \001(\003\"\252\001\n\027GameServerRespawnPlayer\022\024\n\014cha"
-  "racter_id\030\001 \001(\003\022\014\n\004name\030\002 \001(\014\022\016\n\006gender\030"
-  "\003 \001(\010\022\017\n\007face_id\030\004 \001(\005\022\r\n\005pos_x\030\005 \001(\002\022\r\n"
-  "\005pos_y\030\006 \001(\002\022\r\n\005pos_z\030\007 \001(\002\022\035\n\005items\030\010 \003"
-  "(\0132\016.Protocol.item\".\n\026GameServerRemovePl"
-  "ayer\022\024\n\014character_id\030\001 \001(\003\"Y\n\024GameClient"
-  "MovePlayer\022\r\n\005state\030\001 \001(\005\022\016\n\006radian\030\002 \001("
-  "\002\022\"\n\010position\030\003 \001(\0132\020.Protocol.float3\"o\n"
-  "\024GameServerMovePlayer\022\024\n\014character_id\030\001 "
-  "\001(\003\022\r\n\005state\030\002 \001(\005\022\016\n\006radian\030\003 \001(\002\022\"\n\010po"
-  "sition\030\004 \001(\0132\020.Protocol.float3\"\342\001\n\030GameS"
-  "erverRespawnMonster\022\021\n\tobject_id\030\001 \001(\003\022\022"
-  "\n\nmonster_id\030\002 \001(\005\022\n\n\002hp\030\003 \001(\005\022\037\n\005right\030"
-  "\004 \001(\0132\020.Protocol.float3\022\034\n\002up\030\005 \001(\0132\020.Pr"
-  "otocol.float3\022\036\n\004look\030\006 \001(\0132\020.Protocol.f"
-  "loat3\022\"\n\010position\030\007 \001(\0132\020.Protocol.float"
-  "3\022\020\n\010is_spawn\030\010 \001(\010\"\346\001\n\025GameServerMoveMo"
-  "nster\022\021\n\tobject_id\030\001 \001(\003\022&\n\005state\030\002 \001(\0162"
-  "\027.Protocol.kMonsterState\022\037\n\005right\030\003 \001(\0132"
-  "\020.Protocol.float3\022\034\n\002up\030\004 \001(\0132\020.Protocol"
-  ".float3\022\036\n\004look\030\005 \001(\0132\020.Protocol.float3\022"
-  "\"\n\010position\030\006 \001(\0132\020.Protocol.float3\022\017\n\007s"
-  "killId\030\007 \001(\005\"D\n\024GameClientTakeDamage\022\024\n\014"
-  "character_id\030\001 \001(\003\022\026\n\016monster_obj_id\030\002 \001"
-  "(\003\"T\n\024GameServerTakeDamage\022\024\n\014character_"
-  "id\030\001 \001(\003\022\026\n\016monster_obj_id\030\002 \001(\003\022\016\n\006dama"
-  "ge\030\003 \001(\003\"N\n\024GameServerUpdateStat\022\'\n\004type"
-  "\030\001 \001(\0162\031.Protocol.kPlayerStatType\022\r\n\005val"
-  "ue\030\002 \001(\005\"1\n\027GameClientAttackMonster\022\026\n\016m"
-  "onster_obj_id\030\001 \003(\003\"Y\n\027GameServerAttackM"
-  "onster\022\024\n\014character_id\030\001 \001(\003\022(\n\007damages\030"
-  "\002 \003(\0132\027.Protocol.AttackMonster\"n\n\033GameSe"
-  "rverMonsterStatUpdate\022\026\n\016monster_obj_id\030"
-  "\001 \001(\003\022(\n\004type\030\002 \001(\0162\032.Protocol.kMonsterS"
-  "tatType\022\r\n\005value\030\003 \001(\005\"/\n\025GameServerKill"
-  "Monster\022\026\n\016monster_obj_id\030\001 \001(\003\"\224\001\n\033Game"
-  "ClientInventoryItemMove\0223\n\tmove_type\030\001 \001"
-  "(\0162 .Protocol.kInventoryItemMoveType\022&\n\004"
-  "type\030\002 \001(\0162\030.Protocol.kInventoryType\022\013\n\003"
-  "src\030\003 \001(\005\022\013\n\003dst\030\004 \001(\005\"Q\n\025GameServerDres"
-  "sChange\022\024\n\014character_id\030\001 \001(\003\022\021\n\titem_ty"
-  "pe\030\002 \001(\005\022\017\n\007item_id\030\003 \001(\005\"5\n\020GameClientS"
-  "tatUp\022!\n\004type\030\001 \001(\0162\023.Protocol.kStatType"
-  "\"V\n\020GameServerStatUp\022!\n\004type\030\001 \001(\0162\023.Pro"
-  "tocol.kStatType\022\r\n\005value\030\002 \001(\005\022\020\n\010ap_val"
-  "ue\030\003 \001(\005\"Y\n\020GameClientKeySet\022\021\n\tkey_valu"
-  "e\030\001 \001(\005\022#\n\004type\030\002 \001(\0162\025.Protocol.kKeySet"
-  "Type\022\r\n\005value\030\003 \001(\005\"O\n\023GameClientItemApp"
-  "ly\022&\n\004type\030\001 \001(\0162\030.Protocol.kInventoryTy"
-  "pe\022\020\n\010position\030\002 \001(\005\"j\n\034GameServerItemQu"
-  "antityUpdate\022&\n\004type\030\001 \001(\0162\030.Protocol.kI"
-  "nventoryType\022\020\n\010position\030\002 \001(\005\022\020\n\010quanti"
-  "ty\030\003 \001(\005\"\030\n\026GameClientResurrection\"R\n\026Ga"
-  "meServerResurrection\022\024\n\014character_id\030\001 \001"
-  "(\003\022\"\n\010position\030\002 \001(\0132\020.Protocol.float3\"\026"
-  "\n\024GameClientSpRecovery\"\'\n\024GameClientAppl"
-  "ySkill\022\017\n\007skillid\030\001 \001(\005\"\"\n\016GameClientCha"
-  "t\022\020\n\010contents\030\001 \001(\014\"\"\n\016GameServerChat\022\020\n"
-  "\010contents\030\001 \001(\014\"(\n\023GameClientChangeMap\022\021"
-  "\n\tportal_id\030\001 \001(\005\"%\n\023GameServerChangeMap"
-  "\022\016\n\006map_id\030\001 \001(\005b\006proto3"
+  "otocol.keymap\022\020\n\010is_first\030\031 \001(\010\"F\n\021GameC"
+  "lientLoading\022#\n\005state\030\001 \001(\0162\024.Protocol.k"
+  "LoadState\022\014\n\004auth\030\002 \001(\003\"\252\001\n\027GameServerRe"
+  "spawnPlayer\022\024\n\014character_id\030\001 \001(\003\022\014\n\004nam"
+  "e\030\002 \001(\014\022\016\n\006gender\030\003 \001(\010\022\017\n\007face_id\030\004 \001(\005"
+  "\022\r\n\005pos_x\030\005 \001(\002\022\r\n\005pos_y\030\006 \001(\002\022\r\n\005pos_z\030"
+  "\007 \001(\002\022\035\n\005items\030\010 \003(\0132\016.Protocol.item\".\n\026"
+  "GameServerRemovePlayer\022\024\n\014character_id\030\001"
+  " \001(\003\"Y\n\024GameClientMovePlayer\022\r\n\005state\030\001 "
+  "\001(\005\022\016\n\006radian\030\002 \001(\002\022\"\n\010position\030\003 \001(\0132\020."
+  "Protocol.float3\"o\n\024GameServerMovePlayer\022"
+  "\024\n\014character_id\030\001 \001(\003\022\r\n\005state\030\002 \001(\005\022\016\n\006"
+  "radian\030\003 \001(\002\022\"\n\010position\030\004 \001(\0132\020.Protoco"
+  "l.float3\"\342\001\n\030GameServerRespawnMonster\022\021\n"
+  "\tobject_id\030\001 \001(\003\022\022\n\nmonster_id\030\002 \001(\005\022\n\n\002"
+  "hp\030\003 \001(\005\022\037\n\005right\030\004 \001(\0132\020.Protocol.float"
+  "3\022\034\n\002up\030\005 \001(\0132\020.Protocol.float3\022\036\n\004look\030"
+  "\006 \001(\0132\020.Protocol.float3\022\"\n\010position\030\007 \001("
+  "\0132\020.Protocol.float3\022\020\n\010is_spawn\030\010 \001(\010\"\346\001"
+  "\n\025GameServerMoveMonster\022\021\n\tobject_id\030\001 \001"
+  "(\003\022&\n\005state\030\002 \001(\0162\027.Protocol.kMonsterSta"
+  "te\022\037\n\005right\030\003 \001(\0132\020.Protocol.float3\022\034\n\002u"
+  "p\030\004 \001(\0132\020.Protocol.float3\022\036\n\004look\030\005 \001(\0132"
+  "\020.Protocol.float3\022\"\n\010position\030\006 \001(\0132\020.Pr"
+  "otocol.float3\022\017\n\007skillId\030\007 \001(\005\"D\n\024GameCl"
+  "ientTakeDamage\022\024\n\014character_id\030\001 \001(\003\022\026\n\016"
+  "monster_obj_id\030\002 \001(\003\"T\n\024GameServerTakeDa"
+  "mage\022\024\n\014character_id\030\001 \001(\003\022\026\n\016monster_ob"
+  "j_id\030\002 \001(\003\022\016\n\006damage\030\003 \001(\003\"N\n\024GameServer"
+  "UpdateStat\022\'\n\004type\030\001 \001(\0162\031.Protocol.kPla"
+  "yerStatType\022\r\n\005value\030\002 \001(\005\"1\n\027GameClient"
+  "AttackMonster\022\026\n\016monster_obj_id\030\001 \003(\003\"Y\n"
+  "\027GameServerAttackMonster\022\024\n\014character_id"
+  "\030\001 \001(\003\022(\n\007damages\030\002 \003(\0132\027.Protocol.Attac"
+  "kMonster\"n\n\033GameServerMonsterStatUpdate\022"
+  "\026\n\016monster_obj_id\030\001 \001(\003\022(\n\004type\030\002 \001(\0162\032."
+  "Protocol.kMonsterStatType\022\r\n\005value\030\003 \001(\005"
+  "\"/\n\025GameServerKillMonster\022\026\n\016monster_obj"
+  "_id\030\001 \001(\003\"\224\001\n\033GameClientInventoryItemMov"
+  "e\0223\n\tmove_type\030\001 \001(\0162 .Protocol.kInvento"
+  "ryItemMoveType\022&\n\004type\030\002 \001(\0162\030.Protocol."
+  "kInventoryType\022\013\n\003src\030\003 \001(\005\022\013\n\003dst\030\004 \001(\005"
+  "\"Q\n\025GameServerDressChange\022\024\n\014character_i"
+  "d\030\001 \001(\003\022\021\n\titem_type\030\002 \001(\005\022\017\n\007item_id\030\003 "
+  "\001(\005\"5\n\020GameClientStatUp\022!\n\004type\030\001 \001(\0162\023."
+  "Protocol.kStatType\"V\n\020GameServerStatUp\022!"
+  "\n\004type\030\001 \001(\0162\023.Protocol.kStatType\022\r\n\005val"
+  "ue\030\002 \001(\005\022\020\n\010ap_value\030\003 \001(\005\"Y\n\020GameClient"
+  "KeySet\022\021\n\tkey_value\030\001 \001(\005\022#\n\004type\030\002 \001(\0162"
+  "\025.Protocol.kKeySetType\022\r\n\005value\030\003 \001(\005\"O\n"
+  "\023GameClientItemApply\022&\n\004type\030\001 \001(\0162\030.Pro"
+  "tocol.kInventoryType\022\020\n\010position\030\002 \001(\005\"j"
+  "\n\034GameServerItemQuantityUpdate\022&\n\004type\030\001"
+  " \001(\0162\030.Protocol.kInventoryType\022\020\n\010positi"
+  "on\030\002 \001(\005\022\020\n\010quantity\030\003 \001(\005\"\030\n\026GameClient"
+  "Resurrection\"R\n\026GameServerResurrection\022\024"
+  "\n\014character_id\030\001 \001(\003\022\"\n\010position\030\002 \001(\0132\020"
+  ".Protocol.float3\"\026\n\024GameClientSpRecovery"
+  "\"\'\n\024GameClientApplySkill\022\017\n\007skillid\030\001 \001("
+  "\005\"\"\n\016GameClientChat\022\020\n\010contents\030\001 \001(\014\"\"\n"
+  "\016GameServerChat\022\020\n\010contents\030\001 \001(\014\"(\n\023Gam"
+  "eClientChangeMap\022\021\n\tportal_id\030\001 \001(\005\"%\n\023G"
+  "ameServerChangeMap\022\016\n\006map_id\030\001 \001(\005b\006prot"
+  "o3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_game_5fprotocol_2eproto_deps[2] = {
   &::descriptor_table_game_5fenum_2eproto,
@@ -902,7 +905,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fprotocol_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fprotocol_2eproto = {
-  false, false, 3064, descriptor_table_protodef_game_5fprotocol_2eproto, "game_protocol.proto", 
+  false, false, 3082, descriptor_table_protodef_game_5fprotocol_2eproto, "game_protocol.proto", 
   &descriptor_table_game_5fprotocol_2eproto_once, descriptor_table_game_5fprotocol_2eproto_deps, 2, 32,
   schemas, file_default_instances, TableStruct_game_5fprotocol_2eproto::offsets,
   file_level_metadata_game_5fprotocol_2eproto, file_level_enum_descriptors_game_5fprotocol_2eproto, file_level_service_descriptors_game_5fprotocol_2eproto,
@@ -1561,6 +1564,13 @@ const char* GameServerLoadCharacter::_InternalParse(const char* ptr, ::PROTOBUF_
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<194>(ptr));
         } else goto handle_unusual;
         continue;
+      // bool is_first = 25;
+      case 25:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 200)) {
+          is_first_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag == 0) || ((tag & 7) == 4)) {
@@ -1739,6 +1749,12 @@ failure:
       InternalWriteMessage(24, this->_internal_keymap(i), target, stream);
   }
 
+  // bool is_first = 25;
+  if (this->is_first() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(25, this->_internal_is_first(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1794,11 +1810,6 @@ size_t GameServerLoadCharacter::ByteSizeLong() const {
   if (this->state() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_state());
-  }
-
-  // bool gender = 5;
-  if (this->gender() != 0) {
-    total_size += 1 + 1;
   }
 
   // int32 face_id = 6;
@@ -1863,6 +1874,16 @@ size_t GameServerLoadCharacter::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
         this->_internal_max_hp());
+  }
+
+  // bool gender = 5;
+  if (this->gender() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool is_first = 25;
+  if (this->is_first() != 0) {
+    total_size += 2 + 1;
   }
 
   // int32 mp = 16;
@@ -1959,9 +1980,6 @@ void GameServerLoadCharacter::MergeFrom(const GameServerLoadCharacter& from) {
   if (from.state() != 0) {
     _internal_set_state(from._internal_state());
   }
-  if (from.gender() != 0) {
-    _internal_set_gender(from._internal_gender());
-  }
   if (from.face_id() != 0) {
     _internal_set_face_id(from._internal_face_id());
   }
@@ -1991,6 +2009,12 @@ void GameServerLoadCharacter::MergeFrom(const GameServerLoadCharacter& from) {
   }
   if (from.max_hp() != 0) {
     _internal_set_max_hp(from._internal_max_hp());
+  }
+  if (from.gender() != 0) {
+    _internal_set_gender(from._internal_gender());
+  }
+  if (from.is_first() != 0) {
+    _internal_set_is_first(from._internal_is_first());
   }
   if (from.mp() != 0) {
     _internal_set_mp(from._internal_mp());

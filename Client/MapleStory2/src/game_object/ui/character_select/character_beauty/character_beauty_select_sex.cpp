@@ -136,22 +136,22 @@ auto CharacterBeautySelectSex::ChangeButtonState(const kCreateSexBtnState state)
 
 auto CharacterBeautySelectSex::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
 	if (_info.sex)
 	{
-		if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SexGirlBtn"), TEXT("Com_Select_SexBtn"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture))))
+		if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SexGirlBtn"), TEXT("Com_Select_SexBtn"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture))))
 			return E_FAIL;
-		if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SexGirlImage"), TEXT("Com_Select_SexImage"), reinterpret_cast<std::shared_ptr<Component>*>(&_sex_texture))))
+		if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SexGirlImage"), TEXT("Com_Select_SexImage"), reinterpret_cast<std::shared_ptr<Component>*>(&_sex_texture))))
 			return E_FAIL;
 		
 	}
 	else
 	{
-		if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SexManBtn"), TEXT("Com_Select_SexBtn"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture))))
+		if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SexManBtn"), TEXT("Com_Select_SexBtn"), reinterpret_cast<std::shared_ptr<Component>*>(&_select_texture))))
 			return E_FAIL;
-		if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SexManImage"), TEXT("Com_Select_SexImage"), reinterpret_cast<std::shared_ptr<Component>*>(&_sex_texture))))
+		if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_SexManImage"), TEXT("Com_Select_SexImage"), reinterpret_cast<std::shared_ptr<Component>*>(&_sex_texture))))
 			return E_FAIL;
 		_state = kSelect;
 	}

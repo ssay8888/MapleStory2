@@ -17,5 +17,6 @@ private:
 
 	auto ReadyLayerBackGround(const std::wstring& layerTag)->HRESULT;
 	auto ReadyLayerTextBox(const std::wstring& layerTag)->HRESULT;
+	auto ReadyMouse()->HRESULT;
 };
 

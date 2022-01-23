@@ -102,7 +102,7 @@ auto IngameCamera::AddComponents() -> HRESULT
 	transformDesc.speed_per_sec = 10.0f;
 	transformDesc.rotation_per_sec = D3DXToRadian(90.0);
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		TEXT("Prototype_Transform"),
 		TEXT("Com_Transform"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_transform),

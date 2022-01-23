@@ -102,7 +102,7 @@ auto SkillLevelChangeBtn::Create(std::function<void()> callback, bool isMinus) -
 
 auto SkillLevelChangeBtn::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		TEXT("Prototype_VIBuffer_Rect"),
 		TEXT("Com_VIBuffer"),
 		reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
@@ -112,7 +112,7 @@ auto SkillLevelChangeBtn::AddComponents() -> HRESULT
 
 	if (_is_minus)
 	{
-		if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0,
+		if (FAILED(AddComponent(kScene::kSceneGamePlay0,
 			TEXT("Prototype_Texture_SkillUi_MinusBtn"),
 			TEXT("Com_Texture"),
 			reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
@@ -122,7 +122,7 @@ auto SkillLevelChangeBtn::AddComponents() -> HRESULT
 	}
 	else
 	{
-		if (FAILED(GameObject::AddComponent(kScene::kSceneGamePlay0,
+		if (FAILED(AddComponent(kScene::kSceneGamePlay0,
 			TEXT("Prototype_Texture_SkillUi_PlusBtn"),
 			TEXT("Com_Texture"),
 			reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))

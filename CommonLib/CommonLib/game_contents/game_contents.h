@@ -18,5 +18,6 @@ public:
 	static auto EquipeType(int32_t itemId)->kEquipeType;
 #pragma endregion
 
+
 };
 

@@ -1943,7 +1943,7 @@
 		</entity>
 		<entity id="65ebb14dd86b4cb1bb15bafae071b005" modelName="portal" name="portal[]" iterations="10">
 			<property name="Position">
-				<set value="-1800, -875, 1950" />
+				<set value="-2400, -875, 1950" />
 			</property>
 			<property name="portal">
 				<set value="0, 2000003, 0" />

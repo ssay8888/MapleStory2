@@ -102,7 +102,7 @@ auto CharacterCreateNamePopup::Render(std::shared_ptr<Shader> shader) -> HRESULT
 		transformMatrix._11 = _info.popup_size.x;
 		transformMatrix._22 = _info.popup_size.y;
 		transformMatrix._41 = _info.popup_pos.x - (g_WinCX >> 1);
-		transformMatrix._42 = -_info.popup_pos.y + (g_WinCY >> 1);
+		transformMatrix._42 = -_info.popup_pos.y - 10 + (g_WinCY >> 1);
 
 
 		auto result = shader->SetUpConstantTable("g_WorldMatrix", &transformMatrix, sizeof(_matrix));
@@ -158,10 +158,10 @@ auto CharacterCreateNamePopup::ChangeShow(const bool show) -> void
 auto CharacterCreateNamePopup::AddComponents() -> HRESULT
 {
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer_Name"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer_Name"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
-	if (FAILED(GameObject::AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_CreateName"), TEXT("Com_NameCreate"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture))))
+	if (FAILED(AddComponent(kScene::kSceneCharacterSelect, TEXT("Prototype_Texture_CreateName"), TEXT("Com_NameCreate"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture))))
 		return E_FAIL;
 
 	return S_OK;

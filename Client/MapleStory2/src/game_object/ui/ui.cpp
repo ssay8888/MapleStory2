@@ -116,11 +116,11 @@ auto Ui::AddComponents() -> HRESULT
 {
 
 	/* Com_VIBuffer */
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_VIBuffer_Rect"), TEXT("Com_VIBuffer"), reinterpret_cast<std::shared_ptr<Component>*>(&_vi_buffer_com))))
 		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic, TEXT("Prototype_Texture_Default2"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
+	if (FAILED(AddComponent(kScene::kSceneStatic, TEXT("Prototype_Texture_Default2"), TEXT("Com_Texture"), reinterpret_cast<std::shared_ptr<Component>*>(&_texture_com))))
 		return E_FAIL;
 
 	return S_OK;

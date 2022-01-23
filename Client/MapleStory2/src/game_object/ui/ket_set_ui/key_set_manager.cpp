@@ -101,7 +101,7 @@ auto KeySetManager::Create() -> std::shared_ptr<KeySetManager>
 
 auto KeySetManager::AddComponents() -> HRESULT
 {
-	if (FAILED(GameObject::AddComponent(kScene::kSceneStatic,
+	if (FAILED(AddComponent(kScene::kSceneStatic,
 		L"Prototype_Shader_Ui",
 		L"Com_Shader",
 		reinterpret_cast<std::shared_ptr<Component>*>(&_shader_com))))
