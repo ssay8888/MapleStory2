@@ -54,7 +54,7 @@ auto MainApp::NativeConstruct() -> HRESULT
 	if (FAILED(AddPrototypeGameObject()))
 		return E_FAIL;
 
-	g_service = ClientNetworkThreadInit(L"127.0.0.1", 7777, Service::kServerType::kClientLogin, 1, 2);
+	g_service = ClientNetworkThreadInit(L"211.219.146.217", 7777, Service::kServerType::kClientLogin, 1, 2);
 	DataReaderManager::GetInstance().Init(GraphicDevice::GetInstance().GetDevice());
 	SceneManager::GetInstance().SetUpScene(SceneLogo::Create(_graphic_device));
 	return S_OK;

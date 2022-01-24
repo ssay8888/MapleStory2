@@ -90,7 +90,7 @@ auto Item::Render(const _float3& pos, std::shared_ptr<Shader> shader) const -> H
 	shader->Commit();
 	_vi_buffer_com->RenderViBuffer();
 
-	if (_info.type != Protocol::kInventoryEqp)
+	if (_info.type != Protocol::kInventoryEqp && _info.type != Protocol::kInventoryEquipped)
 	{
 		const float centerX = g_WinCX >> 1;
 		const float centerY = g_WinCY >> 1;

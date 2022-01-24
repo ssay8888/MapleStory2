@@ -6159,6 +6159,14 @@
 				<set value="0, 0, 0" />
 			</property>
 		</entity>
+		<entity id="65ebb14dd86b4cb1bb15bafae071b005" modelName="MS2RegionSpawn_3" name="MS2RegionSpawn_2" iterations="10">
+			<property name="Position">
+				<set value="-150, -1650, 1500" />
+			</property>
+			<property name="spawnMonster">
+				<set value="43000101" />
+			</property>
+		</entity>
 		<entity id="58541fda98df4224abeeb9621e700c2b" modelName="sf_deform_beam_E01_" name="sf_deform_beam_E01_[0, -11, 11]" iterations="62">
 			<property name="Position">
 				<set value="0, -1650, 1650" />

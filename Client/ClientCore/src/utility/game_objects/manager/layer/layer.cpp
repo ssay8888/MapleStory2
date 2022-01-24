@@ -43,15 +43,33 @@ auto Layer::GetGameObject(const uint32_t index) -> std::shared_ptr<GameObject>
 
 int32_t Layer::Tick(const double timeDelta)
 {
+	if (_objects.empty())
+	{
+		return S_OK;
+	}
 	for (const auto& gameObject : _objects)
-		gameObject->Tick(timeDelta);
+	{
+		if (gameObject)
+		{
+			gameObject->Tick(timeDelta);
+		}
+	}
 	return S_OK;
 }
 
 int32_t Layer::LateTick(const double timeDelta)
 {
+	if (_objects.empty())
+	{
+		return S_OK;
+	}
 	for (const auto& gameObject : _objects)
-		gameObject->LateTick(timeDelta);
+	{
+		if (gameObject)
+		{
+			gameObject->LateTick(timeDelta);
+		}
+	}
 	return S_OK;
 }
 

@@ -66,6 +66,7 @@ auto GameLogicQueue::RemoveUser(PacketSessionRef session, Protocol::GameServerRe
 	auto& objectManager = ObjectManager::GetInstance();
 	std::wstring layer = fmt::format(L"Layer_User_{}", pkt.character_id());
 	objectManager.LayerClear(kSceneGamePlay0, layer);
+	WeaponManager::GetInstance().RemoveWeapon(pkt.character_id());
 }
 
 auto GameLogicQueue::MovePlayer(PacketSessionRef session, Protocol::GameServerMovePlayer pkt) -> void

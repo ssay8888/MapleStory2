@@ -33,7 +33,7 @@ auto MonsterDeadState::LateTick(const double timeDelta, std::shared_ptr<Monster>
 		if (const auto mapInstance = MapManager::GetInstance().FindMapInstance(CharacterStat::GetInstance().GetMapName()))
 		{
 			monster->SetDead(true);
-			mapInstance->RemoveMonster(monster->GetMonsterInfo().object_id());
+			//mapInstance->RemoveMonster(monster->GetMonsterInfo().object_id());
 		}
 	}
 }

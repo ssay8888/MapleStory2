@@ -31,9 +31,15 @@ auto GameSession::OnDisconnected() -> void
 	const auto gameSession = std::static_pointer_cast<GameSession>(shared_from_this());
 	GameSessionManager::GetInstance().GameSessionRemove(gameSession);
 
-	const auto mapInstance = MapManager::GetInstance().FindMapInstance(_character->GetMapId());
-	GameTick::GetInstance()->DoAsync(&GameTick::RemoveCharacter, mapInstance, _character->GetCharacterId());
-	GameCharacterLoadQueue::GetInstance()->DoAsync(&GameCharacterLoadQueue::SaveDbToPlayer, packetSession);
+	if (_character)
+	{
+		const auto mapInstance = MapManager::GetInstance().FindMapInstance(_character->GetMapId());
+		if (mapInstance)
+		{
+			GameTick::GetInstance()->DoAsync(&GameTick::RemoveCharacter, mapInstance, _character->GetCharacterId());
+		}
+		GameCharacterLoadQueue::GetInstance()->DoAsync(&GameCharacterLoadQueue::SaveDbToPlayer, packetSession);
+	}
 }
 
 auto GameSession::OnRecvPacket(BYTE* buffer, const int32_t len) -> void

@@ -53,7 +53,7 @@ void GameServer::CreateServerService()
 {
 	//플레이어를 받는 게임서버 형태
 	ServerServiceRef service = MakeShared<ServerService>(
-		NetAddress(L"127.0.0.1", 7778),
+		NetAddress(L"211.219.146.217", 7778),
 		MakeShared<IocpCore>(),
 		MakeShared<GameSession>, // TODO : SessionManager 등
 		Service::kServerType::kServerGame,
@@ -90,7 +90,7 @@ void GameServer::CreateClientService()
 	//로그인서버로 연결되는 서비스형태
 
 	_center_service = MakeShared<ClientService>(
-		NetAddress(L"127.0.0.1", 7779),
+		NetAddress(L"211.219.146.217", 7779),
 		MakeShared<IocpCore>(),
 		MakeShared<CenterClientSession>, // TODO : SessionManager 등
 		Service::kServerType::kCenterClientGame,

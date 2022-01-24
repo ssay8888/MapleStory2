@@ -304,17 +304,41 @@ std::wstring LoginHandler::ItemListToXml(Protocol::LoginClientCreateCharacter pk
 				}
 				item.append_attribute("quantity").set_value(1);
 			}
+			else
+			{
+				item.append_attribute("str").set_value(0);
+				item.append_attribute("dex").set_value(0);
+				item.append_attribute("_int").set_value(0);
+				item.append_attribute("luk").set_value(0);
+				item.append_attribute("wap").set_value(0);
+				item.append_attribute("quantity").set_value(1);
+			}
 		}
 	}
-	auto item = items.append_child("item");
-	item.append_attribute("type").set_value(0);
-	item.append_attribute("itemid").set_value(15000011);
-	item.append_attribute("position").set_value(static_cast<int>(GameContents::EquipeType(15000011)));
-	item.append_attribute("str").set_value(static_cast<int32_t>(Randomizer::Rand(0ll, 3ll)));
-	item.append_attribute("dex").set_value(static_cast<int32_t>(Randomizer::Rand(0ll, 3ll)));
-	item.append_attribute("_int").set_value(static_cast<int32_t>(Randomizer::Rand(0ll, 3ll)));
-	item.append_attribute("luk").set_value(static_cast<int32_t>(Randomizer::Rand(0ll, 3ll)));
-	item.append_attribute("wap").set_value(static_cast<int32_t>(Randomizer::Rand(0ll, 3ll)));
+	{
+		auto item = items.append_child("item");
+		item.append_attribute("type").set_value(0);
+		item.append_attribute("itemid").set_value(15000011);
+		item.append_attribute("quantity").set_value(1);
+		item.append_attribute("position").set_value(static_cast<int>(GameContents::EquipeType(15000011)));
+		item.append_attribute("str").set_value(static_cast<int32_t>(Randomizer::Rand(0ll, 3ll)));
+		item.append_attribute("dex").set_value(static_cast<int32_t>(Randomizer::Rand(0ll, 3ll)));
+		item.append_attribute("_int").set_value(static_cast<int32_t>(Randomizer::Rand(0ll, 3ll)));
+		item.append_attribute("luk").set_value(static_cast<int32_t>(Randomizer::Rand(0ll, 3ll)));
+		item.append_attribute("wap").set_value(static_cast<int32_t>(Randomizer::Rand(0ll, 3ll)));
+	}
+	{
+		auto item = items.append_child("item");
+		item.append_attribute("type").set_value(2);
+		item.append_attribute("itemid").set_value(20000022);
+		item.append_attribute("quantity").set_value(99);
+		item.append_attribute("position").set_value(0);
+		item.append_attribute("str").set_value(0);
+		item.append_attribute("dex").set_value(0);
+		item.append_attribute("_int").set_value(0);
+		item.append_attribute("luk").set_value(0);
+		item.append_attribute("wap").set_value(0);
+	}
 	std::wstringstream xml;
 	doc.save(xml);
 	return xml.str();

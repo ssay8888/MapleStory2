@@ -35,7 +35,7 @@ void CenterHandler::CenterLoginClientCheckAuth(PacketSessionRef session, Protoco
 		Protocol::LoginServerCharacterSelect sendPkt;
 		sendPkt.set_result(Protocol::kCharacterSelectMessage::kSelectSuccess);
 		sendPkt.set_auth(pkt.auth());
-		sendPkt.set_ip("127.0.0.1");
+		sendPkt.set_ip("211.219.146.217");
 		sendPkt.set_port(7778);
 		auth->session->Send(LoginClientPacketHandler::MakeSendBuffer(sendPkt));
 	}

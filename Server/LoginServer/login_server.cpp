@@ -26,7 +26,7 @@ auto LoginServer::LoginServerServiceCreate() -> void
 {
 	//로그인하는 유저를 받는서버 형태
 	_login_service = MakeShared<ServerService>(
-		NetAddress(L"127.0.0.1", 7777),
+		NetAddress(L"211.219.146.217", 7777),
 		MakeShared<IocpCore>(),
 		MakeShared<LoginSession>, // TODO : SessionManager 등
 		Service::kServerType::kServerLogin,
@@ -59,7 +59,7 @@ auto LoginServer::LoginCenterServerServiceCreate() -> void
 
 	//게임서버와의 통신서버
 	_center_service = MakeShared<ServerService>(
-		NetAddress(L"127.0.0.1", 7779),
+		NetAddress(L"211.219.146.217", 7779),
 		MakeShared<IocpCore>(),
 		MakeShared<CenterLoginSession>, // TODO : SessionManager 등
 		Service::kServerType::kCenterServerLogin);

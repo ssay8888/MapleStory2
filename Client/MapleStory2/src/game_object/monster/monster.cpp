@@ -66,7 +66,10 @@ auto Monster::Tick(const double timeDelta) -> HRESULT
 auto Monster::LateTick(const double timeDelta) -> HRESULT
 {
 	_current_monster_state->LateTick(timeDelta, GetMonster());
-	Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());
+	if (!_is_dead)
+	{
+		Renderer::GetInstance().AddRenderGroup(Renderer::kRenderGroup::kRenderNonAlpha, shared_from_this());
+	}
 	return GameObject::LateTick(timeDelta);
 }
 

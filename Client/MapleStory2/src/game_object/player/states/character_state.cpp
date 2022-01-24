@@ -128,10 +128,12 @@ auto CharacterState::StraightCheck() -> bool
 
 			auto maxValue = std::max(Min.z, targetMin.z);
 			auto minValue = min(Max.z, targetMax.z);
-			auto result = minValue - maxValue;
-			auto pos = _player->GetTransform()->GetState(Transform::kState::kStatePosition);
+			//auto result = minValue - maxValue;
+			//auto targetPos = _last_wall_map_object->GetTransform()->GetState(Transform::kState::kStatePosition);
+			//auto pos = _player->GetTransform()->GetState(Transform::kState::kStatePosition);
 			//pos.z = _last_tile_map_object->GetCollider()->GetMin().z;
-			//	_transform_com->SetState(Transform::kState::kStatePosition, pos);
+			//pos.y = targetMax.y;
+			//_player->GetTransform()->SetState(Transform::kState::kStatePosition, pos);
 		}
 	}
 	return check;

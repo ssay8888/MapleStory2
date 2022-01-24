@@ -43,8 +43,8 @@ auto Fittingdoll::NativeConstruct(void* arg) -> HRESULT
 	_transform_com->SetState(Transform::kState::kStatePosition, _float3(-622.779358f, 1064.66284f - 40.f, -16.07339f) / 150 * 0.58f);
 	_transform_com->SetScale(0.01f, 0.01f, 0.01f);
 
-	_character_mesh_list[0]->SetAnimationIndex(1);
-	_current_mesh_num = 1;
+	_character_mesh_list[0]->SetAnimationIndex(0);
+	_current_mesh_num = 0;
 	//_transform_com->SetUpRotation(_float3(1,  1, 0), D3DXToRadian(90));
 	return S_OK;
 }

@@ -8182,14 +8182,6 @@
 				<set value="0, 0, 180" />
 			</property>
 		</entity>
-		<entity id="65ebb14dd86b4cb1bb15bafae071b005" modelName="MS2RegionSpawn_3" name="MS2RegionSpawn_2" iterations="10">
-			<property name="Position">
-				<set value="-900, 300, 2700" />
-			</property>
-			<property name="spawnMonster">
-				<set value="43000101" />
-			</property>
-		</entity>
 		<entity id="65ecbbdb4ea141daa328f305fa5a2afd" modelName="he_ground_rock_A04_" name="he_ground_rock_A04_[-8, -1, 9]" iterations="4">
 			<property name="Position">
 				<set value="-1200, -150, 1350" />
